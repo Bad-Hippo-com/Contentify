@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.2.6**
-Assessment/update time: **2026-09-06 20:00 CEST**
+Local workstream version: **0.3.0**
+Assessment/update time: **2026-09-06 20:17 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -53,12 +53,12 @@ Generated lock/build output was removed before documentation was written.
 | PHP 8.5 Artisan | Fail; exit code 255 |
 | PHP 8.5 PHPUnit | Fail; 2 tests, 2 errors |
 | PHP 7.4 lint | Pass; 726 files parse |
-| PHP 7.4 Artisan | Pass; reports Laravel 6.20.30 |
+| PHP 7.4 Artisan | Pass; `0.3.0` candidate reports Laravel 6.20.45 |
 | PHP 7.4 PHPUnit | Fail; unit placeholder passes, feature placeholder gets 404 |
-| Composer validation | Fail; lockfile is not current with composer.json |
+| Composer validation | Pass for `0.3.0`; regenerated lock is valid with `--strict` |
 | Composer normal install on PHP 8.5 | Fail; incompatible PHP/package constraints |
 | Composer install with ignored requirements | Packages extract, but this is not a runnable current build |
-| Composer production audit | Fail; 47 advisories (1 critical, 18 high) |
+| Composer production audit | Improved but fails; 39 advisories in eight packages |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -372,6 +372,30 @@ Der kombinierte PHPUnit-Lauf für Upload und Speicherplatz meldete mit PHP 7.4
 im selben Vorgang neu erstellt. Beide Smoke-Tests liefen im neuen App-Container
 grün; Startseite und Anmeldeseite antworteten mit HTTP 200, alle vier Dienste
 liefen und MariaDB blieb gesund.
+
+### Laravel-6-Patchstufe 0.3.0 - 2026-09-06 20:17 CEST
+
+Die erste Modernisierungsstufe ändert weder PHP-Major noch Laravel-Major. In
+einem wegwerfbaren Container auf Basis des realen Staging-Abbilds wurde gezielt
+`laravel/framework` mit allen zulässigen Abhängigkeiten aktualisiert. Composer
+wählte Laravel 6.20.45, 45 Paketupdates und vier zusätzliche Hilfspakete; die
+erzeugte Lockdatei wurde erst nach den Prüfungen in den Arbeitsstand übernommen.
+
+Der Kandidat bestand `composer validate --strict`, meldete über Artisan Laravel
+6.20.45, bestand fünf Unit-Tests mit 16 Assertions, beide Regression-Smoke-Tests
+und den Syntaxlauf über alle eigenen PHP-Dateien. Composer 2.10.3 meldet noch
+39 Advisories in acht Paketen statt zuvor 47. Das Produktionsabbild
+`contentify-staging-app:0.3.0` wurde danach für App und Jobs ausgerollt; Nginx
+wurde im selben Vorgang neu erstellt. Laravel meldet live 6.20.45, MariaDB ist
+gesund und beide Smoke-Tests bleiben grün. Startseite, Anmeldung, Font Awesome,
+Glyphicons und der von der Seite eingebundene jQuery-Pfad antworten mit HTTP
+200 und passenden MIME-Typen. Die zentralen Logs zeigen keine neuen Fehler.
+
+Damit ist diese Stufe auf Staging angenommen, aber weiterhin weder test- noch
+public-freigegeben.
+Die noch offenen Findings werden nicht verschwiegen oder per
+`--ignore-platform-reqs` umgangen, sondern in den folgenden isolierten
+Framework- und Laufzeitstufen bearbeitet.
 
 ## Files added or updated
 

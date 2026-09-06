@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.2.6**
-Last updated: **2026-09-06 20:00 CEST**
+Local workstream version: **0.3.0**
+Last updated: **2026-09-06 20:17 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.2.0` is installed on the internal staging host with Nginx 1.26.3,
-PHP-FPM 7.4.33, Laravel 6.20.30 and MariaDB 10.11. The application, database,
+Version `0.3.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 7.4.33, Laravel 6.20.45 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -189,6 +189,20 @@ Systeminformationen dürfen das Backend nicht blockieren. Die gemeinsame
 Speicherplatzabfrage liefert bei Host-Beschränkungen `null`; nur ein valider
 Messwert kann die Warnschwelle auslösen. Dieses Verhalten ist unabhängig vom
 späteren PHP-/Laravel-Ziel und bleibt als Portierungsanforderung erhalten.
+
+### Letzte Laravel-6-Patchstufe - 2026-09-06 20:17 CEST
+
+Version `0.3.0` hält PHP bewusst auf 7.4 und Laravel bewusst auf Major-Version 6.
+Nur der erste Modernisierungsschritt wurde ausgeführt: Laravel 6.20.30 wurde auf
+6.20.45 und der dazu passend aufgelöste Lockbestand aktualisiert. Der isolierte
+Kandidat bestand Composer-Validierung, Artisan-Boot, den Syntaxlauf, fünf
+Unit-Tests mit 16 Assertions und beide vorhandenen Smoke-Tests. Der Auditbestand
+sank von 47 auf 39 Advisories in acht Paketen. Diese Zwischenstufe bleibt wegen
+PHP 7.4, Laravel 6 und der verbleibenden Findings ausschließlich intern.
+App, Jobs und Nginx wurden gemeinsam neu erstellt; Startseite, Anmeldung,
+Font Awesome, Glyphicons und der tatsächlich eingebundene jQuery-Pfad wurden
+anschließend mit HTTP 200 geprüft. In den zentralen Logs entstanden dabei keine
+neuen Anwendungs-, PHP- oder Nginx-Fehler.
 
 ## Non-viable shortcut
 

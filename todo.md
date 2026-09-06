@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.2.6**
-Last updated: **2026-09-06 20:00 CEST**
+Local workstream version: **0.3.0**
+Last updated: **2026-09-06 20:17 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -87,6 +87,9 @@ Last updated: **2026-09-06 20:00 CEST**
   mandatory Nginx recreation to the staging rollout procedure.
 - [x] Preserve low-disk warnings while making unavailable disk-space data safe
   for restricted hosts in `0.2.6`.
+- [x] Regenerate `composer.lock` on PHP 7.4, update Laravel within major version
+  6 from 6.20.30 to 6.20.45, and verify the exact dependency candidate in an
+  isolated container as `0.3.0`.
 - [x] Narrow `.dockerignore` so the Composer dependency tree stays excluded
   while every required `public/vendor` resource remains in the image.
 - [x] Restore the Glyphicons font output expected below `public/css/fonts`.
@@ -101,8 +104,9 @@ Last updated: **2026-09-06 20:00 CEST**
 - [ ] Upgrade Composer packages, PHP and Laravel in small, separately tested
   steps; determine the final supported stack from measured compatibility rather
   than selecting PHP 8.5/Laravel 13 in advance.
-- [ ] Regenerate `composer.lock`; make `composer validate --strict` and
-  `composer audit --no-dev` pass with zero known advisories.
+- [x] Regenerate `composer.lock` and make `composer validate --strict` pass.
+- [ ] Reduce the remaining Composer production audit from 39 advisories to zero
+  through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.
 - [ ] Replace the container definitions with pinned supported images,

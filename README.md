@@ -12,7 +12,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.2.6 auf Basis von Contentify 3.2-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.3.0 auf Basis von Contentify 3.2-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -85,8 +85,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.2.6**
-Last updated: **2026-09-06 20:00 CEST**
+Local workstream version: **0.3.0**
+Last updated: **2026-09-06 20:17 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
@@ -112,6 +112,13 @@ processed. Teams can now save logo and banner together, including a banner when
 the earlier logo field is empty. The fix is covered by unit and staging smoke tests.
 Version `0.2.6` makes the disk-space check safe on restricted hosting: unavailable
 filesystem information is shown as unknown instead of crashing the dashboard.
+Version `0.3.0` begins the controlled modernization: Laravel remains on major
+version 6 and PHP remains on 7.4, while the framework is raised from 6.20.30 to
+the final Laravel-6 patch 6.20.45 together with its resolved dependency set.
+The candidate passes Composer validation, Artisan boot, PHP lint, five unit
+tests and both staging smoke tests. It is installed on staging; the homepage,
+login and required browser assets return HTTP 200. It still has known
+advisories and is not a public release.
 
 See:
 

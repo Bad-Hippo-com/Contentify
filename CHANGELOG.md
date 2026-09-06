@@ -1,3 +1,14 @@
+## Bad Hippo 0.3.0 - 2026-09-06
+
+- Laravel innerhalb der bestehenden Major-Version von 6.20.30 auf 6.20.45
+  aktualisiert; PHP bleibt für diese getrennte Migrationsstufe auf 7.4.
+- `composer.lock` reproduzierbar neu erzeugt und 45 kompatible Paketupdates
+  sowie vier neu aufgelöste Hilfspakete festgeschrieben.
+- Composer-Validierung, Artisan-Boot, PHP-Syntax, fünf Unit-Tests und beide
+  bestehenden Staging-Smoke-Tests erfolgreich ausgeführt.
+- Produktions-Audit von 47 auf 39 Advisories reduziert; die Version bleibt
+  deshalb ein interner Staging-Kandidat und ist nicht öffentlich freigegeben.
+
 ## Bad Hippo 0.2.6 - 2026-09-06
 
 - Speicherplatzabfragen von Dashboard und Diagnose behandeln eingeschränkte

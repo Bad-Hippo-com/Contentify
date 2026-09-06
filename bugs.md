@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.2.6**
-Last updated: **2026-09-06 20:00 CEST**
+Local workstream version: **0.3.0**
+Last updated: **2026-09-06 20:17 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -28,29 +28,43 @@ invalid PHP syntax.
 Severity: **blocker**
 Status: **open**
 
-`composer audit --locked --no-dev` with Composer 2.10.3 reports **47 known
-advisories**: 1 critical, 18 high, 26 medium and 2 low. Affected runtime
-packages include Laravel Framework 6.20.30, Guzzle 7.3.0, Guzzle PSR-7 2.0.0,
-League CommonMark 1.6.6, Symfony components and Carbon 2.51.1.
-
-The critical Laravel finding applies to versions below 6.20.44. This checkout
-locks 6.20.30. A second high Laravel finding requires at least 6.20.45, while
-the current application lock remains below both fixed versions.
+After the controlled `0.3.0` update, `composer audit --locked --no-dev` with
+Composer 2.10.3 reports **39 known advisories in eight packages**. The previous
+lock contained 47 advisories. Laravel is now 6.20.45, removing the findings
+fixed by Laravel 6.20.44 and 6.20.45, but Laravel 6 itself and other legacy
+packages remain unsupported or vulnerable. Affected packages still include
+Laravel Framework, Guzzle, Guzzle PSR-7, League CommonMark, PsySH and Symfony
+components. Production approval therefore remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
 Severity: **high**
-Status: **open**
+Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 
 - The bundled `composer.phar` is obsolete, emits extensive deprecation output
   on PHP 8.5 and does not provide the `audit` command.
-- Current Composer reports that `composer.lock` is out of date relative to
-  `composer.json`.
+- Version `0.3.0` regenerates `composer.lock`; current Composer now reports
+  `composer.json` and the lock as valid with `--strict`.
 - A normal PHP 8.5 install is rejected by package PHP constraints. It proceeds
   only with `--ignore-platform-reqs`, installing 112 old packages despite the
   declared incompatibilities.
-- Two locked packages are abandoned: `oyejorge/less.php` and
-  `sebastian/resource-operations`.
+- The refreshed lock still contains abandoned packages. Composer 2.10.3 reports
+  `oyejorge/less.php`, `swiftmailer/swiftmailer` and `symfony/debug` in the
+  production audit; development dependencies add further legacy warnings.
+
+### BUG-013 - Laravel-6 patch level was below available security fixes
+
+Severity: **high**
+Status: **resolved as migration rung 2026-09-06 20:17 CEST**
+
+The historical lock selected Laravel 6.20.30 although compatible security fixes
+exist in the same framework major. Version `0.3.0` regenerates the lock on the
+real PHP 7.4 baseline and selects Laravel 6.20.45 plus its compatible dependency
+set. The isolated candidate passed strict Composer validation, Artisan boot,
+five unit tests with 16 assertions, both smoke tests and a complete first-party
+PHP syntax pass. This resolves only the outdated Laravel-6 patch level; BUG-001
+and BUG-002 remain open until the later PHP/Laravel rungs remove the unsupported
+stack and all advisories.
 
 ### BUG-004 - Front-end dependency installation fails by default
 
