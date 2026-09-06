@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.5.0**
-Last updated: **2026-09-06 21:01 CEST**
+Local workstream version: **0.5.1**
+Last updated: **2026-09-06 21:27 CEST**
 
 ## Decision
 
@@ -233,6 +233,19 @@ sie scheiterte bereits vor dieser Stufe mit HTTP 404. Auf Staging laufen das
 authentifizierte Dashboard, 512 aktivierte Routen, die echte Anmeldeseite, alle
 geprüften Browserassets und beide Smoke-Tests. Laravel 7 ist damit als interne
 Zwischenstufe angenommen, nicht als Test- oder Public-Freigabe.
+
+### Getrennte Betriebs- und Anzeige-Logs - 2026-09-06 21:27 CEST
+
+Version `0.5.1` verändert keine Framework- oder PHP-Version. Der Laravel-
+Standardkanal ist nun ein Stack aus zwei Ausgaben: `application` bewahrt das
+ausführliche tägliche JSON mit Umgebung, Host, Build und Requestkontext unter
+`/var/log/contentify`; `legacy` schreibt parallel das klassische Monolog-
+Textformat nach `storage/logs/laravel.log`. Nur diese zweite Datei wird von der
+historischen Admin-Seite angezeigt und gelöscht. PHP-, FPM-, Nginx-, Security-
+und Jobprotokolle bleiben eigenständig und sind von der Admin-Löschung nicht
+erreichbar. Der Live-Test auf Staging bestätigt identische Meldungen in beiden
+Ausgaben, Dateimodus `0640` mit Eigentümer `www-data:www-data` und die korrekte
+Darstellung des klassischen Eintrags im vorhandenen Admin-Logviewer.
 
 ## Non-viable shortcut
 

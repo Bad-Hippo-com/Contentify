@@ -1,22 +1,25 @@
 # Central logging for Contentify
 
-Version: **0.5.0**
-Last updated: **2026-09-06 21:05 CEST**
+Version: **0.5.1**
+Last updated: **2026-09-06 21:27 CEST**
 
 Each test or staging server uses its own local `/var/log/contentify` directory.
 All relevant logs are therefore in one predictable location without sharing
 data between the two environments.
 
-Known UI limitation: Contentify's historical `/admin/config/log` page still
-looks only for `storage/logs/laravel.log`. It does not display these central
-files yet; see BUG-018. Diagnose from the files below until the bounded admin
-viewer has been migrated.
+Ordinary Laravel records are deliberately split. The `application` channel is
+the detailed daily JSON operations record below `/var/log/contentify`. The
+`legacy` channel receives the same event in classic Laravel text format at
+`storage/logs/laravel.log`, which restores the historical `/admin/config/log`
+page. Its delete button removes only this display copy and never the central
+component logs.
 
 ## File layout
 
 | File pattern | Producer |
 | --- | --- |
 | `application-YYYY-MM-DD.log` | Laravel application and uncaught exceptions |
+| `storage/logs/laravel.log` | Classic Laravel display copy for the admin page |
 | `security-YYYY-MM-DD.log` | Explicit Laravel security/audit events |
 | `jobs-YYYY-MM-DD.log` | Explicit Laravel job events |
 | `php/php-error.log` | PHP errors |

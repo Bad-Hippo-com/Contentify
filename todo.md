@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.5.0**
-Last updated: **2026-09-06 21:05 CEST**
+Local workstream version: **0.5.1**
+Last updated: **2026-09-06 21:27 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -118,9 +118,11 @@ Last updated: **2026-09-06 21:05 CEST**
   404 in the isolated test environment.
 - [ ] Add a focused exception-handler regression and return HTTP 404 rather
   than 500 for unknown routes and absent static files (BUG-017).
-- [ ] Connect `/admin/config/log` to the current daily application JSON log
-  with bounded, escaped output; keep PHP, Nginx and job logs protected from the
-  page's legacy delete action (BUG-018).
+- [x] Split ordinary Laravel logging into the detailed daily JSON operations
+  log and a classic `storage/logs/laravel.log` display copy, restoring
+  `/admin/config/log` without exposing central component logs to its delete
+  action; verify both outputs and the authenticated browser view on staging
+  (BUG-018).
 - [ ] Reduce the remaining Composer production audit from 12 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`

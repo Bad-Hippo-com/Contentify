@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.5.0**
-Last updated: **2026-09-06 21:05 CEST**
+Local workstream version: **0.5.1**
+Last updated: **2026-09-06 21:27 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -98,7 +98,7 @@ Symfony's `NotFoundHttpException` are still required.
 ### BUG-018 - Admin log page reads an obsolete file
 
 Severity: **medium**
-Status: **open; confirmed on staging 2026-09-06 21:05 CEST**
+Status: **resolved in 0.5.1, 2026-09-06 21:27 CEST**
 
 `AdminConfigController::LOG_FILE` is hard-coded to
 `storage/logs/laravel.log`. Since the central logging work, Laravel writes
@@ -107,8 +107,13 @@ daily structured files such as
 runner use their own files below the same root. The legacy file does not exist,
 so `/admin/config/log` always displays the translated empty-log notice even
 though the central files are populated. The page needs a read-only, bounded
-viewer for the current application log. Its existing delete action must not be
-allowed to remove all central component logs.
+viewer for the current application log. Version `0.5.1` keeps the detailed
+daily JSON application log and adds a classic single-file `legacy` channel.
+The default stack writes each ordinary Laravel record to both channels. The
+existing page and its clear action therefore operate only on the display copy;
+central application, PHP, Nginx and job logs cannot be deleted through it. The
+staging browser check displays the clean 84-byte validation record; the matching
+central JSON record contains the `0.5.1` build and runtime context.
 
 ### BUG-014 - Remote dashboard feed was rendered without validation
 

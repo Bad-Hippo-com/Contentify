@@ -1,3 +1,12 @@
+## Bad Hippo 0.5.1 / Contentify 3.3-dev - 2026-09-06
+
+- Laravel-Standardlogs auf zwei bewusst getrennte Ziele aufgeteilt: tägliches,
+  ausführliches JSON unter `/var/log/contentify` und klassisches Monolog-Textlog
+  unter `storage/logs/laravel.log` für die bestehende Admin-Anzeige.
+- Bestehende Löschfunktion auf das klassische Anzeige-Log begrenzt; zentrale
+  Anwendungs-, PHP-, Nginx- und Jobprotokolle bleiben davon unberührt.
+- Logging-Konfiguration mit einem neuen Regressionstest abgesichert.
+
 ## Bad Hippo 0.5.0 / Contentify 3.3-dev - 2026-09-06
 
 - Laravel kontrolliert von 6.20.45 auf 7.30.7 angehoben; PHP bleibt als

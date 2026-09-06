@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Das neue Dual-Logging schreibt ausführliche Betriebsdaten zentral als JSON und stellt parallel das klassische Laravel-Log im Adminbereich bereit.",
+        "timestamp": 1788722840,
+        "icon": "clipboard-list"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Die schrittweise Modernisierung erreicht Laravel 7.30.7; PHP bleibt für diese getrennte Prüfstrecke auf 7.4.",
         "timestamp": 1788720660,
         "icon": "wrench"

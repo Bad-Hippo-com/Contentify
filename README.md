@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.5.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.5.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,8 +87,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.5.0**
-Last updated: **2026-09-06 21:01 CEST**
+Local workstream version: **0.5.1**
+Last updated: **2026-09-06 21:27 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
@@ -133,6 +133,13 @@ unit and staging smoke tests; its production audit is reduced from 39 to 12
 advisories, so this remains an internal migration rung rather than a release.
 The same image is running on staging: the authenticated dashboard, 512 enabled
 routes, login page, required assets and both regression smoke tests pass.
+Version `0.5.1` mirrors default Laravel records into two independent outputs:
+the detailed daily JSON operations log and the classic `laravel.log` consumed
+by the existing administrator log page. Clearing the display copy does not
+remove the protected central component logs. The deployed staging image writes
+both formats as `www-data`; the administrator viewer displays the verified
+classic entry while the matching JSON record retains environment, container,
+build and request context.
 
 See:
 

@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.5.0**
-Assessment/update time: **2026-09-06 21:05 CEST**
+Local workstream version: **0.5.1**
+Assessment/update time: **2026-09-06 21:27 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -480,6 +480,25 @@ Anwendungs-, PHP-, Nginx- und Job-Logdateien Daten. Diese auseinanderlaufenden
 Quellen sind als BUG-018 erfasst. Eine spätere UI-Anbindung muss Ausgabegröße,
 Escaping, Zugriffsrecht und die gefährliche alte Löschfunktion berücksichtigen.
 
+Version `0.5.1` löst BUG-018 durch bewusstes Splitting statt durch direkten
+Zugriff der Weboberfläche auf die Betriebslogs. Der Standardkanal `stack`
+verteilt normale Laravel-Einträge gleichzeitig an `application` und `legacy`.
+`application` bleibt das ausführliche tägliche JSON-Protokoll unter dem
+zentralen Logroot. `legacy` nutzt Laravels klassisches Single-File-Format genau
+unter `storage/logs/laravel.log`, das der vorhandene Controller bereits sicher
+escaped darstellt. Die Admin-Löschtaste kann damit ausschließlich diese
+Anzeige-Kopie löschen; die zentralen Anwendungs-, Security-, Job-, PHP- und
+Nginx-Dateien bleiben erhalten.
+
+Der finale Kandidat bestand neun Unit-Tests mit 33 Assertions sowie den
+vollständigen First-Party-Syntaxlauf. Das gemeinsam neu erstellte Staging-Set
+aus App, Jobs und Nginx läuft mit Image `contentify-staging-app:0.5.1`; MariaDB
+blieb gesund und Laravel meldet weiterhin 7.30.7. Ein als `www-data`
+geschriebener Prüfdatensatz erschien gleichzeitig als ausführliches JSON mit
+Umgebung, Container, Build `0.5.1` und Requestkontext sowie als klassischer
+84-Byte-Eintrag im Admin-Logviewer. Die Anzeige-Datei besitzt Modus `0640` und
+`www-data:www-data`. Startseite und Admin-Route antworteten mit HTTP 200.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -488,7 +507,10 @@ Escaping, Zugriffsrecht und die gefährliche alte Löschfunktion berücksichtige
 - `porting.md`: seven-stage port plan and acceptance gates
 - `PROJECT_DOCUMENTATION.md`: complete assessment record
 - `config/logging.php` and `.env.example`: central Laravel channels and controls
-- `app/Logging/JsonLogFormatter.php`: structured JSON Lines plus host/request context
+- `app/Logging/LogContextProcessor.php`: shared environment, host, build and request context
+- `app/Logging/JsonLogFormatter.php`: structured JSON Lines formatter
+- `app/Logging/ClassicLogFormatter.php`: classic administrator display formatter
+- `tests/Unit/LoggingConfigurationTest.php`: split-channel regression coverage
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields

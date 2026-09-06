@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'application'),
+    'default' => env('LOG_CHANNEL', 'stack'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,8 +41,9 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['application'],
+            'channels' => ['application', 'legacy'],
             'ignore_exceptions' => false,
+            'tap' => [App\Logging\LogContextProcessor::class],
         ],
 
         'application' => [
@@ -52,7 +53,10 @@ return [
             'days' => $logDays,
             'permission' => 0640,
             'locking' => true,
-            'tap' => [App\Logging\JsonLogFormatter::class],
+            'tap' => [
+                App\Logging\LogContextProcessor::class,
+                App\Logging\JsonLogFormatter::class,
+            ],
         ],
 
         'security' => [
@@ -62,7 +66,10 @@ return [
             'days' => $logDays,
             'permission' => 0640,
             'locking' => true,
-            'tap' => [App\Logging\JsonLogFormatter::class],
+            'tap' => [
+                App\Logging\LogContextProcessor::class,
+                App\Logging\JsonLogFormatter::class,
+            ],
         ],
 
         'jobs' => [
@@ -72,7 +79,20 @@ return [
             'days' => $logDays,
             'permission' => 0640,
             'locking' => true,
-            'tap' => [App\Logging\JsonLogFormatter::class],
+            'tap' => [
+                App\Logging\LogContextProcessor::class,
+                App\Logging\JsonLogFormatter::class,
+            ],
+        ],
+
+        // Classic Laravel text log consumed by /admin/config/log.
+        'legacy' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => $logLevel,
+            'permission' => 0640,
+            'locking' => true,
+            'tap' => [App\Logging\ClassicLogFormatter::class],
         ],
 
         'single' => [
