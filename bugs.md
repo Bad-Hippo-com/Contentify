@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.4.0**
-Last updated: **2026-09-06 20:28 CEST**
+Local workstream version: **0.4.1**
+Last updated: **2026-09-06 20:38 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -82,6 +82,16 @@ Blade view. Original Contentify and Bad Hippo now use independent cache entries
 and failure handling. This preserves the original feed while adding our clearly
 labelled GitHub-backed feed. Three focused regression tests pass as part of the
 eight-test, 27-assertion unit suite.
+
+### BUG-015 - Newer Bad-Hippo feed appeared below the historical feed
+
+Severity: **low**
+Status: **resolved in 0.4.1, 2026-09-06 20:38 CEST**
+
+Both feeds rendered correctly in `0.4.0`, but the original source was declared
+first and therefore occupied the upper dashboard position despite its newest
+message dating from 2020. Version `0.4.1` makes the maintained Bad-Hippo source
+the first dashboard feed and keeps Contentify Original directly below it.
 
 ### BUG-004 - Front-end dependency installation fails by default
 

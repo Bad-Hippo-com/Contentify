@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.4.0**
-Last updated: **2026-09-06 20:28 CEST**
+Local workstream version: **0.4.1**
+Last updated: **2026-09-06 20:38 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -107,6 +107,8 @@ Last updated: **2026-09-06 20:28 CEST**
 - [x] Raise the maintained CMS development identifier to `3.3-dev` and add a
   separately labelled Bad-Hippo dashboard feed linked to our GitHub repository
   without replacing Chris' original Contentify feed.
+- [x] Place the newer Bad-Hippo feed above the historical original feed in
+  dashboard display order.
 - [ ] Reduce the remaining Composer production audit from 39 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`

@@ -1,3 +1,8 @@
+## Bad Hippo 0.4.1 / Contentify 3.3-dev - 2026-09-06
+
+- Den neueren Bad-Hippo-Newsfeed im Admin-Dashboard vor dem historischen
+  Contentify-Originalfeed angeordnet.
+
 ## Bad Hippo 0.4.0 / Contentify 3.3-dev - 2026-09-06
 
 - Sichtbare CMS-Entwicklungsversion von `3.2-dev` auf `3.3-dev` angehoben.

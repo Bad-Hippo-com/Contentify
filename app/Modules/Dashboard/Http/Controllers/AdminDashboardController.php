@@ -16,16 +16,16 @@ class AdminDashboardController extends BackController
 
     const FEEDS = [
         [
-            'key'         => 'contentify-original',
-            'name'        => 'Contentify Original',
-            'url'         => 'https://www.contentify.org/share/feeds/cms.json',
-            'project_url' => 'https://github.com/Contentify/Contentify',
-        ],
-        [
             'key'         => 'bad-hippo',
             'name'        => 'Bad Hippo 3.3-dev',
             'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json',
             'project_url' => 'https://github.com/Bad-Hippo-com/Contentify',
+        ],
+        [
+            'key'         => 'contentify-original',
+            'name'        => 'Contentify Original',
+            'url'         => 'https://www.contentify.org/share/feeds/cms.json',
+            'project_url' => 'https://github.com/Contentify/Contentify',
         ],
     ];
 

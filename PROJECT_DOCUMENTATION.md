@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.4.0**
-Assessment/update time: **2026-09-06 20:28 CEST**
+Local workstream version: **0.4.1**
+Assessment/update time: **2026-09-06 20:38 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -424,6 +424,11 @@ unvollständige Einträge und ungültige JSON-Wurzeln. Der vollständige Unit-La
 im PHP-7.4-Kandidaten bestand acht Tests mit 27 Assertions. Außerdem wurde der
 veraltete Staging-Wert `CONTENTIFY_BUILD_VERSION=0.2.4` auf `0.4.0` korrigiert,
 damit neu erzeugte zentrale Logs die tatsächlich laufende Buildversion tragen.
+
+Die reale Browserprüfung von `0.4.0` zeigte beide Quellen und alle drei eigenen
+GitHub-Meldungen korrekt, aber den Originalfeed oberhalb der neueren Quelle.
+Version `0.4.1` korrigiert ausschließlich diese Reihenfolge: Bad Hippo steht
+oben, Contentify Original bleibt direkt darunter vollständig erhalten.
 
 ## Files added or updated
 

@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.4.0**
-Last updated: **2026-09-06 20:28 CEST**
+Local workstream version: **0.4.1**
+Last updated: **2026-09-06 20:38 CEST**
 
 ## Decision
 
@@ -213,6 +213,8 @@ GitHub-Datei `public/share/feeds/cms.json` geladen. Ein Ausfall wird je Quelle
 separat gecacht und protokolliert. Alle externen Felder werden vor der Ausgabe
 normalisiert, damit die zusätzliche Remotequelle keine ungeprüften Links,
 Iconnamen oder HTML-Inhalte in den Adminbereich einführt.
+Seit `0.4.1` steht die neuere Bad-Hippo-Quelle oberhalb des historischen
+Originalfeeds; die Trennung und unabhängige Fehlerbehandlung bleiben erhalten.
 
 ## Non-viable shortcut
 

@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.4.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.4.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,8 +87,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.4.0**
-Last updated: **2026-09-06 20:28 CEST**
+Local workstream version: **0.4.1**
+Last updated: **2026-09-06 20:38 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
@@ -125,6 +125,8 @@ Version `0.4.0` adds a separately labelled Bad-Hippo dashboard feed next to the
 unchanged Contentify original feed. Every Bad-Hippo entry and its source heading
 links to `Bad-Hippo-com/Contentify` on GitHub. Remote feed content is validated
 before it is rendered.
+Version `0.4.1` places the newer Bad-Hippo feed above the historical original
+feed in the administrator dashboard.
 
 See:
 

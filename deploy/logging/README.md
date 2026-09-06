@@ -1,7 +1,7 @@
 # Central logging for Contentify
 
-Version: **0.4.0**
-Last updated: **2026-09-06 20:28 CEST**
+Version: **0.4.1**
+Last updated: **2026-09-06 20:38 CEST**
 
 Each test or staging server uses its own local `/var/log/contentify` directory.
 All relevant logs are therefore in one predictable location without sharing
