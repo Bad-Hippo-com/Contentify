@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.5.0**
-Last updated: **2026-09-06 21:01 CEST**
+Last updated: **2026-09-06 21:05 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -94,6 +94,21 @@ of 404. The real Contentify login route `/auth/login` and the Font Awesome 5
 assets are present and return HTTP 200, so this is not a Laravel-7 or missing-
 asset regression. A focused exception-handler test and correct handling of
 Symfony's `NotFoundHttpException` are still required.
+
+### BUG-018 - Admin log page reads an obsolete file
+
+Severity: **medium**
+Status: **open; confirmed on staging 2026-09-06 21:05 CEST**
+
+`AdminConfigController::LOG_FILE` is hard-coded to
+`storage/logs/laravel.log`. Since the central logging work, Laravel writes
+daily structured files such as
+`/var/log/contentify/application-2026-09-06.log`; PHP-FPM, Nginx and the jobs
+runner use their own files below the same root. The legacy file does not exist,
+so `/admin/config/log` always displays the translated empty-log notice even
+though the central files are populated. The page needs a read-only, bounded
+viewer for the current application log. Its existing delete action must not be
+allowed to remove all central component logs.
 
 ### BUG-014 - Remote dashboard feed was rendered without validation
 

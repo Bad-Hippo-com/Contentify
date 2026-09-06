@@ -1,11 +1,16 @@
 # Central logging for Contentify
 
 Version: **0.5.0**
-Last updated: **2026-09-06 21:01 CEST**
+Last updated: **2026-09-06 21:05 CEST**
 
 Each test or staging server uses its own local `/var/log/contentify` directory.
 All relevant logs are therefore in one predictable location without sharing
 data between the two environments.
+
+Known UI limitation: Contentify's historical `/admin/config/log` page still
+looks only for `storage/logs/laravel.log`. It does not display these central
+files yet; see BUG-018. Diagnose from the files below until the bounded admin
+viewer has been migrated.
 
 ## File layout
 

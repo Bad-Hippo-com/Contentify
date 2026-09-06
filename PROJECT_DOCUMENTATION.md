@@ -1,7 +1,7 @@
 # Contentify project assessment
 
 Local workstream version: **0.5.0**
-Assessment/update time: **2026-09-06 21:01 CEST**
+Assessment/update time: **2026-09-06 21:05 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -470,6 +470,15 @@ Ein absichtlich falsch verwendeter Altpfad deckte unabhängig davon BUG-017 auf:
 Der originale produktive Exception-Handler macht aus unbekannten Routen HTTP
 500 statt 404. Das betrifft weder die echte Anmeldung noch vorhandene Assets,
 wurde aber als eigener offener Originalfehler erfasst.
+
+Die anschließende Prüfung der leeren Admin-Seite `/admin/config/log` bestätigte
+keinen Logging-Ausfall. Der Controller sucht weiterhin ausschließlich nach
+`storage/logs/laravel.log`, während die zentrale Konfiguration tägliche JSON-
+Dateien unter `/var/log/contentify/application-YYYY-MM-DD.log` erzeugt. Auf
+Staging war die Legacy-Datei nicht vorhanden; gleichzeitig enthielten
+Anwendungs-, PHP-, Nginx- und Job-Logdateien Daten. Diese auseinanderlaufenden
+Quellen sind als BUG-018 erfasst. Eine spätere UI-Anbindung muss Ausgabegröße,
+Escaping, Zugriffsrecht und die gefährliche alte Löschfunktion berücksichtigen.
 
 ## Files added or updated
 
