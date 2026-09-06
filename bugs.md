@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.4.1**
-Last updated: **2026-09-06 20:38 CEST**
+Local workstream version: **0.5.0**
+Last updated: **2026-09-06 21:01 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -28,13 +28,11 @@ invalid PHP syntax.
 Severity: **blocker**
 Status: **open**
 
-After the controlled `0.3.0` update, `composer audit --locked --no-dev` with
-Composer 2.10.3 reports **39 known advisories in eight packages**. The previous
-lock contained 47 advisories. Laravel is now 6.20.45, removing the findings
-fixed by Laravel 6.20.44 and 6.20.45, but Laravel 6 itself and other legacy
-packages remain unsupported or vulnerable. Affected packages still include
-Laravel Framework, Guzzle, Guzzle PSR-7, League CommonMark, PsySH and Symfony
-components. Production approval therefore remains blocked.
+After the controlled `0.5.0` Laravel-7 rung, `composer audit --locked --no-dev`
+with Composer 2.10.3 reports **12 known advisories in two packages** instead of
+39 in eight packages on Laravel 6. The remaining findings affect Laravel
+Framework 7.30.7 and League CommonMark. Laravel 7 and PHP 7.4 are unsupported;
+production approval therefore remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
@@ -48,9 +46,10 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 - A normal PHP 8.5 install is rejected by package PHP constraints. It proceeds
   only with `--ignore-platform-reqs`, installing 112 old packages despite the
   declared incompatibilities.
-- The refreshed lock still contains abandoned packages. Composer 2.10.3 reports
-  `oyejorge/less.php`, `swiftmailer/swiftmailer` and `symfony/debug` in the
-  production audit; development dependencies add further legacy warnings.
+- The refreshed lock still contains four abandoned production packages:
+  `invisnik/laravel-steam-auth`, `laravelcollective/html`, `oyejorge/less.php`
+  and `swiftmailer/swiftmailer`; development dependencies add further legacy
+  warnings.
 
 ### BUG-013 - Laravel-6 patch level was below available security fixes
 
@@ -65,6 +64,36 @@ five unit tests with 16 assertions, both smoke tests and a complete first-party
 PHP syntax pass. This resolves only the outdated Laravel-6 patch level; BUG-001
 and BUG-002 remain open until the later PHP/Laravel rungs remove the unsupported
 stack and all advisories.
+
+### BUG-016 - Laravel 7 required explicit application compatibility changes
+
+Severity: **high**
+Status: **resolved as migration rung 0.5.0, 2026-09-06 20:51 CEST**
+
+The first Laravel-7 dependency probe stopped during package discovery because
+Contentify's exception handler still type-hinted `Exception`, while Laravel 7
+requires `Throwable`. The application handler now uses `Throwable` for report
+and render. The Laravel-7 session-cookie default is adopted and all three own
+Artisan commands return an explicit integer success code. Sentinel is raised
+from 3.0.4 to 4.0.0 because the former restricts Illuminate Support to version
+6. The isolated PHP-7.4 candidate boots as Laravel 7.30.7, lists 540 routes,
+passes eight focused unit tests with 27 assertions, both smoke tests and the
+complete first-party syntax pass. The sole full-suite failure remains the
+pre-existing placeholder feature test that expects the uninstalled test root
+to answer with HTTP 200.
+
+### BUG-017 - Unknown routes are returned as server errors
+
+Severity: **medium**
+Status: **open; confirmed on staging 2026-09-06 21:01 CEST**
+
+The original production exception handler renders its generic HTTP-500 view
+for every exception other than `ModelNotFoundException`. Consequently an
+unknown route such as `/login` and an absent static file return HTTP 500 instead
+of 404. The real Contentify login route `/auth/login` and the Font Awesome 5
+assets are present and return HTTP 200, so this is not a Laravel-7 or missing-
+asset regression. A focused exception-handler test and correct handling of
+Symfony's `NotFoundHttpException` are still required.
 
 ### BUG-014 - Remote dashboard feed was rendered without validation
 

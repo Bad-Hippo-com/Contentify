@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.4.1**
-Last updated: **2026-09-06 20:38 CEST**
+Local workstream version: **0.5.0**
+Last updated: **2026-09-06 21:01 CEST**
 
 ## Decision
 
@@ -39,7 +39,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 ## Current staging baseline
 
 Version `0.3.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 7.4.33, Laravel 6.20.45 and MariaDB 10.11. The application, database,
+PHP-FPM 7.4.33, Laravel 7.30.7 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -215,6 +215,24 @@ normalisiert, damit die zusätzliche Remotequelle keine ungeprüften Links,
 Iconnamen oder HTML-Inhalte in den Adminbereich einführt.
 Seit `0.4.1` steht die neuere Bad-Hippo-Quelle oberhalb des historischen
 Originalfeeds; die Trennung und unabhängige Fehlerbehandlung bleiben erhalten.
+
+### Laravel-7-Migrationsstufe - 2026-09-06 20:51 CEST
+
+Version `0.5.0` hebt ausschließlich Laravel von 6.20.45 auf 7.30.7; PHP bleibt
+bewusst auf 7.4. Der Composer-Probelauf identifizierte Sentinel 3 als direkten
+Blocker, weshalb Sentinel 4 gemeinsam mit Ignition 2 und Collision 4 aufgelöst
+wurde. Der notwendige Anwendungscode beschränkt sich auf `Throwable` im
+Exception-Handler, den Laravel-7-Standard für sichere Session-Cookies und
+Integer-Rückgabecodes der drei eigenen Artisan-Befehle.
+
+Der isolierte Kandidat startet, listet 540 Routen, besteht acht Unit-Tests mit
+27 Assertions, beide bestehenden Smoke-Tests und den vollständigen Syntaxlauf.
+Der Produktions-Audit sinkt von 39 Advisories in acht Paketen auf 12 in zwei
+Paketen. Die bekannte Platzhalter-Featureprüfung bleibt als Testschuld erfasst;
+sie scheiterte bereits vor dieser Stufe mit HTTP 404. Auf Staging laufen das
+authentifizierte Dashboard, 512 aktivierte Routen, die echte Anmeldeseite, alle
+geprüften Browserassets und beide Smoke-Tests. Laravel 7 ist damit als interne
+Zwischenstufe angenommen, nicht als Test- oder Public-Freigabe.
 
 ## Non-viable shortcut
 

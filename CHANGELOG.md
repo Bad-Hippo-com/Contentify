@@ -1,3 +1,14 @@
+## Bad Hippo 0.5.0 / Contentify 3.3-dev - 2026-09-06
+
+- Laravel kontrolliert von 6.20.45 auf 7.30.7 angehoben; PHP bleibt als
+  getrennte Migrationsachse unverändert auf 7.4.
+- Sentinel 4, Ignition 2 und Collision 4 sowie der vollständig neu aufgelöste
+  Composer-Lockbestand für Laravel 7 übernommen.
+- Exception-Handler auf `Throwable`, Session-Cookie-Standard auf `null` und
+  eigene Artisan-Befehle auf explizite Integer-Rückgabecodes umgestellt.
+- Unit-, Smoke-, Syntax-, Artisan- und Routenprüfungen im isolierten Kandidaten
+  bestanden; Produktions-Audit von 39 auf 12 Advisories reduziert.
+
 ## Bad Hippo 0.4.1 / Contentify 3.3-dev - 2026-09-06
 
 - Den neueren Bad-Hippo-Newsfeed im Admin-Dashboard vor dem historischen

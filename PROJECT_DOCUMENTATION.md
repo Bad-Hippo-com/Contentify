@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.4.1**
-Assessment/update time: **2026-09-06 20:38 CEST**
+Local workstream version: **0.5.0**
+Assessment/update time: **2026-09-06 21:01 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -53,12 +53,12 @@ Generated lock/build output was removed before documentation was written.
 | PHP 8.5 Artisan | Fail; exit code 255 |
 | PHP 8.5 PHPUnit | Fail; 2 tests, 2 errors |
 | PHP 7.4 lint | Pass; 726 files parse |
-| PHP 7.4 Artisan | Pass; `0.3.0` candidate reports Laravel 6.20.45 |
+| PHP 7.4 Artisan | Pass; `0.5.0` candidate reports Laravel 7.30.7 |
 | PHP 7.4 PHPUnit | Fail; unit placeholder passes, feature placeholder gets 404 |
-| Composer validation | Pass for `0.3.0`; regenerated lock is valid with `--strict` |
+| Composer validation | Pass for `0.5.0`; regenerated lock is valid with `--strict` |
 | Composer normal install on PHP 8.5 | Fail; incompatible PHP/package constraints |
 | Composer install with ignored requirements | Packages extract, but this is not a runnable current build |
-| Composer production audit | Improved but fails; 39 advisories in eight packages |
+| Composer production audit | Improved but fails; 12 advisories in two packages |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -68,7 +68,7 @@ Generated lock/build output was removed before documentation was written.
 
 Contentify is obsolete as delivered:
 
-- Laravel 6 no longer receives official bug or security fixes. Current Laravel
+- Laravel 7 no longer receives official bug or security fixes. Current Laravel
   is 13, whose supported PHP range is 8.3 through 8.5.
 - PHP 7.4, the newest runtime on which the first-party source parses cleanly,
   reached end-of-life in November 2022.
@@ -429,6 +429,47 @@ Die reale Browserprüfung von `0.4.0` zeigte beide Quellen und alle drei eigenen
 GitHub-Meldungen korrekt, aber den Originalfeed oberhalb der neueren Quelle.
 Version `0.4.1` korrigiert ausschließlich diese Reihenfolge: Bad Hippo steht
 oben, Contentify Original bleibt direkt darunter vollständig erhalten.
+
+### Laravel-7-Migrationsstufe 0.5.0 - 2026-09-06 20:51 CEST
+
+Die zweite Framework-Stufe wurde erneut in einem wegwerfbaren Container auf
+Basis des tatsächlich laufenden PHP-7.4-Staging-Abbilds aufgelöst. Composer
+identifizierte `cartalyst/sentinel` 3.0.4 als direkten Laravel-6-Blocker. Der
+Kandidat verwendet Laravel 7.30.7, Sentinel 4.0.0, Ignition 2.17.7 und
+Collision 4.3.0. Insgesamt wurden 56 Pakete aktualisiert, sieben hinzugefügt
+und 14 aus dem Lockbestand entfernt.
+
+Der erste Package-Discovery-Lauf zeigte einen echten Quellcodebruch im eigenen
+Exception-Handler: Laravel 7 verlangt dort `Throwable` statt `Exception`.
+Zusätzlich übernimmt `config/session.php` den neuen neutralen Cookie-Secure-
+Standard und die drei eigenen Artisan-Befehle liefern explizit den Integercode
+0. Nach diesen begrenzten Änderungen lief Package Discovery vollständig durch.
+
+Der isolierte Kandidat meldet Laravel 7.30.7, listet 540 Routen, besteht acht
+Unit-Tests mit 27 Assertions, beide Regression-Smoke-Tests und den Syntaxlauf
+über alle eigenen PHP-Dateien. Der vollständige PHPUnit-Lauf enthält neun Tests
+mit 28 Assertions; ausschließlich der bereits unter Laravel 6 bekannte
+Platzhalter `ExampleTest::testBasicTest` scheitert, weil `/` in der nicht
+installierten Testumgebung HTTP 404 statt der fest codierten 200 liefert.
+`composer audit --locked --no-dev` sinkt von 39 Advisories in acht Paketen auf
+12 Advisories in Laravel Framework und League CommonMark. Vier produktive
+Pakete bleiben als aufgegeben markiert. Deshalb ist auch `0.5.0` nur eine
+interne, prüfbare Zwischenstufe und noch keine Public-Freigabe.
+
+Das Produktionsabbild `contentify-staging-app:0.5.0` wurde anschließend
+gemeinsam für App und Jobs ausgerollt; Nginx wurde wegen seiner aufgelösten
+Containeradresse im selben Vorgang neu erstellt. MariaDB blieb gesund. Live
+melden Konfiguration und Footer `3.3-dev / 0.5.0`, Laravel 7.30.7 sowie 512 in
+der installierten Modulauswahl aktive Routen. Das bestehende Admin-Sitzungscookie
+blieb unter Sentinel 4 gültig. Dashboard, echte Anmeldung `/auth/login`,
+Font-Awesome-5-CSS und -WOFF2, Glyphicons, jQuery und Startseite antworten mit
+HTTP 200; beide Smoke-Tests bleiben grün. Die Browserprüfung zeigt Icons und
+sämtliche Menüzieladressen weiterhin korrekt unter der Staging-IP.
+
+Ein absichtlich falsch verwendeter Altpfad deckte unabhängig davon BUG-017 auf:
+Der originale produktive Exception-Handler macht aus unbekannten Routen HTTP
+500 statt 404. Das betrifft weder die echte Anmeldung noch vorhandene Assets,
+wurde aber als eigener offener Originalfehler erfasst.
 
 ## Files added or updated
 

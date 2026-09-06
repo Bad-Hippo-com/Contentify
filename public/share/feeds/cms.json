@@ -1,5 +1,11 @@
 [
     {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Die schrittweise Modernisierung erreicht Laravel 7.30.7; PHP bleibt für diese getrennte Prüfstrecke auf 7.4.",
+        "timestamp": 1788720660,
+        "icon": "wrench"
+    },
+    {
         "url": "https://github.com/Bad-Hippo-com/Contentify",
         "text": "Bad Hippo führt Contentify als deutsch gepflegten Community-Fork mit der Entwicklungsversion 3.3-dev weiter.",
         "timestamp": 1788719159,

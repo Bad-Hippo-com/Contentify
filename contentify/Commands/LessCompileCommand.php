@@ -60,6 +60,8 @@ class LessCompileCommand extends Command
         event(self::EVENT_NAME_LESS_COMPILED, [$lessFiles]);
 
         HTML::refreshAssetPaths();
+
+        return 0;
     }
 
     /**

@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.4.1**
-Last updated: **2026-09-06 20:38 CEST**
+Local workstream version: **0.5.0**
+Last updated: **2026-09-06 21:01 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -109,7 +109,16 @@ Last updated: **2026-09-06 20:38 CEST**
   without replacing Chris' original Contentify feed.
 - [x] Place the newer Bad-Hippo feed above the historical original feed in
   dashboard display order.
-- [ ] Reduce the remaining Composer production audit from 39 advisories to zero
+- [x] Raise Laravel in one isolated rung from 6.20.45 to 7.30.7 while keeping
+  PHP 7.4 unchanged; update Sentinel and the required development helpers,
+  then verify Artisan boot, 540 routes, eight unit tests, both smoke tests and
+  the complete first-party syntax pass.
+- [ ] Replace the pre-existing placeholder feature test with an installation-
+  aware HTTP characterization; its historical `/` expectation still receives
+  404 in the isolated test environment.
+- [ ] Add a focused exception-handler regression and return HTTP 404 rather
+  than 500 for unknown routes and absent static files (BUG-017).
+- [ ] Reduce the remaining Composer production audit from 12 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.

@@ -86,6 +86,8 @@ class InstallCommand extends Command
         $this->info('Installation complete!');
         $this->installer->markAsInstalled();
         $this->installer->sendStatistics();
+
+        return 0;
     }
 
     /**

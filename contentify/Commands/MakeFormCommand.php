@@ -50,6 +50,8 @@ class MakeFormCommand extends Command
         $this->info('Done. Form has been generated: '.$filename."\n");
         
         echo $code;
+
+        return 0;
     }
 
     /**
