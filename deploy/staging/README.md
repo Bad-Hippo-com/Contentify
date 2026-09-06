@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
-Version: **0.2.5**
-Last updated: **2026-09-06 19:50 CEST**
+Version: **0.2.6**
+Last updated: **2026-09-06 20:00 CEST**
 
 This deployment reproduces the historical Contentify 3.2-dev baseline behind
 Nginx. PHP 7.4 is isolated in a container and is not an approved public target.
@@ -58,6 +58,13 @@ sudo docker compose --env-file .env.staging exec app \
 
 Er muss sowohl Logo und Banner gemeinsam als auch einen Banner bei leerem
 Logo-Feld bestätigen.
+
+Die fehlertolerante Speicherplatzabfrage aus Original-Issue `#624` wird geprüft
+mit:
+
+```sh
+sudo docker compose --env-file .env.staging exec app php tests/Smoke/DiskSpace.php
+```
 
 Do not copy staging volumes or secrets to test. The test host will receive the
 same versioned source and procedure, then perform a clean installation with

@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.2.5**
-Last updated: **2026-09-06 19:50 CEST**
+Local workstream version: **0.2.6**
+Last updated: **2026-09-06 20:00 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -139,7 +139,7 @@ path remains defective until clean installs preserve such secrets unchanged.
 
 ### Erste Prüfung der offenen Original-Issues
 
-Status: **laufend, sechs Issues geprüft 2026-09-06 19:37 CEST**
+Status: **laufend, sieben Issues geprüft 2026-09-06 19:55 CEST**
 
 - `#645` und `#663`: derselbe bestätigte PHP-8-Blocker durch die reservierte
   Klasse `Match`; noch nicht behoben, bei uns als Issue `#4` geführt.
@@ -152,6 +152,9 @@ Status: **laufend, sechs Issues geprüft 2026-09-06 19:37 CEST**
 - `#650`: reproduzierter Mehrfachupload-Fehler. `Uploader::uploadModelFiles()`
   beendete seine Schleife bereits nach dem ersten konfigurierten Dateifeld.
   Der Fix ist in Bad Hippo `0.2.5` enthalten und auf Staging getestet.
+- `#624`: die ungefangene Abfrage von `disk_free_space()` konnte auf
+  eingeschränktem Hosting das Dashboard abbrechen. Bad Hippo `0.2.6` behandelt
+  nicht verfügbare Angaben als unbekannt und behält echte Platzwarnungen bei.
 
 In den ersten fünf Original-Issues wurde der Befund veröffentlicht; die
 verifizierte Lösung für `#650` folgt mit dem öffentlichen Commit. Jeder Hinweis
@@ -201,6 +204,24 @@ The PHPUnit regression test covers logo plus banner and banner without logo;
 PHPUnit 9.5.8 passed both tests with 11 assertions on PHP 7.4. A standalone
 smoke test also ran successfully inside the real PHP 7.4/Laravel 6.20.30
 staging container for both cases.
+
+### BUG-012 - Disk-space warning can crash on restricted hosting
+
+Severity: **medium**
+Status: **resolved 2026-09-06 19:55 CEST**
+Original issue: `Contentify/Contentify#624`
+
+The dashboard checked only whether `disk_free_space()` exists, then called it
+twice without handling warnings, exceptions or a `false` result. The diagnostics
+page used the same unsafe pattern. Hosting restrictions such as `open_basedir`
+or an unreadable path can therefore turn an informational check into a Laravel
+exception. Removing the warning entirely would also remove useful monitoring.
+
+Version `0.2.6` adds `Contentify\DiskSpace`, calls the native function once with
+warning suppression and exception handling, validates the result, and returns
+`null` when the host cannot provide it. Dashboard and diagnostics now share the
+same behavior. Unit and staging smoke tests cover a readable and a deliberately
+missing path.
 
 ## Staging defects
 

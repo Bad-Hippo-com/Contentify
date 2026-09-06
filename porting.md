@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.2.5**
-Last updated: **2026-09-06 19:50 CEST**
+Local workstream version: **0.2.6**
+Last updated: **2026-09-06 20:00 CEST**
 
 ## Decision
 
@@ -181,6 +181,14 @@ Feldschleife zurück und konnte deshalb nie mehr als ein Dateifeld bearbeiten.
 Die neue Charakterisierung prüft Logo und Banner gemeinsam sowie einen Banner
 bei leerem Logo. Diese Tests müssen bei jeder späteren Laravel- und PHP-Stufe
 grün bleiben.
+
+### Eingeschränkte Hosting-Umgebungen - 2026-09-06 19:55 CEST
+
+Version `0.2.6` charakterisiert Original-Issue `#624`: optionale
+Systeminformationen dürfen das Backend nicht blockieren. Die gemeinsame
+Speicherplatzabfrage liefert bei Host-Beschränkungen `null`; nur ein valider
+Messwert kann die Warnschwelle auslösen. Dieses Verhalten ist unabhängig vom
+späteren PHP-/Laravel-Ziel und bleibt als Portierungsanforderung erhalten.
 
 ## Non-viable shortcut
 

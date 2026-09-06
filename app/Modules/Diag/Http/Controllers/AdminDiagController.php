@@ -6,6 +6,7 @@ use App;
 use BackController;
 use Carbon\Carbon;
 use Config;
+use Contentify\DiskSpace;
 use DB;
 use HTML;
 use Jobs;
@@ -37,7 +38,8 @@ class AdminDiagController extends BackController
         $appClass = get_class(app());
         $opcacheExists = (int) function_exists('opcache_get_status');
         $opcacheEnabled = $opcacheExists and opcache_get_status()['opcache_enabled'] ? 1 : 0;
-        $diskFreeSpace = function_exists('disk_free_space') ?  round(disk_free_space('.') / 1024 / 1024).'M' : '?';
+        $freeBytes = DiskSpace::freeBytes(base_path());
+        $diskFreeSpace = $freeBytes !== null ? round($freeBytes / 1024 / 1024).'M' : '?';
         $cronJobInfo = Jobs::lastRunAt() ?
             Carbon::createFromTimeStamp(Jobs::lastRunAt()) :
             '<b>'.$alertIcon.trans('app.no_cron_job').'</b>';

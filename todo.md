@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.2.5**
-Last updated: **2026-09-06 19:50 CEST**
+Local workstream version: **0.2.6**
+Last updated: **2026-09-06 20:00 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -23,7 +23,9 @@ Last updated: **2026-09-06 19:50 CEST**
   und die Ergebnisse transparent in den Original-Issues veröffentlichen.
 - [x] Original-Issue `#650` auf die vorzeitig beendete Upload-Schleife
   zurückführen, mit zwei Regressionstests beheben und auf Staging prüfen.
-- [ ] Verbleibende 26 Original-Issues einzeln prüfen und nur mit nachweisbaren
+- [x] Original-Issue `#624` durch eine sichere, gemeinsame Speicherplatzabfrage
+  beheben; eingeschränkte Pfade als unbekannt statt als Ausnahme behandeln.
+- [ ] Verbleibende 25 Original-Issues einzeln prüfen und nur mit nachweisbaren
   Ergebnissen beantworten.
 - [x] Clone the official `Contentify/Contentify` repository.
 - [x] Confirm default branch, tags, upstream commit and release state.
@@ -83,6 +85,8 @@ Last updated: **2026-09-06 19:50 CEST**
   banner as well as a banner without a logo in `0.2.5`.
 - [x] Record the temporary Nginx 502 after replacing the app container and add
   mandatory Nginx recreation to the staging rollout procedure.
+- [x] Preserve low-disk warnings while making unavailable disk-space data safe
+  for restricted hosts in `0.2.6`.
 - [x] Narrow `.dockerignore` so the Composer dependency tree stays excluded
   while every required `public/vendor` resource remains in the image.
 - [x] Restore the Glyphicons font output expected below `public/css/fonts`.

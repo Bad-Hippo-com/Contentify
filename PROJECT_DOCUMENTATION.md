@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.2.5**
-Assessment/update time: **2026-09-06 19:50 CEST**
+Local workstream version: **0.2.6**
+Assessment/update time: **2026-09-06 20:00 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -346,6 +346,33 @@ Neuerstellung des Nginx-Containers stellte Homepage und Anmeldeseite mit HTTP
 200 wieder her. STAGE-005 dokumentiert den Vorgang; der Staging-Runbook verlangt
 nun bei jedem App-Austausch auch die Nginx-Neuerstellung.
 
+### Original-Issue #624: disk_free_space - 2026-09-06 19:55 CEST
+
+Die Speicherplatzwarnung im Dashboard war als optionale Admininformation
+gedacht, konnte aber selbst das Dashboard abbrechen. `function_exists()` prüft
+nur die grundsätzliche Verfügbarkeit der PHP-Funktion. Der anschließende
+zweifache, ungefangene Aufruf von `disk_free_space('.')` berücksichtigte weder
+Hostingbeschränkungen noch Warnungen, Exceptions oder `false`. Die Diagnose
+enthielt denselben ungeschützten Aufruf.
+
+Bad Hippo `0.2.6` führt `Contentify\DiskSpace` als gemeinsamen, kleinen Adapter
+ein. Er fragt einen expliziten Basispfad einmal ab, unterdrückt die native
+Warnung, fängt `Throwable`, validiert den Rückgabewert und liefert bei nicht
+verfügbaren Daten `null`. Das Dashboard warnt weiterhin bei einem validen Wert
+unter 100 MB; die Diagnose zeigt andernfalls `?`.
+
+Der Smoke-Test lief im realen Staging-Container erfolgreich mit einem lesbaren
+und einem absichtlich fehlenden Pfad. Die PHPUnit-Fälle werden zusätzlich im
+kurzlebigen Testcontainer mit Entwicklungsabhängigkeiten ausgeführt. Es wurden
+keine PHP-, Laravel- oder Paketversionen angehoben.
+
+Der kombinierte PHPUnit-Lauf für Upload und Speicherplatz meldete mit PHP 7.4
+`OK (4 tests, 15 assertions)`. Anschließend wurde das versionierte Abbild
+`contentify-staging-app:0.2.6` gemeinsam für App und Jobs ausgerollt und Nginx
+im selben Vorgang neu erstellt. Beide Smoke-Tests liefen im neuen App-Container
+grün; Startseite und Anmeldeseite antworteten mit HTTP 200, alle vier Dienste
+liefen und MariaDB blieb gesund.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -359,6 +386,8 @@ nun bei jedem App-Austausch auch die Nginx-Neuerstellung.
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields
 - `tests/Smoke/UploaderMultipleFiles.php`: dependency-free staging smoke check
+- `contentify/DiskSpace.php`: safe shared disk-space adapter
+- `tests/Unit/DiskSpaceTest.php` and `tests/Smoke/DiskSpace.php`: restricted-host regression checks
 
 Die Stabilisierung wird auf `main` des Bad-Hippo-Forks veröffentlicht. Es wurde
 kein Pull Request gegen das Original erstellt und kein Branch des ursprünglichen

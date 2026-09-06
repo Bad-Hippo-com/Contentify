@@ -5,6 +5,7 @@ namespace App\Modules\Dashboard\Http\Controllers;
 use BackController;
 use Cache;
 use Config;
+use Contentify\DiskSpace;
 use HTML;
 use Log;
 use View;
@@ -35,8 +36,9 @@ class AdminDashboardController extends BackController
             ));
         }
 
-        if (function_exists('disk_free_space') and disk_free_space('.') < self::MIN_FREE_DISK_SPACE) {
-            $freeSpace = round(disk_free_space('.') / 1024 / 1024).'M';
+        $freeBytes = DiskSpace::freeBytes(base_path());
+        if ($freeBytes !== null and $freeBytes < self::MIN_FREE_DISK_SPACE) {
+            $freeSpace = round($freeBytes / 1024 / 1024).'M';
             $this->alertWarning(trans('app.space_warning', [$freeSpace]));
         }
 
