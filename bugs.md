@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:23 CEST**
+Last updated: **2026-09-06 19:29 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -134,6 +134,26 @@ The staging administrator hash was reset to the exact requested value and only
 the five user plus six client-IP throttle records were removed. A real browser
 login and the authenticated admin dashboard then succeeded. The deployment
 path remains defective until clean installs preserve such secrets unchanged.
+
+## Prüfung der Original-Issues
+
+### Erste Prüfung der offenen Original-Issues
+
+Status: **laufend, erster Block geprüft 2026-09-06 19:29 CEST**
+
+- `#645` und `#663`: derselbe bestätigte PHP-8-Blocker durch die reservierte
+  Klasse `Match`; noch nicht behoben, bei uns als Issue `#4` geführt.
+- `#658`: Docker-/Installationsweg im Fork grundsätzlich reproduziert; saubere
+  Testinstallation und GHCR-Veröffentlichung fehlen noch.
+- `#613`: OpenGraph-Typfehler wurde bereits von Chris in Upstream-Commit
+  `7e0294ec` für `3.2-dev` korrigiert; Browser-Charakterisierung folgt.
+- `#614`: Valorant- und weitere Spielsymbole wurden bereits von Chris in
+  Upstream-Commit `4630a7aa` für `3.2-dev` ergänzt.
+
+In diesen fünf Original-Issues wurde der Befund veröffentlicht. Jeder Hinweis
+nennt den inoffiziellen Community-Status sowie die aktuelle Baseline aus PHP
+7.4 und Laravel 6.20.30. Eine PHP-8- oder Produktionsfreigabe wurde ausdrücklich
+nicht behauptet.
 
 ## Resolved application defects
 

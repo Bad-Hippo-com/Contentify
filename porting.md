@@ -1,7 +1,7 @@
 # Contentify porting plan
 
 Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:23 CEST**
+Last updated: **2026-09-06 19:29 CEST**
 
 ## Decision
 

@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
 Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:23 CEST**
+Last updated: **2026-09-06 19:29 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -19,6 +19,10 @@ Last updated: **2026-09-06 19:23 CEST**
   vertraulichen Meldung von Sicherheitslücken veröffentlichen.
 - [x] Eigene Arbeits-Issues für Upstream-Triage, zweiten Feed, GHCR-Container
   und den späteren PHP-8-Blocker anlegen.
+- [x] Ersten Upstream-Block `#645`, `#663`, `#658`, `#613` und `#614` prüfen
+  und die Ergebnisse transparent in den Original-Issues veröffentlichen.
+- [ ] Verbleibende 27 Original-Issues einzeln prüfen und nur mit nachweisbaren
+  Ergebnissen beantworten.
 - [x] Clone the official `Contentify/Contentify` repository.
 - [x] Confirm default branch, tags, upstream commit and release state.
 - [x] Validate all 726 project PHP files with PHP 8.5.10 and PHP 7.4.33.

@@ -1,7 +1,7 @@
 # Contentify project assessment
 
 Local workstream version: **0.2.4**
-Assessment/update time: **2026-09-06 19:23 CEST**
+Assessment/update time: **2026-09-06 19:29 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -305,6 +305,14 @@ umgestellt. Im ursprünglichen Repository wurde noch nichts kommentiert.
 Interne IP-Adressen und echte Zugangsdaten werden nicht im öffentlichen Fork
 geführt. Beispiele verwenden ausschließlich reservierte Testdaten; konkrete
 Betriebsziele bleiben in der privaten Betriebsumgebung.
+
+Der erste Upstream-Triageblock umfasst die Original-Issues `#645`, `#663`,
+`#658`, `#613` und `#614`. Die beiden PHP-8-Berichte wurden als derselbe noch
+offene `Match`-Blocker bestätigt. Der Docker-Bericht verweist auf den neuen,
+noch nicht produktionsreifen Nginx-Stagingweg. OpenGraph-Newsfehler und
+Valorant-Icon wurden anhand der ursprünglichen Chris-Commits als bereits in
+`3.2-dev` behoben eingeordnet. Die Befunde wurden in den jeweiligen
+Original-Issues veröffentlicht und in unserem Issue `#1` zusammengefasst.
 
 ## Files added or updated
 

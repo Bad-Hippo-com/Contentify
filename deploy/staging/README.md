@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
 Version: **0.2.4**
-Last updated: **2026-09-06 19:23 CEST**
+Last updated: **2026-09-06 19:29 CEST**
 
 This deployment reproduces the historical Contentify 3.2-dev baseline behind
 Nginx. PHP 7.4 is isolated in a container and is not an approved public target.
