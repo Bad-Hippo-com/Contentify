@@ -1,0 +1,18 @@
+[Unit]
+Description=Contentify queue worker
+After=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=__CONTENTIFY_ROOT__
+EnvironmentFile=__CONTENTIFY_ROOT__/.env
+ExecStart=/usr/bin/php artisan queue:work --sleep=3 --tries=3 --timeout=90
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/var/log/contentify/queue.log
+StandardError=append:/var/log/contentify/queue.log
+
+[Install]
+WantedBy=multi-user.target

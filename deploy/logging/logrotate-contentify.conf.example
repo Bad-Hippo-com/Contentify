@@ -1,0 +1,15 @@
+/var/log/contentify/jobs-runner.log
+/var/log/contentify/deployment.log
+/var/log/contentify/php/*.log
+/var/log/contentify/nginx/*.log {
+    daily
+    rotate 30
+    missingok
+    notifempty
+    compress
+    delaycompress
+    dateext
+    dateformat -%Y%m%d
+    copytruncate
+    su root root
+}

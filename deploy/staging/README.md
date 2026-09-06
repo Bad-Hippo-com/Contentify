@@ -1,0 +1,45 @@
+# Contentify staging deployment
+
+Version: **0.2.4**
+Last updated: **2026-09-06 19:23 CEST**
+
+This deployment reproduces the historical Contentify 3.2-dev baseline behind
+Nginx. PHP 7.4 is isolated in a container and is not an approved public target.
+
+## Components
+
+- `nginx`: public HTTP endpoint on port 80
+- `app`: PHP-FPM 7.4 and Laravel 6.20.30
+- `database`: MariaDB 10.11 with a persistent data volume
+- `jobs`: Contentify's `php artisan jobs` executor, run once per minute
+
+All upstream container bases are pinned by image digest so the same baseline
+can later be rebuilt on the separate test host.
+
+Application state, database data and the public runtime tree use separate
+Docker volumes. Host logs are stored below `/var/log/contentify`. The real
+`deploy/staging/.env.staging` contains secrets, must stay mode 0600 and is
+excluded from both Git and the Docker build context.
+
+The root Composer dependency tree remains excluded from the image context,
+while Contentify's tracked browser libraries below `public/vendor` are
+explicitly re-included. Bootstrap 3.3.7's five original Glyphicons font files
+are stored in `public/css/fonts`, matching the paths already emitted by the
+historical compiled backend CSS.
+
+## Normal operation
+
+From `deploy/staging`:
+
+```sh
+sudo docker compose --env-file .env.staging up -d
+sudo docker compose --env-file .env.staging ps
+sudo docker compose --env-file .env.staging logs --since 10m --no-color
+```
+
+After a build, verify at minimum that the homepage, Font Awesome CSS and WOFF2,
+jQuery and the Glyphicons WOFF2 return HTTP 200 with their expected MIME types.
+
+Do not copy staging volumes or secrets to test. The test host will receive the
+same versioned source and procedure, then perform a clean installation with
+fresh volumes and independent credentials.

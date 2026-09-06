@@ -1,0 +1,9 @@
+; Contentify PHP error logging
+log_errors = On
+display_errors = Off
+display_startup_errors = Off
+error_reporting = E_ALL
+error_log = /var/log/contentify/php-error.log
+html_errors = Off
+ignore_repeated_errors = Off
+ignore_repeated_source = Off

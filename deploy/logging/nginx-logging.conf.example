@@ -1,0 +1,7 @@
+# Include inside the Contentify server block.
+access_log /var/log/contentify/web-access.log combined;
+error_log /var/log/contentify/web-error.log warn;
+
+# Preserve an upstream correlation ID or create one for the request.
+add_header X-Request-ID $request_id always;
+fastcgi_param HTTP_X_REQUEST_ID $request_id;

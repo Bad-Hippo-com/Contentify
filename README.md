@@ -1,3 +1,33 @@
+# Contentify – Bad Hippo Community-Fork
+
+> **Status: frühe Stabilisierung, noch nicht für öffentliche Produktivsysteme freigegeben.**
+
+Dies ist der deutschsprachig gepflegte Community-Fork von Contentify unter
+[`Bad-Hippo-com`](https://github.com/Bad-Hippo-com). Wir stabilisieren zuerst
+den unveränderten Funktionsumfang von Contentify 3.2-dev. Erst danach werden
+PHP, Laravel, Bootstrap und Node.js einzeln, messbar und mit Tests aktualisiert.
+
+Das ursprüngliche Projekt und die Arbeit von Chris Konnertz bleiben ausdrücklich
+genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprünglichen
+Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
+Übergabe bleiben ausdrücklich willkommen.
+
+Aktueller Arbeitsstand: **Bad Hippo 0.2.4 auf Basis von Contentify 3.2-dev**.
+Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
+und die Modernisierung des veralteten Software-Stacks stehen noch aus.
+
+Wichtige Unterlagen:
+
+- [Fehlerregister](bugs.md)
+- [Aufgaben und Reihenfolge](todo.md)
+- [Portierungsplan](porting.md)
+- [Technische Projektdokumentation](PROJECT_DOCUMENTATION.md)
+- [Staging mit Nginx](deploy/staging/README.md)
+
+---
+
+## Ursprüngliche Projektbeschreibung
+
 ![Contentify Logo](http://www.contentify.org/img/hero_small.png)
 
 ## Contentify CMS - v3.2 ALPHA
@@ -52,3 +82,35 @@ or via [e-mail](mailto:contact@contentify.org).
 ### Contribution
 
 Contributions welcome! [Learn more...](CONTRIBUTING.md)
+
+### Local technical assessment
+
+Local workstream version: **0.2.4**
+Last updated: **2026-09-06 19:23 CEST**
+
+This checkout was reviewed against current PHP, Composer, Node.js and Laravel
+support levels. The result is **not production-ready without modernization**.
+The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
+The local `0.2.0` identifier versions our changes without replacing the
+upstream CMS version.
+
+The historical baseline is installed on an internal staging host behind
+Nginx. PHP 7.4/Laravel 6 and MariaDB are
+isolated in containers; this is the migration workshop, not a public release.
+The first interactive administrator-login failure was diagnosed and corrected
+on staging. Account state and session storage are healthy; the secret did not
+survive Docker Compose interpolation unchanged during installation. The first
+successful browser login also exposed internal-hostname links in the admin
+navigation. Both findings and their remaining deployment work are in `bugs.md`.
+The staging packaging error that removed Contentify's `public/vendor` assets
+and admin icons is resolved in `0.2.3`; Font Awesome, the remaining browser
+libraries and the expected Bootstrap Glyphicons are present and browser-tested.
+Version `0.2.4` prevents the cached admin navigation from retaining Docker's
+internal `nginx` hostname; its base URL is now resolved for each client request.
+
+See:
+
+- [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) for evidence and the feasibility decision
+- [bugs.md](bugs.md) for confirmed defects and risks
+- [todo.md](todo.md) for the modernization backlog
+- [porting.md](porting.md) for the proposed migration path

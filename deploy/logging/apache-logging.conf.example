@@ -1,0 +1,4 @@
+# Include inside the Contentify VirtualHost.
+ErrorLog /var/log/contentify/web-error.log
+CustomLog /var/log/contentify/web-access.log combined
+LogLevel warn

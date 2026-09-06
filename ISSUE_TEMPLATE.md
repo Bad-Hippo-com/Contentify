@@ -1,9 +1,12 @@
-Tips to create a new issue
+# Fehler oder Anfrage melden
 
-- Please mention the version of Contentify that you use
-- Please be careful when posting logs, they might contain passwords!
-- Please mention any special environment characteristics. For example: 
-    - using Windows instead of Linux,
-    - using Nginx instead of Apache,
-    - using MariaDB instead of MySQL
-- Please mention the type of hosting (shared hosting, virtual server, etc.)
+Danke, dass du uns hilfst, Contentify zu verbessern. Bitte ergänze:
+
+- verwendete Contentify- und Bad-Hippo-Version
+- genaue Schritte, mit denen sich das Verhalten wiederholen lässt
+- erwartetes und tatsächliches Ergebnis
+- PHP-, Laravel-, Datenbank- und Webserver-Version
+- Betriebssystem und Hosting-Art, zum Beispiel Docker, virtueller Server oder Shared Hosting
+- passende Logauszüge ohne Passwörter, Tokens, Cookies oder andere Zugangsdaten
+
+Bitte schreibe möglichst auf Deutsch. Englische Meldungen bleiben ebenfalls willkommen.

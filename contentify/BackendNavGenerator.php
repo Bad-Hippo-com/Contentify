@@ -30,6 +30,11 @@ class BackendNavGenerator
     const CACHE_KEY = 'app.backNavTemplate';
 
     /**
+     * Placeholder stored in the cached navigation instead of a request host.
+     */
+    const BASE_URL_PLACEHOLDER = '__CONTENTIFY_BASE_URL__';
+
+    /**
      * The current locale, for example 'en'
      *
      * @var string
@@ -133,7 +138,8 @@ class BackendNavGenerator
                 ksort($navCategories[$i]); // Sort category array to bring positions in the right order
             }
 
-            $view = View::make('backend.navigation', compact('navCategories'));
+            $baseUrl = self::BASE_URL_PLACEHOLDER;
+            $view = View::make('backend.navigation', compact('navCategories', 'baseUrl'));
             Cache::forever(self::CACHE_KEY.'_'.$this->locale, $view->render());
         }
     }
@@ -157,6 +163,10 @@ class BackendNavGenerator
     {
         $this->make();
 
-        return Cache::get(self::CACHE_KEY.'_'.$this->locale);
+        return str_replace(
+            self::BASE_URL_PLACEHOLDER,
+            url('/'),
+            Cache::get(self::CACHE_KEY.'_'.$this->locale)
+        );
     }
 }

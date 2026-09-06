@@ -1,0 +1,323 @@
+# Contentify project assessment
+
+Local workstream version: **0.2.4**
+Assessment/update time: **2026-09-06 19:23 CEST**
+Workspace: `E:\WorkSpace\contentify`
+
+## Purpose
+
+This document records what was downloaded, what was tested, the evidence found,
+and whether the upstream Contentify CMS can be implemented on a current stack.
+
+## Source state
+
+- Community repository: `https://github.com/Bad-Hippo-com/Contentify.git`
+- Upstream repository: `https://github.com/Contentify/Contentify.git`
+- Local branch: `main`, intended to track `origin/main`
+- Commit: `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
+- Commit date: 2022-11-20 15:35:06 +0100
+- Upstream label: Contentify v3.2 ALPHA
+- Latest upstream release/tag: v3.1, also described by its README as beta-based
+- License: MIT
+- Size reviewed: 726 first-party PHP files, approximately 32,101 PHP lines,
+  44 module directories and only two placeholder tests
+- GitHub state rechecked on 2026-09-06: 32 open issues and 4 open pull requests;
+  the latest `3.2-dev` commit remains `5bd21fb` from 2022-11-20, all four open
+  pull requests are old Dependabot dependency bumps, and no GitHub Actions
+  workflow is present
+
+The default branch is not a completed stable release. Its changelog still lists
+both breaking changes and changes as `TBA`. Upstream provides no real v3.1 to
+v3.2 upgrade and instructs users to reinstall and manually transfer data.
+
+## Environment used for verification
+
+- Windows PowerShell workspace
+- Node.js 24.15.0 / npm 11.12.1
+- PHP 8.5.10 portable runtime for current compatibility tests
+- PHP 7.4.33 portable runtime for historical compatibility tests
+- Composer 2.10.3 for validation and advisory checks
+- Bundled project Composer executable for compatibility comparison
+- Staging: internal Debian 13.6 host, Docker 26.1.5 and Compose 2.26.1
+- Staging containers: Nginx 1.26.3, PHP-FPM 7.4.33 and MariaDB 10.11
+
+Temporary runtimes and dependency directories were used only for verification.
+Generated lock/build output was removed before documentation was written.
+
+## Verification results
+
+| Check | Result |
+| --- | --- |
+| Git checkout | Pass; official default branch cloned cleanly |
+| PHP 8.5 lint | Fail; 9 of 726 first-party files have syntax errors |
+| PHP 8.5 Artisan | Fail; exit code 255 |
+| PHP 8.5 PHPUnit | Fail; 2 tests, 2 errors |
+| PHP 7.4 lint | Pass; 726 files parse |
+| PHP 7.4 Artisan | Pass; reports Laravel 6.20.30 |
+| PHP 7.4 PHPUnit | Fail; unit placeholder passes, feature placeholder gets 404 |
+| Composer validation | Fail; lockfile is not current with composer.json |
+| Composer normal install on PHP 8.5 | Fail; incompatible PHP/package constraints |
+| Composer install with ignored requirements | Packages extract, but this is not a runnable current build |
+| Composer production audit | Fail; 47 advisories (1 critical, 18 high) |
+| npm install | Fail; direct peer-dependency conflict |
+| npm install with legacy resolution | Completes with 23 vulnerabilities |
+| Grunt LESS build after legacy install | Pass; one stylesheet compiled |
+| Docker/Compose review | Fail for current production readiness |
+
+## Currentness assessment
+
+Contentify is obsolete as delivered:
+
+- Laravel 6 no longer receives official bug or security fixes. Current Laravel
+  is 13, whose supported PHP range is 8.3 through 8.5.
+- PHP 7.4, the newest runtime on which the first-party source parses cleanly,
+  reached end-of-life in November 2022.
+- PHP 8.5 is actively supported, but Contentify cannot parse on it because
+  `match` became a reserved keyword in PHP 8.
+- Locked runtime libraries mostly date from 2017-2021 and have accumulated 47
+  production advisories.
+- The old Travis badge/configuration and stale-bot file are the only automation;
+  there is no current CI pipeline.
+- The installation wiki was last edited in August 2021 and contradicts both PHP
+  version history and the actual source behavior.
+
+## Feasibility assessment
+
+**Unchanged deployment: not feasible for a responsible internet-facing
+production system.** It either fails on supported PHP or runs on unsupported
+PHP with vulnerable dependencies.
+
+**Modernized fork: feasible with high effort.** The application has a coherent
+Laravel module structure, a working historical Artisan bootstrap and a legacy
+asset build, so the behavior can be preserved. The work must include language
+compatibility, framework/package replacement, delivery hardening and a new test
+baseline. This should be scoped as a major release, not a patch.
+
+### Approved migration method
+
+The modernization will use two isolated systems on separate IP addresses.
+The internal staging host is provisioned and is the development and
+fault-analysis system where changes may break. The test-system IP is pending.
+Test is the clean installation and acceptance system for a candidate already
+proven on staging. The addresses will be documented when provisioned. Staging
+and test must not share application data, uploads, cache, sessions or secrets.
+
+The first technical target is to reproduce and stabilize Contentify on staging
+using its historically compatible PHP 7.4/Laravel 6 stack. That is a migration
+baseline, not an approved public deployment. Characterization tests are added
+before crossing the PHP 8 boundary. PHP, Laravel and dependencies are then
+raised in separate, measurable increments on staging. For every candidate, all
+prerequisites are recreated on test and the application is installed cleanly.
+Only an error-free test installation and representative trial can approve the
+version for Public.
+
+PHP 8.5/Laravel 13 is no longer prescribed as an immediate destination. The
+final version combination will be chosen from actual compatibility results and
+must be supported, secure, reproducible and advisory-clean. This reduces
+breakage and makes the exact cause of each regression identifiable.
+
+### Central error logging baseline
+
+The repository now prepares one central log root per host:
+`/var/log/contentify`. Test and staging use identical structure on their own
+servers and never share the directory. Laravel's default channel is a 30-day
+daily JSON log with configurable severity. Every Laravel record includes the
+environment, hostname, request ID when supplied by the webserver, HTTP method
+and request path. Separate prepared Laravel channels exist for security/audit
+and jobs.
+
+Deployment templates configure PHP/PHP-FPM, Nginx or Apache, queue workers,
+the scheduler and deployment output to use separate files in the same root.
+External component files are rotated daily for 30 rotations. Laravel owns its
+own daily rotation. All files are planned with mode 0640, and HTTP error display
+remains disabled so diagnostic details are logged rather than disclosed.
+
+The Laravel configuration was runtime-tested on PHP 7.4.33 with Laravel
+6.20.30. It was then deployed and verified on staging. Laravel wrote valid JSON
+containing `environment=staging` and `build_version=0.2.0`; PHP-FPM, Nginx and
+the Contentify job runner also wrote to their separate files. Logrotate
+accepted the installed 30-day policy in a dry run.
+
+The installed staging baseline started at version `0.2.0`; the diagnosed login
+credential defect is recorded as local workstream version `0.2.1`. The original CMS
+identifier remains `3.2-dev`; keeping these values separate prevents the local
+workstream version from being mistaken for an upstream Contentify release.
+
+## Effort and delivery estimate
+
+For full functional parity across the current 44 module directories, the base
+engineering estimate is **146-235 person-days**. A 20% uncertainty reserve is
+required because the project has virtually no regression suite, outdated
+installation behavior and several dependencies that may need replacement.
+The responsible planning range is therefore **175-282 person-days**, or about
+**1,400-2,256 hours** at eight hours per person-day.
+
+Expected elapsed time is 9-14 months for one experienced full-time developer,
+6-9 months for two engineers, or 4.5-7 months for a coordinated three-person
+team. The three-person model is recommended because framework/application,
+test/security and delivery work can overlap, although the staged Laravel
+migration remains partly sequential.
+
+The estimate includes migration, dependency replacement, test construction,
+security remediation, delivery automation, UAT and release documentation. It
+excludes new product features, a visual redesign, content migration from an
+unknown live installation and external infrastructure procurement. Detailed
+work-package values and assumptions are recorded in `porting.md`.
+
+### User plus Codex delivery model
+
+When the user and Codex implement the modernization together, the planning
+estimate falls to **110-175 human-equivalent engineering days**. Codex performs
+the bulk of repository-wide edits, dependency migration, automation, tests and
+documentation; the user supplies decisions, access, representative data,
+visual checks and production acceptance. Expected active user involvement is
+approximately **20-35 concentrated days** distributed over the project.
+
+With regular collaboration and prompt access to test infrastructure, the
+realistic elapsed duration is **4-6 months**. Part-time weekly collaboration is
+more safely planned at **6-9 months**. Six months is the recommended target,
+with four to nine months retained as the planning range.
+
+## Staging installation record
+
+On 2026-09-06 the staging host was prepared with Docker and Compose. The
+versioned Nginx/PHP-FPM/MariaDB stack was built from the local checkout,
+Contentify's command-line installer completed, 65 database tables and the
+administrator were created, and the installation state was persisted.
+
+The first PHP-FPM start exposed an invalid access-log duration modifier; it was
+corrected and the incident retained in the central logs and `bugs.md`. The
+public runtime tree was then changed to one persistent volume shared read/write
+with PHP and read-only with Nginx, because Contentify writes more than uploads.
+
+Final checks returned HTTP 200 for the homepage and login page, HTTP 302 for a
+valid login submission, and HTTP 200 for the authenticated administrator area.
+All four services remained running, MariaDB was healthy, three Contentify jobs
+executed on the first scheduled pass, central JSON parsing passed, and no new
+container error appeared in the final validation interval.
+
+### Administrator login diagnosis - 2026-09-06 18:43 CEST
+
+The first interactive browser login could not succeed because Sentinel had
+blocked the client IP after five failed attempts. Database inspection showed
+the administrator is present, activated, unbanned and assigned to the
+`super-admins` role. The file-session directory is owned by `www-data` and is
+writable. The login controller accepts the email address only; the username is
+not a valid substitute.
+
+A non-secret round-trip comparison then identified the installation defect:
+Docker Compose changed the requested password's two trailing dollar signs into
+one before passing it to the Contentify installer. The stored hash validates
+the altered 11-character value and rejects the intended 12-character value.
+The actual secret is deliberately not recorded in repository documentation.
+The administrator hash was then reset to the exact requested value. Exactly
+five user and six client-IP throttle entries were removed; unrelated global
+records were retained. A real browser login succeeded, and the authenticated
+admin dashboard opened with the expected `super-admins` access.
+
+That dashboard exposed a separate fault: many left-navigation links use the
+internal absolute host `http://nginx`, while the dashboard's quick-access links
+use the correct external host. This was recorded as BUG-010 and left unchanged
+for the original-baseline fault-analysis phase.
+
+### Missing admin icons - 2026-09-06 18:45 CEST
+
+Browser inspection and direct HTTP probes confirmed that Font Awesome markup
+is generated correctly but its stylesheet and webfonts are unavailable. The
+repository contains these files under `public/vendor/font-awesome`; the
+staging Nginx volume does not. The unanchored `.dockerignore` rule `vendor`
+removes nested `public/vendor` from the Docker build context. Requests for both
+the stylesheet and `fa-solid-900.woff2` return Contentify's HTML crash page with
+HTTP 500, while `css/backend.css` returns HTTP 200.
+
+The impact extends beyond icons because jQuery, CKEditor and other client assets
+are stored in the same excluded directory. The compiled backend CSS also points
+to a Glyphicons font directory that is absent from the upstream checkout. No
+matching current upstream admin-icon issue exists; GitHub issue #614 concerns a
+Valorant game icon already addressed in the current branch.
+
+STAGE-004 was resolved in local version `0.2.3`. Docker ignore rules now
+explicitly re-include `public/vendor`; all 272 tracked files were restored to
+the staging source and existing public-data volume. The absent Glyphicons were
+copied unchanged from the official Bootstrap 3.3.7 npm tarball (package SHA-1
+`5a389394549f23330875a3b150656574f8a9eb71`) into `public/css/fonts`.
+
+Both app and Nginx images were rebuilt and inspected before recreation. After
+the complete stack restarted with the real Compose environment file, MariaDB
+was healthy and all four services were running. Homepage, Font Awesome CSS and
+WOFF2, jQuery, CKEditor, backend CSS and all five Glyphicons formats returned
+HTTP 200 with suitable MIME types. A real authenticated browser reload showed
+the Font Awesome glyphs in the header, navigation, quick access and dashboard.
+The separate cached `http://nginx/...` navigation-link defect remains open.
+
+### Cached admin navigation URL repair - 2026-09-06 19:03 CEST
+
+The left menu was rendered once through Laravel's `url()` helper and the full
+HTML was cached forever per locale. If an internal health check or service
+request created that cache, Docker's `nginx` hostname became part of every
+administrator's links even when they connected through the staging IP.
+
+Version `0.2.4` keeps the existing per-locale HTML cache but stores a neutral
+base-URL placeholder in every navigation link. `BackendNavGenerator::get()`
+replaces it with `url('/')` for the active client request. This is deliberately
+narrower than globally forcing `APP_URL`, and it preserves Contentify installs
+below a URL path. Deployment refreshes only the affected navigation cache.
+
+The `0.2.4` image passed PHP 7.4 syntax validation. A controlled test first
+forced `http://nginx` while building the menu, verified that only the neutral
+placeholder was cached, and then obtained IP-based links from the same cache.
+An authenticated browser opened News, Pages and Configuration from the left
+menu through the external staging address; no `nginx` link remained. All services stayed up,
+MariaDB remained healthy, and no new error-level container log entry appeared.
+One follow-up Tinker inspection command contained an accidentally doubled PHP
+namespace separator and produced a console parse error. It did not execute
+application code or change state; the corrected cache inspection immediately
+passed and is the result reported above.
+
+## Öffentlicher Community-Fork - 2026-09-06 19:20 CEST
+
+Der öffentliche Fork liegt unter `Bad-Hippo-com/Contentify`. Die eigene
+Entwicklung verwendet `main`; der unveränderte Upstream-Stand bleibt über den
+Remote `upstream` und dessen Branch `3.2-dev` nachvollziehbar. Beschreibung und
+Projektstatus sind deutsch. Der Fork bezeichnet sich ausdrücklich als
+Community-Projekt und nicht als offizielle Übernahme von Chris Konnertz.
+
+Container sollen später über GitHub Container Registry unter dem Namensraum
+`ghcr.io/bad-hippo-com` veröffentlicht werden. Bis ein unabhängiger Testserver
+die saubere Installation bestätigt hat, wird das PHP-7.4-Baseline-Image nicht
+als stabile oder produktionsreife Version angeboten. Geplant sind eindeutige
+Versions-Tags und unveränderliche Image-Digests; ein bewegliches `latest` gibt
+es erst nach der ersten freigegebenen Version.
+
+Der bisherige Dashboard-Feed von `contentify.org` bleibt zunächst sichtbar und
+wird als Original-Contentify-Feed gekennzeichnet. Daneben kommt ein eigener
+Bad-Hippo-Projektfeed für Wartungsstatus, Releases und Sicherheitsmeldungen.
+Beide Quellen müssen per HTTPS, mit getrennten Zeitlimits und getrennten Caches
+geladen werden. Externe Texte, URLs und Icons werden validiert und escaped. Ein
+Ausfall eines Feeds darf weder Dashboard noch zweiten Feed blockieren.
+
+Zur öffentlichen Arbeitsorganisation wurden vier deutschsprachige Issues im
+Bad-Hippo-Fork angelegt: vollständige Upstream-Triage (`#1`), sicherer zweiter
+Dashboard-Feed (`#2`), GHCR-Container (`#3`) und der spätere PHP-8-Blocker
+(`#4`). Issue-, Pull-Request- und Security-Hinweise sind ebenfalls auf Deutsch
+umgestellt. Im ursprünglichen Repository wurde noch nichts kommentiert.
+
+Interne IP-Adressen und echte Zugangsdaten werden nicht im öffentlichen Fork
+geführt. Beispiele verwenden ausschließlich reservierte Testdaten; konkrete
+Betriebsziele bleiben in der privaten Betriebsumgebung.
+
+## Files added or updated
+
+- `README.md`: local assessment notice and documentation links
+- `bugs.md`: confirmed blockers and risks
+- `todo.md`: completed audit work and required modernization backlog
+- `porting.md`: seven-stage port plan and acceptance gates
+- `PROJECT_DOCUMENTATION.md`: complete assessment record
+- `config/logging.php` and `.env.example`: central Laravel channels and controls
+- `app/Logging/JsonLogFormatter.php`: structured JSON Lines plus host/request context
+- `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
+- `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
+
+Die Stabilisierung wird auf `main` des Bad-Hippo-Forks veröffentlicht. Es wurde
+kein Pull Request gegen das Original erstellt und kein Branch des ursprünglichen
+Repositories verändert.

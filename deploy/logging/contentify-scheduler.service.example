@@ -1,0 +1,12 @@
+[Unit]
+Description=Run the Contentify Laravel scheduler
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=__CONTENTIFY_ROOT__
+EnvironmentFile=__CONTENTIFY_ROOT__/.env
+ExecStart=/usr/bin/php artisan schedule:run --no-interaction
+StandardOutput=append:/var/log/contentify/scheduler.log
+StandardError=append:/var/log/contentify/scheduler.log
