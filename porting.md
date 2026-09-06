@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:29 CEST**
+Local workstream version: **0.2.5**
+Last updated: **2026-09-06 19:50 CEST**
 
 ## Decision
 
@@ -172,6 +172,15 @@ Before framework upgrades, `0.2.4` removes request-host data from the persistent
 admin-navigation cache. This is a baseline bug fix and does not alter PHP,
 Laravel, routes or module behavior. The fix must remain covered when proxy and
 trusted-host handling are modernized in a later port stage.
+
+### Mehrfachupload-Charakterisierung - 2026-09-06 19:37 CEST
+
+Version `0.2.5` behebt vor jeder Framework-Anhebung den in Original-Issue
+`#650` beschriebenen Team-Upload. Der gemeinsame Uploader kehrte innerhalb der
+Feldschleife zurück und konnte deshalb nie mehr als ein Dateifeld bearbeiten.
+Die neue Charakterisierung prüft Logo und Banner gemeinsam sowie einen Banner
+bei leerem Logo. Diese Tests müssen bei jeder späteren Laravel- und PHP-Stufe
+grün bleiben.
 
 ## Non-viable shortcut
 

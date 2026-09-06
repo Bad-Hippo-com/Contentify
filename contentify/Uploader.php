@@ -123,7 +123,6 @@ class Uploader
                     }
                 }
 
-                return [];
             }
         }
 

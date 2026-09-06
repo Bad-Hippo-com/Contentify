@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.2.4**
-Assessment/update time: **2026-09-06 19:29 CEST**
+Local workstream version: **0.2.5**
+Assessment/update time: **2026-09-06 19:50 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -300,7 +300,8 @@ Zur öffentlichen Arbeitsorganisation wurden vier deutschsprachige Issues im
 Bad-Hippo-Fork angelegt: vollständige Upstream-Triage (`#1`), sicherer zweiter
 Dashboard-Feed (`#2`), GHCR-Container (`#3`) und der spätere PHP-8-Blocker
 (`#4`). Issue-, Pull-Request- und Security-Hinweise sind ebenfalls auf Deutsch
-umgestellt. Im ursprünglichen Repository wurde noch nichts kommentiert.
+umgestellt. Befunde werden im ursprünglichen Repository erst nach Quellprüfung
+und, bei eigenen Änderungen, erst nach erfolgreichem Staging-Test kommentiert.
 
 Interne IP-Adressen und echte Zugangsdaten werden nicht im öffentlichen Fork
 geführt. Beispiele verwenden ausschließlich reservierte Testdaten; konkrete
@@ -314,6 +315,37 @@ Valorant-Icon wurden anhand der ursprünglichen Chris-Commits als bereits in
 `3.2-dev` behoben eingeordnet. Die Befunde wurden in den jeweiligen
 Original-Issues veröffentlicht und in unserem Issue `#1` zusammengefasst.
 
+### Original-Issue #650: Team-Logo und Banner - 2026-09-06 19:37 CEST
+
+Der Fehler ist unabhängig von Dateirechten und Upload-Verzeichnissen im
+gemeinsamen `Contentify\Uploader` reproduzierbar. `uploadModelFiles()` enthielt
+sein erfolgreiches `return []` innerhalb der Schleife über `$fileHandling`.
+Bei `Team::$fileHandling` steht `image` vor `banner`; damit endete jeder Aufruf
+nach der Logo-Prüfung. War ein Logo vorhanden, wurde nur dieses gespeichert.
+War es leer, wurde trotzdem zurückgekehrt und ein vorhandener Banner ignoriert.
+Da dies ein regulärer erfolgreicher Rückgabepfad war, entstand erwartungsgemäß
+kein Laravel-, PHP- oder Nginx-Fehlerlog.
+
+Bad Hippo `0.2.5` verschiebt die Rückgabe hinter die Schleife. Ein PHPUnit-Test
+deckt beide gemeldeten Varianten ab. Weil das Produktionsabbild bewusst ohne
+Entwicklungsabhängigkeiten gebaut wird, enthält das Repository zusätzlich einen
+direkt ausführbaren Smoke-Test. Dieser lief im echten Staging-App-Container mit
+PHP 7.4.33 und Laravel 6.20.30 erfolgreich für Logo plus Banner sowie Banner
+ohne Logo. Die Änderung hebt weder PHP noch Laravel an und bleibt damit Teil der
+Stabilisierung des Originalumfangs.
+
+Für den eigentlichen PHPUnit-Lauf wurden die im Produktionsabbild bewusst
+fehlenden Entwicklungsabhängigkeiten nur in einem kurzlebigen Container
+installiert. PHPUnit 9.5.8 meldete `OK (2 tests, 11 assertions)`; der Container
+wurde danach verworfen. Das laufende App-Abbild bleibt damit `--no-dev`.
+
+Beim anschließenden Containerwechsel blieben App und Jobs gesund, aber der
+bereits laufende Nginx-Prozess hielt die nicht mehr gültige IP des ersetzten
+App-Containers und antwortete vorübergehend mit HTTP 502. Eine gezielte
+Neuerstellung des Nginx-Containers stellte Homepage und Anmeldeseite mit HTTP
+200 wieder her. STAGE-005 dokumentiert den Vorgang; der Staging-Runbook verlangt
+nun bei jedem App-Austausch auch die Nginx-Neuerstellung.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -325,6 +357,8 @@ Original-Issues veröffentlicht und in unserem Issue `#1` zusammengefasst.
 - `app/Logging/JsonLogFormatter.php`: structured JSON Lines plus host/request context
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
+- `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields
+- `tests/Smoke/UploaderMultipleFiles.php`: dependency-free staging smoke check
 
 Die Stabilisierung wird auf `main` des Bad-Hippo-Forks veröffentlicht. Es wurde
 kein Pull Request gegen das Original erstellt und kein Branch des ursprünglichen

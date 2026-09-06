@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
-Version: **0.2.4**
-Last updated: **2026-09-06 19:29 CEST**
+Version: **0.2.5**
+Last updated: **2026-09-06 19:50 CEST**
 
 This deployment reproduces the historical Contentify 3.2-dev baseline behind
 Nginx. PHP 7.4 is isolated in a container and is not an approved public target.
@@ -37,8 +37,27 @@ sudo docker compose --env-file .env.staging ps
 sudo docker compose --env-file .env.staging logs --since 10m --no-color
 ```
 
+Wenn der App-Container neu gebaut oder ersetzt wurde, muss Nginx im selben
+Rollout neu erstellt werden, damit sein PHP-Upstream nicht auf die alte
+Container-IP zeigt:
+
+```sh
+sudo docker compose --env-file .env.staging up -d --force-recreate app jobs nginx
+```
+
 After a build, verify at minimum that the homepage, Font Awesome CSS and WOFF2,
 jQuery and the Glyphicons WOFF2 return HTTP 200 with their expected MIME types.
+
+Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
+App-Containers mit:
+
+```sh
+sudo docker compose --env-file .env.staging exec app \
+  php tests/Smoke/UploaderMultipleFiles.php
+```
+
+Er muss sowohl Logo und Banner gemeinsam als auch einen Banner bei leerem
+Logo-Feld bestätigen.
 
 Do not copy staging volumes or secrets to test. The test host will receive the
 same versioned source and procedure, then perform a clean installation with

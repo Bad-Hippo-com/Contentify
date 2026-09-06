@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:29 CEST**
+Local workstream version: **0.2.5**
+Last updated: **2026-09-06 19:50 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -21,7 +21,9 @@ Last updated: **2026-09-06 19:29 CEST**
   und den späteren PHP-8-Blocker anlegen.
 - [x] Ersten Upstream-Block `#645`, `#663`, `#658`, `#613` und `#614` prüfen
   und die Ergebnisse transparent in den Original-Issues veröffentlichen.
-- [ ] Verbleibende 27 Original-Issues einzeln prüfen und nur mit nachweisbaren
+- [x] Original-Issue `#650` auf die vorzeitig beendete Upload-Schleife
+  zurückführen, mit zwei Regressionstests beheben und auf Staging prüfen.
+- [ ] Verbleibende 26 Original-Issues einzeln prüfen und nur mit nachweisbaren
   Ergebnissen beantworten.
 - [x] Clone the official `Contentify/Contentify` repository.
 - [x] Confirm default branch, tags, upstream commit and release state.
@@ -62,7 +64,7 @@ Last updated: **2026-09-06 19:29 CEST**
 
 ## Required before any public or production deployment
 
-- [ ] Fork the project and establish a maintained default branch.
+- [x] Fork the project and establish a maintained default branch.
 - [ ] Record the dedicated test-system address in the private operations inventory.
 - [ ] Install and verify `/var/log/contentify` independently on test; staging is complete.
 - [ ] Trigger one controlled Laravel, PHP and webserver error on each host and
@@ -77,6 +79,10 @@ Last updated: **2026-09-06 19:29 CEST**
   root with a per-request base URL in `0.2.4`.
 - [x] Recreate the internal-host cache condition and browser-test News, Pages
   and Configuration through the staging IP.
+- [x] Process every configured model upload field and verify team logo plus
+  banner as well as a banner without a logo in `0.2.5`.
+- [x] Record the temporary Nginx 502 after replacing the app container and add
+  mandatory Nginx recreation to the staging rollout procedure.
 - [x] Narrow `.dockerignore` so the Composer dependency tree stays excluded
   while every required `public/vendor` resource remains in the image.
 - [x] Restore the Glyphicons font output expected below `public/css/fonts`.

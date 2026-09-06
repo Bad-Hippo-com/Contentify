@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.2.4**
-Last updated: **2026-09-06 19:29 CEST**
+Local workstream version: **0.2.5**
+Last updated: **2026-09-06 19:50 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -139,7 +139,7 @@ path remains defective until clean installs preserve such secrets unchanged.
 
 ### Erste Prüfung der offenen Original-Issues
 
-Status: **laufend, erster Block geprüft 2026-09-06 19:29 CEST**
+Status: **laufend, sechs Issues geprüft 2026-09-06 19:37 CEST**
 
 - `#645` und `#663`: derselbe bestätigte PHP-8-Blocker durch die reservierte
   Klasse `Match`; noch nicht behoben, bei uns als Issue `#4` geführt.
@@ -149,8 +149,12 @@ Status: **laufend, erster Block geprüft 2026-09-06 19:29 CEST**
   `7e0294ec` für `3.2-dev` korrigiert; Browser-Charakterisierung folgt.
 - `#614`: Valorant- und weitere Spielsymbole wurden bereits von Chris in
   Upstream-Commit `4630a7aa` für `3.2-dev` ergänzt.
+- `#650`: reproduzierter Mehrfachupload-Fehler. `Uploader::uploadModelFiles()`
+  beendete seine Schleife bereits nach dem ersten konfigurierten Dateifeld.
+  Der Fix ist in Bad Hippo `0.2.5` enthalten und auf Staging getestet.
 
-In diesen fünf Original-Issues wurde der Befund veröffentlicht. Jeder Hinweis
+In den ersten fünf Original-Issues wurde der Befund veröffentlicht; die
+verifizierte Lösung für `#650` folgt mit dem öffentlichen Commit. Jeder Hinweis
 nennt den inoffiziellen Community-Status sowie die aktuelle Baseline aus PHP
 7.4 und Laravel 6.20.30. Eine PHP-8- oder Produktionsfreigabe wurde ausdrücklich
 nicht behauptet.
@@ -180,7 +184,39 @@ The staging regression check generated the cache while forcing
 then reused that cache with an external staging URL. Browser tests opened
 News, Pages and Configuration from the left menu at the staging IP.
 
+### BUG-011 - Only the first configured upload field is processed
+
+Severity: **medium**
+Status: **resolved 2026-09-06 19:37 CEST**
+Original issue: `Contentify/Contentify#650`
+
+`Uploader::uploadModelFiles()` returned from inside its `foreach` loop. A model
+with several configured upload fields therefore processed only the first field,
+whether or not that field contained a file. For teams, this meant that `image`
+worked but `banner` was ignored; no exception occurred, so Laravel and Nginx had
+nothing to log. Permissions and a separate banner folder were not the cause.
+
+Version `0.2.5` returns only after the loop has examined every configured field.
+The PHPUnit regression test covers logo plus banner and banner without logo;
+PHPUnit 9.5.8 passed both tests with 11 assertions on PHP 7.4. A standalone
+smoke test also ran successfully inside the real PHP 7.4/Laravel 6.20.30
+staging container for both cases.
+
 ## Staging defects
+
+### STAGE-005 - Nginx retains the replaced app container address
+
+Severity: **high during deployment**
+Status: **operationally mitigated 2026-09-06 19:44 CEST**
+
+After only `app` and `jobs` were recreated for version `0.2.5`, the already
+running Nginx worker continued using the removed app container's resolved IP.
+Requests temporarily returned HTTP 502 although the new PHP-FPM container was
+healthy. Recreating Nginx resolved `app` again and restored HTTP 200.
+
+The staging runbook now requires Nginx recreation whenever the app container is
+replaced. A later delivery-hardening step should make upstream resolution
+dynamic or add an atomic deployment procedure so this cannot be omitted.
 
 ### STAGE-004 - Admin icon and vendor assets are absent from the image
 
