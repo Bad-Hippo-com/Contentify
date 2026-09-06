@@ -1,0 +1,20 @@
+[
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify",
+        "text": "Bad Hippo führt Contentify als deutsch gepflegten Community-Fork mit der Entwicklungsversion 3.3-dev weiter.",
+        "timestamp": 1788719159,
+        "icon": "code-branch"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commit/9e7486982f5701d819b0ad80b54ba6e64c23bf21",
+        "text": "Die erste Modernisierungsstufe aktualisiert Laravel innerhalb der Version 6 auf 6.20.45.",
+        "timestamp": 1788716700,
+        "icon": "wrench"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/issues",
+        "text": "Fehler, Modernisierungsschritte und Rückmeldungen werden öffentlich im Bad-Hippo-GitHub dokumentiert.",
+        "timestamp": 1788716400,
+        "icon": "bug"
+    }
+]

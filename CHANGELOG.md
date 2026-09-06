@@ -1,3 +1,17 @@
+## Bad Hippo 0.4.0 / Contentify 3.3-dev - 2026-09-06
+
+- Sichtbare CMS-Entwicklungsversion von `3.2-dev` auf `3.3-dev` angehoben.
+- Bad-Hippo-Newsfeed zusätzlich und klar getrennt neben dem weiterhin
+  vorhandenen Originalfeed im Admin-Dashboard eingebunden.
+- Bad-Hippo-Feed und alle eigenen Meldungen auf das GitHub-Repository
+  `Bad-Hippo-com/Contentify` verlinkt.
+- Beide Quellen unabhängig gecacht, sodass der Ausfall eines Feeds den anderen
+  nicht mehr entfernt.
+- Externe Feed-Daten validiert, unsichere URLs und Iconnamen abgefangen und
+  Meldungstexte in der Ansicht escaped.
+- Drei neue Feed-Unit-Tests ergänzt; der gesamte Unit-Lauf besteht acht Tests
+  mit 27 Assertions.
+
 ## Bad Hippo 0.3.0 - 2026-09-06
 
 - Laravel innerhalb der bestehenden Major-Version von 6.20.30 auf 6.20.45

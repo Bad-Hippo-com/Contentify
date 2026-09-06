@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.3.0**
-Last updated: **2026-09-06 20:17 CEST**
+Local workstream version: **0.4.0**
+Last updated: **2026-09-06 20:28 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -65,6 +65,23 @@ five unit tests with 16 assertions, both smoke tests and a complete first-party
 PHP syntax pass. This resolves only the outdated Laravel-6 patch level; BUG-001
 and BUG-002 remain open until the later PHP/Laravel rungs remove the unsupported
 stack and all advisories.
+
+### BUG-014 - Remote dashboard feed was rendered without validation
+
+Severity: **high**
+Status: **resolved in 0.4.0, 2026-09-06 20:28 CEST**
+
+The original dashboard trusted remote JSON fields and rendered message text and
+icon names as raw HTML. A compromised or malformed feed could therefore inject
+markup into an authenticated administrator page. The previous single cache key
+also meant that one failed source could suppress the entire feed output.
+
+Version `0.4.0` normalizes each remote message, accepts only HTTP(S) links and
+safe icon identifiers, skips incomplete records and escapes message text in the
+Blade view. Original Contentify and Bad Hippo now use independent cache entries
+and failure handling. This preserves the original feed while adding our clearly
+labelled GitHub-backed feed. Three focused regression tests pass as part of the
+eight-test, 27-assertion unit suite.
 
 ### BUG-004 - Front-end dependency installation fails by default
 

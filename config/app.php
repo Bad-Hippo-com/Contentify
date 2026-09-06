@@ -49,13 +49,13 @@ return [
     |
     */
 
-    'version' => '3.2-dev',
+    'version' => '3.3-dev',
 
     /*
     | Local modernization workstream version. This does not replace the
     | original Contentify CMS version above.
     */
-    'build_version' => env('CONTENTIFY_BUILD_VERSION', '0.2.0'),
+    'build_version' => env('CONTENTIFY_BUILD_VERSION', '0.4.0'),
 
     /*
     |--------------------------------------------------------------------------

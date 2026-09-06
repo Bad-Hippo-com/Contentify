@@ -5,6 +5,7 @@ namespace App\Modules\Dashboard\Http\Controllers;
 use BackController;
 use Cache;
 use Config;
+use Contentify\DashboardFeed;
 use Contentify\DiskSpace;
 use HTML;
 use Log;
@@ -13,10 +14,20 @@ use View;
 class AdminDashboardController extends BackController
 {
 
-    /**
-     * Feed URL
-     */
-    const FEED_URL = 'http://www.contentify.org/share/feeds/cms.json';
+    const FEEDS = [
+        [
+            'key'         => 'contentify-original',
+            'name'        => 'Contentify Original',
+            'url'         => 'https://www.contentify.org/share/feeds/cms.json',
+            'project_url' => 'https://github.com/Contentify/Contentify',
+        ],
+        [
+            'key'         => 'bad-hippo',
+            'name'        => 'Bad Hippo 3.3-dev',
+            'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json',
+            'project_url' => 'https://github.com/Bad-Hippo-com/Contentify',
+        ],
+    ];
 
     /**
      * Show a warning when there is less free disk space than defined in this constant
@@ -52,30 +63,54 @@ class AdminDashboardController extends BackController
      */
     public function feed()
     {
-        $key = 'dashboard::feedMessages';
+        $feeds = [];
 
-        if (Cache::has($key)) {
-            $view = Cache::get($key);
-        } else {
-            // Note: File::get() can't access remote targets so we have to use the PHP function.
-            $content = @file_get_contents(self::FEED_URL);
-
-            if ($content === false) {
-                // Create an empty key to avoid incessant fetching attempts
-                Cache::put($key, '', 10 * 60);
-
-                Log::warning("Failed to fetch dashboard message feed '".self::FEED_URL."'");
-
-                return null;
-            }
-
-            $messages = json_decode($content);
-
-            $view = View::make('dashboard::feed', compact('messages'))->render();
-
-            Cache::put($key, $view, 60 * 6 * 60);
+        foreach (self::FEEDS as $definition) {
+            $feeds[] = [
+                'name'        => $definition['name'],
+                'project_url' => $definition['project_url'],
+                'messages'    => $this->feedMessages($definition),
+            ];
         }
 
-        return $view;
+        return View::make('dashboard::feed', compact('feeds'))->render();
+    }
+
+    /**
+     * Receive and cache one feed independently from all other feed sources.
+     *
+     * @param array $definition
+     * @return array
+     */
+    protected function feedMessages(array $definition): array
+    {
+        $key = 'dashboard::feedMessages::v2::'.$definition['key'];
+
+        if (Cache::has($key)) {
+            return Cache::get($key);
+        }
+
+        // File::get() cannot access remote targets, so use the PHP function.
+        $content = @file_get_contents($definition['url']);
+
+        if ($content === false) {
+            Cache::put($key, [], 10 * 60);
+            Log::warning("Failed to fetch dashboard message feed '".$definition['url']."'");
+
+            return [];
+        }
+
+        $messages = DashboardFeed::decode($content, $definition['project_url']);
+
+        if ($messages === null) {
+            Cache::put($key, [], 10 * 60);
+            Log::warning("Invalid dashboard message feed '".$definition['url']."'");
+
+            return [];
+        }
+
+        Cache::put($key, $messages, 60 * 6 * 60);
+
+        return $messages;
     }
 }

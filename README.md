@@ -4,15 +4,17 @@
 
 Dies ist der deutschsprachig gepflegte Community-Fork von Contentify unter
 [`Bad-Hippo-com`](https://github.com/Bad-Hippo-com). Wir stabilisieren zuerst
-den unveränderten Funktionsumfang von Contentify 3.2-dev. Erst danach werden
-PHP, Laravel, Bootstrap und Node.js einzeln, messbar und mit Tests aktualisiert.
+den Funktionsumfang von Contentify ausgehend von 3.2-dev. Unsere gepflegte
+Entwicklungslinie trägt ab jetzt die CMS-Kennung **3.3-dev**. PHP, Laravel,
+Bootstrap und Node.js werden weiterhin einzeln, messbar und mit Tests
+aktualisiert.
 
 Das ursprüngliche Projekt und die Arbeit von Chris Konnertz bleiben ausdrücklich
 genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprünglichen
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.3.0 auf Basis von Contentify 3.2-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.4.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -85,14 +87,14 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.3.0**
-Last updated: **2026-09-06 20:17 CEST**
+Local workstream version: **0.4.0**
+Last updated: **2026-09-06 20:28 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-The local `0.2.0` identifier versions our changes without replacing the
-upstream CMS version.
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.4.0`
+identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
 Nginx. PHP 7.4/Laravel 6 and MariaDB are
@@ -119,6 +121,10 @@ The candidate passes Composer validation, Artisan boot, PHP lint, five unit
 tests and both staging smoke tests. It is installed on staging; the homepage,
 login and required browser assets return HTTP 200. It still has known
 advisories and is not a public release.
+Version `0.4.0` adds a separately labelled Bad-Hippo dashboard feed next to the
+unchanged Contentify original feed. Every Bad-Hippo entry and its source heading
+links to `Bad-Hippo-com/Contentify` on GitHub. Remote feed content is validated
+before it is rendered.
 
 See:
 

@@ -1,20 +1,23 @@
-<div class="feed-messages">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{ trans('app.latest_msgs') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (is_array($messages))
-                @foreach($messages as $message)
+@foreach($feeds as $feed)
+    <div class="feed-messages">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        {{ trans('app.latest_msgs') }} –
+                        <a href="{{ $feed['project_url'] }}" target="_blank" rel="noopener noreferrer">{{ $feed['name'] }}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($feed['messages'] as $message)
                     <tr>
                         <td title="{{ $message->text }}">
-                            <a href="{!! url($message->url) !!}" target="_blank">{!! HTML::fontIcon($message->icon) !!} {!! date(trans('app.date_format'), $message->timestamp) !!}: {!! $message->text !!}</a>
+                            <a href="{{ $message->url }}" target="_blank" rel="noopener noreferrer">{!! HTML::fontIcon($message->icon) !!} {{ date(trans('app.date_format'), $message->timestamp) }}: {{ $message->text }}</a>
                         </td>
                     </tr>
                 @endforeach
-            @endif
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+@endforeach

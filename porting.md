@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.3.0**
-Last updated: **2026-09-06 20:17 CEST**
+Local workstream version: **0.4.0**
+Last updated: **2026-09-06 20:28 CEST**
 
 ## Decision
 
@@ -203,6 +203,16 @@ App, Jobs und Nginx wurden gemeinsam neu erstellt; Startseite, Anmeldung,
 Font Awesome, Glyphicons und der tatsächlich eingebundene jQuery-Pfad wurden
 anschließend mit HTTP 200 geprüft. In den zentralen Logs entstanden dabei keine
 neuen Anwendungs-, PHP- oder Nginx-Fehler.
+
+### Getrennte Projektfeeds und Version 3.3-dev - 2026-09-06 20:28 CEST
+
+Die gepflegte Bad-Hippo-Linie verwendet ab `0.4.0` die sichtbare CMS-Kennung
+`3.3-dev`. Der Originalfeed von Contentify bleibt als eigene Quelle bestehen;
+der neue Bad-Hippo-Feed wird getrennt bezeichnet und aus der versionierten
+GitHub-Datei `public/share/feeds/cms.json` geladen. Ein Ausfall wird je Quelle
+separat gecacht und protokolliert. Alle externen Felder werden vor der Ausgabe
+normalisiert, damit die zusätzliche Remotequelle keine ungeprüften Links,
+Iconnamen oder HTML-Inhalte in den Adminbereich einführt.
 
 ## Non-viable shortcut
 

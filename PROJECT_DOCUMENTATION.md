@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.3.0**
-Assessment/update time: **2026-09-06 20:17 CEST**
+Local workstream version: **0.4.0**
+Assessment/update time: **2026-09-06 20:28 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -139,9 +139,10 @@ the Contentify job runner also wrote to their separate files. Logrotate
 accepted the installed 30-day policy in a dry run.
 
 The installed staging baseline started at version `0.2.0`; the diagnosed login
-credential defect is recorded as local workstream version `0.2.1`. The original CMS
-identifier remains `3.2-dev`; keeping these values separate prevents the local
-workstream version from being mistaken for an upstream Contentify release.
+credential defect is recorded as local workstream version `0.2.1`. At that time,
+the original CMS identifier was still `3.2-dev`. Bad Hippo now identifies its
+continued development as `3.3-dev` while the separate `0.x.y` workstream version
+keeps every staged change traceable.
 
 ## Effort and delivery estimate
 
@@ -396,6 +397,33 @@ public-freigegeben.
 Die noch offenen Findings werden nicht verschwiegen oder per
 `--ignore-platform-reqs` umgangen, sondern in den folgenden isolierten
 Framework- und Laufzeitstufen bearbeitet.
+
+### Bad-Hippo-Newsfeed und CMS-Version 3.3-dev - 2026-09-06 20:28 CEST
+
+Bad Hippo führt die gepflegte Entwicklungslinie ab Version `0.4.0` sichtbar als
+Contentify `3.3-dev`. Diese Kennung ist von der kleinschrittigen internen
+Releaseversion getrennt und ersetzt nicht rückwirkend Chris' Upstream-Version
+3.2-dev.
+
+Das Admin-Dashboard lädt nun zwei ausdrücklich bezeichnete Quellen. Der
+weiterhin unveränderte Originalfeed verweist auf `Contentify/Contentify`; der
+zusätzliche Feed wird aus `public/share/feeds/cms.json` auf dem `main`-Branch
+des Repositories `Bad-Hippo-com/Contentify` geladen. Überschrift, Projektquelle
+und jede eigene Meldung führen auf unser GitHub. Beide Quellen besitzen eigene
+Cache- und Fehlerzustände.
+
+Weil Feed-Inhalte außerhalb der Installation liegen, wurde die bestehende rohe
+HTML-Ausgabe nicht auf die zweite Quelle übertragen. `Contentify\DashboardFeed`
+verwirft ungültige JSON-Wurzeln und unvollständige Einträge, erlaubt nur
+HTTP(S)-Links und sichere Iconnamen und stellt einen GitHub-Fallback bereit. Die
+Blade-Ansicht escaped Texte und Attribute und setzt bei externen Tabs
+`noopener noreferrer`.
+
+Drei neue Unit-Tests prüfen gültige Meldungen, unsichere URL-/Iconfelder,
+unvollständige Einträge und ungültige JSON-Wurzeln. Der vollständige Unit-Lauf
+im PHP-7.4-Kandidaten bestand acht Tests mit 27 Assertions. Außerdem wurde der
+veraltete Staging-Wert `CONTENTIFY_BUILD_VERSION=0.2.4` auf `0.4.0` korrigiert,
+damit neu erzeugte zentrale Logs die tatsächlich laufende Buildversion tragen.
 
 ## Files added or updated
 

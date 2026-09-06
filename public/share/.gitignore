@@ -1,2 +1,5 @@
 *
 !.gitignore
+!feeds/
+feeds/*
+!feeds/cms.json

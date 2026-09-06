@@ -1,15 +1,14 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.3.0**
-Last updated: **2026-09-06 20:17 CEST**
+Local workstream version: **0.4.0**
+Last updated: **2026-09-06 20:28 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
-2. Eigenen Bad-Hippo-Nachrichtenfeed zusätzlich zum klar bezeichneten Originalfeed einbauen.
-3. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
-4. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-5. Erst danach PHP, Laravel, Bootstrap und Node.js einzeln aktualisieren.
+2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
+3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
+4. PHP, Laravel, Bootstrap und Node.js weiterhin einzeln aktualisieren.
 
 ## Completed
 
@@ -105,6 +104,9 @@ Last updated: **2026-09-06 20:17 CEST**
   steps; determine the final supported stack from measured compatibility rather
   than selecting PHP 8.5/Laravel 13 in advance.
 - [x] Regenerate `composer.lock` and make `composer validate --strict` pass.
+- [x] Raise the maintained CMS development identifier to `3.3-dev` and add a
+  separately labelled Bad-Hippo dashboard feed linked to our GitHub repository
+  without replacing Chris' original Contentify feed.
 - [ ] Reduce the remaining Composer production audit from 39 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
