@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.5.1**
-Assessment/update time: **2026-09-06 21:27 CEST**
+Local workstream version: **0.6.0**
+Assessment/update time: **2026-09-06 22:05 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -52,13 +52,13 @@ Generated lock/build output was removed before documentation was written.
 | PHP 8.5 lint | Fail; 9 of 726 first-party files have syntax errors |
 | PHP 8.5 Artisan | Fail; exit code 255 |
 | PHP 8.5 PHPUnit | Fail; 2 tests, 2 errors |
-| PHP 7.4 lint | Pass; 726 files parse |
-| PHP 7.4 Artisan | Pass; `0.5.0` candidate reports Laravel 7.30.7 |
+| PHP 7.4 lint | Pass; latest `0.6.0` candidate parses 686 selected first-party and test files |
+| PHP 7.4 Artisan | Pass; `0.6.0` candidate reports Laravel 8.83.29 |
 | PHP 7.4 PHPUnit | Fail; unit placeholder passes, feature placeholder gets 404 |
-| Composer validation | Pass for `0.5.0`; regenerated lock is valid with `--strict` |
+| Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.5 | Fail; incompatible PHP/package constraints |
 | Composer install with ignored requirements | Packages extract, but this is not a runnable current build |
-| Composer production audit | Improved but fails; 12 advisories in two packages |
+| Composer production audit | Improved but fails; 3 advisories in one package |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -68,7 +68,7 @@ Generated lock/build output was removed before documentation was written.
 
 Contentify is obsolete as delivered:
 
-- Laravel 7 no longer receives official bug or security fixes. Current Laravel
+- Laravel 8 no longer receives official bug or security fixes. Current Laravel
   is 13, whose supported PHP range is 8.3 through 8.5.
 - PHP 7.4, the newest runtime on which the first-party source parses cleanly,
   reached end-of-life in November 2022.
@@ -499,6 +499,31 @@ Umgebung, Container, Build `0.5.1` und Requestkontext sowie als klassischer
 84-Byte-Eintrag im Admin-Logviewer. Die Anzeige-Datei besitzt Modus `0640` und
 `www-data:www-data`. Startseite und Admin-Route antworteten mit HTTP 200.
 
+Version `0.6.0` hebt als nächste getrennte Framework-Stufe Laravel von 7.30.7
+auf 8.83.29 an; PHP bleibt unverändert auf 7.4. Composer ermittelte Sentinel
+4 als ersten Blocker, weil diese Generation Illuminate Support 7 verlangt.
+Die kleinste passende Major-Stufe ist Sentinel 5; der finale Lockbestand nutzt
+Sentinel 5.1.0, Cartalyst Support 5.1.2 und Collision 5.11.0. Insgesamt wurden
+sechs Pakete neu aufgenommen und sieben aktualisiert.
+
+Der erste echte HTTP-Aufruf deckte BUG-019 auf: Contentifys eigener Übersetzer
+rief die in Laravel 8 entfernte geschützte Methode `sortReplacements()` auf.
+Die bisherige längste-Platzhalter-zuerst-Sortierung liegt nun im eigenen
+Übersetzer und ist durch einen Regressionstest gesichert. Zusätzlich verwendet
+der Wartungsmodus Laravels neue `PreventRequestsDuringMaintenance`-Middleware.
+Die PHP-Anforderung ist für diese Stufe ehrlich auf `^7.3` begrenzt; PHP 8
+bleibt bis zur Beseitigung der reservierten `Match`-Klassennamen gesperrt.
+
+Der finale Kandidat meldete Laravel 8.83.29, bestand zehn Unit-Tests mit 34
+Assertions, beide Smoke-Tests, Syntaxprüfungen für 686 Dateien, 512 aktivierte
+Routen und den lesenden Datenbanktest mit vier erkannten Migrationen. Der
+Produktions-Audit sank von 12 Findings in zwei Paketen auf drei Findings in
+Laravel Framework; vier aufgegebene Produktionspakete bleiben erfasst. Das
+Staging-Image `contentify-staging-app:0.6.0` läuft gemeinsam für App und Jobs.
+Nginx wurde mit neu erstellt, MariaDB blieb gesund. Startseite, Anmeldung,
+bestehende Admin-Sitzung, Dashboard, Newsverwaltung, Logviewer, Icons,
+IP-Navigation und Jobrunner wurden erfolgreich geprüft.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -511,6 +536,10 @@ Umgebung, Container, Build `0.5.1` und Requestkontext sowie als klassischer
 - `app/Logging/JsonLogFormatter.php`: structured JSON Lines formatter
 - `app/Logging/ClassicLogFormatter.php`: classic administrator display formatter
 - `tests/Unit/LoggingConfigurationTest.php`: split-channel regression coverage
+- `contentify/Translator.php`: Laravel-8-compatible placeholder ordering
+- `tests/Unit/TranslatorTest.php`: translator replacement regression coverage
+- `app/Http/Middleware/CheckForMaintenanceMode.php`: Laravel-8 maintenance middleware bridge
+- `composer.json` and `composer.lock`: reproducible Laravel-8 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields

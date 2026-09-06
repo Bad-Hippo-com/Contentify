@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.5.1**
-Last updated: **2026-09-06 21:27 CEST**
+Local workstream version: **0.6.0**
+Last updated: **2026-09-06 22:05 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -113,6 +113,9 @@ Last updated: **2026-09-06 21:27 CEST**
   PHP 7.4 unchanged; update Sentinel and the required development helpers,
   then verify Artisan boot, 540 routes, eight unit tests, both smoke tests and
   the complete first-party syntax pass.
+- [x] Raise Laravel in the next isolated rung from 7.30.7 to 8.83.29 while
+  keeping PHP 7.4 unchanged; update Sentinel and Collision, replace the removed
+  maintenance middleware and preserve the custom translator behavior (BUG-019).
 - [ ] Replace the pre-existing placeholder feature test with an installation-
   aware HTTP characterization; its historical `/` expectation still receives
   404 in the isolated test environment.
@@ -123,7 +126,7 @@ Last updated: **2026-09-06 21:27 CEST**
   `/admin/config/log` without exposing central component logs to its delete
   action; verify both outputs and the authenticated browser view on staging
   (BUG-018).
-- [ ] Reduce the remaining Composer production audit from 12 advisories to zero
+- [ ] Reduce the remaining Composer production audit from 3 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.

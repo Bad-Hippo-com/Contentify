@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Die nächste kontrollierte Modernisierungsstufe läuft auf Laravel 8.83.29; PHP bleibt getrennt davon auf 7.4.",
+        "timestamp": 1788724534,
+        "icon": "wrench"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Das neue Dual-Logging schreibt ausführliche Betriebsdaten zentral als JSON und stellt parallel das klassische Laravel-Log im Adminbereich bereit.",
         "timestamp": 1788722840,
         "icon": "clipboard-list"

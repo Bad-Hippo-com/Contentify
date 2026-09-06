@@ -1,3 +1,17 @@
+## Bad Hippo 0.6.0 / Contentify 3.3-dev - 2026-09-06
+
+- Laravel kontrolliert von 7.30.7 auf 8.83.29 angehoben; PHP bleibt für diese
+  getrennte Migrationsstufe unverändert auf 7.4.
+- Sentinel 5.1.0, Cartalyst Support 5.1.2 und Collision 5.11.0 sowie der
+  reproduzierbar neu aufgelöste Composer-Lockbestand übernommen.
+- Wartungsmodus-Middleware auf Laravels neue Implementierung umgestellt.
+- Contentifys Übersetzer von der in Laravel 8 entfernten internen Methode
+  `sortReplacements()` entkoppelt und das bisherige Ersetzungsverhalten mit
+  einem Regressionstest bewahrt.
+- Zehn Unit-Tests mit 34 Assertions, beide Smoke-Tests, 686 PHP-Dateien,
+  512 aktive Routen, Datenbankzugriff und Browserabläufe auf Staging bestanden.
+- Produktions-Audit von 12 auf 3 Advisories in einem Paket reduziert.
+
 ## Bad Hippo 0.5.1 / Contentify 3.3-dev - 2026-09-06
 
 - Laravel-Standardlogs auf zwei bewusst getrennte Ziele aufgeteilt: tägliches,

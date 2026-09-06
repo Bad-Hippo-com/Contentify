@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.5.1 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.6.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -35,11 +35,11 @@ Wichtige Unterlagen:
 ## Contentify CMS - v3.2 ALPHA
 
 [![Build Status](https://img.shields.io/travis/Contentify/Contentify.svg?style=flat-square)](https://travis-ci.org/Contentify/Contentify)
-[![Laravel](https://img.shields.io/badge/Laravel-7-orange.svg?style=flat-square)](http://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-8-orange.svg?style=flat-square)](http://laravel.com)
 [![Source](http://img.shields.io/badge/source-Contentify/Contentify-blue.svg?style=flat-square)](https://github.com/Contentify/Contentify)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
-[Contentify](http://contentify.org/) is an esports CMS based on the PHP framework Laravel 7.
+[Contentify](http://contentify.org/) is an esports CMS based on the PHP framework Laravel 8.
 Build your gaming website with a modern CMS.
 
 - [x] Technologically advanced gaming CMS
@@ -87,17 +87,17 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.5.1**
-Last updated: **2026-09-06 21:27 CEST**
+Local workstream version: **0.6.0**
+Last updated: **2026-09-06 22:05 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.4.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.6.0`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
-Nginx. PHP 7.4/Laravel 7 and MariaDB are
+Nginx. PHP 7.4/Laravel 8 and MariaDB are
 isolated in containers; this is the migration workshop, not a public release.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
@@ -140,6 +140,13 @@ remove the protected central component logs. The deployed staging image writes
 both formats as `www-data`; the administrator viewer displays the verified
 classic entry while the matching JSON record retains environment, container,
 build and request context.
+Version `0.6.0` raises only the framework axis to Laravel 8.83.29 while PHP
+remains 7.4. Sentinel and Collision move to their smallest compatible major
+lines. Contentify's custom translator no longer calls Laravel's removed
+`sortReplacements()` helper. The live staging image passed ten unit tests,
+both smoke tests, 686 syntax checks, 512 routes, database inspection and the
+authenticated dashboard, news and log views. Three Laravel advisories remain,
+so this is still an internal migration rung rather than a public release.
 
 See:
 

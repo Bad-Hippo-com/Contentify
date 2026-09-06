@@ -55,7 +55,7 @@ return [
     | Local modernization workstream version. This does not replace the
     | original Contentify CMS version above.
     */
-    'build_version' => env('CONTENTIFY_BUILD_VERSION', '0.5.1'),
+    'build_version' => env('CONTENTIFY_BUILD_VERSION', '0.6.0'),
 
     /*
     |--------------------------------------------------------------------------

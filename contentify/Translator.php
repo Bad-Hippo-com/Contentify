@@ -4,6 +4,7 @@ namespace Contentify;
 
 use Cache;
 use File;
+use Illuminate\Support\Collection;
 use Illuminate\Translation\Translator as OriginalTranslator;
 
 /**
@@ -50,7 +51,12 @@ class Translator extends OriginalTranslator
      */
     protected function makeReplacements($line, array $replace)
     {
-        $replace = $this->sortReplacements($replace);
+        // Laravel 8 removed Translator::sortReplacements(). Keep Contentify's
+        // longest-placeholder-first behavior locally so keys cannot replace
+        // the prefixes of longer keys.
+        $replace = (new Collection($replace))->sortBy(function ($value, $key) {
+            return mb_strlen($key) * -1;
+        })->all();
 
         foreach ($replace as $key => $value) {
             $line = str_replace(':'.$key, $value, $line);

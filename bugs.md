@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.5.1**
-Last updated: **2026-09-06 21:27 CEST**
+Local workstream version: **0.6.0**
+Last updated: **2026-09-06 22:05 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -23,16 +23,20 @@ and installation wiki nevertheless claim PHP 8 support when Composer is run
 with `--ignore-platform-reqs`. Ignoring dependency constraints cannot repair
 invalid PHP syntax.
 
+Version `0.6.0` entfernt deshalb die irreführende PHP-8-Freigabe aus
+`composer.json` und erlaubt für diese Laravel-8-Stufe bewusst nur PHP `^7.3`.
+PHP 8 wird erst wieder freigegeben, wenn die reservierten Klassennamen
+umgebaut und der komplette Code darauf geprüft wurde.
+
 ### BUG-002 - Production dependencies contain known vulnerabilities
 
 Severity: **blocker**
 Status: **open**
 
-After the controlled `0.5.0` Laravel-7 rung, `composer audit --locked --no-dev`
-with Composer 2.10.3 reports **12 known advisories in two packages** instead of
-39 in eight packages on Laravel 6. The remaining findings affect Laravel
-Framework 7.30.7 and League CommonMark. Laravel 7 and PHP 7.4 are unsupported;
-production approval therefore remains blocked.
+After the controlled `0.6.0` Laravel-8 rung, `composer audit --locked --no-dev`
+reports **3 known advisories in one package** instead of 12 in two packages on
+Laravel 7. The remaining findings affect Laravel Framework 8.83.29. Laravel 8
+and PHP 7.4 are unsupported; production approval therefore remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
@@ -81,6 +85,20 @@ passes eight focused unit tests with 27 assertions, both smoke tests and the
 complete first-party syntax pass. The sole full-suite failure remains the
 pre-existing placeholder feature test that expects the uninstalled test root
 to answer with HTTP 200.
+
+### BUG-019 - Eigener Übersetzer verwendete entfernte Laravel-Interna
+
+Severity: **high**
+Status: **resolved as migration rung 0.6.0, 2026-09-06 22:05 CEST**
+
+Contentifys `Translator::makeReplacements()` rief die geschützte Framework-
+Methode `sortReplacements()` auf. Laravel 8 entfernte diese Methode, wodurch
+der erste echte Seitenaufruf mit HTTP 500 und `BadMethodCallException` endete.
+Version `0.6.0` sortiert die Platzhalter lokal weiterhin nach absteigender
+Namenslänge. Damit bleibt das alte Verhalten erhalten und kurze Schlüssel
+überschreiben keine Präfixe längerer Schlüssel. Ein fokussierter Unit-Test
+sichert genau diesen Fall ab; Startseite und Login antworten danach mit HTTP
+200 und die authentifizierten Admin-Seiten funktionieren weiter.
 
 ### BUG-017 - Unknown routes are returned as server errors
 

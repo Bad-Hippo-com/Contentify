@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.5.1**
-Last updated: **2026-09-06 21:27 CEST**
+Local workstream version: **0.6.0**
+Last updated: **2026-09-06 22:05 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.3.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 7.4.33, Laravel 7.30.7 and MariaDB 10.11. The application, database,
+Version `0.6.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 7.4.33, Laravel 8.83.29 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -246,6 +246,24 @@ und Jobprotokolle bleiben eigenständig und sind von der Admin-Löschung nicht
 erreichbar. Der Live-Test auf Staging bestätigt identische Meldungen in beiden
 Ausgaben, Dateimodus `0640` mit Eigentümer `www-data:www-data` und die korrekte
 Darstellung des klassischen Eintrags im vorhandenen Admin-Logviewer.
+
+### Laravel 8 bei unverändertem PHP 7.4 - 2026-09-06 22:05 CEST
+
+Version `0.6.0` hebt ausschließlich die Framework-Achse von Laravel 7.30.7 auf
+8.83.29. Sentinel steigt auf 5.1.0, Cartalyst Support auf 5.1.2 und Collision
+auf 5.11.0. Die neue Laravel-Wartungsmodus-Middleware ersetzt die entfernte
+Vorgängerklasse. Contentifys eigener Übersetzer übernimmt die bisherige
+Sortierung der Platzhalter nun selbst, weil Laravel 8 die dafür verwendete
+geschützte Methode entfernt hat. `composer.json` begrenzt diese Stufe bewusst
+auf PHP `^7.3`, damit der noch nicht kompatible PHP-8-Pfad nicht länger
+fälschlich installierbar erscheint.
+
+Der Kandidat bestand zehn Unit-Tests mit 34 Assertions, beide Smoke-Tests,
+Syntaxprüfungen für 686 PHP-Dateien, 512 aktivierte Routen und den lesenden
+Datenbanktest mit vier erkannten Migrationen. Auf Staging blieben Anmeldung,
+bestehende Admin-Sitzung, Dashboard, Newsverwaltung, Logviewer, Icons,
+Navigation und Jobrunner funktionsfähig. Der Produktions-Audit enthält noch
+drei Laravel-Advisories; die Stufe ist daher weiterhin nicht public-fähig.
 
 ## Non-viable shortcut
 
