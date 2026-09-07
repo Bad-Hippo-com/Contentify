@@ -56,7 +56,7 @@
             @endif
         @show
         </div>
-        @if ($forumPost->updater_id and $forumPost->updated_at->diffInMinutes($forumPost->created_at) > 0)
+        @if ($forumPost->updater_id and abs($forumPost->updated_at->diffInMinutes($forumPost->created_at)) > 0)
             <div class="updated">
                 {!! trans('forums::updated_at', [$forumPost->updated_at->dateTime()]) !!}
             </div>

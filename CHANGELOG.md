@@ -1,3 +1,22 @@
+## Bad Hippo 0.11.0 / Contentify 3.3-dev - 2026-09-07
+
+- Laravel getrennt von 10.50.3 auf 11.56.1 angehoben; PHP bleibt unverändert
+  auf 8.5.10.
+- Sentinel 8.0.0, Collision 8.5.0 und Carbon 3.13.2 eingeführt.
+- Laravel Collective HTML 6.4.1 als dokumentierte lokale MIT-
+  Kompatibilitätsversion 6.4.2 für Laravel 11 fortgeführt und zwei
+  Konstruktorsignaturen ohne Verhaltensänderung an PHP 8.5 angepasst.
+- Bestehenden vollständigen Contentify-Konfigurationsbaum beibehalten und das
+  doppelte Laden der schlanken Laravel-11-Frameworkkonfiguration verhindert.
+- Foren-Zeitdifferenz an die gerichteten Carbon-3-Ergebnisse angepasst und den
+  entfernten Carbon-Formatzugriff der Formularansichten ersetzt; den frischen
+  Installationstest gegen vorhandene Laufzeitmarker isoliert.
+- Den seit der PHP-8-Modellumbenennung falschen Match-Formular-Viewnamen
+  repariert und den bestehenden `admin_form`-Vertrag getestet.
+- Composer-Auflösung, 801 Syntaxprüfungen, 17 Tests mit 52 Assertions und 512
+  aktive Produktionsrouten geprüft; drei
+  Framework-Advisories bleiben sichtbar, Public bleibt gesperrt.
+
 ## Bad Hippo 0.10.0 / Contentify 3.3-dev - 2026-09-07
 
 - Laravel als getrennte Migrationsachse von 9.52.21 auf die stabile Version

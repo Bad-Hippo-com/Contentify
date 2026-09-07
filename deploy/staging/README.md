@@ -1,6 +1,6 @@
 # Contentify staging deployment
 
-Version: **0.10.0 / Contentify 3.3-dev**
+Version: **0.11.0 / Contentify 3.3-dev**
 Last updated: **2026-09-07 09:45 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
@@ -10,7 +10,7 @@ approved public target.
 ## Components
 
 - `nginx`: public HTTP endpoint on port 80
-- `app`: PHP-FPM 8.5.10, Laravel 10.50.3 and Contentify 3.3-dev
+- `app`: PHP-FPM 8.5.10, Laravel 11.56.1 and Contentify 3.3-dev
 - `database`: MariaDB 10.11 with a persistent data volume
 - `jobs`: Contentify's `php artisan jobs` executor, run once per minute
 

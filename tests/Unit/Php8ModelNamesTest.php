@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Modules\Cups\CupMatch;
 use App\Modules\Games\Game;
 use App\Modules\Matches\GameMatch;
+use App\Modules\Matches\Http\Controllers\AdminMatchesController;
 use App\Modules\Matches\MatchScore;
 use App\Modules\Opponents\Opponent;
 use App\Modules\Teams\Team;
@@ -13,6 +14,13 @@ use Tests\TestCase;
 
 class Php8ModelNamesTest extends TestCase
 {
+    public function test_renamed_match_model_keeps_the_existing_admin_form(): void
+    {
+        $property = new \ReflectionProperty(AdminMatchesController::class, 'formTemplate');
+
+        $this->assertSame('admin_form', $property->getDefaultValue());
+    }
+
     public function test_renamed_models_keep_their_historical_tables(): void
     {
         $this->assertSame('matches', (new GameMatch())->getTable());

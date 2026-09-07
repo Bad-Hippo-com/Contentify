@@ -18,6 +18,8 @@ class AdminMatchesController extends BackController
 
     protected $icon = 'crosshairs';
 
+    protected $formTemplate = 'admin_form';
+
     public function __construct()
     {
         $this->modelClass = GameMatch::class;

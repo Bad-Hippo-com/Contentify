@@ -49,6 +49,11 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+// Contentify keeps the complete, upgraded Laravel configuration tree. Laravel
+// 11 otherwise merges its slim-application defaults as well, which would load
+// duplicate database definitions and PHP 8.5-deprecated PDO constants.
+$app->dontMergeFrameworkConfiguration();
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.10.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.11.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,17 +87,17 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.10.0**
-Last updated: **2026-09-07 09:45 CEST**
+Local workstream version: **0.11.0**
+Last updated: **2026-09-07 11:01 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.10.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.11.0`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
-Nginx. PHP 8.5/Laravel 10 and MariaDB are
+Nginx. PHP 8.5/Laravel 11 and MariaDB are
 isolated in containers; this is the migration workshop, not a public release.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
@@ -177,6 +177,21 @@ im Projekt. Alle 40 alten Eloquent-`$dates`-Definitionen wurden auf explizite
 `datetime`-Casts umgestellt. Composer, 14 Tests mit 47 Assertions, 515 Routen,
 beide Smoke-Tests und die kritischen Adminseiten bestehen. Drei bekannte
 Laravel-Advisories verhindern weiterhin die Public-Freigabe.
+Version `0.11.0` hebt ausschließlich die Framework-Achse auf Laravel 11.56.1;
+PHP bleibt 8.5.10. Sentinel 8 und Carbon 3 werden regulär aktualisiert. Das
+alte Modulsystem, Steam-OpenID und Laravel Collective HTML laufen für diese
+Stufe als dokumentierte lokale Kompatibilitätsbrücken. Collective HTML benötigt
+dabei zwei rein signaturbezogene PHP-8.5-Korrekturen. Contentifys Carbon-
+Unterklasse verwendet statt der in Carbon 3 entfernten statischen Eigenschaft
+nun direkt das übersetzte Datumsformat. Der vollständige
+Konfigurationsbaum verhindert das
+zusätzliche Laden der schlanken Laravel-11-Standardkonfiguration; die einzige
+Carbon-3-relevante Zeitdifferenz wurde auf richtungsunabhängiges Verhalten
+festgelegt. Der seit der PHP-8-Modellumbenennung falsche Match-Formular-Viewname
+ist ebenfalls repariert und getestet. Die Stufe bleibt intern und ist keine
+Public-Freigabe. Der finale Kandidat besteht 801 Syntaxprüfungen, 17 Tests mit
+52 Assertions, 512 aktive Produktionsrouten, Datenbank-, Log- und
+authentifizierte Browserprüfungen.
 
 See:
 

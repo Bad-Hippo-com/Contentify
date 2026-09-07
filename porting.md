@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.10.0**
-Last updated: **2026-09-07 09:45 CEST**
+Local workstream version: **0.11.0**
+Last updated: **2026-09-07 11:01 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.10.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.5.10, Laravel 10.50.3 and MariaDB 10.11. The application, database,
+Version `0.11.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 11.56.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -371,6 +371,44 @@ Dual-Logging. Dashboard, Matches, Cups, Logviewer, News und Module wurden im
 Browser geprüft; es traten keine Konsolen- oder Laravel-Fehler auf. Der Audit
 meldet noch drei Laravel-Advisories und zwei offiziell aufgegebene Pakete.
 Public bleibt gesperrt; die nächste getrennte Stufe ist Laravel 11.
+
+### Laravel-11-Migrationsstufe 0.11.0 - 2026-09-07 10:26 CEST
+
+Laravel wird bei unverändertem PHP 8.5.10 auf 11.56.1 angehoben. Sentinel 8,
+Collision 8.5 und Carbon 3 folgen den neuen Verträgen. Die von Laravel 11
+angebotene schlanke Anwendungsstruktur wird bewusst nicht übernommen: Der
+offizielle Upgradepfad unterstützt die bestehende Laravel-10-Struktur, und
+Contentify benötigt seinen vollständigen Konfigurationsbaum weiterhin.
+
+`laravelcollective/html` endet upstream bei Illuminate 10. Sein MIT-lizenzierter
+Stand liegt für diese Stufe als lokale Version 6.4.2 vor; die Composer-Grenzen
+erlauben Illuminate 11 und zwei Konstruktorsignaturen sind explizit PHP-8.5-
+kompatibel. Ebenso werden die bereits
+dokumentierten Modul- und Steam-Brücken ohne Quellcodeänderung auf Laravel 11
+fortgeführt. Diese drei Brücken bleiben getrennte technische Schulden.
+
+Carbon 3 liefert gerichtete und gegebenenfalls nicht-ganzzahlige `diffIn*`-
+Ergebnisse. Contentifys einziges entsprechendes Anzeigeprädikat im Forum wird
+explizit richtungsunabhängig ausgewertet. Die eigene Carbon-Unterklasse greift
+nicht mehr auf die entfernte statische `$toStringFormat`-Eigenschaft zu, sondern
+verwendet das übersetzte Contentify-Datumsformat direkt. Der frische Installationstest
+entfernt seinen Installationsmarker bereits vor dem Framework-Bootstrap und
+prüft die Installer-Route unabhängig vom gemounteten Staging-Speicher.
+
+Der Produktions-Audit meldet weiterhin drei Framework-Advisories. Composer
+markiert nur noch Less.php als aufgegeben, weil Collective HTML nun als
+dokumentierte lokale Brücke aufgelöst wird. Public bleibt gesperrt; die nächste
+getrennte Framework-Stufe ist Laravel 12.
+
+Der Browserlauf prüft zusätzlich die Erstellformulare. Dabei wurde der bereits
+unter Laravel 10 vorhandene falsche Match-Viewname aus der früheren PHP-8-
+Modellumbenennung gefunden und durch einen expliziten `admin_form`-Vertrag mit
+Regressionstest behoben.
+
+Der finale Kandidat besteht 801 Syntaxprüfungen, 17 Tests mit 52 Assertions,
+512 aktive Produktionsrouten, vier Migrationen, beide Smoke-Tests, Datenbank-
+und Dienstauflösung sowie den authentifizierten Browserlauf. Im abschließenden
+frischen Logfenster entstehen keine neuen Anwendung-, PHP- oder Nginx-Fehler.
 
 ## Non-viable shortcut
 

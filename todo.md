@@ -1,14 +1,14 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.10.0**
-Last updated: **2026-09-07 09:45 CEST**
+Local workstream version: **0.11.0**
+Last updated: **2026-09-07 11:01 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Laravel als nächste Achse schrittweise von Version 10 auf 11 aktualisieren;
+4. Laravel als nächste Achse schrittweise von Version 11 auf 12 aktualisieren;
    Bootstrap und Node.js bleiben davon getrennt.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
@@ -135,7 +135,11 @@ Last updated: **2026-09-07 09:45 CEST**
   Collision, Ignition und PHPUnit aktualisieren, 40 entfernte `$dates`-
   Definitionen migrieren und die Steam-Authentifizierung kontrolliert lokal
   weiterführen. Der Audit sinkt von vier auf drei Framework-Advisories.
-- [ ] Laravel 10 in der nächsten getrennten Stufe auf Laravel 11 anheben und
+- [x] Laravel 10 in `0.11.0` getrennt auf Laravel 11.56.1 anheben; Sentinel 8,
+  Collision 8 und Carbon 3 aktualisieren, die vollständige Contentify-
+  Konfiguration beibehalten und Laravel Collective HTML kontrolliert lokal
+  weiterführen.
+- [ ] Laravel 11 in der nächsten getrennten Stufe auf Laravel 12 anheben und
   dabei die verbleibenden Framework-Advisories weiter abbauen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen

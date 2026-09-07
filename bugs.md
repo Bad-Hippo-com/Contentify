@@ -1,10 +1,60 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.10.0**
-Last updated: **2026-09-07 09:45 CEST**
+Local workstream version: **0.11.0**
+Last updated: **2026-09-07 11:01 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-031 - Umbenanntes Match-Modell erzeugt falschen Formular-Viewnamen
+
+Severity: **high**
+Status: **resolved in 0.11.0, 2026-09-07 11:00 CEST**
+
+`/admin/matches/create` antwortete sowohl auf Laravel 10 als auch im ersten
+Laravel-11-Kandidaten mit HTTP 500, weil der generische Controller nach der
+PHP-8-Umbenennung von `Match` zu `GameMatch` den nicht vorhandenen View
+`admin_matches_form` ableitete. Der Matches-Controller bindet nun wie der
+ursprüngliche Ablauf ausdrücklich `admin_form`. Ein Regressionstest hält diesen
+Viewvertrag unabhängig vom Modellnamen fest.
+
+### BUG-030 - Contentifys Carbon-Unterklasse liest entfernte Carbon-3-Eigenschaft
+
+Severity: **high**
+Status: **resolved in 0.11.0, 2026-09-07 10:50 CEST**
+
+Die Formularansichten riefen `Contentify\Carbon::date()` auf. Diese Methode las
+direkt Carbons frühere statische Eigenschaft `$toStringFormat`, die Carbon 3
+entfernt hat. Dadurch antworteten unter anderem die Erstellseiten für News,
+Matches und Seiten mit HTTP 500. Die Contentify-Unterklasse verwendet nun
+direkt das bereits benutzerspezifisch übersetzte Datumsformat. Ein
+Regressionstest prüft Datum, Datum/Uhrzeit und gerichtete Carbon-3-Differenzen.
+
+### BUG-029 - Laravel Collective HTML endet upstream bei Laravel 10
+
+Severity: **high**
+Status: **resolved as controlled bridge in 0.11.0, 2026-09-07 10:26 CEST**
+
+`laravelcollective/html` 6.4.1 erlaubt Illuminate nur bis Laravel 10 und
+blockierte die Laravel-11-Auflösung. Contentify verwendet die Form- und
+HTML-Fassaden in zahlreichen bestehenden Templates. Ein gleichzeitiger
+Template-Umbau würde die isolierte Framework-Stufe unnötig vergrößern. Der
+exakte MIT-lizenzierte Upstream-Commit liegt daher als lokale Version 6.4.2 im
+Projekt. Neben Composer-Metadaten und Herkunftsdokumentation wurden genau zwei
+Konstruktorsignaturen ohne Verhaltensänderung an PHP 8.5 angepasst.
+Der Austausch durch eine gepflegte Lösung bleibt eine eigene Aufgabe.
+
+### BUG-028 - Laravel 11 lädt unter PHP 8.5 doppelte Framework-Konfiguration
+
+Severity: **medium**
+Status: **resolved in 0.11.0, 2026-09-07 10:26 CEST**
+
+Laravel 11 ergänzt standardmäßig die Konfiguration seiner neuen schlanken
+Anwendungsstruktur. Contentify besitzt bereits einen vollständigen, gepflegten
+Konfigurationsbaum. Das zusätzliche Laden der Framework-Datenbankvorgaben
+wertete unter PHP 8.5 zweimal die veraltete PDO-MySQL-Konstante aus. Der
+vollständige Contentify-Konfigurationsbaum wird nun ausdrücklich allein
+verwendet; Artisan startet danach ohne diese Deprecations.
 
 ### BUG-027 - Laravel 10 entfernt die Eloquent-Eigenschaft `$dates`
 
@@ -20,20 +70,21 @@ wurden ohne Änderung der Datenbankspalten auf explizite `datetime`-Casts
 ### BUG-026 - Steam-Authentifizierung endet upstream bei Laravel 9
 
 Severity: **high**
-Status: **resolved as controlled bridge in 0.10.0, 2026-09-07 09:45 CEST**
+Status: **resolved as controlled bridge through 0.11.0, 2026-09-07 10:26 CEST**
 
 Das aufgegebene Paket `invisnik/laravel-steam-auth` 4.4.0 erlaubt Illuminate
 nur bis Laravel 9 und blockierte die Laravel-10-Auflösung. Weil Contentify den
 Steam-OpenID-Ablauf direkt verwendet, wäre ersatzloses Entfernen ein
 Funktionsverlust. Der exakte MIT-lizenzierte Upstream-Stand liegt daher als
 lokale Version 4.4.1 im Projekt; geändert wurden ausschließlich Composer-
-Metadaten für PHP 8.5/Laravel 10. Der PHP-Paketcode blieb unverändert. Ein
+Metadaten für PHP 8.5/Laravel 10 und anschließend Laravel 11. Die lokale
+Brückenversion ist nun 4.4.2; der PHP-Paketcode blieb unverändert. Ein
 späterer Austausch gegen eine gepflegte Implementierung bleibt erforderlich.
 
 ### BUG-025 - Caffeinated Modules endet offiziell bei Laravel 8
 
 Severity: **high**
-Status: **resolved as controlled bridge through 0.10.0, 2026-09-07 09:45 CEST**
+Status: **resolved as controlled bridge through 0.11.0, 2026-09-07 10:26 CEST**
 
 Contentifys 44 Module hängen an `caffeinated/modules`. Die letzte Ausgabe 6.3.1
 stammt von 2021 und erlaubt Illuminate nur bis Version 8, wodurch Composer den
@@ -41,7 +92,7 @@ Laravel-9-Kandidaten korrekt blockierte. Ein unmittelbarer Wechsel des gesamten
 Modulsystems wäre keine isolierte Framework-Stufe. Version 0.9.0 übernimmt daher
 den MIT-lizenzierten Stand unverändert als lokale Version 6.3.2 und erweitert
 nur dessen Plattformvertrag auf PHP 8.5 und anschließend Illuminate 10. Die
-lokale Brückenversion ist jetzt 6.3.3. Die Herkunft ist im
+lokale Brückenversion ist jetzt 6.3.4 und erlaubt Illuminate 11. Die Herkunft ist im
 Paket dokumentiert. Modulverwaltung, 44 Modul-Bootstraps, 515 Routen und die
 authentifizierte Admin-Modulseite funktionieren im Kandidaten. Ein späterer
 Austausch bleibt als eigene Architekturaufgabe offen.
@@ -145,9 +196,9 @@ laufendem Nginx/FPM-Staging.
 Severity: **blocker**
 Status: **open**
 
-After the controlled `0.10.0` Laravel-10 rung, `composer audit --locked --no-dev`
+After the controlled `0.11.0` Laravel-11 rung, `composer audit --locked --no-dev`
 reports **3 known advisories in one package**. Sie betreffen Laravel Framework
-10.50.3. Composer 2.10 blockiert diese letzte stabile Laravel-10-Ausgabe daher
+11.56.1. Composer 2.10 blockiert diese letzte stabile Laravel-11-Ausgabe daher
 bei einer neuen Auflösung; der interne Lockbestand wurde einmal mit
 `--no-blocking` erzeugt, während der Audit alle Findings weiterhin meldet.
 Production approval remains blocked.
@@ -164,10 +215,10 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 - Version `0.8.0` aktualisiert die beiden blockierenden Nette-Pakete und setzt
   die PHP-Anforderung auf `~8.5.0`; Installation und Plattformprüfung laufen
   nun ohne ignorierte Anforderungen.
-- Composer meldet noch zwei aufgegebene Produktionspakete:
-  `laravelcollective/html` und `oyejorge/less.php`. Die ebenfalls aufgegebene
-  Steam-Authentifizierung wird seit 0.10.0 als kontrollierte lokale Brücke
-  geführt und bleibt als technische Schuld dokumentiert.
+- Composer meldet noch ein aufgegebenes Produktionspaket: `oyejorge/less.php`.
+  Laravel Collective HTML und Steam-Authentifizierung werden seit 0.11.0 als
+  kontrollierte lokale Brücken geführt und bleiben als technische Schuld
+  dokumentiert.
 
 ### BUG-013 - Laravel-6 patch level was below available security fixes
 

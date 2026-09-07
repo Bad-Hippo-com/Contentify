@@ -17,7 +17,7 @@ class Carbon extends OriginalCarbon
      */
     public function date() : string
     {
-        return $this->format(self::$toStringFormat);
+        return $this->format(trans('app.date_format'));
     }
 
     /**
@@ -27,6 +27,6 @@ class Carbon extends OriginalCarbon
      */
     public function dateTime() : string
     {
-        return $this->format(self::$toStringFormat).' '.$this->format('H:i:s');
+        return $this->format(trans('app.date_format')).' '.$this->format('H:i:s');
     }
 }

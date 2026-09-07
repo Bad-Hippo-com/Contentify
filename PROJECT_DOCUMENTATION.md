@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.10.0**
-Assessment/update time: **2026-09-07 09:45 CEST**
+Local workstream version: **0.11.0**
+Assessment/update time: **2026-09-07 11:01 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -48,9 +48,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 10 lint | Pass; `0.10.0` parses 792 project and local-package files |
-| PHP 8.5 / Laravel 10 Artisan | Pass; Laravel 10.50.3 and 515 candidate routes |
-| PHP 8.5 / Laravel 10 PHPUnit | Pass; 14 tests with 47 assertions |
+| PHP 8.5 / Laravel 11 lint | Pass; `0.11.0` parses 801 project and local-package files |
+| PHP 8.5 / Laravel 11 Artisan | Pass; Laravel 11.56.1 and 512 active production routes |
+| PHP 8.5 / Laravel 11 PHPUnit | Pass; 17 tests with 52 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -61,7 +61,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Fails; 3 Laravel-10 advisories in one package |
+| Composer production audit | Fails; 3 Laravel-11 advisories in one package |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -654,6 +654,54 @@ aufgegeben. Der Lockbestand wurde für diese bewusst interne Zwischenstufe
 einmal mit `--no-blocking` erzeugt; Findings werden nicht ausgeblendet. Daher
 bleibt Public gesperrt und Laravel 11 ist die nächste Migrationsstufe.
 
+### Laravel-11-Migrationsstufe 0.11.0 - 2026-09-07 10:26 CEST
+
+Laravel wurde bei unverändertem PHP 8.5.10 auf 11.56.1 angehoben. Sentinel
+wechselt regulär auf 8.0.0, Collision auf 8.5.0 und Carbon auf 3.13.2. Die
+bestehende Laravel-10-Anwendungsstruktur bleibt gemäß offiziellem Upgradepfad
+erhalten. Contentify verwendet weiterhin seinen vollständigen eigenen
+Konfigurationsbaum und deaktiviert deshalb das zusätzliche Zusammenführen der
+schlanken Laravel-11-Frameworkvorgaben. Dadurch verschwinden zugleich zwei
+PHP-8.5-Deprecations aus der doppelten Datenbankkonfiguration.
+
+Die erste Auflösung stoppte regulär an Sentinel 7; dessen neue Version 8 stellt
+den Laravel-11-Vertrag bereit. Danach blockierte `laravelcollective/html` 6.4.1,
+das upstream nur bis Illuminate 10 reicht. Der exakte MIT-Stand vom Commit
+`64ddfdcaeeb8d332bd98bef442bef81e39c3910b` liegt nun als lokale Version 6.4.2
+im Projekt. Composer-Metadaten, Herkunftsdokumentation und genau zwei unter
+PHP 8.5 implizit-nullbare Konstruktorsignaturen wurden angepasst.
+Die Modul- und Steam-Brücken werden nach demselben kontrollierten Muster als
+6.3.4 und 4.4.2 weitergeführt; ihr PHP-Code bleibt unverändert.
+
+Carbon 3 kann Zeitdifferenzen gerichtet als Fließkommazahl liefern. Die einzige
+Contentify-Verwendung von `diffInMinutes()` entscheidet nur, ob ein Forenbeitrag
+nachträglich geändert wurde, und wertet die Differenz nun mit `abs()` bewusst
+richtungsunabhängig aus. Der Installationstest kapselt den vorhandenen
+Staging-Marker jetzt vor dem Anwendungsstart und prüft die tatsächliche
+Installer-Closure ohne Abhängigkeit von einem gemounteten Laufzeitspeicher.
+
+Die eigene Carbon-Unterklasse las außerdem noch die in Carbon 3 entfernte
+statische Eigenschaft `$toStringFormat`. Erstellformulare für News, Matches und
+Seiten antworteten deshalb im ersten Browserlauf mit HTTP 500. `date()` und
+`dateTime()` verwenden nun direkt das bereits übersetzte Contentify-
+Datumsformat; ein eigener Regressionstest deckt beide Methoden ab.
+
+Der erweiterte Formularlauf deckte zusätzlich einen bereits auf Laravel 10
+vorhandenen Fehler aus der PHP-8-Modellumbenennung auf: Der Matches-Controller
+leitete `admin_matches_form` statt des vorhandenen `admin_form` ab. Ein
+expliziter Formularvertrag und ein Regressionstest beheben diesen Fehler.
+
+Composer validiert den Lockbestand und PHPUnit 10.5.64 besteht 17 Tests mit 52
+Assertions. Der Audit meldet weiterhin drei Advisories in Laravel 11.56.1 und
+nur noch ein offiziell aufgegebenes Paket, Less.php. Public bleibt gesperrt;
+Laravel 12 ist die nächste getrennte Framework-Stufe.
+
+Der abschließende Kandidat bestand 801 Syntaxprüfungen, 17 Tests mit 52
+Assertions, 512 aktive Produktionsrouten, vier Migrationen, beide Smoke-Tests,
+lesende Match-/Cup-Datenbankzugriffe und den Steam-Service-Bootstrap. Der
+saubere Browserlauf öffnete Dashboard, Matches, Cups, Logviewer, News- und
+Seitenformulare sowie Module ohne neue Anwendung-, PHP- oder Nginx-Fehler.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -672,6 +720,7 @@ bleibt Public gesperrt und Laravel 11 ist die nächste Migrationsstufe.
 - `app/Modules/Matches/GameMatch.php` und `app/Modules/Cups/CupMatch.php`: PHP-8-kompatible Modellnamen bei unveränderten Tabellen
 - `tests/Unit/Php8ModelNamesTest.php`: Tabellen- und Relationsverträge der umbenannten Modelle
 - `packages/laravel-steam-auth`: dokumentierte Steam-OpenID-Kompatibilitätskopie
+- `packages/laravelcollective-html`: dokumentierte Formular-/HTML-Kompatibilitätskopie
 - `tests/Unit/Laravel10DateCastsTest.php`: Laravel-10-Datumsregression
 - `composer.json` and `composer.lock`: reproducible Laravel-10 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
