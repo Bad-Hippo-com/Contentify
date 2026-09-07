@@ -1,7 +1,7 @@
 # Contentify project assessment
 
 Local workstream version: **0.15.3**
-Assessment/update time: **2026-09-07 17:56 CEST**
+Assessment/update time: **2026-09-07 18:33 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -843,7 +843,7 @@ echte Browser zeigt beide deutschen Editoren sowie die neue Bad-Hippo-Meldung
 an erster Stelle. Die Containerlogs enthalten seit dem Rollout keinen neuen
 Fehler, keine Exception und keinen Rechtefehler.
 
-### Node-/LESS-Modernisierung 0.15.0 - 2026-09-07 17:56 CEST
+### Node-/LESS-Modernisierung 0.15.0 bis 0.15.3 - 2026-09-07 18:33 CEST
 
 Der historische Baum aus Grunt 1.3, `grunt-contrib-less` 1.0.1,
 `grunt-contrib-watch` 0.6.1 und `jit-grunt` ließ sich mit npm 11 nicht regulär
@@ -875,6 +875,27 @@ verworfen: Der Test darf nicht an die installierte Betriebsumgebung gekoppelt
 sein. 0.15.3 blendet den Marker zentral in `Tests\CreatesApplication` aus und
 stellt ihn im gemeinsamen `TestCase` selbst bei Fehlern wieder her. Das Image
 und die MariaDB-Betriebsdaten bleiben unverändert.
+
+Der finale isolierte Kandidat bestand unter PHP 8.5.10 und Laravel 13.30.1 die
+vollständigen 22 Tests mit 74 Assertions, 515 Routen, beide direkt ausführbaren
+Smoke-Skripte sowie den npm-Vertrag. Anschließend wurde der exakte Commit
+`0a4e094826b9f091c1a4de57c600b12b77e38ad3` in ein frisches Git-Checkout unter
+`/opt/contentify-staging` übernommen. Der vorherige 0.14.0-Quellstand liegt als
+Rollback-Kopie unter `/opt/contentify-staging-backup-0.14.0-20260907-1835`;
+Datenbank, Storage, Uploads, Anwendungsschlüssel und zentrale Logs wurden nicht
+ersetzt.
+
+Die Live-Container melden Build 0.15.3, PHP 8.5.10, Laravel 13.30.1, 512 auf
+diesem Modulbestand aktive Routen und eine vorhandene Installationsmarkierung.
+Composer meldet keine bekannte Sicherheitslücke, aber weiterhin das bereits
+erfasste aufgegebene Produktionspaket `oyejorge/less.php`. Upload- und
+Speicherplatz-Smoke bestehen. Homepage, Backend-CSS, Glyphicons und die vier
+tatsächlich eingebundenen SunEditor-Dateien antworten mit HTTP 200; CKEditor
+antwortet mit HTTP 404. Der authentifizierte Browser zeigt Icons, ausschließlich
+IP-basierte Menüziele, den Bad-Hippo-Feed an erster Stelle sowie beide deutschen
+Editoren mit ihren Werkzeugleisten. Seit dem Rollout entstanden keine neuen
+Anwendungs-, Job-, PHP- oder Nginx-Fehler. Danach wurde der isolierte Kandidat
+beendet, ohne seine Diagnose-Volumes zu löschen.
 
 ## Files added or updated
 

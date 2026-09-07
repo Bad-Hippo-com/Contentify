@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
 Local workstream version: **0.15.3**
-Last updated: **2026-09-07 17:56 CEST**
+Last updated: **2026-09-07 18:33 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -17,6 +17,9 @@ Last updated: **2026-09-07 17:56 CEST**
 
 - [x] PHPUnit auf installierten Kandidaten vom Betriebsmarker und der realen
   MariaDB entkoppeln (`0.15.3`, BUG-040).
+- [x] `0.15.3` nach 22 Tests mit 74 Assertions im isolierten Kandidaten auf
+  Staging ausrollen; 512 Live-Routen, beide Smoke-Skripte, echte Editor-Assets,
+  Dashboard-Icons, IP-Menülinks, Feed-Reihenfolge und frische Logs prüfen.
 - [x] Historischen npm-/Grunt-Baum durch Less 4.9.1 und einen Node-24-Watcher
   ersetzen; `npm ci`, reproduzierbaren Build und Audit mit null bekannten
   Schwachstellen nachweisen (`0.15.0`).

@@ -1,7 +1,7 @@
 # Contentify porting plan
 
 Local workstream version: **0.15.3**
-Last updated: **2026-09-07 17:56 CEST**
+Last updated: **2026-09-07 18:33 CEST**
 
 ## Decision
 
@@ -38,9 +38,9 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.14.0` remains installed on staging with Nginx 1.26.3 while the
-isolated `0.15.3` candidate is being verified. It uses
-PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11. The application, database,
+Version `0.15.3` is installed on staging with Nginx 1.26.3 after passing its
+isolated candidate. It uses PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11.
+The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -55,6 +55,12 @@ Die Node-/LESS-Stufe 0.15.0 ersetzt danach nur die historische Grunt-Baukette.
 Node.js 24, npm 11 und Less 4.9.1 bauen das weiterhin auf Bootstrap 3.3.7
 basierende Stylesheet reproduzierbar. Der npm-Audit sinkt von 23 auf null
 bekannte Schwachstellen; PHP, Laravel, Editor und Bootstrap bleiben unverändert.
+Der isolierte Kandidat bestand 22 Tests mit 74 Assertions und wurde danach aus
+dem exakten Git-Stand auf Port 80 ausgerollt. Live wurden 512 Routen, beide
+Smoke-Skripte, Dashboard, IP-Menülinks, Feed-Reihenfolge, beide Editoren und die
+wirklich eingebundenen SunEditor-Assets geprüft. Seit dem Rollout enthalten die
+Containerlogs keinen neuen Fehler. Das Kandidatensystem wurde danach beendet;
+seine persistenten Volumes bleiben für eine nachvollziehbare Diagnose erhalten.
 
 ## Target-selection rule
 
@@ -521,7 +527,7 @@ HTTP 200, der entfernte CKEditor-Pfad HTTP 404. Beide Smoke-Tests, 512 auf diese
 Modulbestand aktive Routen, PHP 8.5.10, Laravel 13.30.1, der echte Admin-
 Editor und die neue oberste Bad-Hippo-Feedmeldung wurden erneut geprüft.
 
-### Node-/LESS-Stufe 0.15.0 - 2026-09-07 17:56 CEST
+### Node-/LESS-Stufe 0.15.0 bis 0.15.3 - 2026-09-07 18:33 CEST
 
 Grunt und seine alten LESS-/Watch-Plugins werden entfernt. Less 4.9.1 baut die
 vorhandene LESS-Einstiegsdatei direkt, ein kleines Node-24-Skript übernimmt den
@@ -530,6 +536,12 @@ Glyphicons-Pfade; der Google-Font-Import bleibt netzunabhängig im erzeugten CSS
 Normaler Clean-Install, Audit, Build, Test und Watch-Probe bestehen ohne
 Legacy-Auflösung, zwei Builds sind bytegleich. Bootstrap bleibt auf 3.3.7 und
 wird erst in einer eigenen folgenden Stufe bearbeitet.
+
+Der finale Kandidat bestand 22 Tests mit 74 Assertions, 515 Kandidatenrouten,
+beide Smoke-Skripte und alle Frontend-Verträge. Danach wurde Commit
+`0a4e094826b9f091c1a4de57c600b12b77e38ad3` als `0.15.3` auf Staging
+installiert. Dort bestehen 512 modulabhängige Routen, beide Smoke-Skripte und
+die echten HTTP-/Browserprüfungen; der entfernte CKEditor bleibt HTTP 404.
 
 ## Non-viable shortcut
 

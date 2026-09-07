@@ -5,6 +5,11 @@
   booten und den Betriebsdatenbestand nicht verwenden.
 - Den in 0.15.1/0.15.2 erprobten SQLite-Umweg wieder entfernt; diese beiden
   Kandidaten wurden nicht auf Staging übernommen.
+- Finalen Kandidaten mit 22 Tests und 74 Assertions, 515 Routen sowie beiden
+  Smoke-Skripten bestanden und anschließend auf Staging installiert.
+- Live 512 modulabhängige Routen, PHP 8.5.10, Laravel 13.30.1, Dashboard-Icons,
+  IP-Menülinks, Feed-Reihenfolge, beide SunEditor-Instanzen, HTTP-Assets und
+  frische Containerlogs geprüft; CKEditor bleibt erwartungsgemäß HTTP 404.
 
 ## Bad Hippo 0.15.2 / Contentify 3.3-dev - 2026-09-07
 

@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.15.3**
-Last updated: **2026-09-07 17:56 CEST**
+Last updated: **2026-09-07 18:33 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -18,6 +18,9 @@ abfragt. Dadurch scheiterten elf Tests vor ihrer eigentlichen Prüfung. Die
 falsche Ebene und wurden nicht auf Staging übernommen. 0.15.3 blendet den Marker
 für jeden Test zentral aus und stellt ihn selbst nach Ausnahmen wieder her. Die
 Suite bleibt zustandslos und die MariaDB-Betriebsdaten werden nicht verwendet.
+Der finale Kandidat bestand dadurch 22 Tests mit 74 Assertions. Derselbe Stand
+läuft als `0.15.3` auf Staging; der Installationsmarker blieb nach den Tests
+vorhanden und beide zustandslosen Smoke-Skripte bestanden erneut.
 
 ### BUG-039 - Ausgelieferter CKEditor 4.3.1 ist abgekündigt und unsicher
 
