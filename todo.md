@@ -1,14 +1,14 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.8.0**
-Last updated: **2026-09-07 07:35 CEST**
+Local workstream version: **0.9.0**
+Last updated: **2026-09-07 08:30 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Laravel als nächste Achse schrittweise über Version 8 hinaus aktualisieren;
+4. Laravel als nächste Achse schrittweise über Version 9 hinaus aktualisieren;
    Bootstrap und Node.js bleiben davon getrennt.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
@@ -127,8 +127,12 @@ Last updated: **2026-09-07 07:35 CEST**
   Composer 2.10.3 sowie kompatible Nette-Versionen verwenden, alle eigenen
   PHP-8.5-Deprecations beseitigen und 735 Syntaxprüfungen, zwölf Unit-Tests mit
   42 Assertions, Plattform-, Datenbank-, Nginx- und HTTP-Prüfungen bestehen.
-- [ ] Laravel 8 in einer eigenen Folgestufe anheben und dabei die unter PHP 8.5
-  protokollierten Framework-Deprecations sowie die drei Advisories abbauen.
+- [x] Laravel in `0.9.0` getrennt von 8.83.29 auf 9.52.21 anheben; Sentinel,
+  Collision, Ignition, Proxy, Mailer und Flysystem anpassen, die zentrale
+  Caffeinated-Modulverwaltung kontrolliert übernehmen und 781 Syntaxprüfungen,
+  zwölf Unit-Tests, beide Smokes sowie fünf Adminbereiche bestehen.
+- [ ] Laravel 9 in der nächsten getrennten Stufe auf Laravel 10 anheben und dabei die vier
+  Framework-Advisories weiter abbauen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.
@@ -142,7 +146,7 @@ Last updated: **2026-09-07 07:35 CEST**
   `/admin/config/log` without exposing central component logs to its delete
   action; verify both outputs and the authenticated browser view on staging
   (BUG-018).
-- [ ] Reduce the remaining Composer production audit from 3 advisories to zero
+- [ ] Reduce the remaining Composer production audit from 4 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.

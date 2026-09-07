@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.8.0**
-Assessment/update time: **2026-09-07 07:35 CEST**
+Local workstream version: **0.9.0**
+Assessment/update time: **2026-09-07 08:30 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -14,7 +14,7 @@ and whether the upstream Contentify CMS can be implemented on a current stack.
 - Community repository: `https://github.com/Bad-Hippo-com/Contentify.git`
 - Upstream repository: `https://github.com/Contentify/Contentify.git`
 - Local branch: `main`, intended to track `origin/main`
-- Commit: `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
+- Upstream baseline commit: `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 - Commit date: 2022-11-20 15:35:06 +0100
 - Upstream label: Contentify v3.2 ALPHA
 - Latest upstream release/tag: v3.1, also described by its README as beta-based
@@ -39,15 +39,18 @@ v3.2 upgrade and instructs users to reinstall and manually transfer data.
 - Composer 2.10.3 for validation and advisory checks
 - Bundled project Composer executable for compatibility comparison
 - Staging: internal Debian 13.6 host, Docker 26.1.5 and Compose 2.26.1
-- Staging containers: Nginx 1.26.3, PHP-FPM 8.0.30 and MariaDB 10.11
+- Staging containers: Nginx 1.26.3, PHP-FPM 8.5.10 and MariaDB 10.11
 
-Temporary runtimes and dependency directories were used only for verification.
-Generated lock/build output was removed before documentation was written.
+Isolierte Kandidaten und versionierte Lockbestände werden vor jedem
+Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 ## Verification results
 
 | Check | Result |
 | --- | --- |
+| PHP 8.5 / Laravel 9 lint | Pass; `0.9.0` parses 781 project and local-package files |
+| PHP 8.5 / Laravel 9 Artisan | Pass; Laravel 9.52.21 and 515 candidate routes |
+| PHP 8.5 / Laravel 9 PHPUnit | Pass; 12 unit tests with 42 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -58,7 +61,7 @@ Generated lock/build output was removed before documentation was written.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Improved but fails; 3 advisories in one package |
+| Composer production audit | Fails; 4 Laravel-9 advisories in one package |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -68,14 +71,12 @@ Generated lock/build output was removed before documentation was written.
 
 Contentify is obsolete as delivered:
 
-- Laravel 8 no longer receives official bug or security fixes. Current Laravel
-  is 13, whose supported PHP range is 8.3 through 8.5.
-- PHP 7.4, the newest runtime on which the first-party source parses cleanly,
-  reached end-of-life in November 2022.
-- PHP 8.5 is actively supported, but Contentify cannot parse on it because
-  `match` became a reserved keyword in PHP 8.
-- Locked runtime libraries mostly date from 2017-2021 and have accumulated 47
-  production advisories.
+- Laravel 9 no longer receives official bug or security fixes. Current Laravel
+  is 13, whose supported PHP range includes PHP 8.5.
+- Der Bad-Hippo-Stand läuft inzwischen auf PHP 8.5.10; die reservierten
+  `Match`-Klassennamen wurden in 0.7.0 beseitigt.
+- Der aktuelle Produktions-Lockbestand meldet vier Advisories in Laravel 9 und
+  drei aufgegebene Pakete; Public bleibt dadurch gesperrt.
 - The old Travis badge/configuration and stale-bot file are the only automation;
   there is no current CI pipeline.
 - The installation wiki was last edited in August 2021 and contradicts both PHP
@@ -581,6 +582,41 @@ Nginx/FPM-Pfad mit HTTP 200. Laravel 8 schreibt unter PHP 8.5 weiterhin eigene
 Deprecation-Hinweise in die vorbereiteten Logs. Sie werden nicht unterdrückt
 und bilden zusammen mit drei verbleibenden Laravel-Advisories die klare
 Eingangslage für den folgenden Framework-Sprung. Public bleibt gesperrt.
+
+### Laravel-9-Migrationsstufe 0.9.0 - 2026-09-07 08:30 CEST
+
+Laravel wurde als eigene Achse von 8.83.29 auf die letzte stabile Version
+9.52.21 gehoben; PHP blieb exakt 8.5.10. Die offiziellen Laravel-9-Hinweise
+führten zu Collision 6.4.0, Spatie Laravel Ignition, Symfony Mailer, Flysystem 3
+und der Framework-eigenen Proxy-Middleware. Sentinel 6.0.1 ist die erste
+Ausgabe mit Illuminate-9-Vertrag. Mail- und Dateisystemkonfiguration folgen dem
+Laravel-9-Aufbau, behalten aber Rückfallwerte für die vorhandenen
+`MAIL_DRIVER`- und `FILESYSTEM_DRIVER`-Umgebungen bei.
+
+Der nächste Composer-Blocker war `caffeinated/modules` 6.3.1. Die letzte
+Veröffentlichung von 2021 erlaubt Illuminate nur bis 8, obwohl Contentifys 44
+Module zentral von ihrer Repository- und Bootstrap-API abhängen. Ein Austausch
+des Modulsystems hätte die isolierte Framework-Stufe aufgehoben. Der exakt
+verwendete MIT-Stand wurde deshalb in `packages/caffeinated-modules` als lokale
+Version 6.3.2 übernommen. Der Paketquellcode ist unverändert; nur sein PHP- und
+Illuminate-Vertrag wurde auf die gemessene Umgebung erweitert. Eine eigene
+Herkunftsdatei nennt Originalversion und Commit.
+
+Der isolierte Produktionskandidat installierte ohne ignorierte Plattform-
+anforderungen und meldete PHP 8.5.10 sowie Laravel 9.52.21. Er bestand 781
+Syntaxprüfungen ohne Fehler, zwölf Unit-Tests mit 42 Assertions, beide
+Smoke-Tests, 515 registrierte Routen, vier vorhandene Migrationen und lesende
+Abfragen über beide Match-Modelle. Die bestehende Admin-Sitzung öffnete
+Dashboard, Matches, Cups, Logviewer, News und Modulverwaltung auf dem getrennten
+Prüfport; Links enthielten die korrekte IP und alle Assets wurden geladen.
+
+Die letzte stabile Laravel-9-Version ist 2026 selbst von vier veröffentlichten
+Advisories betroffen. Composer 2.10 blockiert sie daher standardmäßig bei einer
+neuen Auflösung. Nur das Erzeugen dieses internen Lockbestands erfolgte einmal
+mit `--no-blocking`; `composer audit` bleibt aktiv und meldet alle vier Funde.
+Zusätzlich bleiben Steam Auth, Laravel Collective HTML und Less.php aufgegeben.
+Der Schritt ist eine interne Migrationsstufe und ausdrücklich keine Public-
+Freigabe.
 
 ## Files added or updated
 

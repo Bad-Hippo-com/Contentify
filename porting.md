@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.8.0**
-Last updated: **2026-09-07 07:35 CEST**
+Local workstream version: **0.9.0**
+Last updated: **2026-09-07 08:30 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.8.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.5.10, Laravel 8.83.29 and MariaDB 10.11. The application, database,
+Version `0.9.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 9.52.21 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -316,6 +316,33 @@ bleiben in den ausführlichen zentralen und klassischen Logs erhalten. Sie sind
 kein Anlass, Vendor-Dateien zu patchen oder Meldungen zu unterdrücken, sondern
 die messbare Ausgangslage für die nächste getrennte Laravel-Stufe. Drei
 Laravel-Advisories verhindern weiterhin eine Public-Freigabe.
+
+### Laravel-9-Migrationsstufe 0.9.0 - 2026-09-07 08:30 CEST
+
+Laravel wurde bei unverändertem PHP 8.5.10 von 8.83.29 auf die letzte stabile
+9.x-Ausgabe 9.52.21 angehoben. Sentinel wechselte auf 6.0.1, Collision auf
+6.4.0 und Facade Ignition wurde entsprechend Laravels Upgradepfad durch Spatie
+Laravel Ignition ersetzt. Die externe Fideloper-Proxy-Middleware entfällt
+zugunsten der Framework-Implementierung. Laravel 9 ersetzt außerdem SwiftMailer
+durch Symfony Mailer und Flysystem 1 durch Flysystem 3; beide Konfigurationen
+wurden aktualisiert und akzeptieren vorerst weiterhin die historischen
+Umgebungsvariablen als Rückfallwert.
+
+Die letzte Veröffentlichung von `caffeinated/modules` unterstützt Composer-
+seitig nur Illuminate 6 bis 8. Da Contentifys 44 Module an genau dieser API
+hängen, wurde v6.3.1 unter Beibehaltung der MIT-Lizenz als lokale Version 6.3.2
+übernommen. Nur PHP- und Illuminate-Anforderung wurden erweitert; der Paketcode
+blieb unverändert. Herkunft und Abgrenzung stehen in
+`packages/caffeinated-modules/BAD_HIPPO.md`. Damit bleibt die Framework-Stufe
+klein und ein möglicher späterer Austausch des Modulsystems separat.
+
+Der Kandidat bestand 781 Syntaxprüfungen, zwölf Unit-Tests mit 42 Assertions,
+beide Smoke-Tests, 515 Routen, vier Migrationen und Datenbankabfragen über
+GameMatch und CupMatch. Dashboard, Matches, Cups, Logs, News und Module wurden
+mit der bestehenden Admin-Sitzung geprüft. Der Produktions-Audit meldet vier
+Advisories in Laravel 9.52.21 und drei aufgegebene Pakete. Composer 2.10 musste
+die bekannte Laravel-9-Stufe beim Erzeugen des Lockbestands einmal mit
+`--no-blocking` zulassen; der Audit bleibt aktiv und Public bleibt gesperrt.
 
 ## Non-viable shortcut
 

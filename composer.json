@@ -5,6 +5,15 @@
     "homepage": "http://www.contentify.org",
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/caffeinated-modules",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "require": {
         "php": "~8.5.0",
         "ext-ctype": "*",
@@ -13,26 +22,25 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",
-        "caffeinated/modules": "6.*",
-        "cartalyst/sentinel": "^5.0",
+        "caffeinated/modules": "^6.3.2",
+        "cartalyst/sentinel": "^6.0",
         "chriskonnertz/bbcode": "1.*",
         "chriskonnertz/jobs": "3.*",
         "chriskonnertz/open-graph": "1.*",
-        "fideloper/proxy": "^4.4",
         "intervention/image": "2.*",
         "invisnik/laravel-steam-auth": "4.*",
-        "laravel/framework": "^8.0",
+        "laravel/framework": "^9.52.21",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.0",
         "oyejorge/less.php": "1.*",
         "watson/validating": "3.*"
     },
     "require-dev": {
-        "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^5.0",
+        "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^8.5.8|^9.3.3",
+        "spatie/laravel-ignition": "^1.0",
         "squizlabs/php_codesniffer": "*"
     },
     "config": {

@@ -1,23 +1,39 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.8.0**
-Last updated: **2026-09-07 07:35 CEST**
+Local workstream version: **0.9.0**
+Last updated: **2026-09-07 08:30 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### BUG-025 - Caffeinated Modules endet offiziell bei Laravel 8
+
+Severity: **high**
+Status: **resolved as controlled bridge in 0.9.0, 2026-09-07 08:30 CEST**
+
+Contentifys 44 Module hängen an `caffeinated/modules`. Die letzte Ausgabe 6.3.1
+stammt von 2021 und erlaubt Illuminate nur bis Version 8, wodurch Composer den
+Laravel-9-Kandidaten korrekt blockierte. Ein unmittelbarer Wechsel des gesamten
+Modulsystems wäre keine isolierte Framework-Stufe. Version 0.9.0 übernimmt daher
+den MIT-lizenzierten Stand unverändert als lokale Version 6.3.2 und erweitert
+nur dessen Plattformvertrag auf PHP 8.5 und Illuminate 9. Die Herkunft ist im
+Paket dokumentiert. Modulverwaltung, 44 Modul-Bootstraps, 515 Routen und die
+authentifizierte Admin-Modulseite funktionieren im Kandidaten. Ein späterer
+Austausch bleibt als eigene Architekturaufgabe offen.
+
 ### BUG-024 - Laravel 8 erzeugt unter PHP 8.5 Framework-Deprecations
 
 Severity: **high**
-Status: **open; auf Staging mit 0.8.0 bestätigt, 2026-09-07 07:35 CEST**
+Status: **resolved by Laravel 9 rung 0.9.0, 2026-09-07 08:30 CEST**
 
 Die Anwendung läuft mit PHP 8.5.10, Laravel 8.83.29 erzeugt dabei jedoch viele
 Hinweise zu implizit-nullbaren Parametern aus dem Framework-Code. Eigene
 Vorkommen wurden beseitigt; der vollständige First-Party-Syntaxlauf meldet null
 Deprecations. Die Framework-Hinweise werden bewusst weder unterdrückt noch im
 Vendor-Verzeichnis gepatcht, sondern über die vorhandenen PHP- und Laravel-Logs
-gespeichert. Der nächste getrennte Laravel-Sprung muss sie durch eine reguläre
-Framework-Aktualisierung abbauen.
+gespeichert. Der isolierte Laravel-9.52.21-Kandidat erzeugt diese Framework-
+Deprecations nicht mehr; 781 Syntaxprüfungen und die vollständige Browserstrecke
+blieben ohne neue Warnung.
 
 ### BUG-023 - PHP-8.5-Abbild versuchte OPcache doppelt zu installieren
 
@@ -104,11 +120,12 @@ laufendem Nginx/FPM-Staging.
 Severity: **blocker**
 Status: **open**
 
-After the controlled `0.6.0` Laravel-8 rung, `composer audit --locked --no-dev`
-reports **3 known advisories in one package** instead of 12 in two packages on
-Laravel 7. The remaining findings affect Laravel Framework 8.83.29. PHP wurde
-in `0.8.0` auf 8.5.10 angehoben, Laravel 8 bleibt jedoch abgekündigt;
-production approval therefore remains blocked.
+After the controlled `0.9.0` Laravel-9 rung, `composer audit --locked --no-dev`
+reports **4 known advisories in one package**. Sie betreffen Laravel Framework
+9.52.21. Composer 2.10 blockiert diese letzte stabile Laravel-9-Ausgabe daher
+bei einer neuen Auflösung; der interne Lockbestand wurde einmal mit
+`--no-blocking` erzeugt, während der Audit alle Findings weiterhin meldet.
+Production approval remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
@@ -122,10 +139,9 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 - Version `0.8.0` aktualisiert die beiden blockierenden Nette-Pakete und setzt
   die PHP-Anforderung auf `~8.5.0`; Installation und Plattformprüfung laufen
   nun ohne ignorierte Anforderungen.
-- The refreshed lock still contains four abandoned production packages:
-  `invisnik/laravel-steam-auth`, `laravelcollective/html`, `oyejorge/less.php`
-  and `swiftmailer/swiftmailer`; development dependencies add further legacy
-  warnings.
+- Laravel 9 ersetzt SwiftMailer durch Symfony Mailer. Drei aufgegebene
+  Produktionspakete bleiben: `invisnik/laravel-steam-auth`,
+  `laravelcollective/html` und `oyejorge/less.php`.
 
 ### BUG-013 - Laravel-6 patch level was below available security fixes
 

@@ -1,0 +1,51 @@
+{
+    "name": "caffeinated/modules",
+    "version": "6.3.2",
+    "description": "Laravel Modules",
+    "keywords": ["modules", "laravel", "caffeinated"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shea Lewis",
+            "email": "shea.lewis89@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "~8.5.0",
+        "illuminate/support": "^9.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.5|^8.0",
+        "orchestra/testbench": "^4.0",
+        "spatie/phpunit-snapshot-assertions": "^2.0"
+    },
+    "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
+        "psr-4": {
+            "Caffeinated\\Modules\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Caffeinated\\Modules\\Tests\\": "tests"
+        }
+    },
+    "suggest": {
+        "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Caffeinated\\Modules\\ModulesServiceProvider"
+            ],
+            "aliases": {
+                "Module": "Caffeinated\\Modules\\Facades\\Module"
+            }
+        }
+    }
+}

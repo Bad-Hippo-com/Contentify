@@ -1,3 +1,22 @@
+## Bad Hippo 0.9.0 / Contentify 3.3-dev - 2026-09-07
+
+- Laravel als getrennte Migrationsachse von 8.83.29 auf die letzte stabile
+  9.x-Version 9.52.21 angehoben; PHP bleibt unverändert auf 8.5.10.
+- Sentinel auf 6.0.1 und Collision auf 6.4.0 aktualisiert, Facade Ignition durch
+  Spatie Laravel Ignition ersetzt und die Proxy-Middleware auf Laravels eigene
+  Implementierung umgestellt.
+- SwiftMailer durch Symfony Mailer und Flysystem 1 durch Flysystem 3 ersetzt;
+  Mail- und Dateisystemkonfiguration mit Rückwärtskompatibilität für vorhandene
+  Umgebungsvariablen aktualisiert.
+- Das nicht mehr veröffentlichte `caffeinated/modules` v6.3.1 als MIT-lizenzierte
+  lokale Kompatibilitätskopie 6.3.2 übernommen und kontrolliert für Laravel 9
+  freigegeben; der eigentliche Paketquellcode blieb unverändert.
+- 781 Syntaxprüfungen, zwölf Unit-Tests mit 42 Assertions, beide Smoke-Tests,
+  515 Routen, Migrationen, Datenbankmodelle und fünf authentifizierte
+  Adminbereiche im isolierten Kandidaten bestanden.
+- Der Produktions-Audit weist weiterhin sichtbar vier Laravel-9-Advisories und
+  drei aufgegebene Produktionspakete aus; Public bleibt gesperrt.
+
 ## Bad Hippo 0.8.0 / Contentify 3.3-dev - 2026-09-07
 
 - PHP als getrennte Migrationsachse direkt von 8.0.30 auf 8.5.10 angehoben;
