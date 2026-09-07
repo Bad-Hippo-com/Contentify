@@ -9,6 +9,8 @@
 - Cache-Deserialisierung ausschließlich für die vom Dashboard-Feed benötigte
   `stdClass` freigegeben und PHP-Sitzungsserialisierung für die Migration
   ausdrücklich beibehalten.
+- Bad-Hippo-Feed-URL und Anwendungscache mit dem Stand 0.13.0 versioniert, damit
+  GitHubs Raw-CDN nicht weiterhin die ältere Laravel-12-Meldung ausliefert.
 - 802 Syntaxprüfungen, 19 Tests mit 58 Assertions, 512 Routen, vier Migrationen,
   beide Smoke-Tests, Anmeldung, Dual-Logging und alle 36 Adminbereiche geprüft.
 - Composer-Audit ohne bekannte Sicherheitslücke; Public bleibt bis zur

@@ -6,6 +6,17 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### BUG-038 - GitHubs Raw-CDN hält alten Bad-Hippo-Feed fest
+
+Severity: **medium**
+Status: **resolved in 0.13.0, 2026-09-07 14:33 CEST**
+
+Nach dem Push lieferte GitHubs Raw-CDN dem Staging-Server weiterhin die vorige
+Feed-Datei, obwohl `main` bereits den Laravel-13-Eintrag enthielt. Der Browser
+zeigte deshalb Laravel 12 weiterhin als neueste Meldung. Die Feed-URL trägt nun
+die Standkennung `0.13.0`, und der unabhängige Anwendungscache steigt auf `v3`.
+Damit wird der neue Inhalt sofort geladen, ohne den Originalfeed zu verändern.
+
 ### BUG-037 - Alter CSRF-Eigenbau umgeht Laravels neuen Origin-Schutz
 
 Severity: **high**

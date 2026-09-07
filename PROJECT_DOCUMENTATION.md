@@ -794,6 +794,12 @@ Less.php bleibt als Frontend-Aufgabe. Die im Kandidaten gefundene Cache-
 Inkompatibilität und zwei korrigierte Kandidaten-Mounts bleiben in den
 getrennten Prüfprotokollen erhalten.
 
+Bei der Live-Abnahme blieb zunächst der Laravel-12-Feed an erster Stelle, obwohl
+der veröffentlichte GitHub-Stand bereits Laravel 13 enthielt. Der Raw-CDN lieferte
+dem Staging-Netz noch die alte Antwort. Die Bad-Hippo-Feed-URL enthält deshalb
+die Standkennung 0.13.0 und verwendet einen neuen unabhängigen Cache-Schlüssel;
+die erneute Browserprüfung muss den Laravel-13-Eintrag an erster Stelle zeigen.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links

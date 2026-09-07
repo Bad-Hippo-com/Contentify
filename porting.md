@@ -483,6 +483,10 @@ Adminbereiche. `composer audit --locked` meldet keine bekannte Schwachstelle;
 nur das aufgegebene Less.php bleibt als getrennte Frontend-Aufgabe. Public bleibt
 bis zur sauberen Installation auf dem unabhängigen Testsystem gesperrt.
 
+Die Live-Abnahme fand anschließend einen veralteten Raw-GitHub-CDN-Treffer für
+den Bad-Hippo-Feed. Version 0.13.0 kennzeichnet Feed-URL und Anwendungscache neu;
+der Laravel-13-Eintrag wird dadurch unmittelbar als erste Meldung geladen.
+
 ## Non-viable shortcut
 
 Running the unveränderten upstream code with `--ignore-platform-reqs` is not a
