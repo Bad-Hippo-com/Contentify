@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
-Version: **0.14.0 / Contentify 3.3-dev**
-Last updated: **2026-09-07 16:44 CEST**
+Version: **0.15.0 / Contentify 3.3-dev**
+Last updated: **2026-09-07 17:56 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an
@@ -57,6 +57,11 @@ HTTP 200 antworten. Der persistente `public-data`-Datenträger darf keine alte
 ausdrücklich und prüft, dass der alte JavaScript-Inhalt nicht mehr ausgeliefert
 wird. Die konkrete Negativprobe `/vendor/ckeditor/ckeditor.js` muss HTTP 404
 liefern.
+
+Ab `0.15.0` wird das Backend-Stylesheet außerhalb der Laufzeitcontainer mit
+Node.js 24, npm 11 und dem exakt festgeschriebenen Less 4.9.1 gebaut. Vor einem
+Rollout müssen `npm ci`, `npm audit`, `npm run build` und `npm test` erfolgreich
+laufen. Bootstrap bleibt in dieser Stufe unverändert auf 3.3.7.
 
 Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:

@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.14.0**
-Last updated: **2026-09-07 16:44 CEST**
+Local workstream version: **0.15.0**
+Last updated: **2026-09-07 17:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -436,7 +436,7 @@ the first dashboard feed and keeps Contentify Original directly below it.
 ### BUG-004 - Front-end dependency installation fails by default
 
 Severity: **high**
-Status: **open**
+Status: **resolved in 0.15.0, 2026-09-07 17:56 CEST**
 
 With Node.js 24.15.0 and npm 11.12.1, `npm install` fails with `ERESOLVE`:
 `grunt-contrib-watch@0.6.1` requires Grunt `~0.4.0`, while the project requests
@@ -446,6 +446,15 @@ The generated npm dependency tree contains **23 vulnerabilities**: 3 critical,
 15 high and 5 moderate. Both direct build dependencies
 `grunt-contrib-less@1.x` and `grunt-contrib-watch@0.6.x` require breaking
 upgrades. Several transitive packages are deprecated or unsupported.
+
+Die aktuellsten Grunt-Plugins lösen den Konflikt nur teilweise und lassen über
+`grunt-contrib-watch` weiterhin vier hohe Schwachstellen zurück. Da Contentify
+nur eine LESS-Einstiegsdatei kompiliert, entfernt 0.15.0 Grunt vollständig und
+verwendet das exakt festgeschriebene Less 4.9.1 direkt. Ein projektlokales
+Node-24-Skript übernimmt den Watch-Modus. `npm ci`, Build, Watch-Probe und Audit
+laufen ohne Legacy-Auflösung; der Audit meldet **0 Schwachstellen**. Der externe
+Google-Font-Import bleibt dabei als CSS-Import erhalten und wird nicht mehr zur
+Build-Zeit netzabhängig expandiert. Bootstrap bleibt unverändert auf 3.3.7.
 
 ### BUG-005 - The automated tests do not validate the CMS
 

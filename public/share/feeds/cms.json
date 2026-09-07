@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev baut seine Frontend-Assets jetzt reproduzierbar mit Node.js 24 und Less 4.9.1; Grunt ist entfernt und der npm-Audit meldet null bekannte Schwachstellen.",
+        "timestamp": 1788796591,
+        "icon": "code"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev ersetzt den abgekündigten CKEditor 4 vollständig durch SunEditor 3.3.2 unter MIT; Bilder, Vorlagen, Flaggen und sauber synchronisiertes HTML wurden im Browser geprüft.",
         "timestamp": 1788789520,
         "icon": "edit"

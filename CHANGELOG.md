@@ -1,3 +1,13 @@
+## Bad Hippo 0.15.0 / Contentify 3.3-dev - 2026-09-07
+
+- Historische Grunt-Baukette vollständig durch das exakt festgeschriebene
+  Less 4.9.1 und einen kleinen Node-24-Watcher ersetzt; Bootstrap bleibt 3.3.7.
+- `npm ci`, normaler CSS-Build, Einmal-Watcher und Frontend-Vertragstest laufen
+  ohne `--legacy-peer-deps` und ohne veraltete Grunt-Plugins.
+- npm-Abhängigkeitsbaum von 23 bekannten Schwachstellen auf null reduziert.
+- Google-Font-Import wird nicht mehr beim Build aus dem Netz aufgelöst; zwei
+  aufeinanderfolgende Builds erzeugen denselben SHA-256-Hash.
+
 ## Bad Hippo 0.14.0 / Contentify 3.3-dev - 2026-09-07
 
 - Den seit 2013 ausgelieferten CKEditor 4.3.1 vollständig durch den exakt

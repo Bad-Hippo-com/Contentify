@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.14.0**
-Last updated: **2026-09-07 16:44 CEST**
+Local workstream version: **0.15.0**
+Last updated: **2026-09-07 17:56 CEST**
 
 ## Decision
 
@@ -38,7 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.14.0` is installed on staging with Nginx 1.26.3,
+Version `0.14.0` remains installed on staging with Nginx 1.26.3 while the
+isolated `0.15.0` candidate is being verified. It uses
 PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
@@ -49,6 +50,11 @@ Der Editor wurde zuerst im getrennten Kandidaten auf Port 8088 geprüft und
 anschließend auf das produktive Staging an Port 80 übernommen. PHP, Laravel und
 Bootstrap blieben dabei unverändert. Eine Public-Freigabe ist weiterhin
 ausgeschlossen.
+
+Die Node-/LESS-Stufe 0.15.0 ersetzt danach nur die historische Grunt-Baukette.
+Node.js 24, npm 11 und Less 4.9.1 bauen das weiterhin auf Bootstrap 3.3.7
+basierende Stylesheet reproduzierbar. Der npm-Audit sinkt von 23 auf null
+bekannte Schwachstellen; PHP, Laravel, Editor und Bootstrap bleiben unverändert.
 
 ## Target-selection rule
 
@@ -514,6 +520,16 @@ Anwendungsschlüssel und Logs. Homepage und die drei neuen Editor-Assets liefern
 HTTP 200, der entfernte CKEditor-Pfad HTTP 404. Beide Smoke-Tests, 512 auf diesem
 Modulbestand aktive Routen, PHP 8.5.10, Laravel 13.30.1, der echte Admin-
 Editor und die neue oberste Bad-Hippo-Feedmeldung wurden erneut geprüft.
+
+### Node-/LESS-Stufe 0.15.0 - 2026-09-07 17:56 CEST
+
+Grunt und seine alten LESS-/Watch-Plugins werden entfernt. Less 4.9.1 baut die
+vorhandene LESS-Einstiegsdatei direkt, ein kleines Node-24-Skript übernimmt den
+Watch-Modus. Die explizite URL-Umschreibung bewahrt die funktionierenden
+Glyphicons-Pfade; der Google-Font-Import bleibt netzunabhängig im erzeugten CSS.
+Normaler Clean-Install, Audit, Build, Test und Watch-Probe bestehen ohne
+Legacy-Auflösung, zwei Builds sind bytegleich. Bootstrap bleibt auf 3.3.7 und
+wird erst in einer eigenen folgenden Stufe bearbeitet.
 
 ## Non-viable shortcut
 

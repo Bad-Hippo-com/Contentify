@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.14.0**
-Assessment/update time: **2026-09-07 16:44 CEST**
+Local workstream version: **0.15.0**
+Assessment/update time: **2026-09-07 17:56 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -62,10 +62,10 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
 | Composer production audit | Pass; no known vulnerability advisories in `0.13.0`; one abandoned LESS package remains |
-| npm install | Fail; direct peer-dependency conflict |
-| npm install with legacy resolution | Completes with 23 vulnerabilities |
+| npm clean install | Pass on Node 24/npm 11 without legacy resolution |
+| npm audit | Pass in `0.15.0`; 0 known vulnerabilities instead of 23 |
 | SunEditor production audit | Pass; exact 3.3.2 dependency, no known production vulnerability |
-| Grunt LESS build after legacy install | Pass; one stylesheet compiled |
+| LESS build/watch | Pass with exact Less 4.9.1; deterministic CSS hash |
 | Docker/Compose review | Fail for current production readiness |
 
 ## Currentness assessment
@@ -843,6 +843,30 @@ echte Browser zeigt beide deutschen Editoren sowie die neue Bad-Hippo-Meldung
 an erster Stelle. Die Containerlogs enthalten seit dem Rollout keinen neuen
 Fehler, keine Exception und keinen Rechtefehler.
 
+### Node-/LESS-Modernisierung 0.15.0 - 2026-09-07 17:56 CEST
+
+Der historische Baum aus Grunt 1.3, `grunt-contrib-less` 1.0.1,
+`grunt-contrib-watch` 0.6.1 und `jit-grunt` ließ sich mit npm 11 nicht regulär
+auflösen. Eine Legacy-Installation enthielt 23 bekannte Schwachstellen. Selbst
+die neuesten Grunt-Plugins ließen über den alten Watch-Unterbau noch vier hohe
+Schwachstellen zurück.
+
+Da Contentify nur `resources/assets/less/backend.less` kompiliert, verwendet
+0.15.0 stattdessen Less 4.9.1 direkt. `scripts/watch-less.js` bietet denselben
+Build- und Watch-Ablauf ohne den aufgegebenen Task-Runner; ein `--once`-Modus
+macht ihn prüfbar. `scripts/check-frontend.js` kontrolliert Node 24, Lockstand,
+entfernte Grunt-Pakete, Editorregeln und den für die Admin-Icons entscheidenden
+Glyphicons-Pfad. Die URL-Umschreibung ist explizit, damit weiterhin
+`public/css/fonts` statt des nicht vorhandenen `public/fonts` verwendet wird.
+
+Der Open-Sans-Import wird als CSS-Import erhalten und nicht mehr während des
+Builds vom Google-Endpunkt expandiert. Zwei unabhängige Buildwege erzeugten
+denselben SHA-256-Wert
+`22B885942914CCB8FA02A858521EF9B908C033DCBD1129D190C5FB7D0F76833F`.
+`npm ci`, `npm audit`, Build, Vertragstest und Einmal-Watcher bestanden; der
+Audit meldet null bekannte Schwachstellen. PHP 8.5.10, Laravel 13.30.1,
+SunEditor 3.3.2 und Bootstrap 3.3.7 wurden in dieser Stufe nicht geändert.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -868,7 +892,8 @@ Fehler, keine Exception und keinen Rechtefehler.
 - `public/vendor/contentify/editor.js`: gemeinsame Contentify-SunEditor-Brücke
 - `public/vendor/suneditor`: exakt vendorte SunEditor-3.3.2-Laufzeit und MIT-Lizenz
 - `tests/Unit/EditorIntegrationTest.php`: Asset-, Formular- und Workflowverträge
-- `package.json` and `package-lock.json`: exact editor dependency and reproducible npm tree
+- `package.json` and `package-lock.json`: exact editor/build dependencies and reproducible npm tree
+- `scripts/check-frontend.js` and `scripts/watch-less.js`: Node-24 asset contracts and LESS watcher
 - `composer.json` and `composer.lock`: reproducible Laravel-13 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
