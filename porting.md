@@ -1,6 +1,6 @@
 # Contentify porting plan
 
-Local workstream version: **0.15.1**
+Local workstream version: **0.15.2**
 Last updated: **2026-09-07 17:56 CEST**
 
 ## Decision
@@ -39,7 +39,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 ## Current staging baseline
 
 Version `0.14.0` remains installed on staging with Nginx 1.26.3 while the
-isolated `0.15.1` candidate is being verified. It uses
+isolated `0.15.2` candidate is being verified. It uses
 PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,

@@ -1,6 +1,6 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.15.1**
+Local workstream version: **0.15.2**
 Last updated: **2026-09-07 17:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
@@ -9,15 +9,16 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 ### BUG-040 - PHPUnit fordert eine nicht registrierte SQLite-Verbindung an
 
 Severity: **medium**
-Status: **resolved in 0.15.1, 2026-09-07 18:10 CEST**
+Status: **resolved in 0.15.2, 2026-09-07 18:18 CEST**
 
 `phpunit.xml` setzt seit der Testmodernisierung `DB_CONNECTION=sqlite` und eine
 In-Memory-Datenbank. Die SQLite-Verbindung blieb jedoch in Laravels
 Datenbankkonfiguration auskommentiert und `pdo_sqlite` fehlte im Prüfimage.
 Dadurch scheiterten elf anwendungsbootende Tests schon vor ihrer eigentlichen
-Prüfung. Version 0.15.1 registriert SQLite ausschließlich für den isolierten
-Testlauf und installiert den Treiber im Container. Der reguläre Staging- und
-Betriebsweg bleibt unverändert auf MariaDB.
+Prüfung. 0.15.1 registrierte Verbindung und Treiber, dessen Imagebau aber noch
+an den fehlenden Debian-SQLite-Headern stoppte. Version 0.15.2 ergänzt diese
+Buildvoraussetzung. Der reguläre Staging- und Betriebsweg bleibt unverändert
+auf MariaDB.
 
 ### BUG-039 - Ausgelieferter CKEditor 4.3.1 ist abgekündigt und unsicher
 

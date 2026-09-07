@@ -1,3 +1,8 @@
+## Bad Hippo 0.15.2 / Contentify 3.3-dev - 2026-09-07
+
+- Für den PDO-SQLite-Bau im Debian-Prüfimage die fehlenden SQLite-Header
+  ergänzt; der erste 0.15.1-Kandidatenbau hatte deshalb kontrolliert gestoppt.
+
 ## Bad Hippo 0.15.1 / Contentify 3.3-dev - 2026-09-07
 
 - Von PHPUnit bereits erzwungene SQLite-In-Memory-Verbindung tatsächlich in
