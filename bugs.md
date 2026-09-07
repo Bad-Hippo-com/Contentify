@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.14.0**
-Last updated: **2026-09-07 15:58 CEST**
+Last updated: **2026-09-07 16:44 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -20,6 +20,9 @@ Editor deshalb vollständig durch SunEditor 3.3.2 unter MIT, entfernt 236 alte
 CKEditor-Dateien und bewahrt Bilder, Vorlagen, Flaggen und Quelltextmodus über
 einen eigenen Adapter. Der Browserkandidat bestand Erstellen, Speichern,
 Bearbeiten, Umlaute und zwei gleichzeitig geladene Editoren.
+Nach der Übernahme auf Port 80 wurden die beiden Editoren und Sonderwerkzeuge
+im angemeldeten Adminbereich erneut dargestellt; die drei neuen Assets liefern
+HTTP 200 und der entfernte CKEditor-Pfad HTTP 404.
 
 ### BUG-038 - GitHubs Raw-CDN hält alten Bad-Hippo-Feed fest
 

@@ -17,6 +17,9 @@
 - Der Produktions-Audit des neuen Editors meldet keine bekannte Schwachstelle.
   Der historische Grunt-Entwicklungsbaum bleibt eine getrennte Frontend-Aufgabe;
   Public bleibt bis zur sauberen Testinstallation gesperrt.
+- Derselbe Stand läuft auf Staging an Port 80: neue Assets und Homepage liefern
+  HTTP 200, der entfernte CKEditor-Pfad HTTP 404; Admin-Editor, oberster
+  Bad-Hippo-Feed, 512 Live-Routen und beide Smoke-Tests wurden erneut geprüft.
 
 ## Bad Hippo 0.13.0 / Contentify 3.3-dev - 2026-09-07
 

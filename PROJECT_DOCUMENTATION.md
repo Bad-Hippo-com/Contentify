@@ -1,7 +1,7 @@
 # Contentify project assessment
 
 Local workstream version: **0.14.0**
-Assessment/update time: **2026-09-07 15:58 CEST**
+Assessment/update time: **2026-09-07 16:44 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -831,6 +831,17 @@ und dort als HTTP 500 darstellte, behandelt Nginx bekannte statische Endungen
 ab 0.14.0 direkt mit `try_files ... =404`. Das löst den Asset-Teil und erlaubt
 eine eindeutige CKEditor-Negativprobe; die fehlerhafte Behandlung unbekannter
 dynamischer Routen bleibt separat offen.
+
+Um 16:44 CEST wurde exakt der auf GitHub veröffentlichte Stand auf das Staging
+an Port 80 übernommen. Datenbank, Uploads, Schlüssel und zentrale Logs blieben
+unverändert. App und Jobs laufen mit dem Image `contentify-staging-app:0.14.0`;
+Nginx und MariaDB sind gesund. PHP meldet 8.5.10, Laravel 13.30.1 und die
+Buildkennung 0.14.0. Homepage sowie SunEditor-JavaScript, SunEditor-CSS und der
+Contentify-Adapter antworten mit HTTP 200, der alte CKEditor-Pfad mit HTTP 404.
+Beide Smoke-Tests bestehen, der Live-Modulbestand enthält 512 Routen, und der
+echte Browser zeigt beide deutschen Editoren sowie die neue Bad-Hippo-Meldung
+an erster Stelle. Die Containerlogs enthalten seit dem Rollout keinen neuen
+Fehler, keine Exception und keinen Rechtefehler.
 
 ## Files added or updated
 

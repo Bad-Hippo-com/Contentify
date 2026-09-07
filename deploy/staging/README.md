@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
 Version: **0.14.0 / Contentify 3.3-dev**
-Last updated: **2026-09-07 15:58 CEST**
+Last updated: **2026-09-07 16:44 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an

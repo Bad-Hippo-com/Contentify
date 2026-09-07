@@ -1,7 +1,7 @@
 # Contentify porting plan
 
 Local workstream version: **0.14.0**
-Last updated: **2026-09-07 15:58 CEST**
+Last updated: **2026-09-07 16:44 CEST**
 
 ## Decision
 
@@ -38,17 +38,17 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.13.0` is installed on staging with Nginx 1.26.3,
+Version `0.14.0` is installed on staging with Nginx 1.26.3,
 PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
 verified. This closes stage 2 only; it does not approve a public deployment.
 
-Der Editor-Kandidat `0.14.0` läuft davon getrennt auf Port 8088. Er ersetzt nur
-CKEditor durch SunEditor; PHP, Laravel und Bootstrap bleiben unverändert. Das
-produktive Staging auf Port 80 bleibt bis zum abgeschlossenen Rollout auf
-`0.13.0`, und eine Public-Freigabe bleibt weiterhin ausgeschlossen.
+Der Editor wurde zuerst im getrennten Kandidaten auf Port 8088 geprüft und
+anschließend auf das produktive Staging an Port 80 übernommen. PHP, Laravel und
+Bootstrap blieben dabei unverändert. Eine Public-Freigabe ist weiterhin
+ausgeschlossen.
 
 ## Target-selection rule
 
@@ -508,6 +508,12 @@ geöffnetem Quelltextmodus und entfernt ausschließlich SunEditor-interne
 Metadaten vor dem Speichern. Der isolierte Kandidat bestand 21 Unit-Tests mit
 71 Assertions, die beiden Smoke-Tests, 515 Routen und im echten Browser das
 Erstellen und erneute Bearbeiten einer News mit Umlauten, Quelltext und Flaggen.
+
+Der anschließende Staging-Rollout auf Port 80 behielt Datenbank, Uploads,
+Anwendungsschlüssel und Logs. Homepage und die drei neuen Editor-Assets liefern
+HTTP 200, der entfernte CKEditor-Pfad HTTP 404. Beide Smoke-Tests, 512 auf diesem
+Modulbestand aktive Routen, PHP 8.5.10, Laravel 13.30.1, der echte Admin-
+Editor und die neue oberste Bad-Hippo-Feedmeldung wurden erneut geprüft.
 
 ## Non-viable shortcut
 
