@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.15.3 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.16.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,8 +87,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.15.3**
-Last updated: **2026-09-07 18:33 CEST**
+Local workstream version: **0.16.0**
+Last updated: **2026-09-07 19:44 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
@@ -235,6 +235,15 @@ Der Kandidatenlauf 0.15.3 blendet den Installationsmarker während PHPUnit
 zentral aus. Dadurch bootet die Suite auch auf einem installierten System ohne
 Zugriff auf dessen Betriebsdatenbank; der Marker wird anschließend garantiert
 wiederhergestellt.
+
+Version `0.16.0` vereinheitlicht den zuvor gemischten Bootstrap-Bestand aus
+CSS 3.3.3 und externem JavaScript 3.3.1 auf lokal ausgeliefertes Bootstrap
+3.4.1. Backend, Morpheus, Phobos und das aktive Frontend werden reproduzierbar
+aus derselben LESS-Quelle gebaut. Dieser kompatible Zwischenschritt ist bewusst
+noch nicht Public-fähig: Der aktuelle npm-Audit meldet zwei Bootstrap-3-XSS-
+Advisories als ein moderates Paketfinding ohne offiziellen 3.x-Patch. Das
+eigentliche Sicherheitsziel ist deshalb Bootstrap 5.3.8 in einer getrennten
+Markup- und JavaScript-Stufe.
 Contentifys Bilder-, Vorlagen- und Flaggenfunktionen übernimmt ein gemeinsamer
 deutscher Editor-Adapter. Erstellen, Bearbeiten und Speichern im Quelltextmodus
 wurden im isolierten Staging-Kandidaten im echten Browser geprüft.

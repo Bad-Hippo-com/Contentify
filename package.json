@@ -8,7 +8,11 @@
         "npm": ">=11 <12"
     },
     "scripts": {
-        "build": "lessc --rewrite-urls=all --math=parens-division resources/assets/less/backend.less public/css/backend.css",
+        "build": "npm run build:backend && npm run build:morpheus && npm run build:phobos && npm run build:active-theme",
+        "build:backend": "lessc --rewrite-urls=all --math=parens-division resources/assets/less/backend.less public/css/backend.css",
+        "build:morpheus": "lessc --rewrite-urls=all --math=parens-division app/Modules/MorpheusTheme/Resources/Assets/less/frontend.less app/Modules/MorpheusTheme/Resources/Assets/css/frontend.css",
+        "build:phobos": "lessc --rewrite-urls=all --math=parens-division app/Modules/PhobosTheme/Resources/Assets/less/frontend.less app/Modules/PhobosTheme/Resources/Assets/css/frontend.css",
+        "build:active-theme": "lessc --rewrite-urls=all --math=parens-division app/Modules/MorpheusTheme/Resources/Assets/less/frontend.less public/css/frontend.css",
         "test": "node scripts/check-frontend.js",
         "watch": "node scripts/watch-less.js"
     },
@@ -16,6 +20,7 @@
         "less": "4.9.1"
     },
     "dependencies": {
+        "bootstrap": "3.4.1",
         "suneditor": "3.3.2"
     }
 }

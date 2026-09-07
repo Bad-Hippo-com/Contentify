@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
-Version: **0.15.3 / Contentify 3.3-dev**
-Last updated: **2026-09-07 18:33 CEST**
+Version: **0.16.0 / Contentify 3.3-dev**
+Last updated: **2026-09-07 19:44 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an
@@ -24,7 +24,7 @@ excluded from both Git and the Docker build context.
 
 The root Composer dependency tree remains excluded from the image context,
 while Contentify's tracked browser libraries below `public/vendor` are
-explicitly re-included. Bootstrap 3.3.7's five original Glyphicons font files
+explicitly re-included. Bootstrap 3.4.1's five original Glyphicons font files
 are stored in `public/css/fonts`, matching the paths already emitted by the
 historical compiled backend CSS.
 
@@ -67,6 +67,11 @@ Ab `0.15.3` blendet die gemeinsame PHPUnit-Basis den Installationsmarker für
 jeden Test aus und stellt ihn anschließend wieder her. Dadurch greift die Suite
 auch im installierten Container weder auf dessen MariaDB noch auf Betriebsdaten
 zu; zusätzliche SQLite-Pakete im Laufzeitimage sind nicht erforderlich.
+
+Ab `0.16.0` wird Bootstrap 3.4.1 vollständig lokal ausgeliefert. Neben den vier
+CSS-Builds muss `/vendor/bootstrap/bootstrap.min.js` HTTP 200 liefern; keine
+Layoutdatei darf mehr `maxcdn.bootstrapcdn.com/bootstrap` referenzieren. Diese
+Version ist wegen BUG-041 ausschließlich eine interne Kompatibilitätsbrücke.
 
 Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:

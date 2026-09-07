@@ -1,13 +1,13 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.15.3**
-Last updated: **2026-09-07 18:33 CEST**
+Local workstream version: **0.16.0**
+Last updated: **2026-09-07 19:44 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
-2. Bootstrap 3.3.7 als nächste getrennte Achse charakterisieren und eine
-   kompatible Migrationsstrecke festlegen; kein gleichzeitiger Funktionsumbau.
+2. Nach der Bootstrap-3.4.1-Kompatibilitätsbrücke die Templates, Plugins und
+   eigenen JavaScript-Aufrufe für Bootstrap 5.3.8 inventarisieren und migrieren.
 3. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 4. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
@@ -15,6 +15,10 @@ Last updated: **2026-09-07 18:33 CEST**
 
 ## Completed
 
+- [x] Gemischten Bootstrap-Bestand aus LESS 3.3.3 und CDN-JavaScript 3.3.1 auf
+  lokale Version 3.4.1 vereinheitlichen; Backend, Morpheus, Phobos und aktives
+  Frontend reproduzierbar bauen und verbleibende XSS-Advisories als BUG-041
+  erfassen (`0.16.0`).
 - [x] PHPUnit auf installierten Kandidaten vom Betriebsmarker und der realen
   MariaDB entkoppeln (`0.15.3`, BUG-040).
 - [x] `0.15.3` nach 22 Tests mit 74 Assertions im isolierten Kandidaten auf

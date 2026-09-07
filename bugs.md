@@ -1,10 +1,23 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.15.3**
-Last updated: **2026-09-07 18:33 CEST**
+Local workstream version: **0.16.0**
+Last updated: **2026-09-07 19:44 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-041 - Bootstrap 3 ist abgekündigt und hat keinen offiziellen Sicherheitspatch
+
+Severity: **high**
+Status: **open; compatibility bridge prepared in 0.16.0, 2026-09-07 19:44 CEST**
+
+Contentify mischte Bootstrap-CSS 3.3.3 mit extern geladenem JavaScript 3.3.1.
+Version 0.16.0 vereinheitlicht zunächst alle Styles und Skripte lokal auf der
+letzten kompatiblen 3.x-Version 3.4.1. Der aktuelle npm-Audit weist dafür jedoch
+CVE-2025-1647 und CVE-2024-6485 als moderates Finding aus; eine offiziell
+gepatchte 3.x-Version existiert nicht. Diese Stufe stabilisiert den Bestand und
+entfernt den CDN-Zwang, schließt BUG-041 aber erst mit der getrennten Migration
+auf Bootstrap 5.3.8.
 
 ### BUG-040 - PHPUnit fordert eine nicht registrierte SQLite-Verbindung an
 

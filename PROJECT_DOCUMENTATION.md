@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.15.3**
-Assessment/update time: **2026-09-07 18:33 CEST**
+Local workstream version: **0.16.0**
+Assessment/update time: **2026-09-07 19:44 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -63,7 +63,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
 | Composer production audit | Pass; no known vulnerability advisories in `0.13.0`; one abandoned LESS package remains |
 | npm clean install | Pass on Node 24/npm 11 without legacy resolution |
-| npm audit | Pass in `0.15.0`; 0 known vulnerabilities instead of 23 |
+| npm audit | Bootstrap-3.4.1 bridge has one moderate package finding from two XSS advisories; Bootstrap 5.3.8 is required |
 | SunEditor production audit | Pass; exact 3.3.2 dependency, no known production vulnerability |
 | LESS build/watch | Pass with exact Less 4.9.1; deterministic CSS hash |
 | Docker/Compose review | Fail for current production readiness |
@@ -896,6 +896,27 @@ IP-basierte Menüziele, den Bad-Hippo-Feed an erster Stelle sowie beide deutsche
 Editoren mit ihren Werkzeugleisten. Seit dem Rollout entstanden keine neuen
 Anwendungs-, Job-, PHP- oder Nginx-Fehler. Danach wurde der isolierte Kandidat
 beendet, ohne seine Diagnose-Volumes zu löschen.
+
+### Bootstrap-3-Kompatibilitätsbrücke 0.16.0 - 2026-09-07 19:44 CEST
+
+Der Quellbestand war nicht auf einer einzelnen Version: die eingebetteten LESS-
+Dateien meldeten 3.3.3, während Backend, Morpheus und Phobos JavaScript 3.3.1
+von MaxCDN luden. 0.16.0 übernimmt die offiziellen MIT-lizenzierten LESS-,
+JavaScript- und Glyphicon-Dateien aus dem exakt festgeschriebenen npm-Paket
+Bootstrap 3.4.1. Das JavaScript liegt nun unter `public/vendor/bootstrap`; alle
+drei Layouts verwenden diesen lokalen Pfad.
+
+Der Build erzeugt separat Backend, Morpheus, Phobos und das aktive Morpheus-
+Frontend. Der Vertragstest prüft Paket- und Lockversion, LESS-Versionsmarker,
+CSS-Banner, lokales JavaScript und das vollständige Fehlen der alten CDN-URL.
+Alle vier Builds sowie der Vertragstest bestehen lokal unter Node 24.
+
+Bootstrap 3.4.1 ist dennoch kein Sicherheitsziel. GitHubs aktueller Audit
+erfasst CVE-2025-1647 in Tooltip/Popover und CVE-2024-6485 im Button-Plugin als
+ein moderates direktes Paketfinding; für 3.x existiert keine offizielle
+gepatchte Version. Die Brücke muss deshalb im internen Staging bleiben und wird
+in der nächsten getrennten Stufe durch Bootstrap 5.3.8 ersetzt. PHP, Laravel,
+SunEditor und Anwendungsfunktionen wurden in 0.16.0 nicht geändert.
 
 ## Files added or updated
 

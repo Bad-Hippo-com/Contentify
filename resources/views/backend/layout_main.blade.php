@@ -31,7 +31,7 @@
 
     {!! HTML::jsTranslations() !!}
     {!! HTML::script('vendor/jquery/jquery-2.2.4.min.js') !!}
-    {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') !!}
+    {!! HTML::script('vendor/bootstrap/bootstrap.min.js') !!}
     {!! HTML::script('vendor/moment/moment.js') !!}
     {!! HTML::script('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js') !!}
     {!! HTML::script('vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') !!}

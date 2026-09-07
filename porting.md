@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.15.3**
-Last updated: **2026-09-07 18:33 CEST**
+Local workstream version: **0.16.0**
+Last updated: **2026-09-07 19:44 CEST**
 
 ## Decision
 
@@ -61,6 +61,13 @@ Smoke-Skripte, Dashboard, IP-Menülinks, Feed-Reihenfolge, beide Editoren und di
 wirklich eingebundenen SunEditor-Assets geprüft. Seit dem Rollout enthalten die
 Containerlogs keinen neuen Fehler. Das Kandidatensystem wurde danach beendet;
 seine persistenten Volumes bleiben für eine nachvollziehbare Diagnose erhalten.
+
+Der lokale Kandidat 0.16.0 vereinheitlicht als nächste getrennte Achse die
+Bootstrap-3-Basis auf 3.4.1 und ersetzt drei externe CDN-Einbindungen durch das
+versionierte lokale JavaScript. Alle vier CSS-Ziele bauen aus derselben
+aktualisierten LESS-Quelle. Da Bootstrap 3.4.1 offiziell abgekündigt ist und der
+Audit zwei neuere XSS-Advisories ohne 3.x-Patch meldet, ist dies nur die
+kompatible Brücke für die anschließende Migration auf Bootstrap 5.3.8.
 
 ## Target-selection rule
 

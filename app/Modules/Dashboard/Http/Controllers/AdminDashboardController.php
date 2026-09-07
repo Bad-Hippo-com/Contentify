@@ -18,7 +18,7 @@ class AdminDashboardController extends BackController
         [
             'key'         => 'bad-hippo',
             'name'        => 'Bad Hippo 3.3-dev',
-            'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json?v=0.15.3',
+            'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json?v=0.16.0',
             'project_url' => 'https://github.com/Bad-Hippo-com/Contentify',
         ],
         [
@@ -84,7 +84,7 @@ class AdminDashboardController extends BackController
      */
     protected function feedMessages(array $definition): array
     {
-        $key = 'dashboard::feedMessages::v5::'.$definition['key'];
+        $key = 'dashboard::feedMessages::v6::'.$definition['key'];
 
         if (Cache::has($key)) {
             return Cache::get($key);
