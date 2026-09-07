@@ -1,3 +1,19 @@
+## Bad Hippo 0.13.0 / Contentify 3.3-dev - 2026-09-07
+
+- Laravel getrennt auf 13.30.1 angehoben; PHP bleibt unverändert auf 8.5.10.
+- Sentinel auf 10.0.0, Tinker auf 3.0.2 und PHPUnit auf 12.5.34 aktualisiert.
+- Validierungs-Observer ohne verschachtelte Modellinstanz registriert und den
+  Laravel-13-Modellboot dadurch kompatibel gemacht.
+- Contentifys CSRF-Spamschutz auf Laravels neuen Origin- und Token-Schutz
+  aufgesetzt; bestehendes Verhalten der Drei-Sekunden-Sperre erhalten.
+- Cache-Deserialisierung ausschließlich für die vom Dashboard-Feed benötigte
+  `stdClass` freigegeben und PHP-Sitzungsserialisierung für die Migration
+  ausdrücklich beibehalten.
+- 802 Syntaxprüfungen, 19 Tests mit 58 Assertions, 512 Routen, vier Migrationen,
+  beide Smoke-Tests, Anmeldung, Dual-Logging und alle 36 Adminbereiche geprüft.
+- Composer-Audit ohne bekannte Sicherheitslücke; Public bleibt bis zur
+  unabhängigen sauberen Testinstallation gesperrt.
+
 ## Bad Hippo 0.12.1 / Contentify 3.3-dev - 2026-09-07
 
 - Contentifys Controller-Dispatcher an Laravels positionsbasierte Übergabe von

@@ -1,10 +1,46 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.12.1**
-Last updated: **2026-09-07 12:42 CEST**
+Local workstream version: **0.13.0**
+Last updated: **2026-09-07 13:49 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-037 - Alter CSRF-Eigenbau umgeht Laravels neuen Origin-Schutz
+
+Severity: **high**
+Status: **resolved in 0.13.0, 2026-09-07 13:49 CEST**
+
+Contentifys eigene Middleware implementierte nur den historischen Tokenvergleich
+und hätte Laravels neuen Schutz gegen fremde Request-Origins nicht übernommen.
+Sie erweitert nun `PreventRequestForgery` und delegiert die Standardprüfung an
+Laravel 13. Die bestehende Drei-Sekunden-Spamsperre bleibt als schmale Hülle
+erhalten. Ab- und Anmeldung wurden im echten Browser erneut geprüft.
+
+### BUG-036 - Sicherer Laravel-13-Cache blockiert bestehenden Feed-Cache
+
+Severity: **high**
+Status: **resolved in 0.13.0, 2026-09-07 13:49 CEST**
+
+Laravel 13 deserialisiert Cache-Objekte nur noch anhand einer ausdrücklichen
+Klassenliste. Contentifys bereits gespeicherter Dashboard-Feed enthält normale
+`stdClass`-Objekte und erzeugte deshalb zunächst unvollständige Objekte. Die
+Konfiguration erlaubt gezielt nur `stdClass`, nicht beliebige PHP-Klassen. Der
+kopierte bestehende Cache funktioniert danach ohne Löschen; der Fehler bleibt
+im Kandidatenlog als nachvollziehbarer Befund erhalten.
+
+### BUG-035 - Watson-Observer erzeugt Modell während Laravel-13-Modellboot
+
+Severity: **high**
+Status: **resolved in 0.13.0, 2026-09-07 13:49 CEST**
+
+`watson/validating` registrierte seinen Observer über `static::observe(new
+ValidatingObserver)`. Laravel 13 verhindert zu Recht eine zweite Instanz
+desselben Modells während seines Bootvorgangs und brach mit einer
+`LogicException` ab. Contentifys gemeinsame Modellbasis registriert die beiden
+benötigten Observer-Methoden nun direkt als Modellereignisse. Paketquellcode und
+Validierungsverhalten bleiben unverändert; Modell-, Datenbank- und Browsertests
+decken die Korrektur ab.
 
 ### BUG-034 - Benannte PHP-Argumente brechen Contentifys Controller-Aufruf
 

@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.12.1 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.13.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,17 +87,17 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.12.1**
-Last updated: **2026-09-07 12:42 CEST**
+Local workstream version: **0.13.0**
+Last updated: **2026-09-07 13:49 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.12.1`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.13.0`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
-Nginx. PHP 8.5/Laravel 12 and MariaDB are
+Nginx. PHP 8.5/Laravel 13 and MariaDB are
 isolated in containers; this is the migration workshop, not a public release.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
@@ -206,6 +206,17 @@ Version `0.12.1` übernimmt Laravels positionsbasierte Controller-Übergabe auch
 in Contentifys überschriebenem `callAction()`. Dadurch funktionieren unter PHP
 8.5 und Laravel 12 Routenparameter unabhängig vom Namen des Zielarguments. Ein
 Regressionstest sowie die erneute Prüfung aller 36 Adminbereiche sichern den Fix.
+Version `0.13.0` hebt ausschließlich Laravel auf 13.30.1 an; PHP bleibt 8.5.10.
+Sentinel 10 und PHPUnit 12 werden regulär aktualisiert. Contentifys Validierungs-
+Basismodell registriert seinen bestehenden Observer direkt, weil Laravel 13 eine
+zweite Modellinstanz während des Bootens bewusst ablehnt. Der eigene CSRF-Schutz
+delegiert nun an Laravels neuen Origin- und Token-Schutz und behält die vorhandene
+Drei-Sekunden-Spamsperre. Für bestehende Feed-Caches ist ausschließlich
+`stdClass` zur Deserialisierung zugelassen; Sitzungen bleiben während dieses
+getrennten Framework-Schritts im PHP-Format. Der Kandidat besteht 802
+Syntaxprüfungen, 19 Tests mit 58 Assertions, 512 Routen, beide Smoke-Tests,
+Anmeldung, Dual-Logging und alle 36 Adminbereiche. Der Audit bleibt frei von
+bekannten Sicherheitslücken; Public bleibt bis zum separaten Testsystem gesperrt.
 
 See:
 

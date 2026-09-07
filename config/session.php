@@ -46,6 +46,10 @@ return [
 
     'encrypt' => false,
 
+    // Keep the existing PHP-serialized sessions valid during this staged
+    // framework upgrade. A later JSON migration must deliberately log users out.
+    'serialization' => env('SESSION_SERIALIZATION', 'php'),
+
     /*
     |--------------------------------------------------------------------------
     | Session File Location

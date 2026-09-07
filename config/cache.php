@@ -18,6 +18,11 @@ return [
 
     'default' => env('CACHE_DRIVER', 'file'),
 
+    // The dashboard feed caches decoded JSON messages as stdClass instances.
+    // Keep that single legacy payload compatible while rejecting every other
+    // arbitrary object class during cache unserialization.
+    'serializable_classes' => [stdClass::class],
+
     /*
     |--------------------------------------------------------------------------
     | Cache Stores

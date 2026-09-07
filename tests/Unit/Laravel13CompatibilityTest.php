@@ -4,14 +4,18 @@ namespace Tests\Unit;
 
 use Contentify\Controllers\BaseController;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Tests\TestCase;
 
-class Laravel12CompatibilityTest extends TestCase
+class Laravel13CompatibilityTest extends TestCase
 {
-    public function testLaravelTwelveRunsWithTheExplicitLegacyLocalDiskRoot(): void
+    public function testLaravelThirteenRunsWithExplicitCompatibilityConfiguration(): void
     {
-        $this->assertStringStartsWith('12.', Application::VERSION);
+        $this->assertStringStartsWith('13.', Application::VERSION);
         $this->assertSame(storage_path('app'), config('filesystems.disks.local.root'));
+        $this->assertSame([\stdClass::class], config('cache.serializable_classes'));
+        $this->assertSame('php', config('session.serialization'));
+        $this->assertTrue(is_subclass_of(\App\Http\Middleware\VerifyCsrfToken::class, PreventRequestForgery::class));
     }
 
     public function testControllerActionsReceiveRouteParametersPositionally(): void

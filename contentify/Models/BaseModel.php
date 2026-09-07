@@ -16,6 +16,7 @@ use InvalidArgumentException;
 use Request;
 use Str;
 use ValidatingTrait;
+use Watson\Validating\ValidatingObserver;
 
 /**
  * This is an abstract base model class that almost all of Contentify's model use.
@@ -31,6 +32,16 @@ abstract class BaseModel extends Eloquent
     use DateAccessorTrait;
 
     use SlugTrait;
+
+    /**
+     * Register Watson's validation observer without instantiating this model
+     * again while Laravel is still booting it.
+     */
+    public static function bootValidatingTrait()
+    {
+        static::registerModelEvent('saving', ValidatingObserver::class.'@saving');
+        static::registerModelEvent('restoring', ValidatingObserver::class.'@restoring');
+    }
 
     /**
      * True if model is slugable

@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.12.1**
-Last updated: **2026-09-07 12:42 CEST**
+Local workstream version: **0.13.0**
+Last updated: **2026-09-07 13:49 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.12.1` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.5.10, Laravel 12.69.1 and MariaDB 10.11. The application, database,
+Version `0.13.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -47,9 +47,9 @@ verified. This closes stage 2 only; it does not approve a public deployment.
 
 ## Target-selection rule
 
-There is deliberately **no fixed immediate target of PHP 8.5 and Laravel 13**.
-The final stack will be the newest combination that is supported, secure and
-demonstrably compatible after the staged migration. Each rung must start, pass
+PHP 8.5.10 and Laravel 13.30.1 have now been reached through separately tested
+rungs. They remain a staging result until the independent test system completes
+a clean installation and acceptance run. Each further axis must start, pass
 its characterization tests and support a clean install before the next runtime
 or framework change begins.
 
@@ -456,6 +456,32 @@ mit `user` oder `slug` konnten bei anders benannten Methodensignaturen scheitern
 Laravel-12-Dispatcher. Der neue Regressionstest erhöht den Stand auf 19 Tests
 mit 55 Assertions; alle 36 Adminbereiche und das Benutzerprofil wurden erneut
 im isolierten Kandidaten geöffnet.
+
+### Laravel-13-Migrationsstufe 0.13.0 - 2026-09-07 13:49 CEST
+
+Laravel wird bei unverändertem PHP 8.5.10 auf 13.30.1 angehoben. Sentinel 10,
+Tinker 3 und PHPUnit 12 bilden die dazu passenden offiziellen Paketstufen. Die
+drei lokalen Brücken erhalten ausschließlich Illuminate-13-Verträge; ihr
+PHP-Paketcode bleibt gegenüber 0.12.1 unverändert.
+
+Der Laravel-13-Leitfaden wurde vollständig gegen Contentify geprüft. Das
+Validierungsmodell registriert seinen Watson-Observer direkt, weil verschachtelte
+Modellinstanzen während des Bootens nicht mehr zulässig sind. Die eigene CSRF-
+Middleware delegiert an `PreventRequestForgery`, damit Origin-, Header-, Cookie-
+und Tokenprüfung des Frameworks gelten; Contentifys Spamsperre bleibt erhalten.
+Bestehende Feed-Caches dürfen gezielt `stdClass` deserialisieren, während alle
+anderen Objektklassen gesperrt bleiben. Das PHP-Sitzungsformat wird explizit
+beibehalten, damit der Framework-Sprung nicht gleichzeitig alle Sitzungen
+ungültig macht. Cache-/Session-Fallbacknamen, Upsert-Schlüssel, Domainrouten,
+Queue-Ereignisse, Manager-Closures und alte Pagination-Viewnamen wurden gesucht;
+Contentify besitzt dort keine weitere betroffene eigene Implementierung.
+
+Der finale Kandidat besteht 802 Syntaxprüfungen, PHPUnit 12.5.34 mit 19 Tests
+und 58 Assertions, 512 aktive Routen, vier Migrationen, beide Smoke-Tests,
+Sentinel- und Steam-Auflösung, Ab- und Anmeldung, Dual-Logging und alle 36
+Adminbereiche. `composer audit --locked` meldet keine bekannte Schwachstelle;
+nur das aufgegebene Less.php bleibt als getrennte Frontend-Aufgabe. Public bleibt
+bis zur sauberen Installation auf dem unabhängigen Testsystem gesperrt.
 
 ## Non-viable shortcut
 

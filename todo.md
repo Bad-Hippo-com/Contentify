@@ -1,15 +1,15 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.12.1**
-Last updated: **2026-09-07 12:42 CEST**
+Local workstream version: **0.13.0**
+Last updated: **2026-09-07 13:49 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Nach der stabilen Laravel-12-Stufe die Laravel-13-Verträglichkeit getrennt
-   untersuchen; Bootstrap und Node.js bleiben davon getrennt.
+4. Nach der stabilen Laravel-13-Stufe Bootstrap und Node.js weiterhin getrennt
+   untersuchen; kein gleichzeitiger Frontend-Umbau.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
 
@@ -103,9 +103,8 @@ Last updated: **2026-09-07 12:42 CEST**
 - [ ] Add characterization tests before changing PHP or Laravel.
 - [x] Rename both `Match` model classes and all references before crossing from
   PHP 7.4 to PHP 8.
-- [ ] Upgrade Composer packages, PHP and Laravel in small, separately tested
-  steps; determine the final supported stack from measured compatibility rather
-  than selecting PHP 8.5/Laravel 13 in advance.
+- [x] PHP und Laravel in kleinen, einzeln geprüften Stufen bis PHP 8.5.10 und
+  Laravel 13.30.1 aktualisieren; Bootstrap und Node.js bleiben eigene Achsen.
 - [x] Regenerate `composer.lock` and make `composer validate --strict` pass.
 - [x] Raise the maintained CMS development identifier to `3.3-dev` and add a
   separately labelled Bad-Hippo dashboard feed linked to our GitHub repository
@@ -145,6 +144,9 @@ Last updated: **2026-09-07 12:42 CEST**
 - [x] Contentifys Controller-Aufruf in `0.12.1` an Laravels positionsbasierte
   Übergabe anpassen und benannte PHP-Argumentfehler für `user`/`slug` mit
   Regressionstest und Browserrunde beseitigen (BUG-034).
+- [x] Laravel in `0.13.0` getrennt auf 13.30.1, Sentinel auf 10 und PHPUnit auf
+  12 anheben; Modellboot, CSRF/Origin-Prüfung, Cache-Deserialisierung und
+  Sitzungsformat kompatibel absichern und alle 36 Adminbereiche prüfen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.

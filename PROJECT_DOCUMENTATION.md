@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.12.1**
-Assessment/update time: **2026-09-07 12:42 CEST**
+Local workstream version: **0.13.0**
+Assessment/update time: **2026-09-07 13:49 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -48,9 +48,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 12 lint | Pass; `0.12.1` parses 802 project and local-package files |
-| PHP 8.5 / Laravel 12 Artisan | Pass; Laravel 12.69.1 and 512 active production routes |
-| PHP 8.5 / Laravel 12 PHPUnit | Pass; 19 tests with 55 assertions |
+| PHP 8.5 / Laravel 13 lint | Pass; `0.13.0` parses 802 project and local-package files |
+| PHP 8.5 / Laravel 13 Artisan | Pass; Laravel 13.30.1 and 512 active production routes |
+| PHP 8.5 / Laravel 13 PHPUnit | Pass; 19 tests with 58 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -61,7 +61,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Pass; no known vulnerability advisories in `0.12.1`; one abandoned LESS package remains |
+| Composer production audit | Pass; no known vulnerability advisories in `0.13.0`; one abandoned LESS package remains |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -75,7 +75,7 @@ Contentify is obsolete as delivered:
   is 13, whose supported PHP range includes PHP 8.5.
 - Der Bad-Hippo-Stand läuft inzwischen auf PHP 8.5.10; die reservierten
   `Match`-Klassennamen wurden in 0.7.0 beseitigt.
-- Der Bad-Hippo-Produktions-Lockbestand auf Laravel 12 meldet keine bekannte
+- Der Bad-Hippo-Produktions-Lockbestand auf Laravel 13 meldet keine bekannte
   Sicherheitslücke mehr. Composer markiert nur noch Less.php als aufgegeben;
   Public bleibt bis zur unabhängigen Testinstallation gesperrt.
 - The old Travis badge/configuration and stale-bot file are the only automation;
@@ -113,10 +113,10 @@ prerequisites are recreated on test and the application is installed cleanly.
 Only an error-free test installation and representative trial can approve the
 version for Public.
 
-PHP 8.5/Laravel 13 is no longer prescribed as an immediate destination. The
-final version combination will be chosen from actual compatibility results and
-must be supported, secure, reproducible and advisory-clean. This reduces
-breakage and makes the exact cause of each regression identifiable.
+PHP 8.5/Laravel 13 wurde nicht als ungetesteter Sprung, sondern über einzeln
+geprüfte Stufen erreicht. Der Stand muss weiterhin unterstützt, sicher,
+reproduzierbar und advisory-frei bleiben. Dadurch ist die Ursache jeder
+Regression einer einzelnen Migrationsachse zuzuordnen.
 
 ### Central error logging baseline
 
@@ -757,6 +757,43 @@ Argument. Der vollständige Stand besteht danach 19 Tests mit 55 Assertions;
 alle 36 Adminbereiche sowie das Benutzerprofil wurden erneut im isolierten
 Kandidaten geöffnet.
 
+### Laravel-13-Prüfung und Staging-Rollout 0.13.0 - 2026-09-07 13:49 CEST
+
+Der getrennte Laravel-13-Löserlauf aktualisiert das Framework auf 13.30.1,
+Sentinel auf 10.0.0, Tinker auf 3.0.2 und PHPUnit auf 12.5.34. PHP bleibt
+unverändert 8.5.10. Die lokalen Versionen Module 6.3.6, Steam-Auth 4.4.4 und
+Collective HTML 6.4.4 erweitern nur ihre Composer-Verträge auf Illuminate 13;
+gegenüber 0.12.1 wurde ihr PHP-Paketcode nicht verändert.
+
+Der vollständige offizielle Upgradeleitfaden wurde gegen Contentify geprüft.
+Laravel 13 verhindert verschachtelte Instanzen eines Modells während dessen
+Bootvorgang; genau dies löste `watson/validating` über `observe(new Observer)`
+aus. Contentifys gemeinsame Modellbasis registriert die beiden vorhandenen
+Observer-Methoden deshalb direkt. Der neue Frameworkschutz
+`PreventRequestForgery` prüft zusätzlich die Request-Origin. Contentifys eigene
+Middleware erweitert ihn nun und behält nur die bestehende Drei-Sekunden-
+Spamsperre als Hülle. Die echte Ab- und Anmeldung im Kandidaten bestätigt den
+Token-, Cookie- und Sitzungsweg.
+
+Laravels neue Cache-Klassenliste blockierte erwartungsgemäß einen aus 0.12.1
+kopierten Feed-Cache mit `stdClass`-Datensätzen. Statt den Altbestand nur zu
+löschen, erlaubt die Konfiguration gezielt diese eine Datenklasse. Alle anderen
+Objektklassen bleiben gesperrt. Das bisherige PHP-Sitzungsformat wird explizit
+beibehalten; eine spätere JSON-Umstellung wäre ein eigener, sitzungsbrechender
+Migrationsschritt. Die übrigen Änderungen an Cache-/Session-Fallbacknamen,
+Upsert-Schlüsseln, Domainrouten, Queue-Ereignissen, Manager-Closures,
+Pagination-Views und Polyfill-Helfern betreffen keinen eigenen Contentify-Code.
+
+Der finale isolierte Kandidat auf Port 8088 bestand 802 Syntaxprüfungen,
+19 Tests mit 58 Assertions, 512 aktive Routen, vier Migrationen, beide
+Smoke-Tests, Datenbankmodelle, Sentinel- und Steam-Auflösung sowie das
+Dual-Logging. Nach einer frischen Browseranmeldung wurden alle 36 Adminbereiche
+und das Benutzerprofil ohne neuen Laravel-, PHP-FPM- oder Nginx-Fehler geöffnet.
+Der Composer-Audit meldet keine bekannte Sicherheitslücke; nur das aufgegebene
+Less.php bleibt als Frontend-Aufgabe. Die im Kandidaten gefundene Cache-
+Inkompatibilität und zwei korrigierte Kandidaten-Mounts bleiben in den
+getrennten Prüfprotokollen erhalten.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -777,8 +814,9 @@ Kandidaten geöffnet.
 - `packages/laravel-steam-auth`: dokumentierte Steam-OpenID-Kompatibilitätskopie
 - `packages/laravelcollective-html`: dokumentierte Formular-/HTML-Kompatibilitätskopie
 - `tests/Unit/Laravel10DateCastsTest.php`: Laravel-10-Datumsregression
-- `tests/Unit/Laravel12CompatibilityTest.php`: Laravel-12- und Speicherpfadvertrag
-- `composer.json` and `composer.lock`: reproducible Laravel-12 dependency rung
+- `tests/Unit/Laravel13CompatibilityTest.php`: Laravel-13-, Cache-, Sitzungs-,
+  CSRF- und Speicherpfadvertrag
+- `composer.json` and `composer.lock`: reproducible Laravel-13 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields

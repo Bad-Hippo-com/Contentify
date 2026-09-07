@@ -12,6 +12,8 @@ Datenbank- und Browserprüfungen entscheiden über die tatsächliche
 Kompatibilität. Version 6.3.4 setzt diese kontrollierte Brücke mit unverändertem
 Paketcode für Illuminate 11 fort. Version 6.3.5 erweitert ausschließlich den
 Composer-Vertrag auf Illuminate 12; der Paketcode bleibt erneut unverändert.
+Version 6.3.6 führt denselben unveränderten PHP-Paketcode mit einem auf
+Illuminate 13 begrenzten Composer-Vertrag weiter. Stand: 2026-09-07 13:49 CEST.
 
 Die lokale Kopie ist eine kontrollierte Brücke. Ein späterer Austausch des
 Modulsystems bleibt eine eigene, deutlich größere Aufgabe.
