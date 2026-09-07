@@ -1,3 +1,12 @@
+## Bad Hippo 0.12.1 / Contentify 3.3-dev - 2026-09-07
+
+- Contentifys Controller-Dispatcher an Laravels positionsbasierte Übergabe von
+  Routenparametern angepasst; `Unknown named parameter $user/$slug` behoben.
+- Regressionstest für voneinander abweichende Routen- und Argumentnamen ergänzt.
+- 802 Syntaxprüfungen, 19 Tests mit 55 Assertions, 512 Routen, beide Smoke-Tests
+  und alle 36 Adminbereiche erneut geprüft.
+- Public bleibt bis zur getrennten sauberen Testinstallation gesperrt.
+
 ## Bad Hippo 0.12.0 / Contentify 3.3-dev - 2026-09-07
 
 - Laravel getrennt von 11.56.1 auf 12.69.1 angehoben; PHP bleibt unverändert

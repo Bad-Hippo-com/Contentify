@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.12.0**
-Last updated: **2026-09-07 12:10 CEST**
+Local workstream version: **0.12.1**
+Last updated: **2026-09-07 12:42 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -142,6 +142,9 @@ Last updated: **2026-09-07 12:10 CEST**
 - [x] Laravel 11 in `0.12.0` getrennt auf Laravel 12.69.1 anheben, Sentinel 9
   und PHPUnit 11 verwenden, alle 36 Adminbereiche prüfen und die drei letzten
   Framework-Advisories vollständig beseitigen.
+- [x] Contentifys Controller-Aufruf in `0.12.1` an Laravels positionsbasierte
+  Übergabe anpassen und benannte PHP-Argumentfehler für `user`/`slug` mit
+  Regressionstest und Browserrunde beseitigen (BUG-034).
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.

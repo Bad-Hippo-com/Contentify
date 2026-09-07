@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.12.0**
-Assessment/update time: **2026-09-07 12:10 CEST**
+Local workstream version: **0.12.1**
+Assessment/update time: **2026-09-07 12:42 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -48,9 +48,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 12 lint | Pass; `0.12.0` parses 802 project and local-package files |
+| PHP 8.5 / Laravel 12 lint | Pass; `0.12.1` parses 802 project and local-package files |
 | PHP 8.5 / Laravel 12 Artisan | Pass; Laravel 12.69.1 and 512 active production routes |
-| PHP 8.5 / Laravel 12 PHPUnit | Pass; 18 tests with 54 assertions |
+| PHP 8.5 / Laravel 12 PHPUnit | Pass; 19 tests with 55 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -61,7 +61,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Pass; no known vulnerability advisories in `0.12.0`; one abandoned LESS package remains |
+| Composer production audit | Pass; no known vulnerability advisories in `0.12.1`; one abandoned LESS package remains |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -742,6 +742,20 @@ HTTP 500 und wurden deshalb nicht als Laravel-12-Regression gewertet.
 `oyejorge/less.php` bleibt als aufgegebenes Paket und eigene Frontend-
 Modernisierungsaufgabe offen. Die Laravel-12-Stufe wurde als 0.12.0 auf Staging
 übernommen; Public bleibt bis zur unabhängigen Testinstallation gesperrt.
+
+### Laravel-12-Laufzeitkorrektur 0.12.1 - 2026-09-07 12:42 CEST
+
+Die nachgelagerte authentifizierte Browserprüfung zeigte `Unknown named
+parameter $user` beziehungsweise `$slug` in Contentifys überschriebenem
+`BaseController::callAction()`. Die Methode verwendete noch
+`call_user_func_array()` mit dem assoziativen Routenparameterarray. PHP 8 deutet
+dessen Schlüssel als benannte Argumente, während Laravels eigener Controller
+die Werte ausdrücklich positionsbasiert übergibt. Contentify folgt nun diesem
+Vertrag mit `array_values($parameters)`. Ein fokussierter Regressionstest prüft
+bewusst einen Routenparameter `user` gegen ein anders benanntes Controller-
+Argument. Der vollständige Stand besteht danach 19 Tests mit 55 Assertions;
+alle 36 Adminbereiche sowie das Benutzerprofil wurden erneut im isolierten
+Kandidaten geöffnet.
 
 ## Files added or updated
 

@@ -1,10 +1,23 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.12.0**
-Last updated: **2026-09-07 12:10 CEST**
+Local workstream version: **0.12.1**
+Last updated: **2026-09-07 12:42 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-034 - Benannte PHP-Argumente brechen Contentifys Controller-Aufruf
+
+Severity: **high**
+Status: **resolved in 0.12.1, 2026-09-07 12:42 CEST**
+
+Contentifys überschriebene `BaseController::callAction()` übergab Laravels
+assoziative Routenparameter direkt an `call_user_func_array()`. Unter PHP 8
+wurden Schlüssel wie `user` und `slug` dadurch als benannte Argumente
+interpretiert. Controller mit abweichend benannten Zielargumenten brachen mit
+`Unknown named parameter` ab. Die Übergabe verwendet nun wie Laravels eigener
+Controller positionsbasierte Werte. Ein Regressionstest und die erneute
+Browserprüfung aller 36 Adminbereiche sowie des Benutzerprofils sichern dies ab.
 
 ### BUG-033 - Sentinel 8 blockiert Laravel 12
 

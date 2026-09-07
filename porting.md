@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.12.0**
-Last updated: **2026-09-07 12:10 CEST**
+Local workstream version: **0.12.1**
+Last updated: **2026-09-07 12:42 CEST**
 
 ## Decision
 
@@ -38,7 +38,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.12.0` is installed on staging with Nginx 1.26.3,
+Version `0.12.1` is installed on staging with Nginx 1.26.3,
 PHP-FPM 8.5.10, Laravel 12.69.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
@@ -444,6 +444,18 @@ vorhandene statische Dateien und sind keine Laravel-12-Regression.
 Der Composer-Audit meldet erstmals keine bekannte Sicherheitslücke. Das
 aufgegebene `oyejorge/less.php` bleibt als getrennte Frontend-Aufgabe offen.
 Public bleibt bis zur unabhängigen sauberen Testinstallation gesperrt.
+
+### Laravel-12-Laufzeitfix 0.12.1 - 2026-09-07 12:42 CEST
+
+Die authentifizierte Live-Browserrunde deckte nach dem technischen Rollout noch
+Contentifys eigenen `BaseController::callAction()` auf. Anders als Laravels
+Controller reichte er das assoziative Parameterarray unverändert an PHP weiter.
+Unter PHP 8.5 wurden Routenschlüssel dadurch zu benannten Argumenten und Routen
+mit `user` oder `slug` konnten bei anders benannten Methodensignaturen scheitern.
+0.12.1 übergibt bewusst `array_values($parameters)` und entspricht damit dem
+Laravel-12-Dispatcher. Der neue Regressionstest erhöht den Stand auf 19 Tests
+mit 55 Assertions; alle 36 Adminbereiche und das Benutzerprofil wurden erneut
+im isolierten Kandidaten geöffnet.
 
 ## Non-viable shortcut
 

@@ -105,7 +105,11 @@ abstract class BaseController extends Controller
     {
         $this->setupLayout();
 
-        $response = call_user_func_array([$this, $method], $parameters);
+        // Route parameters are keyed by their placeholder names. Passing that
+        // associative array directly became a named-argument call on PHP 8,
+        // which fails when a controller uses a different parameter name.
+        // Laravel's own Controller deliberately dispatches positional values.
+        $response = $this->{$method}(...array_values($parameters));
 
         // If no response is returned from the controller action and a layout is being
         // used we will assume we want to just return the layout view as any nested
