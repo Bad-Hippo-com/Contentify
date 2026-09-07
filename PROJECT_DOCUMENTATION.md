@@ -1,7 +1,7 @@
 # Contentify project assessment
 
 Local workstream version: **0.16.0**
-Assessment/update time: **2026-09-07 19:44 CEST**
+Assessment/update time: **2026-09-07 20:13 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -917,6 +917,30 @@ ein moderates direktes Paketfinding; für 3.x existiert keine offizielle
 gepatchte Version. Die Brücke muss deshalb im internen Staging bleiben und wird
 in der nächsten getrennten Stufe durch Bootstrap 5.3.8 ersetzt. PHP, Laravel,
 SunEditor und Anwendungsfunktionen wurden in 0.16.0 nicht geändert.
+
+Der isolierte Kandidat auf Port 8088 meldete PHP 8.5.10, Laravel 13.30.1,
+Contentify 0.16.0 und 512 Routen. PHPUnit 12.5.34 bestand 22 Tests mit 74
+Assertions; beide eigenständigen Smoke-Skripte bestanden ebenfalls. Startseite,
+Backend- und Frontend-CSS, Glyphicons, lokales Bootstrap-JavaScript und
+SunEditor antworteten mit HTTP 200. Im authentifizierten Browser renderten
+Startseite, Admin-Icons, IP-Menülinks, der Bad-Hippo-Feed an erster Stelle und
+beide Editoren. Das durch Contentify ausgelöste Bootstrap-Bildermodal ließ sich
+öffnen und schließen.
+
+Beim ersten Kandidatenstart fehlte unter der absichtlich getrennten Logwurzel
+`/var/log/contentify-bootstrap-candidate` der gemountete Unterordner `php`.
+Diese Einrichtungsmeldung ist als STAGE-007 im Fehlerregister erhalten. Nach
+Anlegen des Ordners mit UID/GID 33 blieb das frische Kandidatenintervall sauber.
+
+Anschließend wurde der exakt auf GitHub veröffentlichte Commit
+`c70dad8b8335f067af3b9fc6f84e4ba7e8602f3c` als App-, Job- und Nginx-Abbild
+`0.16.0` auf Staging installiert; Datenbank und persistente Laufzeitdaten
+blieben erhalten. Der Live-Container bestätigte PHP 8.5.10, Laravel 13.30.1,
+512 Routen, den Installationsmarker und beide Smoke-Skripte. Alle genannten
+Assets antworteten erneut mit HTTP 200. Die vollständige Browserprüfung wurde
+auf Port 80 wiederholt. Das danach ausgewertete Container-Logintervall enthielt
+keine Fehler, Exceptions, Fatal Errors oder Rechtefehler. Der temporäre
+Kandidat wurde ohne Löschen seiner Diagnosevolumes beendet.
 
 ## Files added or updated
 

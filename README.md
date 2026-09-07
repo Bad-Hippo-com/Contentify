@@ -88,20 +88,21 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 ### Local technical assessment
 
 Local workstream version: **0.16.0**
-Last updated: **2026-09-07 19:44 CEST**
+Last updated: **2026-09-07 20:13 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.15.3`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.16.0`
 identifier versions our individual, staged changes.
 
-Bad Hippo `0.15.3` is installed on the internal staging host behind Nginx.
+Bad Hippo `0.16.0` is installed on the internal staging host behind Nginx.
 PHP 8.5/Laravel 13 and MariaDB are isolated in containers; this is the
 migration workshop, not a public release. The Node/LESS rung passed 22 tests
 with 74 assertions in its isolated candidate. Live staging reports 512 routes,
 both regression smoke tests pass, the authenticated dashboard and both German
-SunEditor instances render correctly, and no new container error was logged.
+SunEditor instances render correctly, the locally delivered Bootstrap modal
+opens and closes, and no new container error was logged after the browser run.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
 survive Docker Compose interpolation unchanged during installation. The first

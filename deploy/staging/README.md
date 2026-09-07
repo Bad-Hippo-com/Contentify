@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
 Version: **0.16.0 / Contentify 3.3-dev**
-Last updated: **2026-09-07 19:44 CEST**
+Last updated: **2026-09-07 20:13 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an
@@ -72,6 +72,8 @@ Ab `0.16.0` wird Bootstrap 3.4.1 vollständig lokal ausgeliefert. Neben den vier
 CSS-Builds muss `/vendor/bootstrap/bootstrap.min.js` HTTP 200 liefern; keine
 Layoutdatei darf mehr `maxcdn.bootstrapcdn.com/bootstrap` referenzieren. Diese
 Version ist wegen BUG-041 ausschließlich eine interne Kompatibilitätsbrücke.
+Der Browser-Abnahmetest muss zusätzlich das Contentify-Bildermodal öffnen und
+wieder schließen, damit die echte Bootstrap-JavaScript-Laufzeit geprüft wird.
 
 Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:

@@ -1,3 +1,17 @@
+## Bad Hippo 0.16.0 / Contentify 3.3-dev - 2026-09-07
+
+- Gemischten Bootstrap-Bestand aus LESS 3.3.3 und externem JavaScript 3.3.1
+  auf die letzte kompatible 3.x-Version 3.4.1 vereinheitlicht.
+- Bootstrap-JavaScript und MIT-Lizenz lokal ausgeliefert; CDN-Abhängigkeit aus
+  Backend, Morpheus und Phobos entfernt.
+- Backend, beide Themes und das aktive Frontend reproduzierbar aus derselben
+  Bootstrap-3.4.1-LESS-Quelle gebaut und durch Node-Verträge abgesichert.
+- Kandidat mit 22 Tests, 74 Assertions, beiden Smoke-Skripten und echtem
+  Browser-Modal geprüft; anschließend auf Staging ausgerollt und dort erneut
+  über Assets, Oberfläche und zentrale Logs abgenommen.
+- Zwei aktuelle Bootstrap-3-XSS-Advisories als BUG-041 erfasst. 0.16.0 ist nur
+  eine interne Kompatibilitätsbrücke; Bootstrap 5.3.8 bleibt das Sicherheitsziel.
+
 ## Bad Hippo 0.15.3 / Contentify 3.3-dev - 2026-09-07
 
 - Installationsmarker während aller PHPUnit-Läufe zentral und ausfallsicher
@@ -293,13 +307,3 @@
 
 **Changes**
 - TBA
-## Bad Hippo 0.16.0 / Contentify 3.3-dev - 2026-09-07
-
-- Gemischten Bootstrap-Bestand aus LESS 3.3.3 und externem JavaScript 3.3.1
-  auf die letzte kompatible 3.x-Version 3.4.1 vereinheitlicht.
-- Bootstrap-JavaScript und MIT-Lizenz lokal ausgeliefert; CDN-Abhängigkeit aus
-  Backend, Morpheus und Phobos entfernt.
-- Backend, beide Themes und das aktive Frontend reproduzierbar aus derselben
-  Bootstrap-3.4.1-LESS-Quelle gebaut und durch Node-Verträge abgesichert.
-- Zwei aktuelle Bootstrap-3-XSS-Advisories als BUG-041 erfasst. 0.16.0 ist nur
-  eine interne Kompatibilitätsbrücke; Bootstrap 5.3.8 bleibt das Sicherheitsziel.

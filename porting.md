@@ -1,7 +1,7 @@
 # Contentify porting plan
 
 Local workstream version: **0.16.0**
-Last updated: **2026-09-07 19:44 CEST**
+Last updated: **2026-09-07 20:13 CEST**
 
 ## Decision
 
@@ -38,7 +38,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.15.3` is installed on staging with Nginx 1.26.3 after passing its
+Version `0.16.0` is installed on staging with Nginx 1.26.3 after passing its
 isolated candidate. It uses PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11.
 The application, database,
 public runtime files and uploads are persistent where required. The Contentify
@@ -62,12 +62,17 @@ wirklich eingebundenen SunEditor-Assets geprüft. Seit dem Rollout enthalten die
 Containerlogs keinen neuen Fehler. Das Kandidatensystem wurde danach beendet;
 seine persistenten Volumes bleiben für eine nachvollziehbare Diagnose erhalten.
 
-Der lokale Kandidat 0.16.0 vereinheitlicht als nächste getrennte Achse die
+Version 0.16.0 vereinheitlicht als nächste getrennte Achse die
 Bootstrap-3-Basis auf 3.4.1 und ersetzt drei externe CDN-Einbindungen durch das
 versionierte lokale JavaScript. Alle vier CSS-Ziele bauen aus derselben
 aktualisierten LESS-Quelle. Da Bootstrap 3.4.1 offiziell abgekündigt ist und der
 Audit zwei neuere XSS-Advisories ohne 3.x-Patch meldet, ist dies nur die
-kompatible Brücke für die anschließende Migration auf Bootstrap 5.3.8.
+kompatible Brücke für die anschließende Migration auf Bootstrap 5.3.8. Der
+isolierte Kandidat bestand 22 Tests mit 74 Assertions und beide Smoke-Skripte.
+Auf Staging liefern Startseite, beide CSS-Dateien, Glyphicons, Bootstrap- und
+SunEditor-JavaScript HTTP 200. Dashboard-Icons, IP-Menülinks, Feed-Reihenfolge,
+beide Editoren und das geöffnete und wieder geschlossene Bildermodal wurden im
+Browser geprüft; das anschließende Logintervall blieb fehlerfrei.
 
 ## Target-selection rule
 

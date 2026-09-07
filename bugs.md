@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.16.0**
-Last updated: **2026-09-07 19:44 CEST**
+Last updated: **2026-09-07 20:13 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -9,7 +9,7 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 ### BUG-041 - Bootstrap 3 ist abgekündigt und hat keinen offiziellen Sicherheitspatch
 
 Severity: **high**
-Status: **open; compatibility bridge prepared in 0.16.0, 2026-09-07 19:44 CEST**
+Status: **open; compatibility bridge installed on staging in 0.16.0, 2026-09-07 20:13 CEST**
 
 Contentify mischte Bootstrap-CSS 3.3.3 mit extern geladenem JavaScript 3.3.1.
 Version 0.16.0 vereinheitlicht zunächst alle Styles und Skripte lokal auf der
@@ -643,6 +643,20 @@ same behavior. Unit and staging smoke tests cover a readable and a deliberately
 missing path.
 
 ## Staging defects
+
+### STAGE-007 - Kandidaten-Logwurzel fehlte der PHP-Unterordner
+
+Severity: **nur Testaufbau**
+Status: **resolved during 0.16.0 validation, 2026-09-07 19:52 CEST**
+
+Der getrennte Bootstrap-Kandidat verwendete wie vorgesehen eine eigene
+Logwurzel unter `/var/log/contentify-bootstrap-candidate`. Beim ersten Start
+fehlte darin jedoch der vom Compose-Mount erwartete Unterordner `php`; der
+App-Container wurde deshalb neu gestartet. Die Meldung blieb im getrennten
+Kandidatenlog erhalten. Nach dem Anlegen mit Benutzer und Gruppe `33:33` lief
+der Kandidat stabil; das anschließende frische Prüfintervall sowie die
+Staging-Abnahme enthielten keine Fehler, Exceptions, Fatal Errors oder
+Rechtefehler. Der Quellcode war nicht betroffen.
 
 ### STAGE-006 - Entwicklungsserver lieferte keine REMOTE_ADDR-Umgebung
 

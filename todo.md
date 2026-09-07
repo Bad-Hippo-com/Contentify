@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
 Local workstream version: **0.16.0**
-Last updated: **2026-09-07 19:44 CEST**
+Last updated: **2026-09-07 20:13 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -15,6 +15,10 @@ Last updated: **2026-09-07 19:44 CEST**
 
 ## Completed
 
+- [x] `0.16.0` im getrennten Kandidaten mit 22 Tests und 74 Assertions sowie
+  beiden Smoke-Skripten prüfen, danach auf Staging ausrollen und Homepage,
+  Admin-Icons, IP-Links, Feed, beide Editoren, Bootstrap-Bildermodal, Assets
+  und frische zentrale Logs abnehmen.
 - [x] Gemischten Bootstrap-Bestand aus LESS 3.3.3 und CDN-JavaScript 3.3.1 auf
   lokale Version 3.4.1 vereinheitlichen; Backend, Morpheus, Phobos und aktives
   Frontend reproduzierbar bauen und verbleibende XSS-Advisories als BUG-041
