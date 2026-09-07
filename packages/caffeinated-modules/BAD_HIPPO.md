@@ -10,7 +10,8 @@ zunächst auf Illuminate 9 und PHP 8.5. Version 6.3.3 führt denselben
 unveränderten Paketcode auf Illuminate 10 weiter. Syntax-, Unit-, Modul-,
 Datenbank- und Browserprüfungen entscheiden über die tatsächliche
 Kompatibilität. Version 6.3.4 setzt diese kontrollierte Brücke mit unverändertem
-Paketcode für Illuminate 11 fort.
+Paketcode für Illuminate 11 fort. Version 6.3.5 erweitert ausschließlich den
+Composer-Vertrag auf Illuminate 12; der Paketcode bleibt erneut unverändert.
 
 Die lokale Kopie ist eine kontrollierte Brücke. Ein späterer Austausch des
 Modulsystems bleibt eine eigene, deutlich größere Aufgabe.

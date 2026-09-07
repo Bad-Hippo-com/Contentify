@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev läuft auf Staging mit Laravel 12.69.1, Sentinel 9 und PHP 8.5.10; der Composer-Sicherheitsaudit meldet erstmals keine bekannte Schwachstelle mehr.",
+        "timestamp": 1788775800,
+        "icon": "shield"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev läuft auf Staging mit Laravel 11.56.1 und PHP 8.5.10; Framework-Konfiguration, Carbon-3-Zeitwerte, Formularhelfer und sichere Logrechte wurden kontrolliert angepasst.",
         "timestamp": 1788772200,
         "icon": "wrench"

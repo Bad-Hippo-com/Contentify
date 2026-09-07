@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.11.1**
-Last updated: **2026-09-07 11:01 CEST**
+Local workstream version: **0.12.0**
+Last updated: **2026-09-07 12:10 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.11.1` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.5.10, Laravel 11.56.1 and MariaDB 10.11. The application, database,
+Version `0.12.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 12.69.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -413,6 +413,37 @@ frischen Logfenster entstehen keine neuen Anwendung-, PHP- oder Nginx-Fehler.
 Version `0.11.1` härtet diese Stufe betrieblich ab: Der App-Container und alle
 Laravel-CLI-Prüfungen laufen als `www-data`. Zentrale Logdateien können damit
 nicht mehr durch einen Root-CLI-Lauf für PHP-FPM unbeschreibbar werden.
+
+### Laravel-12-Migrationsstufe 0.12.0 - 2026-09-07 12:10 CEST
+
+Laravel wird bei unverändertem PHP 8.5.10 von 11.56.1 auf 12.69.1 angehoben.
+Sentinel 9.0.0 unterstützt Illuminate 12 offiziell; PHPUnit steigt entsprechend
+dem offiziellen Upgradepfad auf 11.5.56. Die lokalen Brücken für Module,
+Steam-OpenID und Laravel Collective HTML erhalten nur neue Illuminate-12-
+Metadaten und Patchversionen. Ihr PHP-Quellcode bleibt gegenüber 0.11.1
+unverändert.
+
+Die dokumentierten Laravel-12-Änderungen wurden einzeln abgeglichen. Contentify
+verwendet keine UUID-Traits, keine eigenen Datenbank-Grammatiken, keine
+`mergeIfMissing()`-Dot-Schlüssel und keine Concurrency-Ergebnismappen. Der
+lokale Datenträger besitzt bereits ausdrücklich `storage/app` als Wurzel und
+wird zusätzlich per Regressionstest festgehalten. SVG-Dateien laufen über
+Contentifys eigenen Uploader statt über Laravels geänderte `image`-Regel.
+Der einzige doppelte exakte Routenname `admin.` wird nicht zur URL-Erzeugung
+verwendet; alle konkreten `admin.<bereich>.*`-Namen und das vollständige
+Adminmenü funktionieren im Kandidaten.
+
+Der Kandidat besteht 802 Syntaxprüfungen, 18 Tests mit 54 Assertions, 512
+Produktionsrouten, vier Migrationen, beide Smoke-Tests, Match-/Cup-
+Datenbankzugriffe, Sentinel- und Steam-Auflösung, Dual-Logging sowie alle 36
+Adminbereiche. Das absichtlich geöffnete Matchformular protokolliert nur die
+bekannte fachliche Voraussetzung eines fehlenden Teams. Zwei fehlende
+Spielbildaufrufe reproduzieren auch auf 0.11.1 den offenen BUG-017 für nicht
+vorhandene statische Dateien und sind keine Laravel-12-Regression.
+
+Der Composer-Audit meldet erstmals keine bekannte Sicherheitslücke. Das
+aufgegebene `oyejorge/less.php` bleibt als getrennte Frontend-Aufgabe offen.
+Public bleibt bis zur unabhängigen sauberen Testinstallation gesperrt.
 
 ## Non-viable shortcut
 

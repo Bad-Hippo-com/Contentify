@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.11.1**
-Assessment/update time: **2026-09-07 11:01 CEST**
+Local workstream version: **0.12.0**
+Assessment/update time: **2026-09-07 12:10 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -48,9 +48,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 11 lint | Pass; `0.11.1` parses 801 project and local-package files |
-| PHP 8.5 / Laravel 11 Artisan | Pass; Laravel 11.56.1 and 512 active production routes |
-| PHP 8.5 / Laravel 11 PHPUnit | Pass; 17 tests with 52 assertions |
+| PHP 8.5 / Laravel 12 lint | Pass; `0.12.0` parses 802 project and local-package files |
+| PHP 8.5 / Laravel 12 Artisan | Pass; Laravel 12.69.1 and 512 active production routes |
+| PHP 8.5 / Laravel 12 PHPUnit | Pass; 18 tests with 54 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -61,7 +61,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Fails; 3 Laravel-11 advisories in one package |
+| Composer production audit | Pass; no known vulnerability advisories in `0.12.0`; one abandoned LESS package remains |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -75,8 +75,9 @@ Contentify is obsolete as delivered:
   is 13, whose supported PHP range includes PHP 8.5.
 - Der Bad-Hippo-Stand läuft inzwischen auf PHP 8.5.10; die reservierten
   `Match`-Klassennamen wurden in 0.7.0 beseitigt.
-- Der aktuelle Produktions-Lockbestand meldet drei Advisories in Laravel 10 und
-  zwei von Composer markierte aufgegebene Pakete; Public bleibt dadurch gesperrt.
+- Der Bad-Hippo-Produktions-Lockbestand auf Laravel 12 meldet keine bekannte
+  Sicherheitslücke mehr. Composer markiert nur noch Less.php als aufgegeben;
+  Public bleibt bis zur unabhängigen Testinstallation gesperrt.
 - The old Travis badge/configuration and stale-bot file are the only automation;
   there is no current CI pipeline.
 - The installation wiki was last edited in August 2021 and contradicts both PHP
@@ -709,6 +710,39 @@ ursprünglichen Fehler. Version 0.11.1 setzt vorhandene Anwendungs- und PHP-FPM-
 Logs auf `www-data` zurück, startet den App-Dienst selbst unter diesem Benutzer und
 dokumentiert `www-data` als verbindlichen Benutzer für Laravel-CLI-Befehle.
 
+### Laravel-12-Prüfung und Staging-Rollout 0.12.0 - 2026-09-07 12:10 CEST
+
+Der Laravel-12-Löserlauf zeigte zunächst genau einen harten Konflikt: Sentinel
+8.0.0 ist auf Illuminate 11 begrenzt. Statt einer lokalen Paketänderung wird die
+offizielle Sentinel-Version 9.0.0 eingesetzt, die Illuminate 12 unterstützt.
+Laravel löst dadurch stabil auf 12.69.1, Collision auf 8.9.5 und PHPUnit auf
+11.5.56. Die lokalen Paketversionen Module 6.3.5, Steam-Auth 4.4.3 und
+Collective HTML 6.4.3 ändern ausschließlich ihre Composer-Verträge auf
+Illuminate 12; gegenüber 0.11.1 wurde dort kein PHP-Code verändert.
+
+Der offizielle Upgradeleitfaden nennt neben den Abhängigkeiten UUIDv7,
+Container-Standardwerte, Route-Priorität, lokale Dateisystemwurzel,
+SVG-Validierung und einige niedrigstufige Datenbankkonstruktoren. Eine statische
+Suche bestätigte, dass Contentify weder UUID-Traits noch eigene Grammatiken,
+Concurrency oder verschachteltes `mergeIfMissing()` verwendet. `storage/app`
+ist bereits explizit konfiguriert und wird mit einem neuen Test gesichert. Der
+eigene Uploader behandelt SVG unabhängig von Laravels Validator.
+
+Der isolierte Kandidat auf Port 8088 verwendete getrennte Storage-, Public- und
+Logbereiche, aber die echte Staging-Datenbank nur lesend für die geprüften
+Modelle und Dienste. Er bestand 802 Syntaxprüfungen, 18 Tests mit 54 Assertions,
+512 Routen, vier ausgeführte Migrationen, beide Smoke-Tests, Sentinel- und
+Steam-Auflösung sowie das Dual-Logging. Im Browser wurden sämtliche 36
+Adminbereiche geöffnet. Das Match-Erstellformular erreichte erwartungsgemäß die
+fachliche Sperre für ein fehlendes Team; der frühere falsche Viewname trat nicht
+mehr auf. Fehlende Spielbilddateien liefern bereits auf 0.11.1 wegen BUG-017
+HTTP 500 und wurden deshalb nicht als Laravel-12-Regression gewertet.
+
+`composer audit --locked` meldet erstmals keine bekannte Sicherheitslücke. Nur
+`oyejorge/less.php` bleibt als aufgegebenes Paket und eigene Frontend-
+Modernisierungsaufgabe offen. Die Laravel-12-Stufe wurde als 0.12.0 auf Staging
+übernommen; Public bleibt bis zur unabhängigen Testinstallation gesperrt.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -729,7 +763,8 @@ dokumentiert `www-data` als verbindlichen Benutzer für Laravel-CLI-Befehle.
 - `packages/laravel-steam-auth`: dokumentierte Steam-OpenID-Kompatibilitätskopie
 - `packages/laravelcollective-html`: dokumentierte Formular-/HTML-Kompatibilitätskopie
 - `tests/Unit/Laravel10DateCastsTest.php`: Laravel-10-Datumsregression
-- `composer.json` and `composer.lock`: reproducible Laravel-10 dependency rung
+- `tests/Unit/Laravel12CompatibilityTest.php`: Laravel-12- und Speicherpfadvertrag
+- `composer.json` and `composer.lock`: reproducible Laravel-12 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields

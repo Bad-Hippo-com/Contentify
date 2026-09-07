@@ -1,10 +1,21 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.11.1**
-Last updated: **2026-09-07 11:01 CEST**
+Local workstream version: **0.12.0**
+Last updated: **2026-09-07 12:10 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-033 - Sentinel 8 blockiert Laravel 12
+
+Severity: **high**
+Status: **resolved in 0.12.0, 2026-09-07 12:10 CEST**
+
+Der erste Laravel-12-Löserlauf scheiterte nachvollziehbar, weil Sentinel 8.0.0
+`illuminate/support ^11` verlangt. Eine lokale Änderung ist nicht erforderlich:
+Die offizielle Sentinel-Version 9.0.0 unterstützt PHP ab 8.3 und Illuminate 12.
+Contentify verwendet deshalb regulär Sentinel 9; Dienstauflösung, Benutzerzugriff,
+Anmeldeseite und bestehende authentifizierte Sitzung wurden im Kandidaten geprüft.
 
 ### BUG-032 - Root-CLI-Prüfung sperrt das zentrale Laravel-Log
 
@@ -208,14 +219,13 @@ laufendem Nginx/FPM-Staging.
 ### BUG-002 - Production dependencies contain known vulnerabilities
 
 Severity: **blocker**
-Status: **open**
+Status: **resolved in 0.12.0, 2026-09-07 12:10 CEST**
 
-After the controlled `0.11.0` Laravel-11 rung, `composer audit --locked --no-dev`
-reports **3 known advisories in one package**. Sie betreffen Laravel Framework
-11.56.1. Composer 2.10 blockiert diese letzte stabile Laravel-11-Ausgabe daher
-bei einer neuen Auflösung; der interne Lockbestand wurde einmal mit
-`--no-blocking` erzeugt, während der Audit alle Findings weiterhin meldet.
-Production approval remains blocked.
+Nach der kontrollierten Laravel-12-Stufe meldet `composer audit --locked`
+**keine bekannte Sicherheitslücke** mehr. Die drei zuletzt in Laravel 11.56.1
+vorhandenen Meldungen werden durch Laravel 12.69.1 geschlossen. Die technische
+Public-Freigabe bleibt dennoch bis zur sauberen Installation und Abnahme auf dem
+getrennten Testsystem gesperrt.
 
 ### BUG-003 - Current Composer installation is not reproducible
 

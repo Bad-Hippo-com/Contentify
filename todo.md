@@ -1,15 +1,15 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.11.1**
-Last updated: **2026-09-07 11:01 CEST**
+Local workstream version: **0.12.0**
+Last updated: **2026-09-07 12:10 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Laravel als nächste Achse schrittweise von Version 11 auf 12 aktualisieren;
-   Bootstrap und Node.js bleiben davon getrennt.
+4. Nach der stabilen Laravel-12-Stufe die Laravel-13-Verträglichkeit getrennt
+   untersuchen; Bootstrap und Node.js bleiben davon getrennt.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
 
@@ -139,8 +139,9 @@ Last updated: **2026-09-07 11:01 CEST**
   Collision 8 und Carbon 3 aktualisieren, die vollständige Contentify-
   Konfiguration beibehalten und Laravel Collective HTML kontrolliert lokal
   weiterführen.
-- [ ] Laravel 11 in der nächsten getrennten Stufe auf Laravel 12 anheben und
-  dabei die verbleibenden Framework-Advisories weiter abbauen.
+- [x] Laravel 11 in `0.12.0` getrennt auf Laravel 12.69.1 anheben, Sentinel 9
+  und PHPUnit 11 verwenden, alle 36 Adminbereiche prüfen und die drei letzten
+  Framework-Advisories vollständig beseitigen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.
@@ -154,8 +155,9 @@ Last updated: **2026-09-07 11:01 CEST**
   `/admin/config/log` without exposing central component logs to its delete
   action; verify both outputs and the authenticated browser view on staging
   (BUG-018).
-- [ ] Reduce the remaining Composer production audit from 3 advisories to zero
-  through the following isolated Laravel/PHP migration rungs.
+- [x] Den Composer-Produktionsaudit in `0.12.0` von drei Advisories auf null
+  bekannte Sicherheitslücken reduzieren; Less.php bleibt separat als
+  aufgegebenes Paket erfasst.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.
 - [ ] Replace the container definitions with pinned supported images,

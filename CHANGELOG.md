@@ -1,3 +1,21 @@
+## Bad Hippo 0.12.0 / Contentify 3.3-dev - 2026-09-07
+
+- Laravel getrennt von 11.56.1 auf 12.69.1 angehoben; PHP bleibt unverändert
+  auf 8.5.10.
+- Sentinel offiziell von 8.0.0 auf 9.0.0 und PHPUnit auf 11.5.56 aktualisiert.
+- Die dokumentierten Modul-, Steam- und Collective-HTML-Brücken mit
+  unverändertem PHP-Code auf Illuminate 12 erweitert.
+- Laravels Änderungen an UUIDs, Container-Defaults, lokaler Dateisystemwurzel,
+  SVG-Validierung und Routennamens-Priorität gegen Contentifys Nutzung geprüft;
+  den bisherigen lokalen Speicherpfad durch einen Regressionstest abgesichert.
+- 802 Syntaxprüfungen, 18 Tests mit 54 Assertions, 512 Routen, vier
+  Migrationen, beide Smoke-Tests, Datenbank-, Authentifizierungs-, Log- und
+  Browserprüfungen bestanden.
+- Alle 36 Adminbereiche im isolierten Kandidaten geöffnet. Der Audit meldet
+  keine bekannte Sicherheitslücke mehr; nur Less.php bleibt aufgegeben.
+- Public bleibt gesperrt, bis der getrennte Testserver die saubere Installation
+  und die repräsentativen Abläufe bestanden hat.
+
 ## Bad Hippo 0.11.1 / Contentify 3.3-dev - 2026-09-07
 
 - PHP-FPM-App-Container verbindlich als `www-data` ausführen, damit Laravel-
