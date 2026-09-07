@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.13.0**
-Last updated: **2026-09-07 14:44 CEST**
+Local workstream version: **0.14.0**
+Last updated: **2026-09-07 15:58 CEST**
 
 ## Decision
 
@@ -44,6 +44,11 @@ public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
 verified. This closes stage 2 only; it does not approve a public deployment.
+
+Der Editor-Kandidat `0.14.0` läuft davon getrennt auf Port 8088. Er ersetzt nur
+CKEditor durch SunEditor; PHP, Laravel und Bootstrap bleiben unverändert. Das
+produktive Staging auf Port 80 bleibt bis zum abgeschlossenen Rollout auf
+`0.13.0`, und eine Public-Freigabe bleibt weiterhin ausgeschlossen.
 
 ## Target-selection rule
 
@@ -486,6 +491,23 @@ bis zur sauberen Installation auf dem unabhängigen Testsystem gesperrt.
 Die Live-Abnahme fand anschließend einen veralteten Raw-GitHub-CDN-Treffer für
 den Bad-Hippo-Feed. Version 0.13.0 kennzeichnet Feed-URL und Anwendungscache neu;
 der Laravel-13-Eintrag wird dadurch unmittelbar als erste Meldung geladen.
+
+### Editor-Migrationsstufe 0.14.0 - 2026-09-07 15:58 CEST
+
+CKEditor 4.3.1 wird vollständig entfernt. Ein Update innerhalb CKEditor 4 wäre
+außerhalb des kommerziellen LTS-Zweigs weiterhin abgekündigt und unsicher;
+CKEditor 5 würde die MIT-Verteilung dieses Forks mit GPL-2+- beziehungsweise
+kommerziellen Lizenzbedingungen belasten. Der exakt festgeschriebene SunEditor
+3.3.2 ist MIT-lizenziert, ohne Laufzeitabhängigkeiten und wird deshalb als
+separate Editorstufe eingesetzt.
+
+Ein gemeinsamer Contentify-Adapter initialisiert jedes `textarea.editor`, trennt
+Desktop- und Mobil-Werkzeugleisten und bindet die bestehenden Endpunkte für
+Bilder, Vorlagen und Länderflaggen ein. Er synchronisiert den HTML-Wert auch bei
+geöffnetem Quelltextmodus und entfernt ausschließlich SunEditor-interne
+Metadaten vor dem Speichern. Der isolierte Kandidat bestand 21 Unit-Tests mit
+71 Assertions, die beiden Smoke-Tests, 515 Routen und im echten Browser das
+Erstellen und erneute Bearbeiten einer News mit Umlauten, Quelltext und Flaggen.
 
 ## Non-viable shortcut
 

@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev ersetzt den abgekündigten CKEditor 4 vollständig durch SunEditor 3.3.2 unter MIT; Bilder, Vorlagen, Flaggen und sauber synchronisiertes HTML wurden im Browser geprüft.",
+        "timestamp": 1788789520,
+        "icon": "edit"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev läuft auf Staging mit Laravel 13.30.1, Sentinel 10 und PHP 8.5.10; Anmeldung, Cache-Schutz, Modelle, Logs und alle Adminbereiche wurden geprüft.",
         "timestamp": 1788781793,
         "icon": "shield"

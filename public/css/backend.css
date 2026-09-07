@@ -7769,7 +7769,21 @@ fieldset[disabled] .page-images .image .actions a.active {
   width: 50%;
 }
 .editor-flags img {
+  margin: 0 8px 8px 0;
   cursor: pointer;
+}
+.contentify-editor-toolbar {
+  margin-bottom: 8px;
+}
+.contentify-editor-toolbar .btn {
+  margin-right: 6px;
+}
+.form-editor .sun-editor {
+  margin-bottom: 15px;
+  border-color: #cccccc;
+}
+.form-editor .se-wrapper {
+  min-height: 240px;
 }
 .editor-images .actions {
   padding-bottom: 20px;

@@ -1,3 +1,23 @@
+## Bad Hippo 0.14.0 / Contentify 3.3-dev - 2026-09-07
+
+- Den seit 2013 ausgelieferten CKEditor 4.3.1 vollständig durch den exakt
+  festgeschriebenen, MIT-lizenzierten SunEditor 3.3.2 ersetzt.
+- Alle Rich-Text-Felder über einen gemeinsamen Initialisierer angebunden;
+  deutsche Desktop-/Mobil-Werkzeugleisten sowie Contentifys Bilder-, Vorlagen-
+  und Flaggenauswahl bleiben erhalten.
+- Formularwerte werden auch bei geöffnetem Quelltextmodus sicher synchronisiert;
+  editorinterne Attribute und Klassen werden vor dem Speichern entfernt.
+- Die 236 alten CKEditor-Dateien entfernt und Lizenz, Assets, Adapter und
+  Nichtvorhandensein des Alteditors mit Regressionstests abgesichert.
+- Nginx liefert fehlende statische Dateien direkt als 404, sodass entfernte
+  Bibliotheken nicht mehr Laravels generische 500-Seite und Fehlerlogs auslösen.
+- 21 Unit-Tests mit 71 Assertions, zusätzlich 3 fokussierte Editor-Tests mit
+  16 Assertions, 515 Routen, beide Smoke-Tests sowie echtes Erstellen und
+  Bearbeiten einer News im isolierten Browserkandidaten geprüft.
+- Der Produktions-Audit des neuen Editors meldet keine bekannte Schwachstelle.
+  Der historische Grunt-Entwicklungsbaum bleibt eine getrennte Frontend-Aufgabe;
+  Public bleibt bis zur sauberen Testinstallation gesperrt.
+
 ## Bad Hippo 0.13.0 / Contentify 3.3-dev - 2026-09-07
 
 - Laravel getrennt auf 13.30.1 angehoben; PHP bleibt unverändert auf 8.5.10.

@@ -26,6 +26,8 @@
     {!! HTML::style('css/backend.css') !!}
     {!! HTML::style('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.css') !!}
     {!! HTML::style('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') !!}
+    {!! HTML::style('vendor/suneditor/suneditor.min.css') !!}
+    {!! HTML::style('vendor/suneditor/suneditor-contents.min.css') !!}
 
     {!! HTML::jsTranslations() !!}
     {!! HTML::script('vendor/jquery/jquery-2.2.4.min.js') !!}
@@ -33,8 +35,10 @@
     {!! HTML::script('vendor/moment/moment.js') !!}
     {!! HTML::script('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js') !!}
     {!! HTML::script('vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') !!}
-    {!! HTML::script('vendor/ckeditor/ckeditor.js') !!}
+    {!! HTML::script('vendor/suneditor/suneditor.min.js') !!}
+    {!! HTML::script('vendor/suneditor/de.js') !!}
     {!! HTML::script('vendor/contentify/contentify.js') !!}
+    {!! HTML::script('vendor/contentify/editor.js') !!}
     {!! HTML::script('vendor/contentify/backend.js') !!}
     <script>{!! Config::get('app.backend_js_code') !!}</script>
 </head>

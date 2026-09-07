@@ -1,7 +1,7 @@
 # Contentify staging deployment
 
-Version: **0.13.0 / Contentify 3.3-dev**
-Last updated: **2026-09-07 14:44 CEST**
+Version: **0.14.0 / Contentify 3.3-dev**
+Last updated: **2026-09-07 15:58 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an
@@ -49,6 +49,14 @@ sudo docker compose --env-file .env.staging up -d --force-recreate app jobs ngin
 After a build, verify at minimum that the homepage, Font Awesome CSS and WOFF2,
 jQuery (`/vendor/jquery/jquery-2.2.4.min.js`) and the Glyphicons WOFF2 return
 HTTP 200 with their expected MIME types.
+
+Ab `0.14.0` müssen zusätzlich `/vendor/suneditor/suneditor.min.js`,
+`/vendor/suneditor/suneditor.min.css` und `/vendor/contentify/editor.js` mit
+HTTP 200 antworten. Der persistente `public-data`-Datenträger darf keine alte
+`vendor/ckeditor`-Kopie behalten; der Rollout entfernt dieses Verzeichnis
+ausdrücklich und prüft, dass der alte JavaScript-Inhalt nicht mehr ausgeliefert
+wird. Die konkrete Negativprobe `/vendor/ckeditor/ckeditor.js` muss HTTP 404
+liefern.
 
 Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:

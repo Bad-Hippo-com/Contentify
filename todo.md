@@ -1,19 +1,25 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.13.0**
-Last updated: **2026-09-07 14:44 CEST**
+Local workstream version: **0.14.0**
+Last updated: **2026-09-07 15:58 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
-2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
-3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Nach der stabilen Laravel-13-Stufe Bootstrap und Node.js weiterhin getrennt
+2. Den historischen npm-/Grunt-Entwicklungsbaum getrennt modernisieren; der
+   Produktionsbaum des neuen Editors ist bereits audit-frei.
+3. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
+4. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
+5. Nach der stabilen Laravel-13-Stufe Bootstrap und Node.js weiterhin getrennt
    untersuchen; kein gleichzeitiger Frontend-Umbau.
-5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
+6. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
 
 ## Completed
+
+- [x] CKEditor 4.3.1 vollständig durch SunEditor 3.3.2 unter MIT ersetzen,
+  Contentifys Sonderfunktionen anbinden und News-Erstellen/-Bearbeiten im
+  isolierten Staging-Browser prüfen (`0.14.0`).
 
 - [x] Öffentlichen Fork `Bad-Hippo-com/Contentify` erstellen und den ursprünglichen
   Maintainer sowie den Community-Status sichtbar und respektvoll kennzeichnen.

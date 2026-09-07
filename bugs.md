@@ -1,10 +1,25 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.13.0**
-Last updated: **2026-09-07 14:44 CEST**
+Local workstream version: **0.14.0**
+Last updated: **2026-09-07 15:58 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-039 - Ausgelieferter CKEditor 4.3.1 ist abgekündigt und unsicher
+
+Severity: **high**
+Status: **resolved in 0.14.0, 2026-09-07 15:58 CEST**
+
+Contentify lud noch CKEditor 4.3.1 aus dem Jahr 2013. CKEditor 4 wird seit Juni
+2023 nur noch im kommerziellen LTS-Zweig gepflegt; selbst die letzte freie
+4.22.1-Version enthält bekannte Sicherheitsprobleme. CKEditor 5 wäre für diesen
+Fork nur unter GPL 2+ oder einer kommerziellen Sonderlizenz nutzbar und passt
+damit nicht sauber zu Contentifys MIT-Verteilung. Version 0.14.0 ersetzt den
+Editor deshalb vollständig durch SunEditor 3.3.2 unter MIT, entfernt 236 alte
+CKEditor-Dateien und bewahrt Bilder, Vorlagen, Flaggen und Quelltextmodus über
+einen eigenen Adapter. Der Browserkandidat bestand Erstellen, Speichern,
+Bearbeiten, Umlaute und zwei gleichzeitig geladene Editoren.
 
 ### BUG-038 - GitHubs Raw-CDN hält alten Bad-Hippo-Feed fest
 
@@ -352,7 +367,7 @@ sichert genau diesen Fall ab; Startseite und Login antworten danach mit HTTP
 ### BUG-017 - Unknown routes are returned as server errors
 
 Severity: **medium**
-Status: **open; confirmed on staging 2026-09-06 21:01 CEST**
+Status: **für dynamische Routen offen; statischer Anteil in 0.14.0 behoben, 2026-09-07 16:10 CEST**
 
 The original production exception handler renders its generic HTTP-500 view
 for every exception other than `ModelNotFoundException`. Consequently an
@@ -361,6 +376,12 @@ of 404. The real Contentify login route `/auth/login` and the Font Awesome 5
 assets are present and return HTTP 200, so this is not a Laravel-7 or missing-
 asset regression. A focused exception-handler test and correct handling of
 Symfony's `NotFoundHttpException` are still required.
+
+Version `0.14.0` lässt fehlende Dateien mit bekannten Browser-Asset-Endungen
+nicht mehr bis Laravel gelangen: Nginx beantwortet sie direkt mit 404. Damit
+ist die CKEditor-Entfernung prüfbar, ohne einen falschen Anwendungsfehler zu
+erzeugen. Unbekannte dynamische Routen bleiben als eigener Teil dieses Fehlers
+offen.
 
 ### BUG-018 - Admin log page reads an obsolete file
 

@@ -467,16 +467,9 @@ class FormBuilder extends OriginalFormBuilder
             $label    = self::label($name, $title, ['class' => 'full-line']);
             $textarea = self::textarea($name, $value, ['class' => 'editor']);
 
-            $code = "<script>var editorLocale = '".App::getLocale()."';
-            var config = window.innerWidth > 768 ? 'custom_config.js' : 'custom_config_mobile.js';
-            CKEDITOR.replace('".$name."', {
-                customConfig: config
-            });</script>";
-
             $partial  = '<div class="form-editor">'
                 .$label
                 .$textarea
-                .$code
                 .'</div>';
         } else {
             $partial  = self::smartGroupOpen($name, $title)

@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.13.0**
-Assessment/update time: **2026-09-07 14:44 CEST**
+Local workstream version: **0.14.0**
+Assessment/update time: **2026-09-07 15:58 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -50,7 +50,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | --- | --- |
 | PHP 8.5 / Laravel 13 lint | Pass; `0.13.0` parses 802 project and local-package files |
 | PHP 8.5 / Laravel 13 Artisan | Pass; Laravel 13.30.1 and 512 active production routes |
-| PHP 8.5 / Laravel 13 PHPUnit | Pass; 19 tests with 58 assertions |
+| PHP 8.5 / Laravel 13 PHPUnit | Pass; 21 tests with 71 assertions; focused editor suite 3 tests with 16 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -64,6 +64,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer production audit | Pass; no known vulnerability advisories in `0.13.0`; one abandoned LESS package remains |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
+| SunEditor production audit | Pass; exact 3.3.2 dependency, no known production vulnerability |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
 | Docker/Compose review | Fail for current production readiness |
 
@@ -800,6 +801,37 @@ dem Staging-Netz noch die alte Antwort. Die Bad-Hippo-Feed-URL enthält deshalb
 die Standkennung 0.13.0 und verwendet einen neuen unabhängigen Cache-Schlüssel;
 die erneute Browserprüfung muss den Laravel-13-Eintrag an erster Stelle zeigen.
 
+### CKEditor-Ablösung und Kandidatenprüfung 0.14.0 - 2026-09-07 15:58 CEST
+
+Der ausgelieferte CKEditor 4.3.1 stammt aus 2013. CKEditor 4 ist seit Juni 2023
+außerhalb des kommerziellen LTS-Zweigs abgekündigt, und die letzte freie 4.22.1
+enthält bekannte Sicherheitsprobleme. CKEditor 5 ist selbst gehostet nur unter
+GPL 2+ oder einer kommerziellen Sonderlizenz verfügbar. Um Contentifys
+MIT-Verteilung beizubehalten, ersetzt 0.14.0 den alten Editor durch den exakt
+festgeschriebenen, MIT-lizenzierten SunEditor 3.3.2. Alle 236 CKEditor-Dateien
+werden aus dem Repository entfernt.
+
+`public/vendor/contentify/editor.js` bildet die Contentify-spezifische Brücke:
+deutsche Desktop-/Mobil-Werkzeugleisten, mehrere Editoren pro Formular sowie die
+vorhandenen Dialoge für Bilder, Vorlagen und Flaggen. Vor dem Absenden wird jeder
+Editor – auch im Quelltextmodus – in sein Textfeld synchronisiert. Nur interne
+`data-se-*`-Attribute und `se-*`-/`__se__*`-Klassen werden entfernt; fachliches
+HTML bleibt unverändert.
+
+Im isolierten Kandidaten auf Port 8088 bestanden 21 Unit-Tests mit 71 Assertions,
+die fokussierte Editor-Suite mit 3 Tests und 16 Assertions, 515 Routen sowie
+beide Smoke-Tests. Ein echter Browserlauf erstellte eine News mit Umlauten,
+Flagge und aktivem Quelltextmodus, speicherte sie und öffnete sie anschließend
+erneut zum Bearbeiten. Zwei kandidatspezifische Dateirechte wurden getrennt
+korrigiert und nicht als Editorfehler verschwiegen. PHP 8.5.10, Laravel 13.30.1
+und Bootstrap bleiben in dieser Stufe unverändert.
+
+Da Contentifys offener BUG-017 fehlende Dateien bisher an Laravel durchreichte
+und dort als HTTP 500 darstellte, behandelt Nginx bekannte statische Endungen
+ab 0.14.0 direkt mit `try_files ... =404`. Das löst den Asset-Teil und erlaubt
+eine eindeutige CKEditor-Negativprobe; die fehlerhafte Behandlung unbekannter
+dynamischer Routen bleibt separat offen.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -822,6 +854,10 @@ die erneute Browserprüfung muss den Laravel-13-Eintrag an erster Stelle zeigen.
 - `tests/Unit/Laravel10DateCastsTest.php`: Laravel-10-Datumsregression
 - `tests/Unit/Laravel13CompatibilityTest.php`: Laravel-13-, Cache-, Sitzungs-,
   CSRF- und Speicherpfadvertrag
+- `public/vendor/contentify/editor.js`: gemeinsame Contentify-SunEditor-Brücke
+- `public/vendor/suneditor`: exakt vendorte SunEditor-3.3.2-Laufzeit und MIT-Lizenz
+- `tests/Unit/EditorIntegrationTest.php`: Asset-, Formular- und Workflowverträge
+- `package.json` and `package-lock.json`: exact editor dependency and reproducible npm tree
 - `composer.json` and `composer.lock`: reproducible Laravel-13 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
