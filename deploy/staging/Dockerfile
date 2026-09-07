@@ -1,6 +1,6 @@
-FROM composer:2.2.25@sha256:be23a9c3f73293f966a981be03896f9aaaade6c2cc9415f4cf828d1f39c5005c AS composer
+FROM composer:2.10.3@sha256:d8f6343d3fae98107426bc49163ccad46ef85aabd4a27d80a74401fab4aba332 AS composer
 
-FROM php:8.0-fpm-bullseye@sha256:b07b8df17506cdb370945d942c5f12356af2d078005ded8b195f7e17129de9d1 AS app
+FROM php:8.5-fpm-bookworm@sha256:81b9c405b013ebda0c9b8cd7a1a61424cf3627ca96348d93752a9b0539ce9a25 AS app
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -23,7 +23,6 @@ RUN apt-get update \
         gd \
         mbstring \
         mysqli \
-        opcache \
         pdo_mysql \
         simplexml \
         zip \

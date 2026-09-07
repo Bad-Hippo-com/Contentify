@@ -1,14 +1,15 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.7.1**
-Last updated: **2026-09-07 06:44 CEST**
+Local workstream version: **0.8.0**
+Last updated: **2026-09-07 07:35 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. PHP, Laravel, Bootstrap und Node.js weiterhin einzeln aktualisieren.
+4. Laravel als nächste Achse schrittweise über Version 8 hinaus aktualisieren;
+   Bootstrap und Node.js bleiben davon getrennt.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
 
@@ -122,6 +123,12 @@ Last updated: **2026-09-07 06:44 CEST**
   models to `GameMatch` and `CupMatch`, preserve their tables and routes, then
   verify Composer, 688 syntax checks, twelve unit tests, both smoke tests,
   512 routes, live Nginx/FPM, database access and authenticated admin pages.
+- [x] PHP in `0.8.0` direkt und ausschließlich auf 8.5.10 abschließen;
+  Composer 2.10.3 sowie kompatible Nette-Versionen verwenden, alle eigenen
+  PHP-8.5-Deprecations beseitigen und 735 Syntaxprüfungen, zwölf Unit-Tests mit
+  42 Assertions, Plattform-, Datenbank-, Nginx- und HTTP-Prüfungen bestehen.
+- [ ] Laravel 8 in einer eigenen Folgestufe anheben und dabei die unter PHP 8.5
+  protokollierten Framework-Deprecations sowie die drei Advisories abbauen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.

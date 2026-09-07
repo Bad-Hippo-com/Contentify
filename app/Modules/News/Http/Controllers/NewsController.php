@@ -72,7 +72,7 @@ class NewsController extends FrontController implements GlobalSearchInterface
      * @return \Illuminate\Contracts\View\View|null
      * @throws \Exception
      */
-    public function showStream(int $offset = null)
+    public function showStream(?int $offset = null)
     {
         if ($offset) {
             $offset = (int) $offset;
@@ -137,7 +137,7 @@ class NewsController extends FrontController implements GlobalSearchInterface
      * @return void
      * @throws \Exception
      */
-    public function show(int $id, string $slug = null)
+    public function show(int $id, ?string $slug = null)
     {
         /** @var News $news */
         if ($slug) {

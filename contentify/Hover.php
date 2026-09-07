@@ -85,7 +85,7 @@ class Hover
      * @param array       $attributes Image attributes
      * @return self
      */
-    public function image(string $url, string $alt = null, array $attributes = []) : self
+    public function image(string $url, ?string $alt = null, array $attributes = []) : self
     {
         if ($url) {
             $this->content .= HTML::image($url, $alt, $attributes);

@@ -206,7 +206,7 @@ class Forum extends BaseModel
      * @param User|null $user   User model or null if it's the current client
      * @return Builder
      */
-    public function scopeIsAccessible(Builder $query, User $user = null) : Builder
+    public function scopeIsAccessible(Builder $query, ?User $user = null) : Builder
     {
         if (! $user) {
             $user = user();

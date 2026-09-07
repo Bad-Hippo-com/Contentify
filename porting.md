@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.7.1**
-Last updated: **2026-09-07 06:44 CEST**
+Local workstream version: **0.8.0**
+Last updated: **2026-09-07 07:35 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.7.1` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.0.30, Laravel 8.83.29 and MariaDB 10.11. The application, database,
+Version `0.8.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 8.83.29 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -293,6 +293,29 @@ echte Nginx/FPM-Pfad war nicht betroffen. Besucherstatistik, Kontaktformular
 und Bewerbungsformular verwenden nun dennoch einheitlich Laravels Request-IP.
 Dieser Fix verändert weder PHP- noch Laravel-Version und wird deshalb als
 eigener Fixstand geführt.
+
+### PHP-8.5-Meilenstein 0.8.0 - 2026-09-07 07:35 CEST
+
+PHP wurde entsprechend der festgelegten Zielversion direkt von 8.0.30 auf
+8.5.10 angehoben; es gibt keine Freigabestufe auf 8.1 bis 8.4. Laravel bleibt
+für diese isolierte Achse unverändert auf 8.83.29. Die Containerbasis wechselt
+vom offiziellen PHP-FPM-Bullseye- zum gepinnten PHP-8.5-FPM-Bookworm-Abbild;
+Composer steigt von 2.2.25 auf 2.10.3. OPcache ist im Basisabbild bereits
+enthalten und wird deshalb nicht erneut kompiliert.
+
+Die erste reguläre Abhängigkeitsauflösung deckte veraltete PHP-Obergrenzen in
+`nette/schema` und `nette/utils` auf. Die kleinsten kompatiblen Aktualisierungen
+auf 1.3.6 und 4.1.5 wurden in den Lockbestand übernommen. Contentifys eigene
+implizit-nullbare Parameter, SimpleXML-Überschreibungen und die alte PDO-MySQL-
+Konstante wurden an PHP 8.5 angepasst. 735 First-Party-Dateien laufen ohne
+Deprecation, zwölf Unit-Tests mit 42 Assertions sowie Plattform-, Datenbank-
+und HTTP-Prüfungen bestehen.
+
+Laravel 8 selbst erzeugt auf PHP 8.5 weiterhin Deprecations. Diese Hinweise
+bleiben in den ausführlichen zentralen und klassischen Logs erhalten. Sie sind
+kein Anlass, Vendor-Dateien zu patchen oder Meldungen zu unterdrücken, sondern
+die messbare Ausgangslage für die nächste getrennte Laravel-Stufe. Drei
+Laravel-Advisories verhindern weiterhin eine Public-Freigabe.
 
 ## Non-viable shortcut
 

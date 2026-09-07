@@ -1,10 +1,44 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.7.1**
-Last updated: **2026-09-07 06:44 CEST**
+Local workstream version: **0.8.0**
+Last updated: **2026-09-07 07:35 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-024 - Laravel 8 erzeugt unter PHP 8.5 Framework-Deprecations
+
+Severity: **high**
+Status: **open; auf Staging mit 0.8.0 bestätigt, 2026-09-07 07:35 CEST**
+
+Die Anwendung läuft mit PHP 8.5.10, Laravel 8.83.29 erzeugt dabei jedoch viele
+Hinweise zu implizit-nullbaren Parametern aus dem Framework-Code. Eigene
+Vorkommen wurden beseitigt; der vollständige First-Party-Syntaxlauf meldet null
+Deprecations. Die Framework-Hinweise werden bewusst weder unterdrückt noch im
+Vendor-Verzeichnis gepatcht, sondern über die vorhandenen PHP- und Laravel-Logs
+gespeichert. Der nächste getrennte Laravel-Sprung muss sie durch eine reguläre
+Framework-Aktualisierung abbauen.
+
+### BUG-023 - PHP-8.5-Abbild versuchte OPcache doppelt zu installieren
+
+Severity: **high**
+Status: **resolved in 0.8.0, 2026-09-07 07:35 CEST**
+
+Das offizielle PHP-8.5-FPM-Abbild enthält Zend OPcache bereits. Die bisherige
+Erweiterungsliste versuchte OPcache erneut zu kompilieren und brach den Build
+mit fehlenden Moduldateien ab. OPcache wurde aus `docker-php-ext-install`
+entfernt; die eingebaute Version 8.5.10 ist zur Laufzeit aktiv.
+
+### BUG-022 - Alte Nette-Abhängigkeiten sperrten PHP 8.5
+
+Severity: **high**
+Status: **resolved in 0.8.0, 2026-09-07 07:35 CEST**
+
+`nette/schema` 1.2.5 erlaubte höchstens PHP 8.3 und `nette/utils` 3.2.10 nur PHP
+kleiner 8.4. Ein normaler Composer-Lauf auf PHP 8.5 war deshalb nicht möglich.
+Der gezielte Lock-Update auf Schema 1.3.6 und Utils 4.1.5 beseitigt die Schranke.
+Die finale Anwendung besteht `composer check-platform-reqs --no-dev` ohne
+ignorierte Plattformanforderungen.
 
 ### BUG-021 - Besucher-IP hängt von der Prozessumgebung ab
 
@@ -61,7 +95,9 @@ zunächst 688 Syntaxprüfungen und zwölf Unit-Tests mit 42 Assertions. Danach
 bestand derselbe Stand unter PHP 8.0.30 Composer-Installation ohne ignorierte
 Plattformanforderungen, dieselben Syntax- und Unit-Prüfungen, beide Smoke-Tests,
 512 Routen und echte Datenbankabfragen über beide Modelle. BUG-001 ist damit
-für PHP 8.0 behoben; neuere PHP-Stufen werden weiterhin einzeln geprüft.
+für PHP 8.0 behoben. Version `0.8.0` bestätigt den reparierten Stand zusätzlich
+auf PHP 8.5.10 mit 735 Syntaxprüfungen, regulärer Composer-Installation und
+laufendem Nginx/FPM-Staging.
 
 ### BUG-002 - Production dependencies contain known vulnerabilities
 
@@ -70,8 +106,9 @@ Status: **open**
 
 After the controlled `0.6.0` Laravel-8 rung, `composer audit --locked --no-dev`
 reports **3 known advisories in one package** instead of 12 in two packages on
-Laravel 7. The remaining findings affect Laravel Framework 8.83.29. Laravel 8
-and PHP 8.0 are unsupported; production approval therefore remains blocked.
+Laravel 7. The remaining findings affect Laravel Framework 8.83.29. PHP wurde
+in `0.8.0` auf 8.5.10 angehoben, Laravel 8 bleibt jedoch abgekündigt;
+production approval therefore remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
@@ -82,9 +119,9 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
   on PHP 8.5 and does not provide the `audit` command.
 - Version `0.3.0` regenerates `composer.lock`; current Composer now reports
   `composer.json` and the lock as valid with `--strict`.
-- A normal PHP 8.5 install is rejected by package PHP constraints. It proceeds
-  only with `--ignore-platform-reqs`, installing 112 old packages despite the
-  declared incompatibilities.
+- Version `0.8.0` aktualisiert die beiden blockierenden Nette-Pakete und setzt
+  die PHP-Anforderung auf `~8.5.0`; Installation und Plattformprüfung laufen
+  nun ohne ignorierte Anforderungen.
 - The refreshed lock still contains four abandoned production packages:
   `invisnik/laravel-steam-auth`, `laravelcollective/html`, `oyejorge/less.php`
   and `swiftmailer/swiftmailer`; development dependencies add further legacy

@@ -37,7 +37,7 @@ class InstallController extends Controller
      * @param  null|MessageBag $errors Validation errors
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(int $step = -1, MessageBag $errors = null)
+    public function index(int $step = -1, ?MessageBag $errors = null)
     {
         if (! Config::get('app.debug')) {
             die('Please enable the debug mode to start the installer.');

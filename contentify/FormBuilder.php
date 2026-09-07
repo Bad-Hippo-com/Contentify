@@ -214,7 +214,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  array       $options Array with attributes
      * @return string
      */
-    public function numeric(string $name, string $value = null, array $options = []) : string
+    public function numeric(string $name, ?string $value = null, array $options = []) : string
     {
         if (isset($options['class'])) {
             $options['class'] = ' ';
@@ -318,7 +318,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $class Additional class(es)
      * @return string
      */
-    public function smartGroupOpen(string $name = null, string $title = null, string $class = null) : string
+    public function smartGroupOpen(?string $name = null, ?string $title = null, ?string $class = null) : string
     {
         $partial = '<div class="form-group '.$class.'">';
 
@@ -347,7 +347,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  bool|null $default The default value (checked/not checked)
      * @return string
      */
-    public function smartCheckbox(string $name, string $title, bool $default = null) : string
+    public function smartCheckbox(string $name, string $title, ?bool $default = null) : string
     {
         $value = self::getDefaultValue($name, $default);
 
@@ -371,7 +371,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  array       $options Additional options such as class or placeholder
      * @return string
      */
-    public function smartText(string $name, string $title, string $default = null, $options = []) : string
+    public function smartText(string $name, string $title, ?string $default = null, $options = []) : string
     {
         $value = self::getDefaultValue($name, $default);
         $partial = self::smartGroupOpen($name, $title)
@@ -388,7 +388,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $default The default value
      * @return string
      */
-    public function smartEmail(string $name = 'email', string $title = null, string $default = null) : string
+    public function smartEmail(string $name = 'email', ?string $title = null, ?string $default = null) : string
     {
         if (! $title) {
             $title = trans('app.email');
@@ -409,7 +409,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $default The default value
      * @return string
      */
-    public function smartUrl(string $name = 'url', string $title = null, string $default = null) : string
+    public function smartUrl(string $name = 'url', ?string $title = null, ?string $default = null) : string
     {
         if (! $title) {
             $title = trans('app.url');
@@ -429,7 +429,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $title The title of the input element
      * @return string
      */
-    public function smartPassword(string $name = 'password', string $title = null) : string
+    public function smartPassword(string $name = 'password', ?string $title = null) : string
     {
         if (! $title) {
             $title = trans('app.password');
@@ -452,9 +452,9 @@ class FormBuilder extends OriginalFormBuilder
      */
     public function smartTextarea(
         string $name = 'text',
-        string  $title = null,
+        ?string $title = null,
         bool $editor = false,
-        string $default = null
+        ?string $default = null
     ) : string
     {
         $value = self::getDefaultValue($name, $default);
@@ -496,7 +496,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  array       $attributes Additional HTML attributes
      * @return string
      */
-    public function smartNumeric(string $name, string $title, string $default = null, array $attributes = []) : string
+    public function smartNumeric(string $name, string $title, ?string $default = null, array $attributes = []) : string
     {
         $value = self::getDefaultValue($name, $default);
         $partial = self::smartGroupOpen($name, $title)
@@ -675,7 +675,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $title The title of the input element
      * @return string
      */
-    public function smartFile(string $name = 'file', string $title = null) : string
+    public function smartFile(string $name = 'file', ?string $title = null) : string
     {
         if (! $title) {
             $title = trans('app.file');
@@ -698,7 +698,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $title The title of the input element
      * @return string
      */
-    public function smartImageFile(string $name = 'image', string $title = null) : string
+    public function smartImageFile(string $name = 'image', ?string $title = null) : string
     {
         if (! $title) {
             $title = trans('app.image');
@@ -731,7 +731,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string $title The title of the input element
      * @return string
      */
-    public function smartIconFile(string $name = 'icon', string $title = null) : string
+    public function smartIconFile(string $name = 'icon', ?string $title = null) : string
     {
         if (! $title) {
             $title = trans('app.icon');
@@ -769,8 +769,8 @@ class FormBuilder extends OriginalFormBuilder
      */
     public function smartDateTime(
         string $name = 'datetime',
-        string $title = null,
-        string $default = null,
+        ?string $title = null,
+        ?string $default = null,
         bool $onlyDate = false
     ) : string
     {
@@ -814,7 +814,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $default The default value
      * @return string
      */
-    public function smartDate(string $name = 'date', string $title = null, string $default = null) : string
+    public function smartDate(string $name = 'date', ?string $title = null, ?string $default = null) : string
     {
         return self::smartDateTime($name, $title, $default, true);
     }
@@ -827,7 +827,7 @@ class FormBuilder extends OriginalFormBuilder
      * @param  string|null $default The default value
      * @return string
      */
-    public function smartTags(string $name, string $title, string $default = null) : string
+    public function smartTags(string $name, string $title, ?string $default = null) : string
     {
         $value = self::getDefaultValue($name, $default);
 

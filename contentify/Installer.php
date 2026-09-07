@@ -60,7 +60,7 @@ class Installer
      * @param string|null $password
      * @return MessageBag
      */
-    public function createDatabaseIni(string $host, string $database, string $username = null, string $password = null)
+    public function createDatabaseIni(string $host, string $database, ?string $username = null, ?string $password = null)
     {
         /*
          * Validation

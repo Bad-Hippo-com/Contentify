@@ -195,7 +195,7 @@ function load_image_encoded(string $filename) : string
  * @param  string $module The name of the module
  * @return string 
  */
-function trans_object(string $name, string $module = null) : string
+function trans_object(string $name, ?string $module = null) : string
 {
     $translator = app('translator');
 

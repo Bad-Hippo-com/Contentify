@@ -49,7 +49,7 @@ class MessagesController extends FrontController
      * @param string|null $username Optional: Name of the receiver
      * @throws \Exception
      */
-    public function create(string $username = null)
+    public function create(?string $username = null)
     {
         $this->pageView('messages::form', ['username' => $username]);
     }

@@ -114,7 +114,7 @@ class CupMatch extends BaseModel
      * @param  User|null $user
      * @return bool
      */
-    public function canConfirmLeft(User $user = null) : bool
+    public function canConfirmLeft(?User $user = null) : bool
     {
         if ($user == null or $this->left_confirmed) {
             return false;

@@ -67,7 +67,7 @@ class CupsController extends FrontController implements GlobalSearchInterface
      * @return void
      * @throws \Exception
      */
-    public function show(int $id, string $slug = null)
+    public function show(int $id, ?string $slug = null)
     {
         /** @var Cup $cup */
         if ($slug) {

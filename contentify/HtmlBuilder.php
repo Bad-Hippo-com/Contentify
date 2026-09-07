@@ -31,7 +31,7 @@ class HtmlBuilder extends OriginalHtmlBuilder
      * @return string
      * @throws Exception
      */
-    public function widget(string $widgetName, array $parameters = null) : string
+    public function widget(string $widgetName, ?array $parameters = null) : string
     {
         if (! is_array($parameters)) {
             $parameters = (array) $parameters;
@@ -87,7 +87,7 @@ class HtmlBuilder extends OriginalHtmlBuilder
      * @param string|null $title
      * @return string
      */
-    public function title(string $title = null) : string
+    public function title(?string $title = null) : string
     {
         if ($title) {
             $title .= ' - '.Config::get('app.name');
@@ -277,8 +277,8 @@ class HtmlBuilder extends OriginalHtmlBuilder
         string $url,
         string $title,
         string $sortBy,
-        string $order = null,
-        string $search = null,
+        ?string $order = null,
+        ?string $search = null,
         bool $active = false
     ) : string
     {
@@ -399,7 +399,7 @@ class HtmlBuilder extends OriginalHtmlBuilder
      * @param string|null $category The name of the category (solid: fas, regular: far/fa, light: fal, brands: fab)
      * @return string
      */
-    public function fontIcon(string $icon, string $color = null, string $class = null, string $category = null) : string
+    public function fontIcon(string $icon, ?string $color = null, ?string $class = null, ?string $category = null) : string
     {
         if ($color) {
             $color = ' style="color: '.$color.'"';

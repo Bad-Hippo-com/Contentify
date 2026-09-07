@@ -108,7 +108,7 @@ class ForumPost extends BaseModel
      * @param int|null $max Limits the number of characters. 0/null = no limit
      * @return string
      */
-    public function plainText(int $max = null) : string
+    public function plainText(?int $max = null) : string
     {
         $text = strip_tags($this->renderText());
 
@@ -129,7 +129,7 @@ class ForumPost extends BaseModel
      * @param User|null $user   User model or null if it's the current client
      * @return Builder
      */
-    public function scopeIsAccessible(Builder $query, User $user = null) : Builder
+    public function scopeIsAccessible(Builder $query, ?User $user = null) : Builder
     {
         $query->select('forum_posts.*')
             ->join('forum_threads', 'forum_posts.thread_id', '=', 'forum_threads.id')

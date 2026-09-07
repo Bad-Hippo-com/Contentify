@@ -103,7 +103,7 @@ abstract class ModuleInstaller
      * @param  int|null $step The step (null = auto)
      * @return string
      */
-    final protected function nextStep(int $step = null) : string
+    final protected function nextStep(?int $step = null) : string
     {
         if ($step === null) {
             $step = $this->step;

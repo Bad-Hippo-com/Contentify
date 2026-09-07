@@ -275,7 +275,7 @@ class Cup extends BaseModel
      * @param  User|null $user
      * @return Team|User|null
      */
-    public function getParticipantOfUser(User $user = null)
+    public function getParticipantOfUser(?User $user = null)
     {
         if (! $user) {
             return null;
@@ -361,7 +361,7 @@ class Cup extends BaseModel
      * @param bool      $onlyOpen If true return only cups that still are open
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
-    public function cupsByUser(User $user = null, bool $onlyOpen = false)
+    public function cupsByUser(?User $user = null, bool $onlyOpen = false)
     {
         if (! $user) {
             return null;
@@ -387,7 +387,7 @@ class Cup extends BaseModel
      * @param  int|null $participants Number of participants
      * @return int
      */
-    public function rounds(int $participants = null) : int
+    public function rounds(?int $participants = null) : int
     {
         if ($participants === null) {
             $participants = $this->countParticipants();

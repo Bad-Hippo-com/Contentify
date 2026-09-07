@@ -27,7 +27,7 @@ abstract class FrontController extends BaseController
      * @return void
      * @throws Exception
      */
-    protected function setupLayout(string $layoutName = null)
+    protected function setupLayout(?string $layoutName = null)
     {
         if (! $layoutName) {
             $theme = Config::get('app.theme');

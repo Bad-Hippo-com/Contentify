@@ -1,3 +1,21 @@
+## Bad Hippo 0.8.0 / Contentify 3.3-dev - 2026-09-07
+
+- PHP als getrennte Migrationsachse direkt von 8.0.30 auf 8.5.10 angehoben;
+  Laravel bleibt bewusst unverändert auf 8.83.29.
+- Containerbasis auf das gepinnte offizielle PHP-8.5-FPM-Bookworm-Abbild und
+  Composer 2.10.3 umgestellt; die bereits enthaltene OPcache-Erweiterung wird
+  nicht mehr ein zweites Mal kompiliert.
+- Nette Schema auf 1.3.6 und Nette Utils auf 4.1.5 aktualisiert, damit Composer
+  die Produktionsabhängigkeiten regulär unter PHP 8.5 installieren kann.
+- Eigene implizit-nullbare Signaturen, SimpleXML-Signaturen und die veraltete
+  PDO-MySQL-Konstante an PHP 8.5 angepasst; keine First-Party-Deprecations im
+  vollständigen Syntaxlauf.
+- 735 Syntaxprüfungen, zwölf Unit-Tests mit 42 Assertions, Composer-
+  Plattformprüfung, Datenbank-, Nginx- und HTTP-Prüfungen bestanden.
+- Laravel 8 erzeugt unter PHP 8.5 weiterhin Deprecation-Hinweise aus dem
+  Framework. Sie bleiben vollständig in den getrennten Logs sichtbar und sind
+  der Ausgangspunkt für den nächsten Laravel-Migrationsschritt.
+
 ## Bad Hippo 0.7.1 / Contentify 3.3-dev - 2026-09-07
 
 - Besucher-IP in Middleware, Kontaktformular und Bewerbung auf Laravels

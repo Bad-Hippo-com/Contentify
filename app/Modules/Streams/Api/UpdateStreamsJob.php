@@ -20,7 +20,7 @@ class UpdateStreamsJob extends AbstractJob
 
     protected $interval = 5; // Run this job every five minutes
 
-    public function run(int $executedAt = null)
+    public function run(?int $executedAt = null)
     {
         $streams = Stream::all();
 

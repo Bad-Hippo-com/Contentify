@@ -34,7 +34,7 @@ class GalleriesController extends FrontController
      * @return void
      * @throws \Exception
      */
-    public function show(int $galleryId, int$imageId = null)
+    public function show(int $galleryId, ?int $imageId = null)
     {
         /** @var Gallery $gallery */
         $gallery = Gallery::published()->findOrFail($galleryId);

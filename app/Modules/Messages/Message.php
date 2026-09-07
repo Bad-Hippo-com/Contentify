@@ -108,7 +108,7 @@ class Message extends BaseModel
      * @param int|null $max Limits the number of characters. 0/null = no limit
      * @return string
      */
-    public function plainText(int $max = null) : string
+    public function plainText(?int $max = null) : string
     {
         $text = strip_tags($this->renderText());
 

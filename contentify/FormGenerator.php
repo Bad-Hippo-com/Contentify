@@ -42,7 +42,7 @@ class FormGenerator
      * @param  string|null $moduleName The module name - leave it empty if it's the table name
      * @return string
      */
-    public function generate(string $tableName, string $moduleName = null) : string
+    public function generate(string $tableName, ?string $moduleName = null) : string
     {
         if ($moduleName == null) {
             $moduleName = $tableName;

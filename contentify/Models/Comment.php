@@ -67,7 +67,7 @@ class Comment extends BaseModel
      * @param  int    $foreignId   ID of the foreign type or null
      * @return int
      */
-    public static function count(string $foreignType, int $foreignId = null) : int
+    public static function count(string $foreignType, ?int $foreignId = null) : int
     {
         $key = 'comments.countByModel.'.$foreignType.'.'.$foreignId;
 
@@ -105,7 +105,7 @@ class Comment extends BaseModel
      * @param int|null $max Limits the number of characters. 0/null = no limit
      * @return string
      */
-    public function plainText(int $max = null) : string
+    public function plainText(?int $max = null) : string
     {
         $text = strip_tags($this->renderText());
 

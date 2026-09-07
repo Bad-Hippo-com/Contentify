@@ -173,7 +173,7 @@ abstract class BaseController extends Controller
      * @param string $layoutName The name of the layout template file
      * @return void
      */
-    protected function setupLayout(string $layoutName = null)
+    protected function setupLayout(?string $layoutName = null)
     {
         /*
          * Controllers that directly extend the BaseController class might not have

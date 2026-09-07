@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.7.1**
-Assessment/update time: **2026-09-07 06:44 CEST**
+Local workstream version: **0.8.0**
+Assessment/update time: **2026-09-07 07:35 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -552,6 +552,35 @@ Laravel-Request. Der Fehler und seine Abgrenzung zum PHP-8-Port sind als
 BUG-021 im zentralen Register erfasst. Ein zusätzlicher Aufruf der nicht
 existierenden Route `/login` bestätigte BUG-017; die echte Route
 `/auth/login` bestand den wiederholten anonymen HTTP-Test.
+
+### PHP-8.5-Meilenstein 0.8.0 - 2026-09-07 07:35 CEST
+
+Die PHP-Achse wurde ohne Zwischenfreigabe direkt von PHP 8.0.30 auf PHP 8.5.10
+angehoben. Laravel blieb absichtlich auf 8.83.29, damit Framework- und Runtime-
+Änderungen getrennt messbar bleiben. Das reproduzierbare Abbild verwendet die
+gepinnten offiziellen Basen PHP 8.5 FPM Bookworm und Composer 2.10.3. Ein erster
+Buildfehler zeigte, dass OPcache im PHP-Abbild schon enthalten ist; die doppelte
+Kompilierung wurde entfernt. Composer identifizierte anschließend Nette Schema
+1.2.5 und Nette Utils 3.2.10 als PHP-8.5-Blocker. Der gezielte Lock-Update auf
+1.3.6 und 4.1.5 löste die Installation regulär und ohne ignorierte Plattform-
+anforderungen.
+
+Contentifys eigene implizit-nullbare Signaturen wurden explizit typisiert. Die
+SimpleXML-Überschreibungen entsprechen den aktuellen internen Signaturen und
+die MySQL-SSL-Option nutzt die PHP-8.5-PDO-Konstante. Der abschließende Lauf
+prüfte 735 eigene PHP-Dateien ohne Syntaxfehler und ohne First-Party-
+Deprecations. PHPUnit 9.6.36 bestand zwölf Tests mit 42 Assertions. Composer
+bestätigte alle Produktionsanforderungen einschließlich GD, cURL, PDO und
+SimpleXML. Die vorhandenen Migrationen und Modellabfragen funktionierten gegen
+die unveränderte Staging-Datenbank.
+
+App, Jobrunner und Nginx wurden gemeinsam auf `contentify-staging-app:0.8.0`
+umgestellt; MariaDB blieb gesund. PHP meldet live 8.5.10, Artisan Laravel
+8.83.29. Startseite, `/auth/login` und `/admin` antworten über den echten
+Nginx/FPM-Pfad mit HTTP 200. Laravel 8 schreibt unter PHP 8.5 weiterhin eigene
+Deprecation-Hinweise in die vorbereiteten Logs. Sie werden nicht unterdrückt
+und bilden zusammen mit drei verbleibenden Laravel-Advisories die klare
+Eingangslage für den folgenden Framework-Sprung. Public bleibt gesperrt.
 
 ## Files added or updated
 

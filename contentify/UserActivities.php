@@ -43,9 +43,9 @@ class UserActivities
         int $activityId,
         bool $frontend,
         int $userId,
-        string $modelClass = null,
-        string $info = null,
-        int $createdAt = null
+        ?string $modelClass = null,
+        ?string $info = null,
+        ?int $createdAt = null
     )
     {
         if (! $createdAt) {
@@ -81,9 +81,9 @@ class UserActivities
     public function addCreate(
         bool $frontend,
         int $userId,
-        string $modelClass = null,
-        string $info = null,
-        int $createdAt = null
+        ?string $modelClass = null,
+        ?string $info = null,
+        ?int $createdAt = null
     )
     {
         $this->add(self::ACTIVITY_CREATE, $frontend, $userId, $modelClass, $info, $createdAt);
@@ -101,9 +101,9 @@ class UserActivities
     public function addRead(
         bool $frontend,
         int $userId,
-        string $modelClass = null,
-        string $info = null,
-        int $createdAt = null
+        ?string $modelClass = null,
+        ?string $info = null,
+        ?int $createdAt = null
     )
     {
         $this->add(self::ACTIVITY_READ, $frontend, $userId, $modelClass, $info, $createdAt);
@@ -121,9 +121,9 @@ class UserActivities
     public function addUpdate(
         bool $frontend,
         int $userId,
-        string $modelClass = null,
-        string $info = null,
-        int $createdAt = null
+        ?string $modelClass = null,
+        ?string $info = null,
+        ?int $createdAt = null
     )
     {
         $this->add(self::ACTIVITY_UPDATE, $frontend, $userId, $modelClass, $info, $createdAt);
@@ -141,9 +141,9 @@ class UserActivities
     public function addDelete(
         bool $frontend,
         int $userId,
-        string $modelClass = null,
-        string $info = null,
-        int $createdAt = null
+        ?string $modelClass = null,
+        ?string $info = null,
+        ?int $createdAt = null
     )
     {
         $this->add(self::ACTIVITY_DELETE, $frontend, $userId, $modelClass, $info, $createdAt);

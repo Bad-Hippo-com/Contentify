@@ -32,7 +32,7 @@ class TeamsController extends FrontController implements GlobalSearchInterface
      * @param int|null $userId
      * @throws \Exception
      */
-    public function overview(int $userId = null)
+    public function overview(?int $userId = null)
     {
         if ($userId) {
             $user = User::findOrFail($userId);

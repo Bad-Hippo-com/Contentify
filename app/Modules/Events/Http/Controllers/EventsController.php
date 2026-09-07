@@ -65,7 +65,7 @@ class EventsController extends FrontController implements GlobalSearchInterface
      * @return null|string
      * @throws \Exception
      */
-    public function calendar(int $year = null, int $month = null)
+    public function calendar(?int $year = null, ?int $month = null)
     {
         if (Request::ajax()) {
             $widget = new CalendarWidget;

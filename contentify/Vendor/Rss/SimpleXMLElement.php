@@ -16,8 +16,13 @@ class SimpleXMLElement extends \SimpleXMLElement
      * @param null $namespace The tag namespace, if any
      * @return \SimpleXMLElement
      */
-    public function addChild($name, $value = NULL, $namespace = NULL) {
-        return parent::addChild($name, ($value !== NULL ? str_replace('&', '&amp;', $value) : NULL), $namespace);
+    public function addChild(string $qualifiedName, ?string $value = null, ?string $namespace = null): ?\SimpleXMLElement
+    {
+        return parent::addChild(
+            $qualifiedName,
+            ($value !== null ? str_replace('&', '&amp;', $value) : null),
+            $namespace
+        );
     }
 
     /**
@@ -27,8 +32,9 @@ class SimpleXMLElement extends \SimpleXMLElement
      * @param string $value The value to set, if any
      * @param string $namespace The namespace, if any
      */
-    public function addAttribute($name, $value = NULL, $namespace = NULL) {
-        parent::addAttribute($name, ($value !== NULL ? str_replace('&', '&amp;', $value) : NULL), $namespace);
+    public function addAttribute(string $qualifiedName, string $value, ?string $namespace = null): void
+    {
+        parent::addAttribute($qualifiedName, str_replace('&', '&amp;', $value), $namespace);
     }
 
     /**

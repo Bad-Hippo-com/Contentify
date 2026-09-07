@@ -327,7 +327,7 @@ class User extends SentinelUser implements UserInterface
      * @return void
      * @throws Exception
      */
-    public function sendMessage(string $title, string $text, int $creatorId = null, bool $sentBySystem = false)
+    public function sendMessage(string $title, string $text, ?int $creatorId = null, bool $sentBySystem = false)
     {
         if (! $creatorId) {
             if (user()) {
@@ -361,7 +361,7 @@ class User extends SentinelUser implements UserInterface
      * @return void
      * @throws Exception
      */
-    public function sendSystemMessage(string $title, string $text, int $creatorId = null)
+    public function sendSystemMessage(string $title, string $text, ?int $creatorId = null)
     {
         $this->sendMessage($title, $text, $creatorId, true);
     }
