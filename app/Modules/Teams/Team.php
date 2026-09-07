@@ -23,7 +23,7 @@ use SoftDeletingTrait;
  * @property int                            $access_counter
  * @property int                            $creator_id
  * @property int                            $updater_id
- * @property \App\Modules\Matches\Match[]   $matches
+ * @property \App\Modules\Matches\GameMatch[]   $matches
  * @property \User[]                        $members
  * @property \App\Modules\Teams\TeamCat     $teamCat
  * @property \App\Modules\Countries\Country $country
@@ -57,7 +57,7 @@ class Team extends BaseModel
 
     public static $relationsData = [
         'matches'   => [
-            self::HAS_MANY, 'App\Modules\Matches\Match', 'foreignKey' => 'left_team_id', 'dependency' => true
+            self::HAS_MANY, 'App\Modules\Matches\GameMatch', 'foreignKey' => 'left_team_id', 'dependency' => true
         ],
         'members'   => [self::BELONGS_TO_MANY, 'User'],
         'teamCat'   => [self::BELONGS_TO, 'App\Modules\Teams\TeamCat'],

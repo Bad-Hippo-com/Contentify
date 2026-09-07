@@ -32,7 +32,7 @@ use User;
  * @property \User|\App\Modules\Cups\Team $left_participant
  * @property \User|\App\Modules\Cups\Team $right_participant
  */
-class Match extends BaseModel
+class CupMatch extends BaseModel
 {
     /**
      * Name of the event that is fired when a new match has been generated
@@ -263,7 +263,7 @@ class Match extends BaseModel
             'created_at'            => new Carbon,
         ];
 
-        $newMatch = new Match($matchData);
+        $newMatch = new self($matchData);
         $newMatch->save();
 
         $this->next_match_id = $newMatch->id;
@@ -319,7 +319,7 @@ class Match extends BaseModel
      * @param int $leftScore The score of the participant on the left side
      * @param int $rightScore The score of the participant on the right side
      * @param bool $left If true, confirm the left result. If false, confirm the right.
-     * @return Match|null Returns the next match or null if there is no next match
+     * @return self|null Returns the next match or null if there is no next match
      * @throws MsgException
      */
     public function confirm(int $leftScore, int $rightScore, bool $left)
@@ -361,10 +361,10 @@ class Match extends BaseModel
         // Create next matches for wildcard-matches
         if ($this->round == 1) {
             // Remember: Wildcard-matches can only appear in the first row (so we do not need to check this)
-            $wildcards = Match::whereCupId($this->cup_id)->whereRightParticipantId(0)->whereNextMatchId(0)
+            $wildcards = self::whereCupId($this->cup_id)->whereRightParticipantId(0)->whereNextMatchId(0)
                 ->orderBy('row')->get();
 
-            /** @var Match $wildcard */
+            /** @var self $wildcard */
             foreach ($wildcards as $wildcard) {
                 // It's enough to create  the next match of one of the pair matches
                 if ($wildcard->row % 2 == 1) { 

@@ -15,7 +15,7 @@ use SoftDeletingTrait;
  * @property int                          $creator_id
  * @property int                          $updater_id
  * @property \App\Modules\Awards\Award[]  $awards
- * @property \App\Modules\Matches\Match[] $matches
+ * @property \App\Modules\Matches\GameMatch[] $matches
  * @property \User                        $creator
  */
 class Tournament extends BaseModel
@@ -37,7 +37,7 @@ class Tournament extends BaseModel
 
     public static $relationsData = [
         'awards'    => [self::HAS_MANY, 'App\Modules\Awards\Award', 'dependency' => true],
-        'matches'   => [self::HAS_MANY, 'App\Modules\Matches\Match', 'dependency' => true],
+        'matches'   => [self::HAS_MANY, 'App\Modules\Matches\GameMatch', 'dependency' => true],
         'creator'   => [self::BELONGS_TO, 'User', 'title' => 'username'],
     ];
 }

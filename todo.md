@@ -1,7 +1,7 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.6.0**
-Last updated: **2026-09-06 22:05 CEST**
+Local workstream version: **0.7.1**
+Last updated: **2026-09-07 06:44 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -9,6 +9,8 @@ Last updated: **2026-09-06 22:05 CEST**
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
 4. PHP, Laravel, Bootstrap und Node.js weiterhin einzeln aktualisieren.
+5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
+   absichern und getrennt vom PHP-8-Port beheben.
 
 ## Completed
 
@@ -98,7 +100,7 @@ Last updated: **2026-09-06 22:05 CEST**
 - [x] Repair installer/startup defects until the full historical workflow is
   reproducible on staging.
 - [ ] Add characterization tests before changing PHP or Laravel.
-- [ ] Rename both `Match` model classes and all references before crossing from
+- [x] Rename both `Match` model classes and all references before crossing from
   PHP 7.4 to PHP 8.
 - [ ] Upgrade Composer packages, PHP and Laravel in small, separately tested
   steps; determine the final supported stack from measured compatibility rather
@@ -116,6 +118,13 @@ Last updated: **2026-09-06 22:05 CEST**
 - [x] Raise Laravel in the next isolated rung from 7.30.7 to 8.83.29 while
   keeping PHP 7.4 unchanged; update Sentinel and Collision, replace the removed
   maintenance middleware and preserve the custom translator behavior (BUG-019).
+- [x] Raise only PHP from 7.4.33 to 8.0.30 in `0.7.0`; rename the reserved
+  models to `GameMatch` and `CupMatch`, preserve their tables and routes, then
+  verify Composer, 688 syntax checks, twelve unit tests, both smoke tests,
+  512 routes, live Nginx/FPM, database access and authenticated admin pages.
+- [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
+  statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
+  (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.
 - [ ] Replace the pre-existing placeholder feature test with an installation-
   aware HTTP characterization; its historical `/` expectation still receives
   404 in the isolated test environment.

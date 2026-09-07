@@ -3,7 +3,7 @@
 namespace App\Modules\Matches\Http\Controllers;
 
 use App\Modules\Maps\Map;
-use App\Modules\Matches\Match;
+use App\Modules\Matches\GameMatch;
 use BackController;
 use Hover;
 use HTML;
@@ -20,7 +20,7 @@ class AdminMatchesController extends BackController
 
     public function __construct()
     {
-        $this->modelClass = Match::class;
+        $this->modelClass = GameMatch::class;
 
         parent::__construct();
     }
@@ -37,7 +37,7 @@ class AdminMatchesController extends BackController
                 trans('app.object_tournament')  => 'tournament_id',
                 trans('matches::played_at')     => 'played_at'
             ],
-            'tableRow' => function(Match $match)
+            'tableRow' => function(GameMatch $match)
             {
                 Hover::modelAttributes($match, ['access_counter', 'creator', 'updated_at']);
 

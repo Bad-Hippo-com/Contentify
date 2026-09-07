@@ -35,10 +35,18 @@ use SoftDeletingTrait;
  * @property \App\Modules\Opponents\Opponent     $right_team
  * @property \User                               $creator
  */
-class Match extends BaseModel
+class GameMatch extends BaseModel
 {
 
     use SoftDeletingTrait;
+
+    /**
+     * Keep the historical database contract after renaming the PHP 8 reserved
+     * class name `Match`.
+     *
+     * @var string
+     */
+    protected $table = 'matches';
 
     /**
      * Match state "open"

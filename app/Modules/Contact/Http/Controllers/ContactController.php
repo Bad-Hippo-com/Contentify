@@ -18,7 +18,7 @@ class ContactController extends FrontController
     public function store()
     {
         $msg = new ContactMessage(Request::all());
-        $msg->ip = getenv('REMOTE_ADDR');
+        $msg->ip = Request::ip();
 
         $okay = $msg->save();
 

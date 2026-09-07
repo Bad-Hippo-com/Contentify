@@ -3,7 +3,6 @@
 namespace App\Modules\Cups\Http\Controllers;
 
 use App\Modules\Cups\Cup;
-use App\Modules\Cups\Match;
 use BackController;
 use Carbon;
 use DB;

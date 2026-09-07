@@ -2,7 +2,7 @@
 
 namespace App\Modules\Cups\Http\Controllers;
 
-use App\Modules\Cups\Match;
+use App\Modules\Cups\CupMatch;
 use FrontController;
 use Illuminate\Http\RedirectResponse;
 use Redirect;
@@ -13,7 +13,7 @@ class MatchesController extends FrontController
 
     public function __construct()
     {
-        $this->modelClass = Match::class;
+        $this->modelClass = CupMatch::class;
 
         parent::__construct();
     }
@@ -27,8 +27,8 @@ class MatchesController extends FrontController
      */
     public function show(int $id)
     {
-        /** @var Match $match */
-        $match = Match::findOrFail($id);
+        /** @var CupMatch $match */
+        $match = CupMatch::findOrFail($id);
 
         if ($match->with_teams) {
             $leftName = $match->left_participant ? $match->left_participant->title : 'Wildcard';
@@ -54,8 +54,8 @@ class MatchesController extends FrontController
      */
     public function confirm(int $id, bool $left = true)
     {
-        /** @var Match $match */
-        $match = Match::findOrFail($id);
+        /** @var CupMatch $match */
+        $match = CupMatch::findOrFail($id);
 
         try {
             $newMatch = $match->confirm(Request::get('left_score'), Request::get('right_score'), $left);
@@ -102,8 +102,8 @@ class MatchesController extends FrontController
      */
     public function winner()
     {
-        /** @var Match $match */
-        $match = Match::findOrFail(Request::get('match_id'));
+        /** @var CupMatch $match */
+        $match = CupMatch::findOrFail(Request::get('match_id'));
 
         if (! user() or ! user()->isSuperAdmin()) {
             $this->alertError(trans('app.access_denied'));

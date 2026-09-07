@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.6.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.7.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,17 +87,17 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.6.0**
-Last updated: **2026-09-06 22:05 CEST**
+Local workstream version: **0.7.1**
+Last updated: **2026-09-07 06:44 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.6.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.7.1`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
-Nginx. PHP 7.4/Laravel 8 and MariaDB are
+Nginx. PHP 8.0/Laravel 8 and MariaDB are
 isolated in containers; this is the migration workshop, not a public release.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
@@ -147,6 +147,14 @@ lines. Contentify's custom translator no longer calls Laravel's removed
 both smoke tests, 686 syntax checks, 512 routes, database inspection and the
 authenticated dashboard, news and log views. Three Laravel advisories remain,
 so this is still an internal migration rung rather than a public release.
+Version `0.7.0` überschreitet getrennt davon ausschließlich die PHP-Grenze von
+7.4 auf 8.0.30. Die beiden reservierten Modellnamen `Match` heißen nun
+`GameMatch` und `CupMatch`; Tabellen, URLs und sichtbare Begriffe bleiben
+unverändert. Das laufende Staging bestand 688 Syntaxprüfungen, zwölf Unit-Tests
+mit 42 Assertions, beide Smoke-Tests, 512 Routen, Datenbankabfragen sowie die
+authentifizierten Adminseiten für Matches, Cups und Logs. PHP 8.0 und Laravel 8
+sind weiterhin abgekündigt; diese Stufe ist nur die kontrollierte Brücke zum
+nächsten Framework-Upgrade.
 
 See:
 

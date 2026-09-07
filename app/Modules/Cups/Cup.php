@@ -34,7 +34,7 @@ use User;
  * @property \App\Modules\Games\Game          $game
  * @property \User[]                          $referees
  * @property \User                            $creator
- * @property \App\Modules\Cups\Match[]        $matches
+ * @property \App\Modules\Cups\CupMatch[]        $matches
  * @property \User[]|\App\Modules\Cups\Team[] $participants
  */
 class Cup extends BaseModel
@@ -166,7 +166,7 @@ class Cup extends BaseModel
      */
     public function matches()
     {
-        return $this->hasMany('App\Modules\Cups\Match')->orderBy('round')->orderBy('row');
+        return $this->hasMany('App\Modules\Cups\CupMatch')->orderBy('round')->orderBy('row');
     }
 
     /**
@@ -182,7 +182,7 @@ class Cup extends BaseModel
             return $this->matchesStored;
         }
 
-        $matches = Match::whereCupId($this->id)->get();
+        $matches = CupMatch::whereCupId($this->id)->get();
 
         $leftParticipantIds = $matches->pluck('left_participant_id')->all();
         $rightParticipantIds = $matches->pluck('right_participant_id')->all();
@@ -428,7 +428,7 @@ class Cup extends BaseModel
             $this->slots = $slots;
         }
 
-        $matches = Match::whereCupId($this->id)->where('winner_id', '>', 0)->where('right_participant_id', '!=', 0)->get();
+        $matches = CupMatch::whereCupId($this->id)->where('winner_id', '>', 0)->where('right_participant_id', '!=', 0)->get();
 
         // (Re-)Seeding is not possible once matches have been played
         if (sizeof($matches) > 0) {
@@ -436,7 +436,7 @@ class Cup extends BaseModel
         }
 
         // Delete the existing matches
-        Match::whereCupId($this->id)->delete();
+        CupMatch::whereCupId($this->id)->delete();
 
         // The number of matches that we will generate is ALWAYS 0.5 * number of slots -
         // it does NOT (directly) depend on the number of wildcard-matches! This fact is very important!
@@ -468,7 +468,7 @@ class Cup extends BaseModel
             ];
         }
 
-        Match::insert($matches);
+        CupMatch::insert($matches);
         
         event(self::EVENT_NAME_CUP_SEEDED, [$cup]);
     }

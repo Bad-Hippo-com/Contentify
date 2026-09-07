@@ -28,7 +28,7 @@ class ApplicationController extends FrontController
             $team = Team::findOrFail(Request::get('team_id'));
 
             $msg = new ContactMessage(Request::all());
-            $msg->ip = $msg->ip = getenv('REMOTE_ADDR');
+            $msg->ip = Request::ip();
             $msg->title = 'Application of '.$msg->username;
             $msg->text = trans('app.object_team').': '.$team->title.PHP_EOL.PHP_EOL.
                 trans('app.role').': '.Request::get('role').PHP_EOL.PHP_EOL.PHP_EOL.

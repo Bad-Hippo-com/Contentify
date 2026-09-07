@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.6.0**
-Last updated: **2026-09-06 22:05 CEST**
+Local workstream version: **0.7.1**
+Last updated: **2026-09-07 06:44 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.6.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 7.4.33, Laravel 8.83.29 and MariaDB 10.11. The application, database,
+Version `0.7.1` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.0.30, Laravel 8.83.29 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -265,8 +265,39 @@ bestehende Admin-Sitzung, Dashboard, Newsverwaltung, Logviewer, Icons,
 Navigation und Jobrunner funktionsfähig. Der Produktions-Audit enthält noch
 drei Laravel-Advisories; die Stufe ist daher weiterhin nicht public-fähig.
 
+### PHP 8.0 bei unverändertem Laravel 8 - 2026-09-07 06:21 CEST
+
+Version `0.7.0` ändert ausschließlich die PHP-Achse von 7.4.33 auf 8.0.30.
+Die reservierten Klassen `App\Modules\Matches\Match` und
+`App\Modules\Cups\Match` wurden in `GameMatch` und `CupMatch` umbenannt.
+`GameMatch` setzt die Tabelle `matches` nun ausdrücklich; `CupMatch` behält
+`cups_matches`. Relationen und Controller verweisen auf die neuen Symbole,
+während Tabellen, URLs, Modulnamen und sichtbare Übersetzungen unverändert
+bleiben. `composer.json` und der Lockbestand verlangen ab dieser Stufe PHP 8.
+
+Der Umbau bestand zuerst unter PHP 7.4 und danach unter PHP 8.0.30 jeweils 688
+Syntaxprüfungen sowie zwölf Unit-Tests mit 42 Assertions. Der PHP-8-Kandidat
+bestand außerdem Composer-Validierung und Plattformprüfung, Artisan-Boot,
+512 Routen, vier erkannte Migrationen, beide Smoke-Tests und Modellabfragen an
+der Staging-Datenbank. Nach dem gemeinsamen Austausch von App, Jobs und Nginx
+antworten Startseite, Anmeldung und geprüfte Assets mit HTTP 200. Die bestehende
+Admin-Sitzung öffnet Dashboard, Matches, Cups und den Logviewer fehlerfrei.
+PHP 8.0 ist selbst abgekündigt und daher nur eine interne Brücke; als nächste
+getrennte Stufe folgt Laravel 9, nicht die Public-Freigabe.
+
+### Request-IP-Fix 0.7.1 - 2026-09-07 06:44 CEST
+
+Der isolierte Testserver deckte einen bereits im Original vorhandenen
+Umgebungsfehler auf: `getenv('REMOTE_ADDR')` lieferte dort keinen Wert. Der
+echte Nginx/FPM-Pfad war nicht betroffen. Besucherstatistik, Kontaktformular
+und Bewerbungsformular verwenden nun dennoch einheitlich Laravels Request-IP.
+Dieser Fix verändert weder PHP- noch Laravel-Version und wird deshalb als
+eigener Fixstand geführt.
+
 ## Non-viable shortcut
 
-Running the current code with `--ignore-platform-reqs` is not a port. It only
-bypasses dependency checks; PHP 8 still cannot parse the `Match` declarations,
-and the vulnerable locked packages remain installed.
+Running the unveränderten upstream code with `--ignore-platform-reqs` is not a
+port. It only bypasses dependency checks; upstream PHP 8 still cannot parse its
+`Match` declarations. Bad Hippo `0.7.0` repairs that boundary explicitly and
+installs without ignored platform requirements, while the remaining vulnerable
+Laravel packages still prevent a public release.

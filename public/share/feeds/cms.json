@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev läuft in der nächsten getrennten Migrationsstufe auf PHP 8.0.30; Laravel bleibt kontrolliert auf 8.83.29.",
+        "timestamp": 1788754860,
+        "icon": "wrench"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Die nächste kontrollierte Modernisierungsstufe läuft auf Laravel 8.83.29; PHP bleibt getrennt davon auf 7.4.",
         "timestamp": 1788724534,
         "icon": "wrench"

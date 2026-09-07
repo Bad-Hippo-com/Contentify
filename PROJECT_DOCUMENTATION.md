@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.6.0**
-Assessment/update time: **2026-09-06 22:05 CEST**
+Local workstream version: **0.7.1**
+Assessment/update time: **2026-09-07 06:44 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -39,7 +39,7 @@ v3.2 upgrade and instructs users to reinstall and manually transfer data.
 - Composer 2.10.3 for validation and advisory checks
 - Bundled project Composer executable for compatibility comparison
 - Staging: internal Debian 13.6 host, Docker 26.1.5 and Compose 2.26.1
-- Staging containers: Nginx 1.26.3, PHP-FPM 7.4.33 and MariaDB 10.11
+- Staging containers: Nginx 1.26.3, PHP-FPM 8.0.30 and MariaDB 10.11
 
 Temporary runtimes and dependency directories were used only for verification.
 Generated lock/build output was removed before documentation was written.
@@ -49,15 +49,15 @@ Generated lock/build output was removed before documentation was written.
 | Check | Result |
 | --- | --- |
 | Git checkout | Pass; official default branch cloned cleanly |
-| PHP 8.5 lint | Fail; 9 of 726 first-party files have syntax errors |
-| PHP 8.5 Artisan | Fail; exit code 255 |
-| PHP 8.5 PHPUnit | Fail; 2 tests, 2 errors |
+| PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
+| PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
+| PHP 8.0 PHPUnit | Pass; 12 unit tests with 42 assertions |
 | PHP 7.4 lint | Pass; latest `0.6.0` candidate parses 686 selected first-party and test files |
 | PHP 7.4 Artisan | Pass; `0.6.0` candidate reports Laravel 8.83.29 |
 | PHP 7.4 PHPUnit | Fail; unit placeholder passes, feature placeholder gets 404 |
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
-| Composer normal install on PHP 8.5 | Fail; incompatible PHP/package constraints |
-| Composer install with ignored requirements | Packages extract, but this is not a runnable current build |
+| Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
+| Composer platform check | Pass on PHP 8.0.30 with all required extensions |
 | Composer production audit | Improved but fails; 3 advisories in one package |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
@@ -524,6 +524,35 @@ Nginx wurde mit neu erstellt, MariaDB blieb gesund. Startseite, Anmeldung,
 bestehende Admin-Sitzung, Dashboard, Newsverwaltung, Logviewer, Icons,
 IP-Navigation und Jobrunner wurden erfolgreich geprüft.
 
+Version `0.7.0` trennt den anschließenden PHP-Sprung vollständig vom nächsten
+Laravel-Major. Die zwei unter PHP 8 reservierten Modellnamen wurden zu
+`GameMatch` und `CupMatch`; alle Relationen und Controller wurden angepasst,
+die Tabellen `matches` und `cups_matches` sowie alle URLs bleiben bestehen.
+Der Umbau bestand zunächst unter PHP 7.4, anschließend baute Composer das
+unveränderte Laravel 8.83.29 auf dem gepinnten PHP-8.0.30-FPM-Abbild ohne
+`--ignore-platform-reqs`. Auf PHP 8 bestanden 688 Syntaxprüfungen, zwölf
+Unit-Tests mit 42 Assertions, beide Smoke-Tests, 512 Routen, vier erkannte
+Migrationen und Abfragen über beide neuen Modellklassen.
+
+App, Jobrunner und Nginx wurden gemeinsam auf Staging ersetzt; MariaDB blieb
+gesund und das 0.6.0-Abbild wurde als Rückfallstufe behalten. Startseite,
+Anmeldung, Font Awesome und Glyphicons antworten mit HTTP 200. Die bestehende
+authentifizierte Sitzung öffnet Dashboard, Matches, Cups und den Admin-Logviewer.
+Der 0.7.0-Prüfeintrag liegt sowohl als zentrales JSON mit Buildkontext als auch
+im klassischen `laravel.log`. PHP 8.0 und Laravel 8 sind weiterhin abgekündigt;
+die Stufe ist eine Migrationsbrücke und keine Public-Freigabe.
+
+### Request-IP-Stabilisierung 0.7.1 - 2026-09-07 06:44 CEST
+
+Der isolierte PHP-Testserver erzeugte SQLSTATE 22007 in der Besucherstatistik,
+weil die Anwendung `false` aus `getenv('REMOTE_ADDR')` als Zahlenwert `0` band.
+Der echte Nginx/FPM-Pfad war nicht betroffen. Middleware sowie Kontakt- und
+Bewerbungsformular beziehen die IP nun unabhängig von der Server-API aus dem
+Laravel-Request. Der Fehler und seine Abgrenzung zum PHP-8-Port sind als
+BUG-021 im zentralen Register erfasst. Ein zusätzlicher Aufruf der nicht
+existierenden Route `/login` bestätigte BUG-017; die echte Route
+`/auth/login` bestand den wiederholten anonymen HTTP-Test.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -539,6 +568,8 @@ IP-Navigation und Jobrunner wurden erfolgreich geprüft.
 - `contentify/Translator.php`: Laravel-8-compatible placeholder ordering
 - `tests/Unit/TranslatorTest.php`: translator replacement regression coverage
 - `app/Http/Middleware/CheckForMaintenanceMode.php`: Laravel-8 maintenance middleware bridge
+- `app/Modules/Matches/GameMatch.php` und `app/Modules/Cups/CupMatch.php`: PHP-8-kompatible Modellnamen bei unveränderten Tabellen
+- `tests/Unit/Php8ModelNamesTest.php`: Tabellen- und Relationsverträge der umbenannten Modelle
 - `composer.json` and `composer.lock`: reproducible Laravel-8 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack

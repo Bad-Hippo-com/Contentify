@@ -9,7 +9,7 @@ use BaseModel;
  * @property int $right_score
  * @property int $map_id
  * @property int $match_id
- * @property \App\Modules\Matches\Match $match,
+ * @property \App\Modules\Matches\GameMatch $match,
  * @property \App\Modules\Maps\Map $map
  */
 class MatchScore extends BaseModel
@@ -25,7 +25,7 @@ class MatchScore extends BaseModel
     ];
 
     public static $relationsData = [
-        'match' => [self::BELONGS_TO, 'App\Modules\Matches\Match'],
+        'match' => [self::BELONGS_TO, 'App\Modules\Matches\GameMatch'],
         'map'   => [self::BELONGS_TO, 'App\Modules\Maps\Map'],
     ];
 

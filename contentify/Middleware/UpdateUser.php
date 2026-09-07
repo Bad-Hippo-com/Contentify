@@ -42,7 +42,7 @@ class UpdateUser
             }
 
             if ($isNewVisitor) {
-                $ip = getenv('REMOTE_ADDR'); // Get the client agent's IP
+                $ip = $request->ip(); // Read the client IP from Laravel's HTTP request
 
                 $rowsAffected = DB::table('visits')->whereIp($ip)->whereVisitedAt(date('Y-m-d', $today))
                                     ->increment('user_agents');

@@ -1,3 +1,25 @@
+## Bad Hippo 0.7.1 / Contentify 3.3-dev - 2026-09-07
+
+- Besucher-IP in Middleware, Kontaktformular und Bewerbung auf Laravels
+  Request-API umgestellt; `getenv('REMOTE_ADDR')` lieferte im isolierten
+  PHP-Testserver `false` und brach die Besucherstatistik mit SQLSTATE 22007 ab.
+- Der bei der Abschlussprüfung gefundene unabhängige Cup-Fehler wurde als
+  BUG-020 erfasst und bewusst nicht mit dem PHP-Port vermischt.
+
+## Bad Hippo 0.7.0 / Contentify 3.3-dev - 2026-09-07
+
+- PHP kontrolliert von 7.4.33 auf 8.0.30 angehoben; Laravel bleibt als getrennte
+  Migrationsachse unverändert auf 8.83.29.
+- Die beiden unter PHP 8 reservierten `Match`-Modelle in `GameMatch` und
+  `CupMatch` umbenannt, sämtliche Relationen und Controller angepasst und die
+  historischen Tabellen sowie URLs ausdrücklich bewahrt.
+- Composer-Anforderung und Lockbestand auf PHP `^8.0` aktualisiert; Installation
+  und Plattformprüfung funktionieren ohne `--ignore-platform-reqs`.
+- 688 Syntaxprüfungen, zwölf Unit-Tests mit 42 Assertions, beide Smoke-Tests,
+  512 Routen, Datenbank- und authentifizierte Browserprüfungen bestanden.
+- Staging-App, Jobrunner und Nginx gemeinsam auf 0.7.0 ausgerollt; getrennte
+  JSON- und Admin-Logs unter PHP 8 bestätigt.
+
 ## Bad Hippo 0.6.0 / Contentify 3.3-dev - 2026-09-06
 
 - Laravel kontrolliert von 7.30.7 auf 8.83.29 angehoben; PHP bleibt für diese

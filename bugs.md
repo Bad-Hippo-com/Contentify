@@ -1,15 +1,42 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.6.0**
-Last updated: **2026-09-06 22:05 CEST**
+Local workstream version: **0.7.1**
+Last updated: **2026-09-07 06:44 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### BUG-021 - Besucher-IP hängt von der Prozessumgebung ab
+
+Severity: **high**
+Status: **resolved in 0.7.1, 2026-09-07 06:44 CEST**
+
+Die historische Middleware las die Besucher-IP mit `getenv('REMOTE_ADDR')`.
+Im isolierten PHP-Testserver lieferte dies `false`, obwohl Laravel im Request
+eine IP führen kann. MariaDB verglich deshalb die Textspalte `visits.ip` mit
+dem Zahlenwert `0` und brach mit SQLSTATE 22007 ab. Der echte Nginx/FPM-Pfad
+war davon nicht betroffen. Version 0.7.1 verwendet für Besucher-, Kontakt- und
+Bewerbungsdaten dennoch einheitlich Laravels Request-IP. Startseite und die
+echte Anmeldung `/auth/login` antworten in getrennten Sitzungen wiederholt mit
+HTTP 200. Der zusätzliche Aufruf `/login` bestätigt unabhängig davon weiterhin
+BUG-017: unbekannte Routen liefern derzeit fälschlich HTTP 500 statt 404.
+
+### BUG-020 - Cup-Siegeraktualisierung verwendet eine undefinierte Variable
+
+Severity: **high**
+Status: **open; bei der PHP-8-Abschlussprüfung am 2026-09-07 06:37 CEST erfasst**
+
+Die bestehende Methode `CupMatch::updateWinner()` ruft mehrfach Methoden und
+Eigenschaften über `$match` auf, obwohl diese Variable in der Methode nicht
+definiert wird. Der betroffene Cup-Ablauf kann deshalb beim Aktualisieren eines
+Siegers mit einer Ausnahme abbrechen. Der Befund stammt bereits aus dem
+Originalcode und ist unabhängig von der Umbenennung des Modells. Die Reparatur
+erfolgt getrennt mit einem gezielten Cup-Regressionsfall.
+
 ### BUG-001 - PHP 8 is not supported despite the documentation claim
 
 Severity: **blocker**
-Status: **open**
+Status: **resolved as migration rung 0.7.0, 2026-09-07 06:21 CEST**
 
 PHP 8 reserves `match` as a language keyword. Contentify declares two classes
 named `Match` and references them throughout the Matches and Cups modules.
@@ -25,8 +52,16 @@ invalid PHP syntax.
 
 Version `0.6.0` entfernt deshalb die irreführende PHP-8-Freigabe aus
 `composer.json` und erlaubt für diese Laravel-8-Stufe bewusst nur PHP `^7.3`.
-PHP 8 wird erst wieder freigegeben, wenn die reservierten Klassennamen
-umgebaut und der komplette Code darauf geprüft wurde.
+Version `0.7.0` benennt die beiden PHP-Modelle gezielt in `GameMatch` und
+`CupMatch` um. Das normale Modell hält seine historische Tabelle `matches`
+explizit fest; das Cup-Modell verwendet weiterhin `cups_matches`. Sämtliche
+Controller, Relationen, Typangaben und statischen Aufrufe wurden angepasst,
+ohne URLs oder Datenbanktabellen umzubenennen. Unter PHP 7.4 bestand der Umbau
+zunächst 688 Syntaxprüfungen und zwölf Unit-Tests mit 42 Assertions. Danach
+bestand derselbe Stand unter PHP 8.0.30 Composer-Installation ohne ignorierte
+Plattformanforderungen, dieselben Syntax- und Unit-Prüfungen, beide Smoke-Tests,
+512 Routen und echte Datenbankabfragen über beide Modelle. BUG-001 ist damit
+für PHP 8.0 behoben; neuere PHP-Stufen werden weiterhin einzeln geprüft.
 
 ### BUG-002 - Production dependencies contain known vulnerabilities
 
@@ -36,7 +71,7 @@ Status: **open**
 After the controlled `0.6.0` Laravel-8 rung, `composer audit --locked --no-dev`
 reports **3 known advisories in one package** instead of 12 in two packages on
 Laravel 7. The remaining findings affect Laravel Framework 8.83.29. Laravel 8
-and PHP 7.4 are unsupported; production approval therefore remains blocked.
+and PHP 8.0 are unsupported; production approval therefore remains blocked.
 
 ### BUG-003 - Current Composer installation is not reproducible
 
@@ -332,6 +367,20 @@ same behavior. Unit and staging smoke tests cover a readable and a deliberately
 missing path.
 
 ## Staging defects
+
+### STAGE-006 - Entwicklungsserver lieferte keine REMOTE_ADDR-Umgebung
+
+Severity: **nur Testaufbau**
+Status: **resolved during 0.7.0 validation, 2026-09-07 06:21 CEST**
+
+Der isolierte HTTP-Vorlauf mit `php artisan serve` lieferte zunächst HTTP 500,
+weil PHPs Entwicklungsserver die Clientadresse zwar in `$_SERVER`, aber nicht
+für Contentifys historischen `getenv('REMOTE_ADDR')`-Zugriff bereitstellte.
+Dadurch wurde `false` als Besucher-IP an MariaDB gebunden. Beide Ausnahmen
+liegen vollständig im zentralen JSON-Log und in der klassischen Admin-Kopie.
+Mit einer ausdrücklich gesetzten Test-IP antworteten Startseite und Anmeldung
+mit HTTP 200. Der echte Nginx/PHP-FPM-Betrieb setzt die Variable korrekt und
+bestand denselben Test ohne Sonderbehandlung; es war kein PHP-8-Laufzeitfehler.
 
 ### STAGE-005 - Nginx retains the replaced app container address
 

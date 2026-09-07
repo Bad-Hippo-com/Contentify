@@ -1,16 +1,16 @@
 # Contentify staging deployment
 
-Version: **0.6.0 / Contentify 3.3-dev**
-Last updated: **2026-09-06 22:05 CEST**
+Version: **0.7.1 / Contentify 3.3-dev**
+Last updated: **2026-09-07 06:44 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
-Bad Hippo 3.3-dev behind Nginx. PHP 7.4 is isolated in a container and is not an
+Bad Hippo 3.3-dev behind Nginx. PHP 8.0 is isolated in a container and is not an
 approved public target.
 
 ## Components
 
 - `nginx`: public HTTP endpoint on port 80
-- `app`: PHP-FPM 7.4, Laravel 8.83.29 and Contentify 3.3-dev
+- `app`: PHP-FPM 8.0.30, Laravel 8.83.29 and Contentify 3.3-dev
 - `database`: MariaDB 10.11 with a persistent data volume
 - `jobs`: Contentify's `php artisan jobs` executor, run once per minute
 

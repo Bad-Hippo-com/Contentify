@@ -2,7 +2,7 @@
 
 namespace App\Modules\Matches\Http\Controllers;
 
-use App\Modules\Matches\Match;
+use App\Modules\Matches\GameMatch;
 use FrontController;
 use HTML;
 
@@ -11,7 +11,7 @@ class MatchesController extends FrontController
 
     public function __construct()
     {
-        $this->modelClass = Match::class;
+        $this->modelClass = GameMatch::class;
 
         parent::__construct();
     }
@@ -31,7 +31,7 @@ class MatchesController extends FrontController
                 trans('matches::right_team')    => 'right_team_id',
                 trans('matches::score')         => 'left_score'
             ],
-            'tableRow'      => function(Match $match)
+            'tableRow'      => function(GameMatch $match)
             {
                 if ($match->game->icon) {
                     $game = HTML::image(
@@ -64,8 +64,8 @@ class MatchesController extends FrontController
      */
     public function show(int $id)
     {
-        /** @var Match $match */
-        $match = Match::findOrFail($id);
+        /** @var GameMatch $match */
+        $match = GameMatch::findOrFail($id);
 
         $match->access_counter++;
         $match->save();
