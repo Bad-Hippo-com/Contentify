@@ -1,6 +1,6 @@
 # Contentify staging deployment
 
-Version: **0.11.0 / Contentify 3.3-dev**
+Version: **0.11.1 / Contentify 3.3-dev**
 Last updated: **2026-09-07 09:45 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
@@ -54,7 +54,7 @@ Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:
 
 ```sh
-sudo docker compose --env-file .env.staging exec app \
+sudo docker compose --env-file .env.staging exec -u www-data app \
   php tests/Smoke/UploaderMultipleFiles.php
 ```
 
@@ -65,8 +65,16 @@ Die fehlertolerante Speicherplatzabfrage aus Original-Issue `#624` wird geprüft
 mit:
 
 ```sh
-sudo docker compose --env-file .env.staging exec app php tests/Smoke/DiskSpace.php
+sudo docker compose --env-file .env.staging exec -u www-data app php tests/Smoke/DiskSpace.php
 ```
+
+Alle Artisan-, Tinker- und anwendungsbezogenen PHP-Befehle müssen im
+App-Container als `www-data` laufen. Der App-Dienst ist ab `0.11.1` auch selbst
+auf diesen Benutzer festgelegt. So können CLI-Prüfungen keine root-eigenen
+Laravel-Logdateien erzeugen, die PHP-FPM anschließend nicht fortschreiben kann.
+Vor dem ersten Start von `0.11.1` werden vorhandene Anwendungs- und PHP-Logs
+einmalig auf UID/GID 33 (`www-data`) zurückgesetzt; Nginx-Logs bleiben davon
+getrennt.
 
 Do not copy staging volumes or secrets to test. The test host will receive the
 same versioned source and procedure, then perform a clean installation with

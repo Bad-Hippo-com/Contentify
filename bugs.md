@@ -1,10 +1,24 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.11.0**
+Local workstream version: **0.11.1**
 Last updated: **2026-09-07 11:01 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-032 - Root-CLI-Prüfung sperrt das zentrale Laravel-Log
+
+Severity: **high**
+Status: **resolved in 0.11.1, 2026-09-07 11:10 CEST**
+
+Eine als Container-Root ausgeführte Artisan-/Tinker-Prüfung erzeugte die
+tägliche zentrale Logdatei mit Besitzer `root:root`. PHP-FPM lief als
+`www-data` und konnte diese Datei danach weder öffnen noch korrigieren; beim
+nächsten Fehler überlagerte eine `UnexpectedValueException` die eigentliche
+Ausnahme. Die betroffenen Anwendungs- und PHP-FPM-Dateien wurden auf `www-data`
+zurückgesetzt. Der
+App-Dienst läuft ab 0.11.1 vollständig als `www-data`, und die Betriebsanleitung
+schreibt denselben Benutzer für alle Laravel-CLI-Prüfungen vor.
 
 ### BUG-031 - Umbenanntes Match-Modell erzeugt falschen Formular-Viewnamen
 

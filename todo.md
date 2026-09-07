@@ -1,6 +1,6 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.11.0**
+Local workstream version: **0.11.1**
 Last updated: **2026-09-07 11:01 CEST**
 
 ## Nächste Arbeitsreihenfolge

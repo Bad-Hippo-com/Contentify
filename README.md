@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.11.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.11.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,13 +87,13 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.11.0**
+Local workstream version: **0.11.1**
 Last updated: **2026-09-07 11:01 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.11.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.11.1`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
@@ -192,6 +192,9 @@ ist ebenfalls repariert und getestet. Die Stufe bleibt intern und ist keine
 Public-Freigabe. Der finale Kandidat besteht 801 Syntaxprüfungen, 17 Tests mit
 52 Assertions, 512 aktive Produktionsrouten, Datenbank-, Log- und
 authentifizierte Browserprüfungen.
+Version `0.11.1` legt den PHP-FPM-App-Container auf `www-data` fest. Damit
+erzeugen auch spätere Laravel-CLI-Prüfungen keine root-eigenen zentralen
+Logdateien mehr, die der Webprozess nicht fortschreiben könnte.
 
 See:
 

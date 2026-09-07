@@ -1,3 +1,12 @@
+## Bad Hippo 0.11.1 / Contentify 3.3-dev - 2026-09-07
+
+- PHP-FPM-App-Container verbindlich als `www-data` ausführen, damit Laravel-
+  CLI-Prüfungen keine root-eigenen zentralen Logdateien hinterlassen.
+- Eigentümer der vorhandenen Laravel-Tageslogs korrigiert und beide
+  Logausgaben erneut mit demselben Live-Marker geprüft.
+- Staging-Anleitung für alle anwendungsbezogenen Containerbefehle auf
+  `www-data` festgelegt.
+
 ## Bad Hippo 0.11.0 / Contentify 3.3-dev - 2026-09-07
 
 - Laravel getrennt von 10.50.3 auf 11.56.1 angehoben; PHP bleibt unverändert

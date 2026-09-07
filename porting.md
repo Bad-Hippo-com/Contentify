@@ -1,6 +1,6 @@
 # Contentify porting plan
 
-Local workstream version: **0.11.0**
+Local workstream version: **0.11.1**
 Last updated: **2026-09-07 11:01 CEST**
 
 ## Decision
@@ -38,7 +38,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.11.0` is installed on staging with Nginx 1.26.3,
+Version `0.11.1` is installed on staging with Nginx 1.26.3,
 PHP-FPM 8.5.10, Laravel 11.56.1 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
@@ -409,6 +409,10 @@ Der finale Kandidat besteht 801 Syntaxprüfungen, 17 Tests mit 52 Assertions,
 512 aktive Produktionsrouten, vier Migrationen, beide Smoke-Tests, Datenbank-
 und Dienstauflösung sowie den authentifizierten Browserlauf. Im abschließenden
 frischen Logfenster entstehen keine neuen Anwendung-, PHP- oder Nginx-Fehler.
+
+Version `0.11.1` härtet diese Stufe betrieblich ab: Der App-Container und alle
+Laravel-CLI-Prüfungen laufen als `www-data`. Zentrale Logdateien können damit
+nicht mehr durch einen Root-CLI-Lauf für PHP-FPM unbeschreibbar werden.
 
 ## Non-viable shortcut
 

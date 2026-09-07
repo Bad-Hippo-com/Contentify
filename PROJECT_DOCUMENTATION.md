@@ -1,6 +1,6 @@
 # Contentify project assessment
 
-Local workstream version: **0.11.0**
+Local workstream version: **0.11.1**
 Assessment/update time: **2026-09-07 11:01 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
@@ -48,7 +48,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 11 lint | Pass; `0.11.0` parses 801 project and local-package files |
+| PHP 8.5 / Laravel 11 lint | Pass; `0.11.1` parses 801 project and local-package files |
 | PHP 8.5 / Laravel 11 Artisan | Pass; Laravel 11.56.1 and 512 active production routes |
 | PHP 8.5 / Laravel 11 PHPUnit | Pass; 17 tests with 52 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
@@ -701,6 +701,13 @@ Assertions, 512 aktive Produktionsrouten, vier Migrationen, beide Smoke-Tests,
 lesende Match-/Cup-Datenbankzugriffe und den Steam-Service-Bootstrap. Der
 saubere Browserlauf öffnete Dashboard, Matches, Cups, Logviewer, News- und
 Seitenformulare sowie Module ohne neue Anwendung-, PHP- oder Nginx-Fehler.
+
+Die Live-Prüfung zeigte danach, dass ein Laravel-CLI-Lauf als Container-Root
+die zentrale Tagesdatei mit `root:root` erzeugen kann. PHP-FPM konnte sie als
+`www-data` nicht fortschreiben und die Protokollausnahme überlagerte den
+ursprünglichen Fehler. Version 0.11.1 setzt vorhandene Anwendungs- und PHP-FPM-
+Logs auf `www-data` zurück, startet den App-Dienst selbst unter diesem Benutzer und
+dokumentiert `www-data` als verbindlichen Benutzer für Laravel-CLI-Befehle.
 
 ## Files added or updated
 
