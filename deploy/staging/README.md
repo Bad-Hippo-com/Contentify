@@ -1,6 +1,6 @@
 # Contentify staging deployment
 
-Version: **0.15.2 / Contentify 3.3-dev**
+Version: **0.15.3 / Contentify 3.3-dev**
 Last updated: **2026-09-07 17:56 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
@@ -63,10 +63,10 @@ Node.js 24, npm 11 und dem exakt festgeschriebenen Less 4.9.1 gebaut. Vor einem
 Rollout müssen `npm ci`, `npm audit`, `npm run build` und `npm test` erfolgreich
 laufen. Bootstrap bleibt in dieser Stufe unverändert auf 3.3.7.
 
-Das Image enthält ab `0.15.2` außerdem PDO-SQLite für die durch `phpunit.xml`
-festgelegte In-Memory-Testdatenbank. Dieser Treiber ändert die Betriebsdatenbank
-nicht; Staging verwendet weiterhin ausschließlich MariaDB. Der Build benötigt
-dazu unter Debian `libsqlite3-dev`.
+Ab `0.15.3` blendet die gemeinsame PHPUnit-Basis den Installationsmarker für
+jeden Test aus und stellt ihn anschließend wieder her. Dadurch greift die Suite
+auch im installierten Container weder auf dessen MariaDB noch auf Betriebsdaten
+zu; zusätzliche SQLite-Pakete im Laufzeitimage sind nicht erforderlich.
 
 Der Mehrfachupload-Smoke-Test für Original-Issue `#650` läuft innerhalb des
 App-Containers mit:

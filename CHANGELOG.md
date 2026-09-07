@@ -1,3 +1,11 @@
+## Bad Hippo 0.15.3 / Contentify 3.3-dev - 2026-09-07
+
+- Installationsmarker während aller PHPUnit-Läufe zentral und ausfallsicher
+  ausblenden, damit Tests auch auf einem installierten Kandidaten zustandslos
+  booten und den Betriebsdatenbestand nicht verwenden.
+- Den in 0.15.1/0.15.2 erprobten SQLite-Umweg wieder entfernt; diese beiden
+  Kandidaten wurden nicht auf Staging übernommen.
+
 ## Bad Hippo 0.15.2 / Contentify 3.3-dev - 2026-09-07
 
 - Für den PDO-SQLite-Bau im Debian-Prüfimage die fehlenden SQLite-Header

@@ -12,7 +12,6 @@ RUN apt-get update \
         libjpeg62-turbo-dev \
         libonig-dev \
         libpng-dev \
-        libsqlite3-dev \
         libxml2-dev \
         libzip-dev \
         unzip \
@@ -25,7 +24,6 @@ RUN apt-get update \
         mbstring \
         mysqli \
         pdo_mysql \
-        pdo_sqlite \
         simplexml \
         zip \
     && rm -rf /var/lib/apt/lists/*

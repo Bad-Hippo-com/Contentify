@@ -56,7 +56,10 @@ return [
             ]) : [],
         ],
 
-        // SQLite is used only by the isolated PHPUnit test environment.
+        /*
+         * The database types listed below are currently not supported by Contentify.
+         */
+        /*
         'sqlite' => [
             'driver'   => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -65,10 +68,6 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        /*
-         * The database types listed below are currently not supported by Contentify.
-         */
-        /*
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

@@ -1,6 +1,6 @@
 # Contentify project assessment
 
-Local workstream version: **0.15.2**
+Local workstream version: **0.15.3**
 Assessment/update time: **2026-09-07 17:56 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
@@ -868,11 +868,13 @@ Audit meldet null bekannte Schwachstellen. PHP 8.5.10, Laravel 13.30.1,
 SunEditor 3.3.2 und Bootstrap 3.3.7 wurden in dieser Stufe nicht geändert.
 
 Der erste Containerlauf des Kandidaten zeigte zusätzlich, dass `phpunit.xml`
-SQLite als In-Memory-Testdatenbank erzwingt, die Verbindung aber in Laravel
-auskommentiert und der PDO-Treiber im Image nicht vorhanden war. Der erste
-0.15.1-Bau zeigte anschließend die fehlenden Debian-SQLite-Header und wurde
-kontrolliert verworfen. 0.15.2 stellt Verbindung, Treiber und Buildvoraussetzung
-ausschließlich für Tests bereit. Anwendung und Staging bleiben auf MariaDB.
+SQLite erzwingt, ein installierter Kandidat aber wegen seines `.installed`-
+Markers schon beim Booten die echte Contentify-Konfigurationstabelle abfragt.
+Die 0.15.1/0.15.2-Versuche, SQLite ins Image aufzunehmen, wurden kontrolliert
+verworfen: Der Test darf nicht an die installierte Betriebsumgebung gekoppelt
+sein. 0.15.3 blendet den Marker zentral in `Tests\CreatesApplication` aus und
+stellt ihn im gemeinsamen `TestCase` selbst bei Fehlern wieder her. Das Image
+und die MariaDB-Betriebsdaten bleiben unverändert.
 
 ## Files added or updated
 

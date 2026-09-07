@@ -1,6 +1,6 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.15.2**
+Local workstream version: **0.15.3**
 Last updated: **2026-09-07 17:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
@@ -9,16 +9,15 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 ### BUG-040 - PHPUnit fordert eine nicht registrierte SQLite-Verbindung an
 
 Severity: **medium**
-Status: **resolved in 0.15.2, 2026-09-07 18:18 CEST**
+Status: **resolved in 0.15.3, 2026-09-07 18:27 CEST**
 
-`phpunit.xml` setzt seit der Testmodernisierung `DB_CONNECTION=sqlite` und eine
-In-Memory-Datenbank. Die SQLite-Verbindung blieb jedoch in Laravels
-Datenbankkonfiguration auskommentiert und `pdo_sqlite` fehlte im Prüfimage.
-Dadurch scheiterten elf anwendungsbootende Tests schon vor ihrer eigentlichen
-Prüfung. 0.15.1 registrierte Verbindung und Treiber, dessen Imagebau aber noch
-an den fehlenden Debian-SQLite-Headern stoppte. Version 0.15.2 ergänzt diese
-Buildvoraussetzung. Der reguläre Staging- und Betriebsweg bleibt unverändert
-auf MariaDB.
+`phpunit.xml` fordert SQLite an, während ein installierter Kandidat durch seinen
+`.installed`-Marker bereits beim Booten die Contentify-Konfigurationstabelle
+abfragt. Dadurch scheiterten elf Tests vor ihrer eigentlichen Prüfung. Die
+0.15.1/0.15.2-Versuche mit zusätzlichem SQLite-Treiber erwiesen sich deshalb als
+falsche Ebene und wurden nicht auf Staging übernommen. 0.15.3 blendet den Marker
+für jeden Test zentral aus und stellt ihn selbst nach Ausnahmen wieder her. Die
+Suite bleibt zustandslos und die MariaDB-Betriebsdaten werden nicht verwendet.
 
 ### BUG-039 - Ausgelieferter CKEditor 4.3.1 ist abgekündigt und unsicher
 
