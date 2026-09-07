@@ -73,7 +73,7 @@ class Cup extends BaseModel
      */
     protected $matchesStored = null;
 
-    protected $dates = ['deleted_at', 'join_at', 'check_in_at', 'start_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'join_at' => 'datetime', 'check_in_at' => 'datetime', 'start_at' => 'datetime'];
 
     protected $slugable = true;
 

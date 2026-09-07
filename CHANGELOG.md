@@ -1,3 +1,23 @@
+## Bad Hippo 0.10.0 / Contentify 3.3-dev - 2026-09-07
+
+- Laravel als getrennte Migrationsachse von 9.52.21 auf die stabile Version
+  10.50.3 angehoben; PHP bleibt unverändert auf 8.5.10.
+- Sentinel auf 7.0.2, Collision auf 7.12.0, Ignition auf 2.9.1 und PHPUnit auf
+  10.5.64 aktualisiert; Composer-Mindeststabilität auf `stable` gesetzt.
+- Alle 40 von Laravel 10 nicht mehr unterstützten Eloquent-`$dates`-
+  Definitionen auf explizite `datetime`-Casts umgestellt und mit einem
+  Regressionstest für Match-, Cup- und Newsdaten abgesichert.
+- Das aufgegebene Steam-Auth-Paket 4.4.0 als dokumentierte MIT-
+  Kompatibilitätskopie 4.4.1 für Laravel 10 übernommen; Paketquellcode
+  unverändert gelassen.
+- Installationsbewussten HTTP-Test ergänzt und PHPUnit-Konfiguration auf das
+  aktuelle Schema migriert; 14 Tests mit 47 Assertions bestehen.
+- 792 Syntaxprüfungen, 515 Routen, beide Smoke-Tests, Migrationen,
+  Datenbankmodelle, Dual-Logging und sechs authentifizierte Adminbereiche im
+  isolierten Kandidaten bestanden.
+- Der Produktions-Audit sinkt von vier auf drei Laravel-Advisories; zwei von
+  Composer markierte aufgegebene Pakete bleiben. Public bleibt gesperrt.
+
 ## Bad Hippo 0.9.0 / Contentify 3.3-dev - 2026-09-07
 
 - Laravel als getrennte Migrationsachse von 8.83.29 auf die letzte stabile

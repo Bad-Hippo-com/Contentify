@@ -20,7 +20,7 @@ class DownloadCat extends BaseModel
 
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $slugable = true;
 

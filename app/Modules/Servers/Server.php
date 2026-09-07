@@ -26,7 +26,7 @@ class Server extends BaseModel
 
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $fillable = ['title', 'ip', 'host', 'slots', 'description', 'published', 'game_id'];
 

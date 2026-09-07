@@ -38,7 +38,7 @@ class News extends BaseModel
 
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at', 'published_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'published_at' => 'datetime'];
 
     protected $slugable = true;
 

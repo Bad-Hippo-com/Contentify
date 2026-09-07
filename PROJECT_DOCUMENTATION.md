@@ -1,7 +1,7 @@
 # Contentify project assessment
 
-Local workstream version: **0.9.0**
-Assessment/update time: **2026-09-07 08:30 CEST**
+Local workstream version: **0.10.0**
+Assessment/update time: **2026-09-07 09:45 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Purpose
@@ -48,9 +48,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 | Check | Result |
 | --- | --- |
-| PHP 8.5 / Laravel 9 lint | Pass; `0.9.0` parses 781 project and local-package files |
-| PHP 8.5 / Laravel 9 Artisan | Pass; Laravel 9.52.21 and 515 candidate routes |
-| PHP 8.5 / Laravel 9 PHPUnit | Pass; 12 unit tests with 42 assertions |
+| PHP 8.5 / Laravel 10 lint | Pass; `0.10.0` parses 792 project and local-package files |
+| PHP 8.5 / Laravel 10 Artisan | Pass; Laravel 10.50.3 and 515 candidate routes |
+| PHP 8.5 / Laravel 10 PHPUnit | Pass; 14 tests with 47 assertions |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -61,7 +61,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Fails; 4 Laravel-9 advisories in one package |
+| Composer production audit | Fails; 3 Laravel-10 advisories in one package |
 | npm install | Fail; direct peer-dependency conflict |
 | npm install with legacy resolution | Completes with 23 vulnerabilities |
 | Grunt LESS build after legacy install | Pass; one stylesheet compiled |
@@ -71,12 +71,12 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 
 Contentify is obsolete as delivered:
 
-- Laravel 9 no longer receives official bug or security fixes. Current Laravel
+- Laravel 10 no longer receives official bug or security fixes. Current Laravel
   is 13, whose supported PHP range includes PHP 8.5.
 - Der Bad-Hippo-Stand läuft inzwischen auf PHP 8.5.10; die reservierten
   `Match`-Klassennamen wurden in 0.7.0 beseitigt.
-- Der aktuelle Produktions-Lockbestand meldet vier Advisories in Laravel 9 und
-  drei aufgegebene Pakete; Public bleibt dadurch gesperrt.
+- Der aktuelle Produktions-Lockbestand meldet drei Advisories in Laravel 10 und
+  zwei von Composer markierte aufgegebene Pakete; Public bleibt dadurch gesperrt.
 - The old Travis badge/configuration and stale-bot file are the only automation;
   there is no current CI pipeline.
 - The installation wiki was last edited in August 2021 and contradicts both PHP
@@ -618,6 +618,42 @@ Zusätzlich bleiben Steam Auth, Laravel Collective HTML und Less.php aufgegeben.
 Der Schritt ist eine interne Migrationsstufe und ausdrücklich keine Public-
 Freigabe.
 
+### Laravel-10-Migrationsstufe 0.10.0 - 2026-09-07 09:45 CEST
+
+Die nächste Framework-Achse hebt Laravel bei unverändertem PHP 8.5.10 auf die
+stabile Ausgabe 10.50.3. Sentinel 7.0.2 stellt den Illuminate-10-Vertrag her;
+Collision 7.12.0, Spatie Laravel Ignition 2.9.1 und PHPUnit 10.5.64 folgen dem
+Laravel-10-Upgradepfad. Die PHPUnit-Konfiguration wurde auf das aktuelle Schema
+migriert und Composer verwendet jetzt `minimum-stability: stable`.
+
+Der erste strenge Composer-Lauf zeigte den tatsächlichen Paketblocker
+`invisnik/laravel-steam-auth`: Version 4.4.0 endet bei Illuminate 9 und ist
+aufgegeben, Contentify nutzt ihre Steam-OpenID-API jedoch direkt. Der exakte
+MIT-lizenzierte Upstream-Commit
+`94a0ef489932615612ddb745b3be3ff679afa209` wurde deshalb als lokale Version
+4.4.1 übernommen. Nur `composer.json` und die Herkunftsdokumentation wurden
+ergänzt; der PHP-Paketcode blieb unverändert.
+
+Laravel 10 entfernt die bisher in 40 Contentify-Modellen verwendete Eloquent-
+Eigenschaft `$dates`. Sämtliche Felder wurden mechanisch auf gleichwertige
+`datetime`-Casts umgestellt. Ein neuer Test prüft `GameMatch::played_at`,
+`CupMatch::deleted_at` und `News::published_at`. Der historische Feature-
+Platzhalter erwartet nun den korrekten Installer-Redirect statt einer
+unbegründeten HTTP-200-Antwort auf einem uninstallierten Testsystem.
+
+Der finale Kandidat meldete Laravel 10.50.3 und PHP 8.5.10. Er bestand 792
+Syntaxprüfungen, 14 Tests mit 47 Assertions, Composer-Validierung, 515 Routen,
+vier ausgeführte Migrationen, lesende Match-/Cup-Modellabfragen und beide
+Smoke-Tests. Das JSON-Betriebslog und das klassische Adminlog enthalten den
+gleichen Prüfmarker. Im Browser funktionierten Dashboard, Matches, Cups,
+Logviewer, News und Module ohne Konsolenfehler und mit der korrekten IP.
+
+`composer audit --locked --no-dev` meldet weiterhin drei Advisories in Laravel
+10.50.3. Composer markiert außerdem Laravel Collective HTML und Less.php als
+aufgegeben. Der Lockbestand wurde für diese bewusst interne Zwischenstufe
+einmal mit `--no-blocking` erzeugt; Findings werden nicht ausgeblendet. Daher
+bleibt Public gesperrt und Laravel 11 ist die nächste Migrationsstufe.
+
 ## Files added or updated
 
 - `README.md`: local assessment notice and documentation links
@@ -635,7 +671,9 @@ Freigabe.
 - `app/Http/Middleware/CheckForMaintenanceMode.php`: Laravel-8 maintenance middleware bridge
 - `app/Modules/Matches/GameMatch.php` und `app/Modules/Cups/CupMatch.php`: PHP-8-kompatible Modellnamen bei unveränderten Tabellen
 - `tests/Unit/Php8ModelNamesTest.php`: Tabellen- und Relationsverträge der umbenannten Modelle
-- `composer.json` and `composer.lock`: reproducible Laravel-8 dependency rung
+- `packages/laravel-steam-auth`: dokumentierte Steam-OpenID-Kompatibilitätskopie
+- `tests/Unit/Laravel10DateCastsTest.php`: Laravel-10-Datumsregression
+- `composer.json` and `composer.lock`: reproducible Laravel-10 dependency rung
 - `deploy/logging`: PHP, webserver, worker, scheduler, rotation and verification templates
 - `deploy/staging`: reproducible Nginx, PHP-FPM, MariaDB and Contentify job stack
 - `tests/Unit/UploaderTest.php`: PHPUnit regression for multiple upload fields

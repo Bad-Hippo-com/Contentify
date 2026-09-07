@@ -18,7 +18,7 @@ use BaseModel;
 class ForumReport extends BaseModel
 {
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $fillable = ['text', 'post_id'];
 

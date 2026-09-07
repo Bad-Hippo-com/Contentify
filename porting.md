@@ -1,7 +1,7 @@
 # Contentify porting plan
 
-Local workstream version: **0.9.0**
-Last updated: **2026-09-07 08:30 CEST**
+Local workstream version: **0.10.0**
+Last updated: **2026-09-07 09:45 CEST**
 
 ## Decision
 
@@ -38,8 +38,8 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.9.0` is installed on staging with Nginx 1.26.3,
-PHP-FPM 8.5.10, Laravel 9.52.21 and MariaDB 10.11. The application, database,
+Version `0.10.0` is installed on staging with Nginx 1.26.3,
+PHP-FPM 8.5.10, Laravel 10.50.3 and MariaDB 10.11. The application, database,
 public runtime files and uploads are persistent where required. The Contentify
 job runner is active. Homepage, login, authenticated administrator backend,
 65-table database, writable installer directories and central logs were
@@ -343,6 +343,34 @@ mit der bestehenden Admin-Sitzung geprüft. Der Produktions-Audit meldet vier
 Advisories in Laravel 9.52.21 und drei aufgegebene Pakete. Composer 2.10 musste
 die bekannte Laravel-9-Stufe beim Erzeugen des Lockbestands einmal mit
 `--no-blocking` zulassen; der Audit bleibt aktiv und Public bleibt gesperrt.
+
+### Laravel-10-Migrationsstufe 0.10.0 - 2026-09-07 09:45 CEST
+
+Laravel wurde bei unverändertem PHP 8.5.10 von 9.52.21 auf die stabile Ausgabe
+10.50.3 angehoben. Entsprechend dem offiziellen Upgradepfad wechseln Sentinel
+auf 7.0.2, Collision auf 7.12.0, Ignition auf 2.9.1 und PHPUnit auf 10.5.64.
+Die Composer-Mindeststabilität ist nun `stable`; der Lockbestand hält trotzdem
+bewusst exakt Laravel 10.50.3 fest.
+
+Laravel 10 entfernt Eloquent `$dates`. Alle 40 Contentify-Modelle wurden daher
+auf explizite `datetime`-Casts umgestellt. Ein neuer Regressionstest prüft die
+kritischen Zeitfelder in Matches, Cups und News. Der alte Feature-Platzhalter
+charakterisiert jetzt korrekt die frische Installation: `/` leitet auf
+`/install.php` weiter.
+
+`invisnik/laravel-steam-auth` endet upstream bei Illuminate 9. Weil Contentify
+den Steam-Login direkt verwendet, liegt der exakte MIT-lizenzierte Stand 4.4.0
+nun als lokale Kompatibilitätsversion 4.4.1 im Projekt. Nur seine Composer-
+Grenzen wurden auf PHP 8.5 und Laravel 10 erweitert; der Paketcode blieb
+unverändert. Wie bei der Modulbrücke ist das ein kontrollierter Zwischenschritt
+und kein dauerhafter Ersatz für eine gepflegte Abhängigkeit.
+
+Der isolierte Kandidat bestand 792 Syntaxprüfungen, 14 Tests mit 47 Assertions,
+515 Routen, vier Migrationen, Datenbankabfragen, beide Smoke-Tests und das
+Dual-Logging. Dashboard, Matches, Cups, Logviewer, News und Module wurden im
+Browser geprüft; es traten keine Konsolen- oder Laravel-Fehler auf. Der Audit
+meldet noch drei Laravel-Advisories und zwei offiziell aufgegebene Pakete.
+Public bleibt gesperrt; die nächste getrennte Stufe ist Laravel 11.
 
 ## Non-viable shortcut
 

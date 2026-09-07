@@ -22,7 +22,7 @@ use Sentinel;
 class Role extends BaseModel
 {
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $slugable = true;
 

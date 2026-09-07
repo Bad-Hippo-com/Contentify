@@ -51,7 +51,7 @@ class Poll extends BaseModel
 
     const RESULTS_CACHE_KEY = 'polls::results.';
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $slugable = true;
 

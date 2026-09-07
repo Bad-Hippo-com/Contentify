@@ -31,7 +31,7 @@ class ForumThread extends BaseModel
 
     protected $slugable = true;
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $fillable = ['title', 'sticky', 'closed', 'forum_id'];
 

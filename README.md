@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.9.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.10.0 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,17 +87,17 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.9.0**
-Last updated: **2026-09-07 08:30 CEST**
+Local workstream version: **0.10.0**
+Last updated: **2026-09-07 09:45 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.9.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.10.0`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
-Nginx. PHP 8.5/Laravel 9 and MariaDB are
+Nginx. PHP 8.5/Laravel 10 and MariaDB are
 isolated in containers; this is the migration workshop, not a public release.
 The first interactive administrator-login failure was diagnosed and corrected
 on staging. Account state and session storage are healthy; the secret did not
@@ -169,6 +169,14 @@ aktualisiert. Die bisher zentrale, seit 2021 nicht weiter veröffentlichte
 Caffeinated-Modulverwaltung liegt nun als dokumentierte MIT-Kompatibilitätskopie
 im Projekt und bestand alle Modul- und Browserprüfungen. Vier Laravel-Advisories
 und drei weitere aufgegebene Pakete verhindern weiterhin die Public-Freigabe.
+Version `0.10.0` führt die nächste getrennte Framework-Stufe auf Laravel
+10.50.3 aus; PHP bleibt unverändert 8.5.10. Sentinel steigt auf 7.0.2,
+Collision auf 7 und Ignition auf 2. Die aufgegebene Steam-Authentifizierung
+liegt nun wie die Modulverwaltung als dokumentierte MIT-Kompatibilitätskopie
+im Projekt. Alle 40 alten Eloquent-`$dates`-Definitionen wurden auf explizite
+`datetime`-Casts umgestellt. Composer, 14 Tests mit 47 Assertions, 515 Routen,
+beide Smoke-Tests und die kritischen Adminseiten bestehen. Drei bekannte
+Laravel-Advisories verhindern weiterhin die Public-Freigabe.
 
 See:
 

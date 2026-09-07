@@ -1,14 +1,14 @@
 # Contentify modernization backlog
 
-Local workstream version: **0.9.0**
-Last updated: **2026-09-07 08:30 CEST**
+Local workstream version: **0.10.0**
+Last updated: **2026-09-07 09:45 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
 2. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 3. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
-4. Laravel als nächste Achse schrittweise über Version 9 hinaus aktualisieren;
+4. Laravel als nächste Achse schrittweise von Version 10 auf 11 aktualisieren;
    Bootstrap und Node.js bleiben davon getrennt.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
    absichern und getrennt vom PHP-8-Port beheben.
@@ -131,14 +131,18 @@ Last updated: **2026-09-07 08:30 CEST**
   Collision, Ignition, Proxy, Mailer und Flysystem anpassen, die zentrale
   Caffeinated-Modulverwaltung kontrolliert übernehmen und 781 Syntaxprüfungen,
   zwölf Unit-Tests, beide Smokes sowie fünf Adminbereiche bestehen.
-- [ ] Laravel 9 in der nächsten getrennten Stufe auf Laravel 10 anheben und dabei die vier
-  Framework-Advisories weiter abbauen.
+- [x] Laravel 9 in `0.10.0` getrennt auf Laravel 10.50.3 anheben; Sentinel,
+  Collision, Ignition und PHPUnit aktualisieren, 40 entfernte `$dates`-
+  Definitionen migrieren und die Steam-Authentifizierung kontrolliert lokal
+  weiterführen. Der Audit sinkt von vier auf drei Framework-Advisories.
+- [ ] Laravel 10 in der nächsten getrennten Stufe auf Laravel 11 anheben und
+  dabei die verbleibenden Framework-Advisories weiter abbauen.
 - [x] Besucher-, Kontakt- und Bewerbungs-IP in `0.7.1` über Laravels Request
   statt über die unter PHP-FPM unzuverlässige Prozessumgebung beziehen
   (BUG-021); wiederholte anonyme HTTP-Aufrufe auf Staging prüfen.
-- [ ] Replace the pre-existing placeholder feature test with an installation-
-  aware HTTP characterization; its historical `/` expectation still receives
-  404 in the isolated test environment.
+- [x] Replace the pre-existing placeholder feature test with an installation-
+  aware HTTP characterization; a fresh system must redirect `/` to
+  `/install.php`.
 - [ ] Add a focused exception-handler regression and return HTTP 404 rather
   than 500 for unknown routes and absent static files (BUG-017).
 - [x] Split ordinary Laravel logging into the detailed daily JSON operations
@@ -146,7 +150,7 @@ Last updated: **2026-09-07 08:30 CEST**
   `/admin/config/log` without exposing central component logs to its delete
   action; verify both outputs and the authenticated browser view on staging
   (BUG-018).
-- [ ] Reduce the remaining Composer production audit from 4 advisories to zero
+- [ ] Reduce the remaining Composer production audit from 3 advisories to zero
   through the following isolated Laravel/PHP migration rungs.
 - [ ] Replace or fully upgrade the Grunt/LESS toolchain; make plain `npm ci`
   succeed without legacy dependency resolution and make `npm audit` clean.

@@ -1,22 +1,47 @@
 # Contentify defect and risk register
 
-Local workstream version: **0.9.0**
-Last updated: **2026-09-07 08:30 CEST**
+Local workstream version: **0.10.0**
+Last updated: **2026-09-07 09:45 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### BUG-027 - Laravel 10 entfernt die Eloquent-Eigenschaft `$dates`
+
+Severity: **high**
+Status: **resolved in 0.10.0, 2026-09-07 09:45 CEST**
+
+Contentify verwendete die entfernte `$dates`-Eigenschaft in 40 Modellen. Unter
+Laravel 10 wären Felder wie `played_at`, `published_at` und `start_at` dadurch
+nicht mehr zuverlässig als Datumsobjekte behandelt worden. Alle Definitionen
+wurden ohne Änderung der Datenbankspalten auf explizite `datetime`-Casts
+überführt. Ein Regressionstest prüft die kritischen Match-, Cup- und Newsfelder.
+
+### BUG-026 - Steam-Authentifizierung endet upstream bei Laravel 9
+
+Severity: **high**
+Status: **resolved as controlled bridge in 0.10.0, 2026-09-07 09:45 CEST**
+
+Das aufgegebene Paket `invisnik/laravel-steam-auth` 4.4.0 erlaubt Illuminate
+nur bis Laravel 9 und blockierte die Laravel-10-Auflösung. Weil Contentify den
+Steam-OpenID-Ablauf direkt verwendet, wäre ersatzloses Entfernen ein
+Funktionsverlust. Der exakte MIT-lizenzierte Upstream-Stand liegt daher als
+lokale Version 4.4.1 im Projekt; geändert wurden ausschließlich Composer-
+Metadaten für PHP 8.5/Laravel 10. Der PHP-Paketcode blieb unverändert. Ein
+späterer Austausch gegen eine gepflegte Implementierung bleibt erforderlich.
+
 ### BUG-025 - Caffeinated Modules endet offiziell bei Laravel 8
 
 Severity: **high**
-Status: **resolved as controlled bridge in 0.9.0, 2026-09-07 08:30 CEST**
+Status: **resolved as controlled bridge through 0.10.0, 2026-09-07 09:45 CEST**
 
 Contentifys 44 Module hängen an `caffeinated/modules`. Die letzte Ausgabe 6.3.1
 stammt von 2021 und erlaubt Illuminate nur bis Version 8, wodurch Composer den
 Laravel-9-Kandidaten korrekt blockierte. Ein unmittelbarer Wechsel des gesamten
 Modulsystems wäre keine isolierte Framework-Stufe. Version 0.9.0 übernimmt daher
 den MIT-lizenzierten Stand unverändert als lokale Version 6.3.2 und erweitert
-nur dessen Plattformvertrag auf PHP 8.5 und Illuminate 9. Die Herkunft ist im
+nur dessen Plattformvertrag auf PHP 8.5 und anschließend Illuminate 10. Die
+lokale Brückenversion ist jetzt 6.3.3. Die Herkunft ist im
 Paket dokumentiert. Modulverwaltung, 44 Modul-Bootstraps, 515 Routen und die
 authentifizierte Admin-Modulseite funktionieren im Kandidaten. Ein späterer
 Austausch bleibt als eigene Architekturaufgabe offen.
@@ -120,9 +145,9 @@ laufendem Nginx/FPM-Staging.
 Severity: **blocker**
 Status: **open**
 
-After the controlled `0.9.0` Laravel-9 rung, `composer audit --locked --no-dev`
-reports **4 known advisories in one package**. Sie betreffen Laravel Framework
-9.52.21. Composer 2.10 blockiert diese letzte stabile Laravel-9-Ausgabe daher
+After the controlled `0.10.0` Laravel-10 rung, `composer audit --locked --no-dev`
+reports **3 known advisories in one package**. Sie betreffen Laravel Framework
+10.50.3. Composer 2.10 blockiert diese letzte stabile Laravel-10-Ausgabe daher
 bei einer neuen Auflösung; der interne Lockbestand wurde einmal mit
 `--no-blocking` erzeugt, während der Audit alle Findings weiterhin meldet.
 Production approval remains blocked.
@@ -139,9 +164,10 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 - Version `0.8.0` aktualisiert die beiden blockierenden Nette-Pakete und setzt
   die PHP-Anforderung auf `~8.5.0`; Installation und Plattformprüfung laufen
   nun ohne ignorierte Anforderungen.
-- Laravel 9 ersetzt SwiftMailer durch Symfony Mailer. Drei aufgegebene
-  Produktionspakete bleiben: `invisnik/laravel-steam-auth`,
-  `laravelcollective/html` und `oyejorge/less.php`.
+- Composer meldet noch zwei aufgegebene Produktionspakete:
+  `laravelcollective/html` und `oyejorge/less.php`. Die ebenfalls aufgegebene
+  Steam-Authentifizierung wird seit 0.10.0 als kontrollierte lokale Brücke
+  geführt und bleibt als technische Schuld dokumentiert.
 
 ### BUG-013 - Laravel-6 patch level was below available security fixes
 

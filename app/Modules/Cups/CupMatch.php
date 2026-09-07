@@ -41,7 +41,7 @@ class CupMatch extends BaseModel
 
     public $table = 'cups_matches';
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $slugable = true;
 

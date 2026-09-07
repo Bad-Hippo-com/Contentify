@@ -68,7 +68,7 @@ class GameMatch extends BaseModel
      */
     const STATE_DELAYED = 3;
 
-    protected $dates = ['deleted_at', 'played_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'played_at' => 'datetime'];
 
     protected $fillable = [
         'state', 

@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev erreicht auf Staging Laravel 10.50.3 mit PHP 8.5.10; Datumsfelder, Authentifizierung, Logs und Module wurden für diese Stufe geprüft.",
+        "timestamp": 1788767100,
+        "icon": "wrench"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev läuft auf Staging mit Laravel 9.52.21 und unverändertem PHP 8.5.10; die Framework-Migration wird weiter stufenweise geprüft.",
         "timestamp": 1788762623,
         "icon": "wrench"

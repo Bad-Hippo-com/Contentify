@@ -32,7 +32,7 @@ class Event extends BaseModel
      */
     const EVENT_NAME_REQUEST_EVENT_CREATION = 'events::requestEventCreation';
 
-    protected $dates = ['deleted_at', 'starts_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'starts_at' => 'datetime'];
 
     protected $slugable = true;
 

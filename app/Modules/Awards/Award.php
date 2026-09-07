@@ -28,7 +28,7 @@ class Award extends BaseModel
 
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at', 'achieved_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'achieved_at' => 'datetime'];
 
     protected $fillable = [
         'title',

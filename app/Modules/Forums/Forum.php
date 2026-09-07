@@ -44,7 +44,7 @@ class Forum extends BaseModel
 
     protected $slugable = true;
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $fillable = ['title', 'description', 'position', 'internal', 'team_id', 'forum_id'];
     

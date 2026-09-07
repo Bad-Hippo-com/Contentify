@@ -49,7 +49,7 @@ class Page extends AbstractStiModel
 
     protected $subclassField = 'page_cat_id';
 
-    protected $dates = ['deleted_at', 'published_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'published_at' => 'datetime'];
 
     protected $slugable = true;
 

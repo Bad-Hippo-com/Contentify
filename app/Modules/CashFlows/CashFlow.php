@@ -24,7 +24,7 @@ class CashFlow extends BaseModel
 
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at', 'paid_at'];
+    protected $casts = ['deleted_at' => 'datetime', 'paid_at' => 'datetime'];
 
     protected $fillable = ['title', 'description', 'revenues', 'expenses', 'paid', 'paid_at', 'user_id'];
 

@@ -38,7 +38,7 @@ class ForumPost extends BaseModel
      */
     const CACHE_KEY = 'forums::posts.';
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     protected $fillable = ['text', 'thread_id'];
 

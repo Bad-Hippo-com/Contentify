@@ -28,7 +28,7 @@ class Friendship extends BaseModel
     
     public $table = 'friends';
 
-    protected $dates = ['messaged_at'];
+    protected $casts = ['messaged_at' => 'datetime'];
 
     public static $relationsData = [
         'sender'   => [self::BELONGS_TO, 'User'],
