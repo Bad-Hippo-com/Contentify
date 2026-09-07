@@ -88,7 +88,7 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 ### Local technical assessment
 
 Local workstream version: **0.13.0**
-Last updated: **2026-09-07 13:49 CEST**
+Last updated: **2026-09-07 14:44 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.

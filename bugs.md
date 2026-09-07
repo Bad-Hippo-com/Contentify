@@ -1,7 +1,7 @@
 # Contentify defect and risk register
 
 Local workstream version: **0.13.0**
-Last updated: **2026-09-07 13:49 CEST**
+Last updated: **2026-09-07 14:44 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
