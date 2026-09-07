@@ -24,6 +24,7 @@ RUN apt-get update \
         mbstring \
         mysqli \
         pdo_mysql \
+        pdo_sqlite \
         simplexml \
         zip \
     && rm -rf /var/lib/apt/lists/*

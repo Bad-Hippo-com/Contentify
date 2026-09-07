@@ -1,3 +1,10 @@
+## Bad Hippo 0.15.1 / Contentify 3.3-dev - 2026-09-07
+
+- Von PHPUnit bereits erzwungene SQLite-In-Memory-Verbindung tatsächlich in
+  Laravel registriert und die PDO-Erweiterung im Prüfimage installiert.
+- MariaDB bleibt unverändert die einzige Staging-/Betriebsdatenbank; SQLite ist
+  ausschließlich die zustandslose Testverbindung.
+
 ## Bad Hippo 0.15.0 / Contentify 3.3-dev - 2026-09-07
 
 - Historische Grunt-Baukette vollständig durch das exakt festgeschriebene

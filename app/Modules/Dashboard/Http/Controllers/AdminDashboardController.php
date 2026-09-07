@@ -18,7 +18,7 @@ class AdminDashboardController extends BackController
         [
             'key'         => 'bad-hippo',
             'name'        => 'Bad Hippo 3.3-dev',
-            'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json?v=0.15.0',
+            'url'         => 'https://raw.githubusercontent.com/Bad-Hippo-com/Contentify/main/public/share/feeds/cms.json?v=0.15.1',
             'project_url' => 'https://github.com/Bad-Hippo-com/Contentify',
         ],
         [

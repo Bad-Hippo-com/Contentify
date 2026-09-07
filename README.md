@@ -14,7 +14,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.15.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.15.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -87,13 +87,13 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.15.0**
+Local workstream version: **0.15.1**
 Last updated: **2026-09-07 17:56 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.15.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.15.1`
 identifier versions our individual, staged changes.
 
 The historical baseline is installed on an internal staging host behind
@@ -227,6 +227,10 @@ Baukette: Node.js 24 und npm 11 verwenden Less 4.9.1 direkt sowie einen kleinen
 projektlokalen Watcher. Grunt und seine nicht mehr sauber auflösbaren Plugins
 sind entfernt. `npm ci` und `npm audit` laufen ohne Sonderparameter und ohne
 bekannte Schwachstellen. Bootstrap bleibt bewusst unverändert auf 3.3.7.
+
+Der Kandidatenlauf 0.15.1 aktiviert außerdem die von PHPUnit bereits
+konfigurierte SQLite-In-Memory-Verbindung. Sie ist nur für zustandslose Tests
+bestimmt; Staging und regulärer Betrieb verwenden weiterhin MariaDB.
 Contentifys Bilder-, Vorlagen- und Flaggenfunktionen übernimmt ein gemeinsamer
 deutscher Editor-Adapter. Erstellen, Bearbeiten und Speichern im Quelltextmodus
 wurden im isolierten Staging-Kandidaten im echten Browser geprüft.

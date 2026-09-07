@@ -1,6 +1,6 @@
 # Contentify project assessment
 
-Local workstream version: **0.15.0**
+Local workstream version: **0.15.1**
 Assessment/update time: **2026-09-07 17:56 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
@@ -866,6 +866,12 @@ denselben SHA-256-Wert
 `npm ci`, `npm audit`, Build, Vertragstest und Einmal-Watcher bestanden; der
 Audit meldet null bekannte Schwachstellen. PHP 8.5.10, Laravel 13.30.1,
 SunEditor 3.3.2 und Bootstrap 3.3.7 wurden in dieser Stufe nicht geändert.
+
+Der erste Containerlauf des Kandidaten zeigte zusätzlich, dass `phpunit.xml`
+SQLite als In-Memory-Testdatenbank erzwingt, die Verbindung aber in Laravel
+auskommentiert und der PDO-Treiber im Image nicht vorhanden war. 0.15.1 stellt
+beides ausschließlich für Tests bereit. Die reale Anwendung und Staging bleiben
+auf MariaDB; es findet keine Betriebsdatenbankmigration statt.
 
 ## Files added or updated
 
