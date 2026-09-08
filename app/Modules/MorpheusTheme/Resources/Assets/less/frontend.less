@@ -717,7 +717,7 @@ ul.pagination {
  */
 
 body { background-color: @darkest; font-family: @primary-font; color: @text-color; }
-th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !important }
+.table, .table > :not(caption) > *, .table > :not(caption) > * > * { border: 0 !important; }
 .table { .contentify-table-colors(@text-color; @darker; lighten(@dark, 10%); @dark; lighten(@dark, 5%)); }
 .table > thead > tr > * { --bs-table-bg: @dark; }
 .bootstrap-datetimepicker-widget .table { .contentify-table-colors(#333; transparent; #ccc; #eee; #ddd); }

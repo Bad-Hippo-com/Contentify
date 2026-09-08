@@ -1,3 +1,9 @@
+## Bad Hippo 0.18.3 / Contentify 3.3-dev - 2026-09-08
+
+- Tabellenrahmen in Morpheus und Phobos auf Benutzerwunsch entfernt, einschließlich
+  Zelllinien und mobiler Zeilenrahmen. Farben, Hover und Adminstil bleiben erhalten.
+- Alte globale 2-Pixel-Zellrahmen entfernt und CSS-Regressionsprüfung ergänzt.
+
 ## Bad Hippo 0.18.2 / Contentify 3.3-dev - 2026-09-08
 
 - Bootstrap-5-Tabellenvariablen an Morpheus/Phobos angepasst: dunkle Flächen,

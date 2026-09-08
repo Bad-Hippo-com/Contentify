@@ -82,5 +82,7 @@ for (const theme of ['MorpheusTheme', 'PhobosTheme']) {
     assert.match(css, /--bs-table-bg:\s*#202020/);
     assert.match(css, /--bs-table-color:\s*(?:white|#fff(?:fff)?)/);
     assert.match(css, /--bs-table-hover-bg:\s*#363636/);
+    assert.match(css, /\.table > :not\(caption\) > \* > \*\s*\{\s*border: 0 !important;/);
+    assert.doesNotMatch(css, /border-width: 2px !important/);
 }
 console.log('OK: Node-24-, LESS-, Bootstrap-5.3.8- und Editor-Asset-Verträge sind erfüllt.');

@@ -2232,10 +2232,10 @@ body {
   font-family: 'Titillium Web';
   color: white;
 }
-th,
-td {
-  border-color: #434343 !important;
-  border-width: 2px !important;
+.table,
+.table > :not(caption) > *,
+.table > :not(caption) > * > * {
+  border: 0 !important;
 }
 .table {
   --bs-table-color: white;
