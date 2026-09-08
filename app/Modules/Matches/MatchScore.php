@@ -31,6 +31,8 @@ class MatchScore extends BaseModel
 
     public static function boot()
     {
+        parent::boot();
+
         self::saved(function(self $matchScore)
         {
             $matchScore->match->updateScore();
