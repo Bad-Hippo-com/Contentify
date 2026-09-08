@@ -92,17 +92,6 @@ $(document).ready(function()
         {
             $(this).datetimepicker({
                 locale: framework.locale || 'de',
-                tooltips: framework.locale === 'de' ? {
-                    today: 'Heute', clear: 'Leeren', close: 'Schließen',
-                    selectMonth: 'Monat wählen', prevMonth: 'Vorheriger Monat', nextMonth: 'Nächster Monat',
-                    selectYear: 'Jahr wählen', prevYear: 'Vorheriges Jahr', nextYear: 'Nächstes Jahr',
-                    selectDecade: 'Jahrzehnt wählen', prevDecade: 'Vorheriges Jahrzehnt', nextDecade: 'Nächstes Jahrzehnt',
-                    prevCentury: 'Vorheriges Jahrhundert', nextCentury: 'Nächstes Jahrhundert',
-                    pickHour: 'Stunde wählen', incrementHour: 'Stunde erhöhen', decrementHour: 'Stunde verringern',
-                    pickMinute: 'Minute wählen', incrementMinute: 'Minute erhöhen', decrementMinute: 'Minute verringern',
-                    pickSecond: 'Sekunde wählen', incrementSecond: 'Sekunde erhöhen', decrementSecond: 'Sekunde verringern',
-                    togglePeriod: 'Tageshälfte wechseln', selectTime: 'Uhrzeit wählen', selectDate: 'Datum wählen'
-                } : {},
                 format: $(this).find('input').attr('data-format'),
                 icons: {
                     time:       'fas fa-clock',

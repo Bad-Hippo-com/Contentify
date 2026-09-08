@@ -1,6 +1,8 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 09:47 CEST: **0.19.4 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:48 CEST: **0.19.5 in Kandidatenprüfung, noch nicht auf Staging.**
+Benutzermeldung fehlender Editoren auf :8088: nicht unterstützte Kalenderoption
+tooltips entfernt. Oberflächenabnahme hat jetzt Vorrang, keine weiteren Funktionen.
 0.19.3: 33 Tests/200 Assertions bestanden. Browsercache machte einen zentralen
 Buildversionsparameter für lokale Assets erforderlich; externe URLs unverändert.
 Weitere Befunde im Register: SVG-/PHP-Ausführungsgrenze und Upload-Datenerhalt.
@@ -41,6 +43,12 @@ Last updated: **2026-09-08 08:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-052 - Nicht unterstützte Kalenderoption stoppt alle Editoren
+
+Eigener Kandidatenfehler bis 0.19.4: Das alte Kalenderplugin kennt keine
+tooltips-Option und wirft TypeError. 0.19.5 entfernt diese Option; locale de bleibt.
+Vom Benutzer auf :8088 gemeldet. Staging :80 war nicht betroffen.
 
 ### BUG-050 - Browser verwendet alte Assets nach Deployment
 

@@ -401,3 +401,8 @@ Teamnamen werden als Text angehängt; Kommentar-Speicherknopf auf Deutsch.
 Lokale Script-/Stylesheet-URLs erhalten die Buildversion als Cache-Schlüssel.
 Der Browser verwendete trotz Neuladen alte Kalenderdateien; externe URLs bleiben
 unverändert. Regressionstest ergänzt. Kandidatenprüfung noch offen.
+## Bad Hippo 0.19.5 / Contentify 3.3-dev - 2026-09-08
+
+Nicht unterstützte tooltips-Option des alten Kalenderplugins entfernt. Die
+deutsche Moment-Lokalisierung bleibt aktiv. Dieser Kandidatenfehler verhinderte
+Editoren auf Formularseiten; Browserabnahme hat Vorrang vor weiteren Änderungen.
