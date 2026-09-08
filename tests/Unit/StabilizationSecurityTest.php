@@ -13,6 +13,16 @@ use Tests\TestCase;
 
 class StabilizationSecurityTest extends TestCase
 {
+    public function testOnlyRecipientCanConfirmFriendRequest(): void
+    {
+        $friendship = new \App\Modules\Friends\Friendship;
+        $friendship->setRawAttributes(['sender_id' => 7, 'receiver_id' => 8, 'confirmed' => 0]);
+        $this->assertFalse($friendship->canBeConfirmedBy(7));
+        $this->assertFalse($friendship->canBeConfirmedBy(9));
+        $this->assertTrue($friendship->canBeConfirmedBy(8));
+        $friendship->confirmed = 1;
+        $this->assertFalse($friendship->canBeConfirmedBy(8));
+    }
     public function testCommentOwnerCanEditWithoutChangingOwnershipOrContext(): void
     {
         $comment = Mockery::mock(\Contentify\Models\Comment::class)->makePartial();
@@ -22,10 +32,10 @@ class StabilizationSecurityTest extends TestCase
         $user->setRawAttributes(['id' => 7]);
         $user->shouldReceive('hasAccess')->with('comments', PERM_UPDATE)->andReturn(false);
         \Sentinel::shouldReceive('getUser')->andReturn($user);
-        \Request::shouldReceive('all')->andReturn(['text' => 'Nachher', 'creator_id' => 99, 'foreign_id' => 99]);
+        app('request')->replace(['text' => 'Nachher', 'creator_id' => 99, 'foreign_id' => 99]);
         $comments = new class($comment) extends \Contentify\Comments {
             public function __construct(private \Contentify\Models\Comment $fixture) {}
-            protected function findComment(int $id): \Comment { return $this->fixture; }
+            protected function findComment(int $id): \Contentify\Models\Comment { return $this->fixture; }
         };
         $view = $comments->update(5);
         $this->assertSame('comments.comment', $view->name());
@@ -47,7 +57,7 @@ class StabilizationSecurityTest extends TestCase
         \Sentinel::shouldReceive('getUser')->andReturn($user);
         $comments = new class($comment) extends \Contentify\Comments {
             public function __construct(private \Contentify\Models\Comment $fixture) {}
-            protected function findComment(int $id): \Comment { return $this->fixture; }
+            protected function findComment(int $id): \Contentify\Models\Comment { return $this->fixture; }
         };
         $this->assertSame(403, $comments->update(5)->getStatusCode());
         $this->assertSame(403, $comments->delete(5)->getStatusCode());

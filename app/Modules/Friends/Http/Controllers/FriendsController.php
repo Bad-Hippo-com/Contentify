@@ -83,7 +83,7 @@ class FriendsController extends FrontController
         /** @var Friendship $friendship */
         $friendship = Friendship::areFriends(user()->id, $id, false)->first();
 
-        if (! $friendship or $friendship->confirmed) {
+        if (! $friendship or ! $friendship->canBeConfirmedBy(user()->id)) {
             $this->alertFlash(trans('friends::request_error'));
             return Redirect::to('users/'.$friend->id);
         }

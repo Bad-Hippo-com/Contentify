@@ -1,6 +1,9 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 09:35 CEST: **0.19.1 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:34 CEST: **0.19.2 in Kandidatenprüfung, noch nicht auf Staging.**
+Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
+Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
+Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.
 Erster Lauf 0.19.0: 29 Tests/137 Assertions, beide Smoke-Tests und LESS-Neubau
 bestanden. Composer- und npm-Audit ohne bekannte gemeldete Schwachstellen.
 Nachprüfung erweitert CSRF-Schutz auf Forum-, Freunde- und Verwaltungsaktionen;
@@ -32,6 +35,23 @@ Last updated: **2026-09-08 08:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-048 - Kalenderinitialisierung im Kandidaten 0.19.0/0.19.1
+
+2026-09-08 09:34 CEST: eigener Integrationsfehler; Zugriff auf contentify.locale
+vor Abschluss des Konstruktors verhindert Kalender- und Editorinitialisierung.
+0.19.2 verwendet framework.locale. Nicht auf Staging ausgeliefert.
+
+### SEC-005 - AJAX-CSRF-Token an falscher Cross-Domain-Prüfung (mittel)
+
+Der alte Prefilter prüft xhr.crossDomain statt options.crossDomain und hängt
+Tokens an Daten/GET-URLs. 0.19.2 prüft die Request-Option und verwendet nur einen
+Same-Origin-Header. Ein tatsächlicher externer Tokenabfluss wurde nicht nachgewiesen.
+
+### SEC-006 - Absender kann eigene Freundschaftsanfrage bestätigen (mittel)
+
+Codebefund: bidirektionale Suche prüft nicht, ob der Handelnde Empfänger ist.
+0.19.2 verlangt Empfängeridentität; Negativtests für Absender und Dritte ergänzt.
 
 ### SEC-001 - Schreibende Cup-Aktionen über GET (hoch)
 

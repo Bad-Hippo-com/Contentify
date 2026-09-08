@@ -384,3 +384,9 @@ Sicherheitsnachprüfung: Bestätigung/POST auch für die erkannten Forum-, Freun
 und Verwaltungsaktionen. Kommentar-Eigentümerprüfung ohne geladene Beziehung;
 Tests für Fremdzugriffe und fehlendes CSRF-Token. HTTP-Fehlertexte auf Deutsch.
 Kandidatenprüfung noch nicht abgeschlossen; Staging weiterhin 0.18.3.
+## Bad Hippo 0.19.2 / Contentify 3.3-dev - 2026-09-08
+
+Kandidatenkorrektur: Kalender verwendet die bereits initialisierte Framework-
+Instanz. AJAX-CSRF-Token nur im Same-Origin-Header, nicht in URLs/fremden Anfragen.
+Freundschaftsanfragen dürfen nur Empfänger bestätigen, nicht der Absender.
+Kommentar-Regressionsfixtures korrigiert; Kandidaten-Abnahme läuft.

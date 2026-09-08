@@ -36,14 +36,8 @@ $(document).ready(function()
          */
         jQuery.ajaxPrefilter(function(options, request, xhr) 
         {
-            if (! xhr.crossDomain) {
-                if (typeof options.data === 'undefined') {
-                    options.data = ''; // We do not have to add "?", this will happen automatically - we just initialize
-                }
-                if (options.data !== '') {
-                    options.data += '&';
-                }
-                options.data += '_token=' + framework.csrfToken;
+            if (! options.crossDomain) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', framework.csrfToken);
             }
         });
 
@@ -97,8 +91,8 @@ $(document).ready(function()
         $('.date-time-picker').each(function() 
         {
             $(this).datetimepicker({
-                locale: contentify.locale || 'de',
-                tooltips: contentify.locale === 'de' ? {
+                locale: framework.locale || 'de',
+                tooltips: framework.locale === 'de' ? {
                     today: 'Heute', clear: 'Leeren', close: 'Schließen',
                     selectMonth: 'Monat wählen', prevMonth: 'Vorheriger Monat', nextMonth: 'Nächster Monat',
                     selectYear: 'Jahr wählen', prevYear: 'Vorheriges Jahr', nextYear: 'Nächstes Jahr',

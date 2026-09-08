@@ -28,6 +28,11 @@ class Friendship extends BaseModel
     
     public $table = 'friends';
 
+    public function canBeConfirmedBy(int $userId): bool
+    {
+        return ! $this->confirmed && $this->receiver_id == $userId;
+    }
+
     protected $casts = ['messaged_at' => 'datetime'];
 
     public static $relationsData = [

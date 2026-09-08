@@ -1,6 +1,9 @@
 # Contentify porting plan
 
-Stand 2026-09-08 09:35 CEST: **0.19.1 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:34 CEST: **0.19.2 in Kandidatenprüfung, noch nicht auf Staging.**
+Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
+Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
+Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.
 Erster Lauf 0.19.0: 29 Tests/137 Assertions, beide Smoke-Tests und LESS-Neubau
 bestanden. Composer- und npm-Audit ohne bekannte gemeldete Schwachstellen.
 Nachprüfung erweitert CSRF-Schutz auf Forum-, Freunde- und Verwaltungsaktionen;

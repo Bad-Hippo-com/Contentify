@@ -14,7 +14,7 @@ use View;
  */
 class Comments
 {
-    protected function findComment(int $id): Comment
+    protected function findComment(int $id): \Contentify\Models\Comment
     {
         return Comment::findOrFail($id);
     }

@@ -77,6 +77,10 @@ for (const file of firstPartyViews) {
     assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /data-(?:toggle|dismiss|target|ride|parent)=/, file);
 }
 const sharedJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/contentify.js'), 'utf8');
+assert.match(sharedJs, /locale: framework\.locale/);
+assert.match(sharedJs, /if \(! options\.crossDomain\)/);
+assert.match(sharedJs, /setRequestHeader\('X-CSRF-TOKEN'/);
+assert.doesNotMatch(sharedJs, /xhr\.crossDomain|options\.data \+= '_token='/);
 const backendJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/backend.js'), 'utf8');
 const pickerJs = fs.readFileSync(path.join(root, 'public/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js'), 'utf8');
 assert.match(sharedJs, /new bootstrap\.Modal/);
