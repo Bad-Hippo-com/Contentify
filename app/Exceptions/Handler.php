@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
                 if ($request->expectsJson()) {
                     return parent::render($request, $exception);
                 }
-                return response()->view($status === 404 ? 'error_not_found' : 'error', [], $status, $exception->getHeaders());
+                return response()->view($status === 404 ? 'error_not_found' : 'error', ['status' => $status], $status, $exception->getHeaders());
             }
             if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                 return Response::make(View::make('error_not_found'), 404);

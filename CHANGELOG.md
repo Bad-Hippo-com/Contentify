@@ -378,3 +378,9 @@ Cup-Aktionslinks zeigen vor schreibenden POST-Aufrufen eine CSRF-Bestätigung.
 jQuery 3.7.1 und Moment 2.30.1 mit deutschen Kalendertexten reproduzierbar gebaut;
 Editor-Standardfilter wieder aktiv, ungenutzte optionale Plugins ausgeblendet.
 Noch kein vollständiger Sicherheitsnachweis oder Public-Release.
+## Bad Hippo 0.19.1 / Contentify 3.3-dev - 2026-09-08
+
+Sicherheitsnachprüfung: Bestätigung/POST auch für die erkannten Forum-, Freunde-
+und Verwaltungsaktionen. Kommentar-Eigentümerprüfung ohne geladene Beziehung;
+Tests für Fremdzugriffe und fehlendes CSRF-Token. HTTP-Fehlertexte auf Deutsch.
+Kandidatenprüfung noch nicht abgeschlossen; Staging weiterhin 0.18.3.

@@ -13,6 +13,57 @@ use Tests\TestCase;
 
 class StabilizationSecurityTest extends TestCase
 {
+    public function testCommentOwnerCanEditWithoutChangingOwnershipOrContext(): void
+    {
+        $comment = Mockery::mock(\Contentify\Models\Comment::class)->makePartial();
+        $comment->setRawAttributes(['id' => 5, 'creator_id' => 7, 'foreign_type' => 'news', 'foreign_id' => 42, 'text' => 'Vorher']);
+        $comment->shouldReceive('save')->once()->andReturn(true);
+        $user = Mockery::mock(\Contentify\Models\User::class)->makePartial();
+        $user->setRawAttributes(['id' => 7]);
+        $user->shouldReceive('hasAccess')->with('comments', PERM_UPDATE)->andReturn(false);
+        \Sentinel::shouldReceive('getUser')->andReturn($user);
+        \Request::shouldReceive('all')->andReturn(['text' => 'Nachher', 'creator_id' => 99, 'foreign_id' => 99]);
+        $comments = new class($comment) extends \Contentify\Comments {
+            public function __construct(private \Contentify\Models\Comment $fixture) {}
+            protected function findComment(int $id): \Comment { return $this->fixture; }
+        };
+        $view = $comments->update(5);
+        $this->assertSame('comments.comment', $view->name());
+        $this->assertSame('news', $view->getData()['foreignType']);
+        $this->assertEquals(42, $view->getData()['foreignId']);
+        $this->assertEquals(7, $comment->creator_id);
+        $this->assertSame('Nachher', $comment->text);
+    }
+
+    public function testOtherUserCannotChangeOrDeleteComment(): void
+    {
+        $comment = Mockery::mock(\Contentify\Models\Comment::class)->makePartial();
+        $comment->setRawAttributes(['id' => 5, 'creator_id' => 7]);
+        $comment->shouldNotReceive('save');
+        $comment->shouldNotReceive('delete');
+        $user = Mockery::mock(\Contentify\Models\User::class)->makePartial();
+        $user->setRawAttributes(['id' => 8]);
+        $user->shouldReceive('hasAccess')->andReturn(false);
+        \Sentinel::shouldReceive('getUser')->andReturn($user);
+        $comments = new class($comment) extends \Contentify\Comments {
+            public function __construct(private \Contentify\Models\Comment $fixture) {}
+            protected function findComment(int $id): \Comment { return $this->fixture; }
+        };
+        $this->assertSame(403, $comments->update(5)->getStatusCode());
+        $this->assertSame(403, $comments->delete(5)->getStatusCode());
+    }
+
+    public function testPostWithoutCsrfTokenIsRejected(): void
+    {
+        $middleware = new class(app(), app('encrypter')) extends \App\Http\Middleware\VerifyCsrfToken {
+            protected function runningUnitTests() { return false; }
+        };
+        $request = Request::create('/cups/check-in/1', 'POST');
+        $request->setLaravelSession(app('session.store'));
+        $this->expectException(\Illuminate\Session\TokenMismatchException::class);
+        $middleware->handle($request, function () { $this->fail('Missing CSRF token accepted.'); });
+    }
+
     public function testHttpErrorsKeepTheirStatusAndHeaders(): void
     {
         config(['app.debug' => false]);
@@ -49,7 +100,11 @@ class StabilizationSecurityTest extends TestCase
     public function testCupMutationRoutesRequireAuthenticationAndConfirmation(): void
     {
         foreach (['cups/join/1/2', 'cups/check-in/1', 'cups/check-out/1', 'admin/cups/seed/1',
-            'admin/cups/participants/delete/1/2', 'cups/teams/leave/1/2', 'cups/teams/delete/1'] as $uri) {
+            'admin/cups/participants/delete/1/2', 'cups/teams/leave/1/2', 'cups/teams/delete/1',
+            'forums/threads/sticky/1', 'forums/threads/closed/1', 'forums/threads/delete/1',
+            'forums/posts/delete/1', 'forums/posts/report/1', 'friends/add/1', 'friends/confirm/1',
+            'admin/activities/delete/all', 'admin/config/log/clear', 'admin/config/optimize',
+            'admin/config/compile-less', 'admin/config/clear-cache'] as $uri) {
             foreach (['GET', 'POST'] as $method) {
                 $route = app('router')->getRoutes()->match(Request::create('/'.$uri, $method));
                 $this->assertContains('auth', $route->gatherMiddleware());

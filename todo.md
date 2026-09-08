@@ -1,6 +1,10 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 09:27 CEST: **0.19.0 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:35 CEST: **0.19.1 in Kandidatenprüfung, noch nicht auf Staging.**
+Erster Lauf 0.19.0: 29 Tests/137 Assertions, beide Smoke-Tests und LESS-Neubau
+bestanden. Composer- und npm-Audit ohne bekannte gemeldete Schwachstellen.
+Nachprüfung erweitert CSRF-Schutz auf Forum-, Freunde- und Verwaltungsaktionen;
+zusätzliche Negativtests für Kommentare und CSRF. Vollständiger Audit bleibt offen.
 Funktionsreparaturen: Cup-Siegerwechsel (BUG-020), Kommentar-Kontext (BUG-008),
 HTTP-Status (BUG-017), Nachrichten-Einstiegsroute und Eingabevalidierung.
 Sicherheitsprüfung: Cup-GET-Mutationen auf Bestätigung/POST umgestellt; jQuery

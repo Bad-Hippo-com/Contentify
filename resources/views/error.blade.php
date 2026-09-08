@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="message-box">
-        <h1>Error</h1>
+        <h1>Anfrage nicht möglich ({{ $status ?? 500 }})</h1>
 
         <hr>
 
-        <p>Sorry, something bad happened. Our website has crashed.</p>
-        <p>Don't worry, we will handle this. In the meantime, make a cup of coffee. And stop crushing our website!</p>
+        <p>Die Anfrage konnte nicht ausgeführt werden.</p>
+        <p>Prüfe bitte deine Anmeldung und versuche es gegebenenfalls erneut.</p>
 
         <hr>
         

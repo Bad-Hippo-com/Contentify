@@ -14,6 +14,10 @@ use View;
  */
 class Comments
 {
+    protected function findComment(int $id): Comment
+    {
+        return Comment::findOrFail($id);
+    }
 
     /**
      * Directly outputs comments and the comment form.
@@ -89,7 +93,7 @@ class Comments
      */
     public function get(int $id) : JsonResponse
     {
-        $comment = Comment::findOrFail($id);
+        $comment = $this->findComment($id);
 
         return Response::json($comment);
     }
@@ -103,9 +107,9 @@ class Comments
     public function edit(int $id)
     {
         /** @var Comment $comment */
-        $comment = Comment::findOrFail($id);
+        $comment = $this->findComment($id);
 
-        if (! user() or (! user()->hasAccess('comments', PERM_UPDATE) and $comment->creator->id != user()->id)) {
+        if (! user() or (! user()->hasAccess('comments', PERM_UPDATE) and $comment->creator_id != user()->id)) {
             return Response::make(trans('app.access_denied'), 403);
         }
 
@@ -123,9 +127,9 @@ class Comments
     public function update(int $id)
     {
         /** @var Comment $comment */
-        $comment = Comment::findOrFail($id);
+        $comment = $this->findComment($id);
 
-        if (! user() or (! user()->hasAccess('comments', PERM_UPDATE) and $comment->creator->id != user()->id)) {
+        if (! user() or (! user()->hasAccess('comments', PERM_UPDATE) and $comment->creator_id != user()->id)) {
             return Response::make(trans('app.access_denied'), 403);
         }
 
@@ -153,9 +157,9 @@ class Comments
     public function delete(int $id) : \Illuminate\Http\Response
     {
         /** @var Comment $comment */
-        $comment = Comment::findOrFail($id);
+        $comment = $this->findComment($id);
 
-        if (! user() or (! user()->hasAccess('comments', PERM_DELETE) and $comment->creator->id != user()->id)) {
+        if (! user() or (! user()->hasAccess('comments', PERM_DELETE) and $comment->creator_id != user()->id)) {
             return Response::make(trans('app.access_denied'), 403);
         }
 
