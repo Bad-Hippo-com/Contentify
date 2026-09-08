@@ -46,8 +46,8 @@
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
         "laravelcollective/html": "^6.4.4",
-        "oyejorge/less.php": "1.*",
-        "watson/validating": "3.*"
+        "watson/validating": "3.*",
+        "wikimedia/less.php": "5.5.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

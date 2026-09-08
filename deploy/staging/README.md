@@ -1,6 +1,6 @@
 # Contentify staging deployment
 
-Stand 2026-09-08 07:13 CEST: Bootstrap-4-Kandidat **0.17.0** in Prüfung.
+Stand 2026-09-08 07:26 CEST: Bootstrap-4-Kandidat **0.17.1** in Prüfung.
 Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
 dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
 sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
@@ -35,6 +35,12 @@ are stored in `public/css/fonts`, matching the paths already emitted by the
 historical compiled backend CSS.
 
 ## Normal operation
+
+Beim Kopieren aus dem Nginx-Abbild müssen PHP-Schreibrechte erhalten bleiben.
+Ab 0.17.1 verwendet die Buildstufe `COPY --chown=33:33`. Nach Aktualisierung
+eines bestehenden Public-Volumes dessen Eigentümer auf UID/GID 33:33 prüfen
+und korrigieren; anschließend echten Theme-Wechsel und `php artisan less:compile`
+testen. Eine reine HTTP-200-Assetprüfung erkennt STAGE-008 nicht.
 
 From `deploy/staging`:
 

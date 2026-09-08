@@ -837,6 +837,9 @@
 html {
   font-size: 14px;
 }
+#sidebar > .border {
+  border: 0 !important;
+}
 .btn-default {
   color: #333;
   background-color: #fff;
@@ -3000,10 +3003,8 @@ td {
 .table-hover > tbody > tr:hover {
   background-color: #292929;
 }
-.nav-tabs li.active a {
-  border-left: #292929 !important;
-  border-top: #292929 !important;
-  border-right: #292929 !important;
+.nav-tabs a.active {
+  border-color: #292929 !important;
   background-color: #292929 !important;
   color: white !important;
 }

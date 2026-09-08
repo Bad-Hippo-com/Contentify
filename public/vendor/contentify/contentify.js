@@ -99,13 +99,13 @@ $(document).ready(function()
             $(this).datetimepicker({
                 format: $(this).find('input').attr('data-format'),
                 icons: {
-                    time:       'fa fa-clock-o',
+                    time:       'fas fa-clock',
                     date:       'fa fa-calendar',
                     up:         'fa fa-chevron-up',
                     down:       'fa fa-chevron-down',
                     previous:   'fa fa-chevron-left',
                     next:       'fa fa-chevron-right',
-                    today:      'fa fa-screenshot',
+                    today:      'fas fa-crosshairs',
                     clear:      'fa fa-trash'
                 }
             });

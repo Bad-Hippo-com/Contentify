@@ -48,4 +48,4 @@ RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --opt
 
 FROM nginx:1.26-alpine@sha256:1eadbb07820339e8bbfed18c771691970baee292ec4ab2558f1453d26153e22d AS web
 COPY deploy/staging/nginx.conf /etc/nginx/conf.d/default.conf
-COPY public /var/www/html/public
+COPY --chown=33:33 public /var/www/html/public

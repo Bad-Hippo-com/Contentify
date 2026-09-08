@@ -837,6 +837,9 @@
 html {
   font-size: 14px;
 }
+#sidebar > .border {
+  border: 0 !important;
+}
 .btn-default {
   color: #333;
   background-color: #fff;
@@ -3002,10 +3005,8 @@ td {
 .table-hover > tbody > tr:hover {
   background-color: #292929;
 }
-.nav-tabs li.active a {
-  border-left: #292929 !important;
-  border-top: #292929 !important;
-  border-right: #292929 !important;
+.nav-tabs a.active {
+  border-color: #292929 !important;
   background-color: #292929 !important;
   color: white !important;
 }
@@ -3013,7 +3014,7 @@ td {
   background-color: #292929 !important;
 }
 #header {
-  position: absolute;
+  position: relative;
   z-index: 2;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -3081,7 +3082,7 @@ td {
   display: inline-block;
   margin-left: 20px;
 }
-#header .top-bar .user .dropdown.open .btn {
+#header .top-bar .user .dropdown.show .btn {
   border-color: #cc3e26;
   background-color: #cc3e26;
 }
@@ -3093,6 +3094,37 @@ td {
 @media (max-width: 990px) {
   #header nav {
     width: 100%;
+  }
+  #header .top-bar {
+    height: auto;
+  }
+  #header .top-bar:before,
+  #header .top-bar:after {
+    display: table;
+    content: " ";
+  }
+  #header .top-bar:after {
+    clear: both;
+  }
+  #header .top-bar:before,
+  #header .top-bar:after {
+    display: table;
+    content: " ";
+  }
+  #header .top-bar:after {
+    clear: both;
+  }
+  #header .top-bar .header-logo img {
+    margin-right: 0;
+  }
+  #header .top-bar nav {
+    float: none;
+    clear: both;
+    margin: 0;
+    padding-top: 10px;
+  }
+  #header .top-bar .user {
+    top: 0;
   }
 }
 .slider {
@@ -3318,13 +3350,22 @@ td {
 #footer .more .social-link {
   font-size: 20px;
 }
-#footer .more .col-md-8 {
+#footer .more .col-lg-8 {
   text-align: right;
 }
 @media (max-width: 992px) {
   #footer {
     z-index: 1;
     position: relative;
+    text-align: center;
+  }
+  #footer .links {
+    height: auto;
+  }
+  #footer .links nav {
+    float: none !important;
+  }
+  #footer .more .col-lg-8 {
     text-align: center;
   }
   #footer .footer-logo {

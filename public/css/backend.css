@@ -820,6 +820,9 @@
 html {
   font-size: 14px;
 }
+#sidebar > .border {
+  border: 0 !important;
+}
 .btn-default {
   color: #333;
   background-color: #fff;

@@ -1,3 +1,19 @@
+## Bad Hippo 0.17.1 / Contentify 3.3-dev - 2026-09-08
+
+- Bootstrap-4-Kandidatenkorrekturen: Phobos-Kopf und -Fuß überlappen mobil nicht
+  mehr, alte Uhr-Icons und aktive Theme-Tabs angepasst.
+- Nginx-Build übernimmt Public-Dateien mit PHP-Schreibrechten (STAGE-008).
+- Defekten PHP-LESS-Compiler durch Wikimedia/less.php 5.5.1 ersetzt; expliziter
+  Neubau berücksichtigt Imports und schreibt atomar (BUG-042).
+- Regressionstest kompiliert Backend und beide Themes mit der PHP-Laufzeit.
+
+## Bad Hippo 0.17.0 / Contentify 3.3-dev - 2026-09-08
+
+- Bootstrap 4.6.2 mit Popper-Bundle lokal eingebunden, alle vier CSS-Ziele gebaut.
+- Raster-Breakpoints, Formularlayout, Tabs, Pagination und Datumsauswähler
+  angepasst. Dokumentierte LESS- und Glyphicons-Adapter erhalten alte Themes.
+- Kandidat bestand 22 Tests mit 74 Assertions sowie beide Smoke-Skripte.
+
 ## Bad Hippo 0.16.0 / Contentify 3.3-dev - 2026-09-07
 
 - Gemischten Bootstrap-Bestand aus LESS 3.3.3 und externem JavaScript 3.3.1

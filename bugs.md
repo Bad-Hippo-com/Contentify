@@ -1,6 +1,6 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 07:13 CEST: Bootstrap-4-Kandidat **0.17.0** in Prüfung.
+Stand 2026-09-08 07:26 CEST: Bootstrap-4-Kandidat **0.17.1** in Prüfung.
 Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
 dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
 sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
@@ -11,6 +11,30 @@ Last updated: **2026-09-07 20:13 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-042 - PHP-LESS-Neubau scheitert unter PHP 8.5
+
+Behoben im Kandidaten 0.17.1: Der erzwungene Neubau meldete mit oyejorge/less.php
+`Trying to access array offset on null` in Parser.php:1927. Wikimedia/less.php
+5.5.1 ersetzt den aufgegebenen Compiler. Der explizite Neubau berücksichtigt nun
+auch importierte Dateien und Admin-LESS und ersetzt das Ergebnis atomar.
+
+### BUG-043 - Kalendertexte und optionale Editor-Plugins
+
+Offen, 2026-09-08 07:26 CEST: Kalendertexte erscheinen noch englisch. SunEditor
+meldet Warnungen zu nicht konfigurierten optionalen Plugins exportPDF, fileUpload,
+layout, template und math. Im Bootstrap-4-Test beobachtet; die verwendeten
+Editor-Funktionen funktionieren. Die Warnungen bleiben als eigener Folgepunkt
+erfasst und werden nicht als Bootstrap-Laufzeitfehler ausgegeben.
+
+### STAGE-008 - Theme-Wechsel kann root-eigene CSS-Dateien nicht ersetzen
+
+Behoben im Kandidaten 0.17.1: Beim Wechsel auf Phobos meldete Flysystem
+`Unable to write file at location: to://frontend.css.` Die Nginx-Buildstufe
+kopiert Public-Dateien nun mit UID/GID 33:33. Bestehende Kandidatendateien wurden
+korrigiert; anschließend bestand der echte Theme-Wechsel. Die ursprüngliche
+Exception liegt unter /var/log/contentify-bootstrap-candidate/application-2026-09-08.log.
+
 
 ### BUG-041 - Bootstrap 3 ist abgekündigt und hat keinen offiziellen Sicherheitspatch
 

@@ -77,19 +77,11 @@ class LessCompileCommand extends Command
         $sourceFileTitle = basename($sourceFilename, '.less');
         $target = public_path('css/'.$sourceFileTitle.'.css');
 
-        // Only compile the file if it has changed
-        if (! File::exists($target) or File::lastModified($sourceFilename) > File::lastModified($target)) {
-            $debug = Config::get('app.debug');
-
-            // Create a new instance for each file - or call the reset method
-            $parser = new Less_Parser(['compress' => ! $debug]);
-
-            $parser->parseFile($sourceFilename);
-
-            file_put_contents($target, $parser->getCss());
-
-            $this->info('CSS files has been compiled: ' . $sourceFilename . ' -> ' . $target . "\n");
-        }
+        // An explicit rebuild must also include changed imports and admin LESS.
+        $parser = new Less_Parser(['compress' => ! Config::get('app.debug')]);
+        $parser->parseFile($sourceFilename);
+        File::replace($target, $parser->getCss());
+        $this->info('CSS kompiliert: '.$sourceFilename.' -> '.$target);
     }
 
 }

@@ -721,11 +721,11 @@ html { font-size: 16px; }
 body { background-color: @darkest; font-family: @primary-font; color: @text-color; }
 th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !important }
 .table-hover > tbody > tr:hover { background-color: @dark; }
-.nav-tabs li.active a { border-left: @dark !important; border-top: @dark !important; border-right: @dark !important; background-color: @dark !important; color: @text-color !important }
+.nav-tabs a.active { border-color: @dark !important; background-color: @dark !important; color: @text-color !important }
 .nav-tabs a:hover { background-color: @dark !important }
 
 #header { 
-    position: absolute; z-index: 2; width: 100%; background-color: rgba(0, 0, 0, 0.5);
+    position: relative; z-index: 2; width: 100%; background-color: rgba(0, 0, 0, 0.5);
     .top-bar { 
         position: relative; height: 80px;
         .header-logo { 
@@ -743,7 +743,7 @@ th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !import
             position: absolute; right: 0; margin: 20px 0; height: 40px; line-height: 40px; font-size: 1rem;
             .image { display: inline-block; width: 40px; height: 40px; border-radius: 40px; border: 2px solid @primary-color; background-position: center; background-size: cover; vertical-align: middle; }
             .dropdown { display: inline-block; margin-left: 20px; }
-            .dropdown.open .btn { border-color: @primary-color; background-color: @primary-color  }
+            .dropdown.show .btn { border-color: @primary-color; background-color: @primary-color  }
         }
     }
 }
@@ -752,6 +752,13 @@ th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !import
 }
 @media (max-width: 990px) {
     #header nav { width: 100%; }
+    #header .top-bar {
+        height: auto;
+        .clearfix();
+        .header-logo img { margin-right: 0; }
+        nav { float: none; clear: both; margin: 0; padding-top: 10px; }
+        .user { top: 0; }
+    }
 }
 
 .slider {
@@ -853,7 +860,7 @@ th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !import
         .social-link {
             font-size: 20px;
         }
-        .col-md-8 { text-align: right; }
+        .col-lg-8 { text-align: right; }
     }
 }
 @media (max-width: @screen-md-min) {
@@ -861,6 +868,9 @@ th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !import
         z-index: 1;
         position: relative;
         text-align: center;
+        .links { height: auto; }
+        .links nav { float: none !important; }
+        .more .col-lg-8 { text-align: center; }
         .footer-logo { float: none !important; }
         .info { display: block; margin-right: 0 !important; clear: both; }
         .list-inline { padding-top: 20px; text-align: center; }

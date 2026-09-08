@@ -3,11 +3,20 @@
  * reset, modal, tooltip or Bootstrap-3 stylesheet is emitted).
  */
 @import (inline) '../../../public/vendor/bootstrap/bootstrap.min.css';
-@import (reference) 'bootstrap/bootstrap';
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins';
+@import (reference) 'bootstrap/type';
+@import (reference) 'bootstrap/forms';
+@import (reference) 'bootstrap/buttons';
+@import (reference) 'bootstrap/alerts';
+@import (reference) 'bootstrap/wells';
+@import (reference) 'bootstrap/labels';
+@import (reference) 'bootstrap/utilities';
 @import 'bootstrap/glyphicons';
 
 /* Temporary presentation adapters for Contentify and its legacy plugins. */
 html { font-size: 14px; }
+#sidebar > .border { border: 0 !important; }
 .btn-default { .btn-default(); }
 .btn-xs { .btn-xs(); }
 .well { .well(); }
