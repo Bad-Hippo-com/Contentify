@@ -2,7 +2,10 @@
 
 Reset bei bereits angemeldetem Benutzer: Sentinel logout mit frisch geladenem
 Benutzerobjekt bewahrte die aktuelle Persistenz. Explizites flush entfernt jetzt
-auch diese Anmeldung. Im erweiterten Ablauftest reproduziert, Neubau folgt.
+auch diese Anmeldung. Im erweiterten Ablauftest reproduziert und behoben.
+Abnahme 2026-09-08 11:00 CEST: sauberer Kandidat :8088, 45 Tests/308 Assertions
+und beide Smoke-Tests bestanden. Alle Dienste laufen. Arbeitszweig gepusht,
+main und Staging :80 unverändert; keine SMTP-/Public-Vollfreigabe.
 
 ## Bad Hippo 0.21.1 / Contentify 3.3-dev - 2026-09-08 10:56 CEST
 

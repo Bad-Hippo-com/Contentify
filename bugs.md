@@ -1,15 +1,21 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 10:53 CEST: **0.21.0 Passwortreset im Kandidatenneubau.**
+Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
+Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
+Assertions bestanden (45 Tests/308 Assertions), beide Smoke-Tests ebenfalls.
+Alle vier Dienste laufen; Protokolle inklusive Fehlversuchen zentral archiviert
+unter /var/log/contentify-bootstrap-candidate/deployment/contentify-021*-*.log.
 Geschützter POST setzt ein selbst gewähltes Passwort; GET zeigt nur das Formular.
 Token: SHA-256-Digest in der DB, 60 Minuten gültig, einmalig, neuer Antrag ersetzt
 alte Links. Benutzerzeilensperre serialisiert Antrag und Abschluss. Kein Passwort
 per E-Mail, Sitzungen werden widerrufen. Antwort nennt keine Kontoexistenz;
 fünf Anträge je IP/Stunde zusätzlich zum Captcha. Formular: 12–72 Zeichen.
-Zehn Controller-/DB-Tests mit 98 Assertions bestanden, inklusive Ablauf,
+Zehn Controller-/DB-Tests mit 103 Assertions bestanden, inklusive Ablauf,
 Wiederverwendung, Ersatzlink, Ratenlimit, GET-Unveränderlichkeit und echtem CSRF-419.
-Nginx-/FPM-Zugriffslogs und Laravel-Pfadkontext maskieren Reset-Pfade; Referrer-
-Policy und No-Store sind im Containerneubau noch live zu prüfen.
+Nginx-/FPM-Zugriffslogs maskieren Reset-Pfade (live bestätigt); Laravel-Pfadkontext
+ebenfalls maskiert. Referrer-Policy, No-Store und CSRF-419 live bestätigt.
+0.21.1 ergänzt die 72-Byte-Bcrypt-Grenze; 0.21.2 korrigiert den Widerruf der
+aktuellen Sentinel-Persistenz bei bereits angemeldeten Benutzern (Test bestanden).
 SMTP, Timing-Seitenkanäle, konkurrierende Lasttests und allgemeine Logredaktion
 sind nicht vollständig abgenommen. Vorhandene Reset-Links werden ungültig.
 GitHub-Arbeitszweig bleibt bad-hippo/stabilisierung-sicherheit; main und :80 unverändert.
@@ -63,12 +69,17 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
-### SEC-009 - Passwortreset verschickt ein neues Passwort (hoch, in Kandidatenabnahme)
+### SEC-009 - Passwortreset verschickt ein neues Passwort (hoch, korrigiert in 0.21.2)
 
-2026-09-08 10:53 CEST: In 0.21.0 durch eigenen Passwortdialog ersetzt, POST mit
+2026-09-08 10:58 CEST: In 0.21.0 durch eigenen Passwortdialog ersetzt, POST mit
 CSRF, gehashte einmalige Tokens, 60 Minuten, Sperre pro Benutzer für Abschluss.
 Reset-Ablauf samt Negativtests bestanden. Alte Links passen nicht mehr zum Hash-
 Verfahren. SMTP und vollständige Log-/Timingprüfung bleiben separat offen.
+0.21.2: Regression fand eine erhaltene Sentinel-Persistenz bei angemeldetem
+Reset. Explizites Repository-flush ersetzt den ungeeigneten logout-Aufruf;
+Test bestätigt null alte Persistenzen und erfolgreiche neue Anmeldung.
+Nginx/PHP-Zugriffspfade sind live maskiert. Nginx-Fehlertexte, SMTP-Protokolle
+und fremde Logquellen sind damit nicht pauschal bereinigt; keine Vollfreigabe.
 
 2026-09-08 10:32 CEST: Reale Reset-Controller erzeugen nach Linkaufruf per GET
 ein Passwort und verschicken es im Klartext per E-Mail. Token-Wiederverwendung
