@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+  <testsuites><testsuite name="Installed workflows"><directory suffix="Test.php">tests/Workflows</directory></testsuite></testsuites>
+  <php>
+    <server name="APP_ENV" value="testing" force="true"/>
+    <server name="CACHE_DRIVER" value="array" force="true"/>
+    <server name="SESSION_DRIVER" value="array" force="true"/>
+    <server name="MAIL_MAILER" value="array" force="true"/>
+    <server name="MAIL_DRIVER" value="array" force="true"/>
+  </php>
+</phpunit>

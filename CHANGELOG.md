@@ -1,3 +1,10 @@
+## Bad Hippo 0.20.0 / Contentify 3.3-dev - 2026-09-08
+
+Frontend-Inventar, Entfernung ungenutzter Browser-LESS-/Kalenderdateien und
+Glyphicons-Imports. Kalenderdefaults verwenden das aktive Font-Awesome-System.
+Separate echte Controller-/DB-Ablauftests mit Rollback und abgefangener E-Mail.
+Kandidatenabnahme offen; Designmodernisierung separat vorgemerkt.
+
 ## Bad Hippo 0.19.5 / Contentify 3.3-dev - 2026-09-08
 
 Nicht unterstützte tooltips-Option des alten Kalenderplugins entfernt. Die

@@ -5,7 +5,6 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = path.join(root, 'node_modules/bootstrap');
 const target = path.join(root, 'public/vendor/bootstrap');
-const less = require('less');
 for (const [from, to] of [
     ['jquery/dist/jquery.min.js', 'jquery/jquery.min.js'],
     ['jquery/LICENSE.txt', 'jquery/LICENSE.txt'],
@@ -24,9 +23,4 @@ for (const [from, to] of [
 ]) {
     fs.copyFileSync(path.join(source, from), path.join(target, to));
 }
-const glyphicons = path.join(root, 'resources/assets/less/glyphicons.less');
-less.render(fs.readFileSync(glyphicons, 'utf8'), {filename: glyphicons, rewriteUrls: 'off'})
-    .then(({css}) => {
-        fs.writeFileSync(path.join(root, 'public/css/glyphicons.css'), css);
-        console.log('Bootstrap 5.3.8, Popper-Bundle und unabhängige Glyphicons bereitgestellt.');
-    }).catch(error => { console.error(error); process.exitCode = 1; });
+console.log('Bootstrap 5.3.8, Popper, jQuery und Moment reproduzierbar bereitgestellt.');

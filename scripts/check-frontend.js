@@ -9,7 +9,6 @@ const packageJson = require(path.join(root, 'package.json'));
 const lock = require(path.join(root, 'package-lock.json'));
 const backendCss = fs.readFileSync(path.join(root, 'public', 'css', 'backend.css'), 'utf8');
 const frontendCss = fs.readFileSync(path.join(root, 'public', 'css', 'frontend.css'), 'utf8');
-const glyphiconsCss = fs.readFileSync(path.join(root, 'public/css/glyphicons.css'), 'utf8');
 const bootstrapJs = fs.readFileSync(path.join(root, 'public', 'vendor', 'bootstrap', 'bootstrap.min.js'), 'utf8');
 const layouts = [
     path.join(root, 'resources', 'views', 'backend', 'layout_main.blade.php'),
@@ -50,6 +49,7 @@ assert.doesNotMatch(bootstrapJs, /Bootstrap v3\./);
 assert.doesNotMatch(backendCss, /\.modal\.in\b/);
 assert.doesNotMatch(frontendCss, /\.modal\.in\b/);
 for (const layout of layouts) {
+    assert.doesNotMatch(layout, /glyphicons\.css|vendor\/less\/|vendor\/datetime\//);
     assert.match(layout, /vendor\/bootstrap\/bootstrap\.min\.js/);
     assert.doesNotMatch(layout, /maxcdn\.bootstrapcdn\.com\/bootstrap/);
 }
@@ -67,7 +67,6 @@ assert.deepEqual(
 );
 assert.match(backendCss, /\.contentify-editor-toolbar/);
 assert.match(backendCss, /\.sun-editor/);
-assert.match(glyphiconsCss, /url\(['"]?\.\/fonts\/glyphicons-halflings-regular\.woff2/);
 assert.doesNotMatch(backendCss + frontendCss, /url\([^)]*glyphicons-halflings/);
 assert.match(backendCss, /@import url\(['"]https:\/\/fonts\.googleapis\.com\/css\?family=Open\+Sans:400,700['"]\)/);
 

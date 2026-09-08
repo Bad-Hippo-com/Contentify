@@ -1,6 +1,10 @@
 # Contentify porting plan
 
-Stand 2026-09-08 09:52 CEST: **0.19.5 im Kandidaten auf :8088; Staging :80 bleibt 0.18.3.**
+Stand 2026-09-08: **0.20.0 vorbereitet; Kandidat noch 0.19.5, Staging :80 bleibt 0.18.3.**
+Frontend-Inventar in FRONTEND_DEPENDENCIES.md; unbenutztes Browser-LESS und
+zweiten Kalender entfernt, Glyphicons aus aktiven Layouts abgelöst. Build bestanden.
+Neue transaktionale Ablaufsuite mit echter Kandidaten-DB und abgefangener Mail
+vorbereitet; noch nicht ausgeführt. Kein vollständiger Kalender-/LESS-Ersatz.
 GitHub: Arbeitszweig bad-hippo/stabilisierung-sicherheit, noch nicht main.
 Browser: Seiteneditor und beide News-Editoren sichtbar, Texteingabe und deutscher
 Kalender funktionieren ohne neue JavaScriptfehler; Downloads-Editor ebenfalls.
