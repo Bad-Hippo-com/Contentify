@@ -1,3 +1,9 @@
+## Bad Hippo 0.21.2 / Contentify 3.3-dev - 2026-09-08 10:58 CEST
+
+Reset bei bereits angemeldetem Benutzer: Sentinel logout mit frisch geladenem
+Benutzerobjekt bewahrte die aktuelle Persistenz. Explizites flush entfernt jetzt
+auch diese Anmeldung. Im erweiterten Ablauftest reproduziert, Neubau folgt.
+
 ## Bad Hippo 0.21.1 / Contentify 3.3-dev - 2026-09-08 10:56 CEST
 
 Bcrypt-Grenze zusätzlich in Bytes prüfen: mehrbyteige Passwörter werden nicht

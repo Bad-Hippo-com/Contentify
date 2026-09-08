@@ -87,7 +87,10 @@ class RestorePasswordController extends FrontController
                 return false;
             }
             DB::table('reminders')->where('user_id', $user->id)->delete();
-            Sentinel::logout($user, true);
+            // logout($user, true) can preserve the current persistence when
+            // $user is a freshly loaded instance instead of Sentinel's instance.
+            Sentinel::getPersistenceRepository()->flush($user);
+            Sentinel::logout();
             return true;
         });
         if (! $completed) {
