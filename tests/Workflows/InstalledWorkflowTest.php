@@ -152,4 +152,80 @@ class InstalledWorkflowTest extends TestCase
         $this->assertSame($newHash, $user->fresh()->password);
         $this->assertCount(2, $transport->messages());
     }
+
+    public function testForumThreadReplyEditAndDelete(): void
+    {
+        $owner = $this->fixture('Forum', true);
+        $this->loginAs($owner);
+        $forum = new \App\Modules\Forums\Forum(['title' => $this->prefix, 'description' => 'Testforum', 'internal' => false]);
+        $forum->creator_id = $owner->id;
+        $forum->forceSave();
+        $this->post('/forums/threads/'.$forum->id, ['title' => $this->prefix, 'text' => 'Erster Testbeitrag'])->assertRedirect();
+        $thread = \App\Modules\Forums\ForumThread::whereTitle($this->prefix)->firstOrFail();
+        $this->assertSame(1, \App\Modules\Forums\ForumPost::whereThreadId($thread->id)->count());
+        $this->post('/forums/posts/'.$thread->id, ['text' => 'Eine Testantwort'])->assertRedirect();
+        $reply = \App\Modules\Forums\ForumPost::whereThreadId($thread->id)->where('root', false)->firstOrFail();
+        $this->put('/forums/posts/'.$reply->id, ['text' => 'Geänderte Testantwort'])->assertRedirect();
+        $this->assertSame('Geänderte Testantwort', $reply->fresh()->text);
+        $this->post('/forums/posts/delete/'.$reply->id)->assertRedirect();
+        $this->assertNull(\App\Modules\Forums\ForumPost::find($reply->id));
+        $this->post('/forums/threads/delete/'.$thread->id)->assertRedirect();
+        $this->assertNull(\App\Modules\Forums\ForumThread::find($thread->id));
+    }
+
+    public function testCupJoinCheckInSeedAndPlayToWinner(): void
+    {
+        $admin = $this->fixture('Cup', true);
+        $cup = new \App\Modules\Cups\Cup([
+            'title' => $this->prefix, 'game_id' => \App\Modules\Games\Game::firstOrFail()->id,
+            'players_per_team' => 1, 'slots' => 4, 'published' => true, 'closed' => false,
+        ]);
+        $cup->creator_id = $admin->id;
+        $cup->join_at = now()->subHour();
+        $cup->check_in_at = now()->addHour();
+        $cup->start_at = now()->addHours(2);
+        $cup->forceSave();
+        $players = [];
+        for ($i = 0; $i < 4; $i++) {
+            $player = $this->fixture('P'.$i);
+            $players[] = $player;
+            $this->loginAs($player);
+            $this->post('/cups/join/'.$cup->id.'/'.$player->id)->assertRedirect();
+        }
+        $this->assertSame(4, $cup->participants()->count());
+        $cup->check_in_at = now()->subMinute();
+        $cup->forceSave();
+        foreach ($players as $player) {
+            $this->loginAs($player);
+            $this->post('/cups/check-in/'.$cup->id)->assertRedirect();
+        }
+        $this->assertEquals(4, DB::table('cups_participants')->where('cup_id', $cup->id)->where('checked_in', 1)->count());
+        $this->loginAs($admin);
+        $this->post('/admin/cups/seed/'.$cup->id)->assertRedirect();
+        $matches = \App\Modules\Cups\CupMatch::whereCupId($cup->id)->whereRound(1)->get();
+        $this->assertCount(2, $matches);
+        foreach ($matches as $match) {
+            $this->post('/cups/matches/confirm-left/'.$match->id, ['left_score' => 2, 'right_score' => 0])->assertRedirect();
+            $this->post('/cups/matches/confirm-right/'.$match->id, ['left_score' => 2, 'right_score' => 0])->assertRedirect();
+        }
+        $final = \App\Modules\Cups\CupMatch::whereCupId($cup->id)->whereRound(2)->firstOrFail();
+        foreach ($matches as $match) $this->assertEquals($final->id, $match->fresh()->next_match_id);
+        $this->post('/cups/matches/confirm-left/'.$final->id, ['left_score' => 2, 'right_score' => 0])->assertRedirect();
+        $this->post('/cups/matches/confirm-right/'.$final->id, ['left_score' => 2, 'right_score' => 0])->assertRedirect();
+        $this->assertEquals($final->left_participant_id, $final->fresh()->winner_id);
+        $this->assertTrue((bool) $cup->fresh()->closed);
+    }
+
+    public function testInvalidUploadKeepsExistingDatabaseRow(): void
+    {
+        $owner = $this->fixture('Upload', true);
+        $download = new \App\Modules\Downloads\Download(['title' => $this->prefix, 'download_cat_id' => 1]);
+        $download->creator_id = $owner->id;
+        $download->forceSave();
+        $file = \Illuminate\Http\UploadedFile::fake()->create('rejected.php', 1, 'text/plain');
+        \Illuminate\Support\Facades\Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], ['file' => $file]));
+        $errors = (new \Contentify\Uploader)->uploadModelFiles($download, false);
+        $this->assertNotEmpty($errors);
+        $this->assertNotNull(\App\Modules\Downloads\Download::find($download->id), 'Abgelehnter Upload darf vorhandenen Datensatz nicht löschen.');
+    }
 }
