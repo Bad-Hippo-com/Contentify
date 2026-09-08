@@ -470,7 +470,7 @@ class Cup extends BaseModel
 
         CupMatch::insert($matches);
         
-        event(self::EVENT_NAME_CUP_SEEDED, [$cup]);
+        event(self::EVENT_NAME_CUP_SEEDED, [$this]);
     }
     
     /**
@@ -484,7 +484,7 @@ class Cup extends BaseModel
             'participant_id' => $participantId,
         ]);
         
-        event(self::EVENT_NAME_PARTICIPANT_ADDED, [$cup, $participantId]);
+        event(self::EVENT_NAME_PARTICIPANT_ADDED, [$this, $participantId]);
     }
     
     /**
@@ -493,8 +493,8 @@ class Cup extends BaseModel
      */
     public function removeParticipantByid(int $participantId)
     {
-        DB::table('cups_participants')->whereCupId($cup->id)->whereParticipantId($participantId)->delete();
+        DB::table('cups_participants')->whereCupId($this->id)->whereParticipantId($participantId)->delete();
         
-        event(self::EVENT_NAME_PARTICIPANT_REMOVED, [$cup, $participantId]);
+        event(self::EVENT_NAME_PARTICIPANT_REMOVED, [$this, $participantId]);
     }        
 }

@@ -270,7 +270,7 @@ class CupMatch extends BaseModel
         $this->save();
 
         $partnerMatch->next_match_id = $newMatch->id;
-        $this->save();
+        $partnerMatch->save();
         
         event(self::EVENT_NAME_MATCH_GENERATED, [$newMatch]);
 

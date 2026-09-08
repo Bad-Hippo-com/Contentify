@@ -238,10 +238,12 @@ class InstalledWorkflowTest extends TestCase
         $admin = $this->fixture('Match', true);
         $this->loginAs($admin);
         $game = \App\Modules\Games\Game::firstOrFail();
+        $opponent = new \App\Modules\Opponents\Opponent(['title' => $this->prefix, 'short' => 'FLOW', 'lineup' => '']);
+        $opponent->forceSave();
         $map = new \App\Modules\Maps\Map(['title' => $this->prefix, 'game_id' => $game->id]);
         $map->forceSave();
         $match = new \App\Modules\Matches\GameMatch([
-            'game_id' => $game->id, 'state' => 0, 'featured' => false,
+            'game_id' => $game->id, 'right_team_id' => $opponent->id, 'state' => 0, 'featured' => false,
             'played_at' => now(), 'text' => 'Testmatch', 'left_lineup' => '', 'right_lineup' => '',
         ]);
         $match->creator_id = $admin->id;
