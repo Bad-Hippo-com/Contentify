@@ -33,7 +33,7 @@ class InstalledWorkflowTest extends TestCase
         parent::setUp();
         config(['mail.default' => 'array', 'cache.default' => 'array', 'session.driver' => 'array']);
         DB::beginTransaction();
-        $this->prefix = 'Flow'.bin2hex(random_bytes(5));
+        $this->prefix = 'Flow'.bin2hex(random_bytes(3));
         Sentinel::logout();
     }
 
@@ -63,6 +63,14 @@ class InstalledWorkflowTest extends TestCase
     {
         Sentinel::logout();
         Sentinel::login($user, false);
+    }
+
+    public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
+    {
+        // PHP-FPM creates fresh controllers per request. Reproduce that boundary
+        // without throwing away our transaction or mail/session test transports.
+        foreach (app('router')->getRoutes() as $route) $route->flushController();
+        return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
     }
 
     public function testRegistrationLoginAndBackendDenial(): void
