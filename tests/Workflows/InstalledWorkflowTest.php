@@ -180,6 +180,7 @@ class InstalledWorkflowTest extends TestCase
         $cup = new \App\Modules\Cups\Cup([
             'title' => $this->prefix, 'game_id' => \App\Modules\Games\Game::firstOrFail()->id,
             'players_per_team' => 1, 'slots' => 4, 'published' => true, 'closed' => false,
+            'prize' => 'Testpreis', 'description' => 'Testcup', 'rulebook' => 'Testregeln',
         ]);
         $cup->creator_id = $admin->id;
         $cup->slug = strtolower($this->prefix);
@@ -230,5 +231,28 @@ class InstalledWorkflowTest extends TestCase
         $errors = (new \Contentify\Uploader)->uploadModelFiles($download, false);
         $this->assertNotEmpty($errors);
         $this->assertNotNull(\App\Modules\Downloads\Download::find($download->id), 'Abgelehnter Upload darf vorhandenen Datensatz nicht löschen.');
+    }
+
+    public function testMatchScoreCreateUpdateAndDelete(): void
+    {
+        $admin = $this->fixture('Match', true);
+        $this->loginAs($admin);
+        $game = \App\Modules\Games\Game::firstOrFail();
+        $map = new \App\Modules\Maps\Map(['title' => $this->prefix, 'game_id' => $game->id]);
+        $map->forceSave();
+        $match = new \App\Modules\Matches\GameMatch([
+            'game_id' => $game->id, 'state' => 0, 'featured' => false,
+            'played_at' => now(), 'text' => 'Testmatch', 'left_lineup' => '', 'right_lineup' => '',
+        ]);
+        $match->creator_id = $admin->id;
+        $match->forceSave();
+        $this->post('/admin/matches/scores/store', ['match_id' => $match->id, 'map_id' => $map->id,
+            'left_score' => 2, 'right_score' => 1])->assertOk();
+        $score = \App\Modules\Matches\MatchScore::whereMatchId($match->id)->firstOrFail();
+        $this->assertEquals(2, $match->fresh()->left_score);
+        $this->put('/admin/matches/scores/'.$score->id, ['left_score' => 3, 'right_score' => 1])->assertOk();
+        $this->assertEquals(3, $match->fresh()->left_score);
+        $this->delete('/admin/matches/scores/'.$score->id)->assertOk();
+        $this->assertEquals(0, $match->fresh()->left_score);
     }
 }

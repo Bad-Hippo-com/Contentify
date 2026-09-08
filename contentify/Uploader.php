@@ -70,7 +70,11 @@ class Uploader
                     }
 
                     if ($error !== false) {
-                        $model->delete(); // Delete the invalid model
+                        // Only a newly created invalid record may be discarded.
+                        // A rejected replacement must never delete existing content.
+                        if ($modelIsNew) {
+                            $model->delete();
+                        }
                         return [$error];
                     }
 
