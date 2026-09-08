@@ -18,8 +18,13 @@ trait DateAccessorTrait
         return new Carbon;
     }
 
-    public function fromDateTime($value) : string
+    public function fromDateTime($value) : ?string
     {
+        // Eloquent also compares nullable original timestamps when detecting
+        // dirty attributes. Missing timestamps are not formatted date strings.
+        if ($value === null || $value === '') {
+            return $value;
+        }
         $format = $this->getDateFormat(); // This is an Eloquent method
 
         if ($value instanceof DateTime) {

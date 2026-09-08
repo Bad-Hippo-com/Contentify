@@ -239,6 +239,7 @@ class InstalledWorkflowTest extends TestCase
         $this->loginAs($admin);
         $game = \App\Modules\Games\Game::firstOrFail();
         $opponent = new \App\Modules\Opponents\Opponent(['title' => $this->prefix, 'short' => 'FLOW', 'lineup' => '']);
+        $opponent->slug = strtolower($this->prefix);
         $opponent->forceSave();
         $map = new \App\Modules\Maps\Map(['title' => $this->prefix, 'game_id' => $game->id]);
         $map->forceSave();

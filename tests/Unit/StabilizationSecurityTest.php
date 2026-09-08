@@ -13,6 +13,12 @@ use Tests\TestCase;
 
 class StabilizationSecurityTest extends TestCase
 {
+    public function testNullableOriginalDatesRemainNullable(): void
+    {
+        $match = new \App\Modules\Cups\CupMatch;
+        $this->assertNull($match->fromDateTime(null));
+        $this->assertSame('', $match->fromDateTime(''));
+    }
     public function testLocalAssetsAreVersionedWithoutChangingExternalUrls(): void
     {
         $builder = app('html');
