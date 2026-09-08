@@ -2,7 +2,8 @@
 
 Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
-Node-Build und Rahmen-Regressionsprüfung bestanden. Staging-Rollout folgt.
+Node-Build, Rahmen-Regressionsprüfung und PHP-LESS-Neubau bestanden.
+Auf Staging installiert und visuell geprüft: Zell- und Zeilenrahmen 0px.
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -13,8 +14,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Version: **0.18.2 / Contentify 3.3-dev**
-Last updated: **2026-09-08 08:50 CEST**
+Version: **0.18.3 / Contentify 3.3-dev**
+Last updated: **2026-09-08 08:56 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an

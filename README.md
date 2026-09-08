@@ -2,7 +2,8 @@
 
 Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
-Node-Build und Rahmen-Regressionsprüfung bestanden. Staging-Rollout folgt.
+Node-Build, Rahmen-Regressionsprüfung und PHP-LESS-Neubau bestanden.
+Auf Staging installiert und visuell geprüft: Zell- und Zeilenrahmen 0px.
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -27,7 +28,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.18.2 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.18.3 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -100,8 +101,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.18.2**
-Last updated: **2026-09-08 08:50 CEST**
+Local workstream version: **0.18.3**
+Last updated: **2026-09-08 08:56 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
