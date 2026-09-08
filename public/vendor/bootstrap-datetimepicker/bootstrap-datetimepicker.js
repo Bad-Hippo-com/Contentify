@@ -274,7 +274,7 @@
                     content.append(toolbar);
                 }
                 if (hasDate()) {
-                    content.append($('<li>').addClass((options.collapse && hasTime() ? 'collapse in' : '')).append(dateView));
+                    content.append($('<li>').addClass((options.collapse && hasTime() ? 'collapse show' : '')).append(dateView));
                 }
                 if (options.toolbarPlacement === 'default') {
                     content.append(toolbar);
@@ -695,8 +695,8 @@
                 }
                 // Ignore event if in the middle of a picker transition
                 widget.find('.collapse').each(function () {
-                    var collapseData = $(this).data('collapse');
-                    if (collapseData && collapseData.transitioning) {
+                    var collapseData = $(this).data('bs.collapse');
+                    if (collapseData && collapseData._isTransitioning) {
                         transitioning = true;
                         return false;
                     }
@@ -810,13 +810,13 @@
                 togglePicker: function (e) {
                     var $this = $(e.target),
                         $parent = $this.closest('ul'),
-                        expanded = $parent.find('.in'),
-                        closed = $parent.find('.collapse:not(.in)'),
+                        expanded = $parent.find('.collapse.show'),
+                        closed = $parent.find('.collapse:not(.show)'),
                         collapseData;
 
                     if (expanded && expanded.length) {
-                        collapseData = expanded.data('collapse');
-                        if (collapseData && collapseData.transitioning) {
+                        collapseData = expanded.data('bs.collapse');
+                        if (collapseData && collapseData._isTransitioning) {
                             return;
                         }
                         expanded.collapse('hide');

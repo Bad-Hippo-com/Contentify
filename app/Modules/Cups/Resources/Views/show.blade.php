@@ -2,13 +2,13 @@
 
 <div class="content">
     <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" class="active"><a href="#home" data-toggle="tab">{!! trans('app.home') !!}</a></li>
-        <li role="presentation"><a href="#participants" data-toggle="tab">{{ trans_object('participants') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab">{!! trans('app.home') !!}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#participants" data-toggle="tab">{{ trans_object('participants') }}</a></li>
         @if ($cup->start_at->timestamp < time() + (user() and user()->isSuperAdmin() ? 0 : 120))
-            <li role="presentation"><a href="#matches" data-toggle="tab">{{ trans('app.object_matches') }}</a></li>
-            <li role="presentation"><a href="#bracket" data-toggle="tab">{{ trans('cups::bracket') }}</a></li>
+            <li role="presentation" class="nav-item"><a class="nav-link" href="#matches" data-toggle="tab">{{ trans('app.object_matches') }}</a></li>
+            <li role="presentation" class="nav-item"><a class="nav-link" href="#bracket" data-toggle="tab">{{ trans('cups::bracket') }}</a></li>
         @endif
-        <li role="presentation"><a href="#rules" data-toggle="tab">{!! trans('app.rules') !!}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#rules" data-toggle="tab">{!! trans('app.rules') !!}</a></li>
     </ul>
 
     <div class="tab-content">

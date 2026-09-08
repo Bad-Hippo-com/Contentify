@@ -1,5 +1,11 @@
 # Contentify porting plan
 
+Stand 2026-09-08 07:13 CEST: Bootstrap-4-Kandidat **0.17.0** in Prüfung.
+Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
+dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
+sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
+Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+
 Local workstream version: **0.16.0**
 Last updated: **2026-09-07 20:13 CEST**
 

@@ -323,10 +323,10 @@ class FormBuilder extends OriginalFormBuilder
         $partial = '<div class="form-group '.$class.'">';
 
         if ($title) {
-            $partial .= self::label($name, $title, ['class' => 'col-sm-'.$this->labelGridCols.' control-label']);
+            $partial .= self::label($name, $title, ['class' => 'col-md-'.$this->labelGridCols.' control-label']);
         }
 
-        return $partial.'<div class="col-sm-'.$this->controlGridCols.'">';
+        return $partial.'<div class="col-md-'.$this->controlGridCols.'">';
     }
 
     /**
@@ -790,8 +790,8 @@ class FormBuilder extends OriginalFormBuilder
         }
 
         $partial = '<div class="form-group">'
-            .'<label for="'.$name.'" class="col-sm-'.$this->labelGridCols.' control-label">'.$title.'</label>'
-            .'<div class="col-sm-'.$this->controlGridCols.' ">'
+            .'<label for="'.$name.'" class="col-md-'.$this->labelGridCols.' control-label">'.$title.'</label>'
+            .'<div class="col-md-'.$this->controlGridCols.' ">'
             .'<div class="input-group date-time-picker">'
             .self::text($name, $value, ['class' => 'form-control', 'data-format' => trans('app.date_format_alt').$time])
             .'<span class="input-group-addon">'.HTML::fontIcon('calendar').'</span>'
@@ -857,8 +857,8 @@ class FormBuilder extends OriginalFormBuilder
     public function helpBlock(string $text) : string
     {
         $partial = '<div class="form-group">'
-            .'<div class="col-sm-'.$this->labelGridCols.' "></div>'
-            .'<div class="col-sm-'.$this->controlGridCols.' ">'
+            .'<div class="col-md-'.$this->labelGridCols.' "></div>'
+            .'<div class="col-md-'.$this->controlGridCols.' ">'
             .'<span class="help-block">'.$text.'</span>'
             .'</div></div>';
 

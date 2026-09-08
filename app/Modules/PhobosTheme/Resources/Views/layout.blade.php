@@ -112,7 +112,7 @@
 
     <div class="container">
         <div id="mid-container" class="row">
-            <div id="content" class="col-md-8">
+            <div id="content" class="col-lg-8">
                 @if (Session::get('_alert'))
                     @include('alert', ['type' => 'info', 'title' => Session::get('_alert')])
                 @endif
@@ -127,7 +127,7 @@
                 </section>
             </div>
 
-            <aside id="sidebar" class="col-md-4">
+            <aside id="sidebar" class="col-lg-4">
                 <div class="border">
                     <h3>
                         {{ trans('app.latest') }} {{ trans('app.object_matches') }}
@@ -160,13 +160,13 @@
     <footer id="footer">
         <div class="links container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <a class="footer-logo" href="{!! route('home') !!}">
                         {!! HTML::image(asset('img/header_logo.png')) !!}
                     </a>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <nav class="pull-right">
                         <ul class="list-inline">
                             <li>{!! link_to('search', trans('app.object_search')) !!}</li>
@@ -183,11 +183,11 @@
 
         <div class="more container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <span class="info">{{ date('Y') }} by <a class="home-link" href="{!! route('home') !!}">{!! Config::get('app.name') !!}</a></span>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <ul class="list-inline">
                         @include('social_links', ['wrapperTag' => 'li'])
                         <li>&nbsp;</li>

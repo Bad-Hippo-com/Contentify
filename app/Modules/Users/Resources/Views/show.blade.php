@@ -1,7 +1,7 @@
 <h1 class="page-title">{{ $user->username }}</h1>
 
 <div class="profile-basics row">
-    <div class="col-md-8">
+    <div class="col-lg-8">
         <table class="table horizontal">
             <tbody>
             @section('users-profile-overview')
@@ -64,7 +64,7 @@
             </tbody>
         </table>
     </div>
-    <div class="details col-md-4">
+    <div class="details col-lg-4">
     @section('users-profile-image-and-actions')
         @if ($user->image)
             <img src="{!! $user->uploadPath().$user->image !!}" alt="{{ $user->username }}">
@@ -84,7 +84,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="profile-socials">
             <table class="table horizontal">
                 <tbody>
@@ -161,7 +161,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="profile-pc">
             <table class="table horizontal">
                 <tbody>

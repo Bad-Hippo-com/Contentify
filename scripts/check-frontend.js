@@ -25,41 +25,31 @@ function filesBelow(directory) {
 
 assert.equal(Number(process.versions.node.split('.')[0]), 24, 'Node.js 24 ist erforderlich.');
 assert.equal(packageJson.devDependencies.less, '4.9.1');
-assert.equal(packageJson.dependencies.bootstrap, '3.4.1');
+assert.equal(packageJson.dependencies.bootstrap, '4.6.2');
 assert.equal(packageJson.devDependencies.grunt, undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-less'], undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-watch'], undefined);
 assert.equal(packageJson.devDependencies['jit-grunt'], undefined);
 assert.equal(lock.packages['node_modules/less'].version, '4.9.1');
-assert.equal(lock.packages['node_modules/bootstrap'].version, '3.4.1');
+assert.equal(lock.packages['node_modules/bootstrap'].version, '4.6.2');
 assert.equal(fs.readFileSync(path.join(root, 'resources', 'assets', 'less', 'bootstrap', 'version.txt'), 'utf8').trim(), '3.4.1');
-assert.match(bootstrapJs, /Bootstrap v3\.4\.1/);
-assert.match(backendCss, /Bootstrap v3\.4\.1/);
-assert.match(frontendCss, /Bootstrap v3\.4\.1/);
+assert.match(bootstrapJs, /Bootstrap v4\.6\.2/);
+assert.match(backendCss, /Bootstrap v4\.6\.2/);
+assert.match(frontendCss, /Bootstrap v4\.6\.2/);
+assert.doesNotMatch(bootstrapJs, /Bootstrap v3\./);
+assert.doesNotMatch(backendCss, /\.modal\.in\b/);
+assert.doesNotMatch(frontendCss, /\.modal\.in\b/);
 for (const layout of layouts) {
     assert.match(layout, /vendor\/bootstrap\/bootstrap\.min\.js/);
     assert.doesNotMatch(layout, /maxcdn\.bootstrapcdn\.com\/bootstrap/);
 }
-for (const source of filesBelow(path.join(root, 'node_modules', 'bootstrap', 'less'))) {
-    const relative = path.relative(path.join(root, 'node_modules', 'bootstrap', 'less'), source);
-    assert.deepEqual(
-        fs.readFileSync(path.join(root, 'resources', 'assets', 'less', 'bootstrap', relative)),
-        fs.readFileSync(source),
-        `Bootstrap-LESS weicht vom festgeschriebenen npm-Paket ab: ${relative}`,
-    );
-}
-for (const font of fs.readdirSync(path.join(root, 'node_modules', 'bootstrap', 'fonts'))) {
-    const published = fs.readFileSync(path.join(root, 'public', 'css', 'fonts', font));
-    const source = fs.readFileSync(path.join(root, 'node_modules', 'bootstrap', 'fonts', font));
-    if (font.endsWith('.svg')) {
-        assert.equal(published.toString().trim(), source.toString().trim());
-    } else {
-        assert.deepEqual(published, source, `Bootstrap-Schriftdatei weicht vom festgeschriebenen npm-Paket ab: ${font}`);
-    }
-}
+assert.deepEqual(
+    fs.readFileSync(path.join(root, 'public/vendor/bootstrap/bootstrap.min.css')),
+    fs.readFileSync(path.join(root, 'node_modules/bootstrap/dist/css/bootstrap.min.css')),
+);
 assert.deepEqual(
     fs.readFileSync(path.join(root, 'public', 'vendor', 'bootstrap', 'bootstrap.min.js')),
-    fs.readFileSync(path.join(root, 'node_modules', 'bootstrap', 'dist', 'js', 'bootstrap.min.js')),
+    fs.readFileSync(path.join(root, 'node_modules', 'bootstrap', 'dist', 'js', 'bootstrap.bundle.min.js')),
 );
 assert.deepEqual(
     fs.readFileSync(path.join(root, 'public', 'vendor', 'bootstrap', 'LICENSE')),
@@ -71,4 +61,4 @@ assert.match(backendCss, /url\(['"]?\.\/fonts\/glyphicons-halflings-regular\.wof
 assert.doesNotMatch(backendCss, /url\(['"]?\.\.\/fonts\/glyphicons-halflings/);
 assert.match(backendCss, /@import url\(['"]https:\/\/fonts\.googleapis\.com\/css\?family=Open\+Sans:400,700['"]\)/);
 
-console.log('OK: Node-24-, LESS-, Bootstrap-3.4.1- und Editor-Asset-Verträge sind erfüllt.');
+console.log('OK: Node-24-, LESS-, Bootstrap-4.6.2- und Editor-Asset-Verträge sind erfüllt.');

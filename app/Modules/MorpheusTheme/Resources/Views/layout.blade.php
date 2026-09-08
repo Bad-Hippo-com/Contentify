@@ -78,7 +78,7 @@
     <div class="divider"></div>
     <div class="container">
         <div id="mid-container" class="row">
-            <div id="content" class="col-md-8">
+            <div id="content" class="col-lg-8">
                 @if (Session::get('_alert'))
                     @include('alert', ['type' => 'info', 'title' => Session::get('_alert')])
                 @endif
@@ -93,7 +93,7 @@
                 </section>
             </div>
 
-            <aside id="sidebar" class="col-md-4">
+            <aside id="sidebar" class="col-lg-4">
                 <div class="border">
                     <h3>
                         {{ trans('app.object_partners') }}
