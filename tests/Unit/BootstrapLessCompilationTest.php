@@ -19,7 +19,7 @@ class BootstrapLessCompilationTest extends TestCase
             $parser->parseFile($root.'/'.$source);
             $css = $parser->getCss();
             $this->assertStringContainsString('Bootstrap v4.6.2', $css, $source);
-            $this->assertStringContainsString('glyphicons-halflings-regular.woff2', $css, $source);
+            $this->assertStringNotContainsString('glyphicons-halflings-regular.woff2', $css, $source);
             $this->assertStringNotContainsString('.modal.in', $css, $source);
         }
     }

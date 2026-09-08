@@ -23,6 +23,7 @@
     <link rel="shortcut icon" type="picture/x-icon" href="{!! asset('img/default/favicon.png') !!}">
 
     {!! HTML::style('vendor/font-awesome/css/all.min.css') !!}
+    {!! HTML::style('css/glyphicons.css') !!}
     {!! HTML::style('css/backend.css') !!}
     {!! HTML::style('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.css') !!}
     {!! HTML::style('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') !!}

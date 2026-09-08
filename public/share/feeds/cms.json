@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev erreicht Bootstrap 4.6.2: Themes, Tabs, Datumsauswähler und PHP-LESS-Neubau sind angepasst. Bootstrap 4 bleibt eine interne Zwischenstufe auf dem Weg zu Bootstrap 5.",
+        "timestamp": 1788845640,
+        "icon": "columns"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev vereinheitlicht Bootstrap-CSS und -JavaScript lokal auf 3.4.1; der kontrollierte Zwischenschritt ist kompatibel, die Sicherheitsmigration auf Bootstrap 5 folgt getrennt.",
         "timestamp": 1788803040,
         "icon": "columns"

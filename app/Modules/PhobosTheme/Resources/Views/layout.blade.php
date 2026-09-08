@@ -30,6 +30,7 @@
         <link rel="alternate" type="application/rss+xml" title="RSS News" href="{!! asset('rss/news.xml') !!}">
 
     {!! HTML::style('vendor/font-awesome/css/all.min.css') !!}
+    {!! HTML::style('css/glyphicons.css') !!}
     {!! HTML::style(HTML::versionedAssetPath('css/frontend.css')) !!}
 
     {!! HTML::jsTranslations() !!}

@@ -1,6 +1,6 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 07:26 CEST: Bootstrap-4-Kandidat **0.17.1** in Prüfung.
+Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
 Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
 dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
 sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
@@ -11,6 +11,15 @@ Last updated: **2026-09-07 20:13 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-044 - Theme-Neubau erzeugt ungültige Glyphicons-Pfade
+
+Behoben in 0.17.2: Durch relative LESS-Imports wurden im Theme-Neubau Pfade
+unter `resources/assets/less/fonts` statt `public/css/fonts` ausgegeben.
+Glyphicons werden jetzt einmal als `public/css/glyphicons.css` gebaut und von
+allen drei Layouts mit dem Asset-Helfer eingebunden. Theme-LESS enthält keine
+Schriftdefinition mehr; Node- und PHP-Regressionsprüfungen sichern diese Grenze.
+
 
 ### BUG-042 - PHP-LESS-Neubau scheitert unter PHP 8.5
 

@@ -1,6 +1,6 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 07:26 CEST: Bootstrap-4-Kandidat **0.17.1** in Prüfung.
+Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
 Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
 dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
 sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
