@@ -1,3 +1,49 @@
+## Bad Hippo 0.19.5 / Contentify 3.3-dev - 2026-09-08
+
+Nicht unterstützte tooltips-Option des alten Kalenderplugins entfernt. Die
+deutsche Moment-Lokalisierung bleibt aktiv. Dieser Kandidatenfehler verhinderte
+Editoren auf Formularseiten; Browserabnahme hat Vorrang vor weiteren Änderungen.
+
+Abnahme 2026-09-08 09:52 CEST: Container gebaut, 34 Tests/203 Assertions und
+beide Smoke-Skripte bestanden. Seiten/News/Downloads-Editoren, Texteingabe und
+deutscher Kalender bestätigt. Kandidat :8088; nicht main und nicht Staging :80.
+
+## Bad Hippo 0.19.4 / Contentify 3.3-dev - 2026-09-08
+
+Lokale Script-/Stylesheet-URLs erhalten die Buildversion als Cache-Schlüssel.
+Der Browser verwendete trotz Neuladen alte Kalenderdateien; externe URLs bleiben
+unverändert. Regressionstest ergänzt. Kandidatenprüfung noch offen.
+
+## Bad Hippo 0.19.3 / Contentify 3.3-dev - 2026-09-08
+
+jQuery-3-Kompatibilität: Kalender verwendet length statt size(), Kommentare und
+Teammitglieder done() statt success(). Kommentarereignisse werden einmal delegiert,
+Bearbeiten/Löschen und anschließendes Neuanlegen überschreiben keine Handler mehr.
+Teamnamen werden als Text angehängt; Kommentar-Speicherknopf auf Deutsch.
+
+## Bad Hippo 0.19.2 / Contentify 3.3-dev - 2026-09-08
+
+Kandidatenkorrektur: Kalender verwendet die bereits initialisierte Framework-
+Instanz. AJAX-CSRF-Token nur im Same-Origin-Header, nicht in URLs/fremden Anfragen.
+Freundschaftsanfragen dürfen nur Empfänger bestätigen, nicht der Absender.
+Kommentar-Regressionsfixtures korrigiert; Kandidaten-Abnahme läuft.
+
+## Bad Hippo 0.19.1 / Contentify 3.3-dev - 2026-09-08
+
+Sicherheitsnachprüfung: Bestätigung/POST auch für die erkannten Forum-, Freunde-
+und Verwaltungsaktionen. Kommentar-Eigentümerprüfung ohne geladene Beziehung;
+Tests für Fremdzugriffe und fehlendes CSRF-Token. HTTP-Fehlertexte auf Deutsch.
+Kandidatenprüfung noch nicht abgeschlossen; Staging weiterhin 0.18.3.
+
+## Bad Hippo 0.19.0 / Contentify 3.3-dev - 2026-09-08
+
+In Kandidatenprüfung: Cup-Siegerwechsel, Kommentar-Kontext und HTTP-Fehlerstatus
+repariert; /messages führt zum Posteingang. Empfänger/Eingaben werden validiert.
+Cup-Aktionslinks zeigen vor schreibenden POST-Aufrufen eine CSRF-Bestätigung.
+jQuery 3.7.1 und Moment 2.30.1 mit deutschen Kalendertexten reproduzierbar gebaut;
+Editor-Standardfilter wieder aktiv, ungenutzte optionale Plugins ausgeblendet.
+Noch kein vollständiger Sicherheitsnachweis oder Public-Release.
+
 ## Bad Hippo 0.18.3 / Contentify 3.3-dev - 2026-09-08
 
 - Tabellenrahmen in Morpheus und Phobos auf Benutzerwunsch entfernt, einschließlich
@@ -370,39 +416,3 @@
 
 **Changes**
 - TBA
-## Bad Hippo 0.19.0 / Contentify 3.3-dev - 2026-09-08
-
-In Kandidatenprüfung: Cup-Siegerwechsel, Kommentar-Kontext und HTTP-Fehlerstatus
-repariert; /messages führt zum Posteingang. Empfänger/Eingaben werden validiert.
-Cup-Aktionslinks zeigen vor schreibenden POST-Aufrufen eine CSRF-Bestätigung.
-jQuery 3.7.1 und Moment 2.30.1 mit deutschen Kalendertexten reproduzierbar gebaut;
-Editor-Standardfilter wieder aktiv, ungenutzte optionale Plugins ausgeblendet.
-Noch kein vollständiger Sicherheitsnachweis oder Public-Release.
-## Bad Hippo 0.19.1 / Contentify 3.3-dev - 2026-09-08
-
-Sicherheitsnachprüfung: Bestätigung/POST auch für die erkannten Forum-, Freunde-
-und Verwaltungsaktionen. Kommentar-Eigentümerprüfung ohne geladene Beziehung;
-Tests für Fremdzugriffe und fehlendes CSRF-Token. HTTP-Fehlertexte auf Deutsch.
-Kandidatenprüfung noch nicht abgeschlossen; Staging weiterhin 0.18.3.
-## Bad Hippo 0.19.2 / Contentify 3.3-dev - 2026-09-08
-
-Kandidatenkorrektur: Kalender verwendet die bereits initialisierte Framework-
-Instanz. AJAX-CSRF-Token nur im Same-Origin-Header, nicht in URLs/fremden Anfragen.
-Freundschaftsanfragen dürfen nur Empfänger bestätigen, nicht der Absender.
-Kommentar-Regressionsfixtures korrigiert; Kandidaten-Abnahme läuft.
-## Bad Hippo 0.19.3 / Contentify 3.3-dev - 2026-09-08
-
-jQuery-3-Kompatibilität: Kalender verwendet length statt size(), Kommentare und
-Teammitglieder done() statt success(). Kommentarereignisse werden einmal delegiert,
-Bearbeiten/Löschen und anschließendes Neuanlegen überschreiben keine Handler mehr.
-Teamnamen werden als Text angehängt; Kommentar-Speicherknopf auf Deutsch.
-## Bad Hippo 0.19.4 / Contentify 3.3-dev - 2026-09-08
-
-Lokale Script-/Stylesheet-URLs erhalten die Buildversion als Cache-Schlüssel.
-Der Browser verwendete trotz Neuladen alte Kalenderdateien; externe URLs bleiben
-unverändert. Regressionstest ergänzt. Kandidatenprüfung noch offen.
-## Bad Hippo 0.19.5 / Contentify 3.3-dev - 2026-09-08
-
-Nicht unterstützte tooltips-Option des alten Kalenderplugins entfernt. Die
-deutsche Moment-Lokalisierung bleibt aktiv. Dieser Kandidatenfehler verhinderte
-Editoren auf Formularseiten; Browserabnahme hat Vorrang vor weiteren Änderungen.

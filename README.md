@@ -1,28 +1,18 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 09:48 CEST: **0.19.5 in Kandidatenprüfung, noch nicht auf Staging.**
-Benutzermeldung fehlender Editoren auf :8088: nicht unterstützte Kalenderoption
-tooltips entfernt. Oberflächenabnahme hat jetzt Vorrang, keine weiteren Funktionen.
-0.19.3: 33 Tests/200 Assertions bestanden. Browsercache machte einen zentralen
-Buildversionsparameter für lokale Assets erforderlich; externe URLs unverändert.
-Weitere Befunde im Register: SVG-/PHP-Ausführungsgrenze und Upload-Datenerhalt.
-0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
-0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
-Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.
-Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
-Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
-Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.
-Erster Lauf 0.19.0: 29 Tests/137 Assertions, beide Smoke-Tests und LESS-Neubau
-bestanden. Composer- und npm-Audit ohne bekannte gemeldete Schwachstellen.
-Nachprüfung erweitert CSRF-Schutz auf Forum-, Freunde- und Verwaltungsaktionen;
-zusätzliche Negativtests für Kommentare und CSRF. Vollständiger Audit bleibt offen.
-Funktionsreparaturen: Cup-Siegerwechsel (BUG-020), Kommentar-Kontext (BUG-008),
-HTTP-Status (BUG-017), Nachrichten-Einstiegsroute und Eingabevalidierung.
-Sicherheitsprüfung: Cup-GET-Mutationen auf Bestätigung/POST umgestellt; jQuery
-3.7.1, Moment 2.30.1 mit Sprachpaketen; Editor-Standardfilter wieder aktiviert.
-PHP- und Browser-Abnahme noch offen. Weitere Altmodule, Berechtigungen,
-serverseitige HTML-Bereinigung und Container-Pakete müssen separat geprüft werden.
-Keine Freigabe für Public; Staging bleibt bis zur Abnahme auf 0.18.3.
+Stand 2026-09-08 09:52 CEST: **0.19.5 im Kandidaten auf :8088; Staging :80 bleibt 0.18.3.**
+GitHub: Arbeitszweig bad-hippo/stabilisierung-sicherheit, noch nicht main.
+Browser: Seiteneditor und beide News-Editoren sichtbar, Texteingabe und deutscher
+Kalender funktionieren ohne neue JavaScriptfehler; Downloads-Editor ebenfalls.
+Container-Endprüfung bestanden: 34 Tests/203 Assertions, beide Smoke-Skripte,
+LESS-Neubau und Composer-Audit. Node-Build und npm-Prüfungen bestanden.
+Reparaturen: Cup-Siegerwechsel, Kommentar-Kontext/Bedienung, HTTP-Status und
+Nachrichten-Einstieg. Sicherheitsmaßnahmen: bestätigte GET-Aktionen auf POST,
+Same-Origin-CSRF-Header, Empfängerrechte bei Freundschaften, jQuery 3.7.1,
+Moment 2.30.1 und Editor-Standardfilter. Alte Browserdateien per Buildversion erneuert.
+Offen: Restore-Routen, Upload-/SVG-Schutz und Datenerhalt, umfassende Objekt-/
+Rollenrechte, serverseitiges HTML, Container-Audit und Neuinstallation auf Test.
+Befunde zentral in bugs.md; keine vollständige Sicherheits- oder Public-Freigabe.
 
 Vorheriger Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
@@ -52,7 +42,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.18.3 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.19.5 / Contentify 3.3-dev (Kandidat)**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -125,8 +115,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.18.3**
-Last updated: **2026-09-08 08:56 CEST**
+Local workstream version: **0.19.5 (Kandidat); Staging: 0.18.3**
+Last updated: **2026-09-08 09:51 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.

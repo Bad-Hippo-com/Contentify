@@ -1,28 +1,18 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 09:48 CEST: **0.19.5 in Kandidatenprüfung, noch nicht auf Staging.**
-Benutzermeldung fehlender Editoren auf :8088: nicht unterstützte Kalenderoption
-tooltips entfernt. Oberflächenabnahme hat jetzt Vorrang, keine weiteren Funktionen.
-0.19.3: 33 Tests/200 Assertions bestanden. Browsercache machte einen zentralen
-Buildversionsparameter für lokale Assets erforderlich; externe URLs unverändert.
-Weitere Befunde im Register: SVG-/PHP-Ausführungsgrenze und Upload-Datenerhalt.
-0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
-0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
-Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.
-Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
-Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
-Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.
-Erster Lauf 0.19.0: 29 Tests/137 Assertions, beide Smoke-Tests und LESS-Neubau
-bestanden. Composer- und npm-Audit ohne bekannte gemeldete Schwachstellen.
-Nachprüfung erweitert CSRF-Schutz auf Forum-, Freunde- und Verwaltungsaktionen;
-zusätzliche Negativtests für Kommentare und CSRF. Vollständiger Audit bleibt offen.
-Funktionsreparaturen: Cup-Siegerwechsel (BUG-020), Kommentar-Kontext (BUG-008),
-HTTP-Status (BUG-017), Nachrichten-Einstiegsroute und Eingabevalidierung.
-Sicherheitsprüfung: Cup-GET-Mutationen auf Bestätigung/POST umgestellt; jQuery
-3.7.1, Moment 2.30.1 mit Sprachpaketen; Editor-Standardfilter wieder aktiviert.
-PHP- und Browser-Abnahme noch offen. Weitere Altmodule, Berechtigungen,
-serverseitige HTML-Bereinigung und Container-Pakete müssen separat geprüft werden.
-Keine Freigabe für Public; Staging bleibt bis zur Abnahme auf 0.18.3.
+Stand 2026-09-08 09:52 CEST: **0.19.5 im Kandidaten auf :8088; Staging :80 bleibt 0.18.3.**
+GitHub: Arbeitszweig bad-hippo/stabilisierung-sicherheit, noch nicht main.
+Browser: Seiteneditor und beide News-Editoren sichtbar, Texteingabe und deutscher
+Kalender funktionieren ohne neue JavaScriptfehler; Downloads-Editor ebenfalls.
+Container-Endprüfung bestanden: 34 Tests/203 Assertions, beide Smoke-Skripte,
+LESS-Neubau und Composer-Audit. Node-Build und npm-Prüfungen bestanden.
+Reparaturen: Cup-Siegerwechsel, Kommentar-Kontext/Bedienung, HTTP-Status und
+Nachrichten-Einstieg. Sicherheitsmaßnahmen: bestätigte GET-Aktionen auf POST,
+Same-Origin-CSRF-Header, Empfängerrechte bei Freundschaften, jQuery 3.7.1,
+Moment 2.30.1 und Editor-Standardfilter. Alte Browserdateien per Buildversion erneuert.
+Offen: Restore-Routen, Upload-/SVG-Schutz und Datenerhalt, umfassende Objekt-/
+Rollenrechte, serverseitiges HTML, Container-Audit und Neuinstallation auf Test.
+Befunde zentral in bugs.md; keine vollständige Sicherheits- oder Public-Freigabe.
 
 Vorheriger Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
@@ -38,13 +28,18 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.18.3**
-Last updated: **2026-09-08 08:56 CEST**
+Local workstream version: **0.19.5 (Kandidat); Staging: 0.18.3**
+Last updated: **2026-09-08 09:51 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
 ### BUG-052 - Nicht unterstützte Kalenderoption stoppt alle Editoren
+
+Browserabnahme 0.19.5, 2026-09-08 09:49 CEST: ein Seiteneditor und beide
+News-Editoren initialisieren wieder. Texteingabe und deutscher Kalender geprüft;
+keine neuen Warnungen/Fehler in diesen Aufrufen. Nach sauberem Container-Neubau
+erneut bestätigt; 34 Tests/203 Assertions und beide Smoke-Skripte bestanden.
 
 Eigener Kandidatenfehler bis 0.19.4: Das alte Kalenderplugin kennt keine
 tooltips-Option und wirft TypeError. 0.19.5 entfernt diese Option; locale de bleibt.
@@ -465,6 +460,10 @@ BUG-017: unbekannte Routen liefern derzeit fälschlich HTTP 500 statt 404.
 
 ### BUG-020 - Cup-Siegeraktualisierung verwendet eine undefinierte Variable
 
+Korrektur in Kandidat 0.19.5: Instanzreferenz, nullable Folgematch und Plausibilität
+korrigiert; Regressionstest für Siegerwechsel und fehlendes Folgematch bestanden.
+Vollständiges Turnier durchspielen bleibt Abnahmeaufgabe.
+
 Severity: **high**
 Status: **open; bei der PHP-8-Abschlussprüfung am 2026-09-07 06:37 CEST erfasst**
 
@@ -581,6 +580,9 @@ sichert genau diesen Fall ab; Startseite und Login antworten danach mit HTTP
 200 und die authentifizierten Admin-Seiten funktionieren weiter.
 
 ### BUG-017 - Unknown routes are returned as server errors
+
+Kandidat 0.19.5: HTTP-Status und Header bleiben erhalten; JSON-Validierung liefert
+422. Live-Proben liefern 404 für unbekannte Route und 419 ohne CSRF-Token.
 
 Severity: **medium**
 Status: **für dynamische Routen offen; statischer Anteil in 0.14.0 behoben, 2026-09-07 16:10 CEST**
@@ -706,6 +708,10 @@ impossible requirement `PHP 7.6.5`, recommends broad CHMOD 777 permissions and
 claims PHP 8 compatibility contradicted by the source.
 
 ### BUG-008 - Comment update passes undefined view variables
+
+Kandidat 0.19.5: Kontext aus dem gespeicherten Kommentar übernommen; Besitzer-
+und Fremdzugriffstests bestanden. Zusätzlich jQuery-3-kompatible Bedienung und
+delegierte Handler. Browser-CRUD-Abnahme bleibt offen.
 
 Severity: **low**
 Status: **open**
