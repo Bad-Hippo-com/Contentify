@@ -21,7 +21,8 @@ class LogContextProcessor
                 $request = app('request');
                 $record['extra']['request_id'] = $request->headers->get('X-Request-ID');
                 $record['extra']['method'] = $request->method();
-                $record['extra']['path'] = $request->path();
+                $record['extra']['path'] = $request->is('auth/restore/new/*')
+                    ? 'auth/restore/new/[redacted]' : $request->path();
             }
 
             return $record;

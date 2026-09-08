@@ -183,6 +183,37 @@ class InstalledWorkflowTest extends TestCase
         $this->assertCount(0, Mail::mailer()->getSymfonyTransport()->messages());
     }
 
+    public function testResetReplacementRateLimitAndCsrf(): void
+    {
+        $user = $this->fixture('Replace');
+        $oldHash = $user->password;
+        $oldCode = str_repeat('b', 32);
+        DB::table('reminders')->insert(['user_id' => $user->id, 'code' => hash('sha256', $oldCode),
+            'completed' => false, 'created_at' => now(), 'updated_at' => now()]);
+        $this->withSession(['captchaCode' => 'test'])->post('/auth/restore', [
+            'email' => $user->email, 'captcha' => 'test'])->assertOk();
+        $this->assertSame(1, DB::table('reminders')->where('user_id', $user->id)->count());
+        $this->get('/auth/restore/new/'.rawurlencode($user->email).'/'.$oldCode)->assertStatus(400);
+        $this->assertSame($oldHash, $user->fresh()->password);
+        for ($i = 0; $i < 4; $i++) {
+            $this->withSession(['captchaCode' => 'test'])->post('/auth/restore', [
+                'email' => $this->prefix.'absent@example.test', 'captcha' => 'test'])->assertOk();
+        }
+        $this->withSession(['captchaCode' => 'test'])->post('/auth/restore', [
+            'email' => $user->email, 'captcha' => 'test'])->assertStatus(429);
+        $this->assertCount(1, Mail::mailer()->getSymfonyTransport()->messages());
+
+        // Force the real forgery check even under PHPUnit.
+        $this->app->bind(\App\Http\Middleware\VerifyCsrfToken::class, function ($app) {
+            return new class($app, $app['encrypter']) extends \App\Http\Middleware\VerifyCsrfToken {
+                protected function runningUnitTests() { return false; }
+            };
+        });
+        $this->post('/auth/restore/new/'.rawurlencode($user->email).'/'.$oldCode, [
+            'password' => $this->password, 'password_confirmation' => $this->password])->assertStatus(419);
+        $this->assertSame($oldHash, $user->fresh()->password);
+    }
+
     public function testForumThreadReplyEditAndDelete(): void
     {
         $owner = $this->fixture('Forum', true);
