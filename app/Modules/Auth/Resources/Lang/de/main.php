@@ -40,6 +40,7 @@ return [
     'reset_completed'   => 'Ihr Passwort wurde geändert. Bitte melden Sie sich mit dem neuen Passwort an.',
     'reset_password_help' => 'Wählen Sie ein neues Passwort mit mindestens 12 und höchstens 72 Zeichen.',
     'reset_confirmation' => 'Neues Passwort wiederholen',
+    'reset_password_bytes' => 'Das Passwort darf höchstens 72 Bytes enthalten; Sonderzeichen können mehrere Bytes benötigen.',
     'email_ignore'      => 'Falls Sie kein neues Passwort generieren lassen möchten, ignorieren Sie diese Email bitte.',
     'pw_generated'      => 'Ein neues Passwort wurde für :0 generiert.',
 

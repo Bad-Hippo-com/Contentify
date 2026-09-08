@@ -154,7 +154,13 @@ class InstalledWorkflowTest extends TestCase
         $this->post($url, ['password' => 'short', 'password_confirmation' => 'different'])->assertRedirect();
         $this->assertSame($oldHash, $user->fresh()->password);
         $newPassword = 'New-Workflow-Password-2026!';
+        $this->post($url, ['password' => $newPassword, 'password_confirmation' => $this->password])->assertRedirect();
+        $this->post($url, ['password' => str_repeat('ö', 40), 'password_confirmation' => str_repeat('ö', 40)])->assertRedirect();
+        $this->assertSame($oldHash, $user->fresh()->password);
+        $this->loginAs($user);
+        $this->assertGreaterThan(0, DB::table('persistences')->where('user_id', $user->id)->count());
         $this->post($url, ['password' => $newPassword, 'password_confirmation' => $newPassword])->assertOk();
+        $this->assertSame(0, DB::table('persistences')->where('user_id', $user->id)->count());
         $this->assertNotSame($oldHash, $user->fresh()->password);
         $this->assertTrue(password_verify($newPassword, $user->fresh()->password));
         $this->assertCount(1, $transport->messages(), 'Kein Passwortversand nach Abschluss.');

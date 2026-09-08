@@ -1,6 +1,20 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
+Stand 2026-09-08 10:53 CEST: **0.21.0 Passwortreset im Kandidatenneubau.**
+Geschützter POST setzt ein selbst gewähltes Passwort; GET zeigt nur das Formular.
+Token: SHA-256-Digest in der DB, 60 Minuten gültig, einmalig, neuer Antrag ersetzt
+alte Links. Benutzerzeilensperre serialisiert Antrag und Abschluss. Kein Passwort
+per E-Mail, Sitzungen werden widerrufen. Antwort nennt keine Kontoexistenz;
+fünf Anträge je IP/Stunde zusätzlich zum Captcha. Formular: 12–72 Zeichen.
+Zehn Controller-/DB-Tests mit 98 Assertions bestanden, inklusive Ablauf,
+Wiederverwendung, Ersatzlink, Ratenlimit, GET-Unveränderlichkeit und echtem CSRF-419.
+Nginx-/FPM-Zugriffslogs und Laravel-Pfadkontext maskieren Reset-Pfade; Referrer-
+Policy und No-Store sind im Containerneubau noch live zu prüfen.
+SMTP, Timing-Seitenkanäle, konkurrierende Lasttests und allgemeine Logredaktion
+sind nicht vollständig abgenommen. Vorhandene Reset-Links werden ungültig.
+GitHub-Arbeitszweig bleibt bad-hippo/stabilisierung-sicherheit; main und :80 unverändert.
+
+Vorheriger Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
 Sauberer Neubau: 35 Regressionstests/205 Assertions und acht Ablauftests/72
 Assertions bestanden, außerdem beide Smoke-Tests, LESS-Neubau und Composer-Audit.
 npm-Test und Produktions-Audit bestanden (keine gemeldeten Advisories).

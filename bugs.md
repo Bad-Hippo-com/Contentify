@@ -1,6 +1,20 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
+Stand 2026-09-08 10:53 CEST: **0.21.0 Passwortreset im Kandidatenneubau.**
+Geschützter POST setzt ein selbst gewähltes Passwort; GET zeigt nur das Formular.
+Token: SHA-256-Digest in der DB, 60 Minuten gültig, einmalig, neuer Antrag ersetzt
+alte Links. Benutzerzeilensperre serialisiert Antrag und Abschluss. Kein Passwort
+per E-Mail, Sitzungen werden widerrufen. Antwort nennt keine Kontoexistenz;
+fünf Anträge je IP/Stunde zusätzlich zum Captcha. Formular: 12–72 Zeichen.
+Zehn Controller-/DB-Tests mit 98 Assertions bestanden, inklusive Ablauf,
+Wiederverwendung, Ersatzlink, Ratenlimit, GET-Unveränderlichkeit und echtem CSRF-419.
+Nginx-/FPM-Zugriffslogs und Laravel-Pfadkontext maskieren Reset-Pfade; Referrer-
+Policy und No-Store sind im Containerneubau noch live zu prüfen.
+SMTP, Timing-Seitenkanäle, konkurrierende Lasttests und allgemeine Logredaktion
+sind nicht vollständig abgenommen. Vorhandene Reset-Links werden ungültig.
+GitHub-Arbeitszweig bleibt bad-hippo/stabilisierung-sicherheit; main und :80 unverändert.
+
+Vorheriger Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
 Sauberer Neubau: 35 Regressionstests/205 Assertions und acht Ablauftests/72
 Assertions bestanden, außerdem beide Smoke-Tests, LESS-Neubau und Composer-Audit.
 npm-Test und Produktions-Audit bestanden (keine gemeldeten Advisories).
@@ -49,7 +63,12 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
-### SEC-009 - Passwortreset verschickt ein neues Passwort (hoch, offen)
+### SEC-009 - Passwortreset verschickt ein neues Passwort (hoch, in Kandidatenabnahme)
+
+2026-09-08 10:53 CEST: In 0.21.0 durch eigenen Passwortdialog ersetzt, POST mit
+CSRF, gehashte einmalige Tokens, 60 Minuten, Sperre pro Benutzer für Abschluss.
+Reset-Ablauf samt Negativtests bestanden. Alte Links passen nicht mehr zum Hash-
+Verfahren. SMTP und vollständige Log-/Timingprüfung bleiben separat offen.
 
 2026-09-08 10:32 CEST: Reale Reset-Controller erzeugen nach Linkaufruf per GET
 ein Passwort und verschicken es im Klartext per E-Mail. Token-Wiederverwendung

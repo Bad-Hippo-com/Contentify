@@ -1,3 +1,18 @@
+## Bad Hippo 0.21.1 / Contentify 3.3-dev - 2026-09-08 10:56 CEST
+
+Bcrypt-Grenze zusätzlich in Bytes prüfen: mehrbyteige Passwörter werden nicht
+stillschweigend abgeschnitten. Tests für falsche Bestätigung und Widerruf der
+Sentinel-Persistenzen ergänzt. Kandidatenabnahme läuft.
+
+## Bad Hippo 0.21.0 / Contentify 3.3-dev - 2026-09-08 10:53 CEST
+
+Passwortreset über eigenen Passwortdialog und CSRF-geschützten POST. Gehashte,
+einmalige Tokens, eine Stunde Laufzeit, Ersatzlink entwertet alte Anträge.
+Kein Passwortversand; alte ungenutzte Mailvorlage entfernt (über Git wiederherstellbar).
+Kontoneutrale Antwort, Ratenlimit und Widerruf der Sentinel-Persistenzen.
+Reset-Pfade in Zugriffslogs maskiert; Referrer-Policy und Cache-Control ergänzt.
+Zehn Ablauftests/98 Assertions bestehen. Containerneubau noch in Prüfung.
+
 ## Bad Hippo 0.20.5 / Contentify 3.3-dev - 2026-09-08 10:31 CEST
 
 Matchergebnisse erhalten den expliziten Fremdschlüssel match_id; Anlegen,

@@ -68,7 +68,13 @@ class RestorePasswordController extends FrontController
     public function postNew(string $email, string $code)
     {
         $validator = Validator::make(Request::only('password', 'password_confirmation'), [
-            'password' => 'required|string|min:12|max:72|confirmed',
+            'password' => ['required', 'string', 'min:12', 'max:72', 'confirmed',
+                function ($attribute, $value, $fail) {
+                    // Bcrypt's limit is bytes, not Unicode characters.
+                    if (is_string($value) && strlen($value) > 72) {
+                        $fail(trans('auth::reset_password_bytes'));
+                    }
+                }],
         ]);
         if ($validator->fails()) {
             // Never flash password fields to the session.

@@ -5,6 +5,7 @@ return [
     'reset_completed' => 'Your password has been changed. Please sign in with your new password.',
     'reset_password_help' => 'Choose a new password containing 12 to 72 characters.',
     'reset_confirmation' => 'Confirm new password',
+    'reset_password_bytes' => 'The password must not exceed 72 bytes; some characters require multiple bytes.',
 
     /*
     |--------------------------------------------------------------------------
