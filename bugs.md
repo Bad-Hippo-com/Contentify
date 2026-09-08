@@ -1,6 +1,10 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
+Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
+
+Vorheriger Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
 23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
 35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
 Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
@@ -12,6 +16,18 @@ Last updated: **2026-09-08 08:26 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-047 - Bootstrap-5-Tabellen überdecken dunkle Themes
+
+Korrigiert in 0.18.2, Abnahme ausstehend (2026-09-08 08:47 CEST): Bootstrap 5
+färbt die Zellen über --bs-table-Variablen und inset-Schatten. Die bisherigen
+Zeilen-Hintergründe reichten nicht aus. Beide Themes setzen jetzt eigene
+Grund-, Text-, Rahmen-, Streifen-, Aktiv- und Hoverfarben. Gilt auch für
+Nachrichteneingang/-ausgang und Profiltabellen; Kalender bleibt separat lesbar.
+
+Nebenbefund: direkter Aufruf `/messages` zeigt eine Fehlerseite; der verlinkte
+Posteingang `/messages/inbox` funktioniert. Routing separat untersuchen;
+kein Bestandteil der Tabellenfarbkorrektur, Exception bleibt zentral erhalten.
 
 ### BUG-045 - Kalender-Komponenten beim Entfernen nicht freigegeben
 

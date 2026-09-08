@@ -386,6 +386,17 @@ a.label:focus {
   background: #00afff;
   color: white;
 }
+.table {
+  --bs-table-color: #7f8891;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: #e7ecf0;
+  --bs-table-striped-color: #7f8891;
+  --bs-table-striped-bg: #f5f7f9;
+  --bs-table-hover-color: #7f8891;
+  --bs-table-hover-bg: #eaf6fc;
+  --bs-table-active-color: #7f8891;
+  --bs-table-active-bg: #eaf6fc;
+}
 /*
  * Classes
  */

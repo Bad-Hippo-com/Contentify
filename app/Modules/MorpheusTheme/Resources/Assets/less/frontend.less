@@ -718,7 +718,10 @@ ul.pagination {
 
 body { background-color: @darkest; font-family: @primary-font; color: @text-color; }
 th, td { border-color: lighten(@dark, 10%) !important; border-width: 2px !important }
-.table-hover > tbody > tr:hover { background-color: @dark; }
+.table { .contentify-table-colors(@text-color; @darker; lighten(@dark, 10%); @dark; lighten(@dark, 5%)); }
+.table > thead > tr > * { --bs-table-bg: @dark; }
+.bootstrap-datetimepicker-widget .table { .contentify-table-colors(#333; transparent; #ccc; #eee; #ddd); }
+.nav-tabs { --bs-nav-tabs-border-color: @dark; }
 .nav-tabs a.active { border-color: @dark !important; background-color: @dark !important; color: @text-color !important }
 .nav-tabs a:hover { background-color: @dark !important }
 

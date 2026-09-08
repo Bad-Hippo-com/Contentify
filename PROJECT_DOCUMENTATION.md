@@ -1,6 +1,10 @@
 # Contentify project assessment
 
-Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
+Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
+
+Vorheriger Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
 23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
 35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
 Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,

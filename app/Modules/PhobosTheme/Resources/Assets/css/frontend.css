@@ -2239,8 +2239,33 @@ td {
   border-color: #434343 !important;
   border-width: 2px !important;
 }
-.table-hover > tbody > tr:hover {
-  background-color: #292929;
+.table {
+  --bs-table-color: white;
+  --bs-table-bg: #202020;
+  --bs-table-border-color: #434343;
+  --bs-table-striped-color: white;
+  --bs-table-striped-bg: #292929;
+  --bs-table-hover-color: white;
+  --bs-table-hover-bg: #363636;
+  --bs-table-active-color: white;
+  --bs-table-active-bg: #363636;
+}
+.table > thead > tr > * {
+  --bs-table-bg: #292929;
+}
+.bootstrap-datetimepicker-widget .table {
+  --bs-table-color: #333;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: #ccc;
+  --bs-table-striped-color: #333;
+  --bs-table-striped-bg: #eee;
+  --bs-table-hover-color: #333;
+  --bs-table-hover-bg: #ddd;
+  --bs-table-active-color: #333;
+  --bs-table-active-bg: #ddd;
+}
+.nav-tabs {
+  --bs-nav-tabs-border-color: #292929;
 }
 .nav-tabs a.active {
   border-color: #292929 !important;

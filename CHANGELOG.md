@@ -1,3 +1,11 @@
+## Bad Hippo 0.18.2 / Contentify 3.3-dev - 2026-09-08
+
+- Bootstrap-5-Tabellenvariablen an Morpheus/Phobos angepasst: dunkle Flächen,
+  helle Schrift und abgestufte Rahmen-, Streifen- und Hoverfarben (BUG-047).
+- Nachrichtentabellen und Tabrahmen eingeschlossen, Backend-Farben separat
+  auf den hellen Inhaltsbereich abgestimmt; Kalenderfarben nicht verdunkelt.
+- Reproduzierbare CSS-Builds und Farb-Regressionsprüfungen bestanden.
+
 ## Bad Hippo 0.18.1 / Contentify 3.3-dev - 2026-09-08
 
 - 08:26 CEST auf Staging abgenommen und auf GitHub main übernommen; final

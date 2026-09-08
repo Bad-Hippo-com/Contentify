@@ -77,4 +77,10 @@ assert.match(pickerJs, /bootstrap\.Collapse\.getOrCreateInstance/);
 assert.match(pickerJs, /bootstrap\.Collapse\.getInstance\(this\)/);
 assert.doesNotMatch(sharedJs + backendJs + pickerJs, /\.(?:modal|tooltip|collapse)\(['"](?:hide|show)?['"]?\)/);
 assert.equal(lock.packages['node_modules/popper.js'], undefined);
+for (const theme of ['MorpheusTheme', 'PhobosTheme']) {
+    const css = fs.readFileSync(path.join(root, 'app/Modules', theme, 'Resources/Assets/css/frontend.css'), 'utf8');
+    assert.match(css, /--bs-table-bg:\s*#202020/);
+    assert.match(css, /--bs-table-color:\s*(?:white|#fff(?:fff)?)/);
+    assert.match(css, /--bs-table-hover-bg:\s*#363636/);
+}
 console.log('OK: Node-24-, LESS-, Bootstrap-5.3.8- und Editor-Asset-Verträge sind erfüllt.');

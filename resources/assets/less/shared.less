@@ -10,6 +10,18 @@
  */
 
 /* Utilities */
+.contentify-table-colors(@text; @background; @border; @stripe; @hover) {
+    --bs-table-color: @text;
+    --bs-table-bg: @background;
+    --bs-table-border-color: @border;
+    --bs-table-striped-color: @text;
+    --bs-table-striped-bg: @stripe;
+    --bs-table-hover-color: @text;
+    --bs-table-hover-bg: @hover;
+    --bs-table-active-color: @text;
+    --bs-table-active-bg: @hover;
+}
+
 .space-top-small { margin-top: 10px }
 .space-top { margin-top: 20px }
 .space-top-huge { margin-top: 40px }
