@@ -1,6 +1,6 @@
 # Contentify porting plan
 
-Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Stand 2026-09-08 08:50 CEST: **0.18.2 Tabellenfarben auf Staging abgenommen.**
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -11,8 +11,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.18.1**
-Last updated: **2026-09-08 08:26 CEST**
+Local workstream version: **0.18.2**
+Last updated: **2026-09-08 08:50 CEST**
 
 ## Decision
 

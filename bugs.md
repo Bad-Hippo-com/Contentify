@@ -1,6 +1,6 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Stand 2026-09-08 08:50 CEST: **0.18.2 Tabellenfarben auf Staging abgenommen.**
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -11,15 +11,15 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.18.1**
-Last updated: **2026-09-08 08:26 CEST**
+Local workstream version: **0.18.2**
+Last updated: **2026-09-08 08:50 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
 ### BUG-047 - Bootstrap-5-Tabellen überdecken dunkle Themes
 
-Korrigiert in 0.18.2, Abnahme ausstehend (2026-09-08 08:47 CEST): Bootstrap 5
+Behoben und auf Staging abgenommen in 0.18.2 (2026-09-08 08:50 CEST): Bootstrap 5
 färbt die Zellen über --bs-table-Variablen und inset-Schatten. Die bisherigen
 Zeilen-Hintergründe reichten nicht aus. Beide Themes setzen jetzt eigene
 Grund-, Text-, Rahmen-, Streifen-, Aktiv- und Hoverfarben. Gilt auch für

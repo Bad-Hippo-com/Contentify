@@ -1,6 +1,6 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Stand 2026-09-08 08:50 CEST: **0.18.2 Tabellenfarben auf Staging abgenommen.**
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -25,7 +25,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.18.1 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.18.2 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -98,8 +98,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.18.1**
-Last updated: **2026-09-08 08:26 CEST**
+Local workstream version: **0.18.2**
+Last updated: **2026-09-08 08:50 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.

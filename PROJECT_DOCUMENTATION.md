@@ -1,6 +1,6 @@
 # Contentify project assessment
 
-Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Stand 2026-09-08 08:50 CEST: **0.18.2 Tabellenfarben auf Staging abgenommen.**
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -11,11 +11,29 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.18.1**
-Assessment/update time: **2026-09-08 08:26 CEST**
+Local workstream version: **0.18.2**
+Assessment/update time: **2026-09-08 08:50 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
-## Bootstrap-5-Portierung – 2026-09-08 08:21 CEST
+## Tabellenfarben – 0.18.2, 2026-09-08
+
+Benutzer meldet weiße/grauweiße Profiltabellen und Nachrichtenflächen nach dem
+Bootstrap-5-Wechsel. Browsermessung bestätigt die Bootstrap-Defaults #fff/#000.
+Ein gemeinsamer LESS-Mixin setzt nun die nativen Tabellenvariablen; Morpheus
+und Phobos verwenden #202020/weiß, Rahmen #434343, Streifen #292929 und Hover
+#363636. Das Backend erhält seine eigene helle, blaugraue Palette. Kalender-
+Tabellen behalten eine separate Farbdefinition und Nachrichtentabs dunkle Rahmen.
+Beide Theme-Builds und Node-Farbverträge bestanden; im isolierten Kandidaten
+PHP-LESS-Neubau und beide Smoke-Skripte erfolgreich. Profilzellen dort gemessen:
+Hintergrund rgb(32,32,32), Text rgb(255,255,255), Rahmen rgb(67,67,67).
+Profil und Nachrichteneingang visuell geprüft. Keine Nachrichten versendet.
+Umsetzung f3095ef7 auf main; Protokolle unter den bestehenden zentralen
+deployment-Verzeichnissen mit Präfix contentify-tables abgelegt.
+Staging-Abnahme 08:50 CEST: alle vier Profiltabellen und Nachrichteneingang
+liefern die neue Palette #202020/weiß; Screenshots bestätigen dunkle Flächen.
+PHP-LESS-Neubau auf Staging erfolgreich, Version 0.18.2 installiert.
+
+## Historische Bootstrap-5-Portierung – 2026-09-08 08:21 CEST
 
 - Abnahme 08:26 CEST: finaler Kandidat 0.18.1 erneut mit 23 Tests / 83 Assertions
   und Audit bestanden. Umsetzung über `bad-hippo/bootstrap-5` nach `main`

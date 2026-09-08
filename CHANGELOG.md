@@ -5,6 +5,8 @@
 - Nachrichtentabellen und Tabrahmen eingeschlossen, Backend-Farben separat
   auf den hellen Inhaltsbereich abgestimmt; Kalenderfarben nicht verdunkelt.
 - Reproduzierbare CSS-Builds und Farb-Regressionsprüfungen bestanden.
+- 08:50 CEST: auf Staging installiert, Profil und Posteingang visuell und
+  anhand gerenderter Farbwerte abgenommen. Implementierung auf GitHub main.
 
 ## Bad Hippo 0.18.1 / Contentify 3.3-dev - 2026-09-08
 

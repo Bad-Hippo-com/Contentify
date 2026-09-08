@@ -1,6 +1,6 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 08:47 CEST: **0.18.2 Tabellenfarben in Prüfung.**
+Stand 2026-09-08 08:50 CEST: **0.18.2 Tabellenfarben auf Staging abgenommen.**
 Profil- und Nachrichtentabellen übernehmen dunkle Themefarben inklusive Schrift,
 Rahmen, Streifen und Hover. Backend bleibt passend zu seinem hellen Inhaltsbereich.
 
@@ -11,8 +11,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.18.1**
-Last updated: **2026-09-08 08:26 CEST**
+Local workstream version: **0.18.2**
+Last updated: **2026-09-08 08:50 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
@@ -26,6 +26,8 @@ Last updated: **2026-09-08 08:26 CEST**
 
 ## Completed
 
+- [x] Profiltabellen und Nachrichten an dunkle Themefarben anpassen, inklusive
+  Bootstrap-5-Zellfarben und Hover; als 0.18.2 auf Staging visuell abgenommen.
 - [x] Bootstrap 5.3.8 als 0.18.1 auf Staging ausrollen und auf GitHub main
   übernehmen; native APIs, reproduzierbare Builds, 23 Tests / 83 Assertions,
   beide Smoke-Skripte und Browserabnahme bestanden (2026-09-08 08:26 CEST).
