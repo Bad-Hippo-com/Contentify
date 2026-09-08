@@ -13,6 +13,14 @@ use Tests\TestCase;
 
 class StabilizationSecurityTest extends TestCase
 {
+    public function testLocalAssetsAreVersionedWithoutChangingExternalUrls(): void
+    {
+        $builder = app('html');
+        $version = trim(file_get_contents(base_path('VERSION')));
+        $this->assertStringContainsString('comments.js?v='.$version, (string) $builder->script('vendor/contentify/comments.js'));
+        $this->assertStringContainsString('backend.css?v='.$version, (string) $builder->style('css/backend.css'));
+        $this->assertStringNotContainsString('?v=', (string) $builder->script('https://example.com/test.js'));
+    }
     public function testOnlyRecipientCanConfirmFriendRequest(): void
     {
         $friendship = new \App\Modules\Friends\Friendship;

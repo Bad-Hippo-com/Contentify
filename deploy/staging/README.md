@@ -1,6 +1,9 @@
 # Contentify staging deployment
 
-Stand 2026-09-08 09:42 CEST: **0.19.3 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:47 CEST: **0.19.4 in Kandidatenprüfung, noch nicht auf Staging.**
+0.19.3: 33 Tests/200 Assertions bestanden. Browsercache machte einen zentralen
+Buildversionsparameter für lokale Assets erforderlich; externe URLs unverändert.
+Weitere Befunde im Register: SVG-/PHP-Ausführungsgrenze und Upload-Datenerhalt.
 0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
 0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
 Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.

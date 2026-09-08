@@ -17,6 +17,27 @@ use URL;
  */
 class HtmlBuilder extends OriginalHtmlBuilder
 {
+    /** Bind local browser assets to the deployed build, without changing external URLs. */
+    protected function versionedAssetUrl($url)
+    {
+        if (! is_string($url) || preg_match('~^(?:[a-z][a-z0-9+.-]*:|//)~i', $url)) {
+            return $url;
+        }
+        $version = trim(file_get_contents(base_path('VERSION')));
+        $parts = explode('#', $url, 2);
+        return $parts[0].(str_contains($parts[0], '?') ? '&' : '?').'v='.rawurlencode($version)
+            .(isset($parts[1]) ? '#'.$parts[1] : '');
+    }
+
+    public function script($url, $attributes = [], $secure = null)
+    {
+        return parent::script($this->versionedAssetUrl($url), $attributes, $secure);
+    }
+
+    public function style($url, $attributes = [], $secure = null)
+    {
+        return parent::style($this->versionedAssetUrl($url), $attributes, $secure);
+    }
 
     /**
      * The cache key used in cachedAssetPath()

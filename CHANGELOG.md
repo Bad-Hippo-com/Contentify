@@ -396,3 +396,8 @@ jQuery-3-Kompatibilität: Kalender verwendet length statt size(), Kommentare und
 Teammitglieder done() statt success(). Kommentarereignisse werden einmal delegiert,
 Bearbeiten/Löschen und anschließendes Neuanlegen überschreiben keine Handler mehr.
 Teamnamen werden als Text angehängt; Kommentar-Speicherknopf auf Deutsch.
+## Bad Hippo 0.19.4 / Contentify 3.3-dev - 2026-09-08
+
+Lokale Script-/Stylesheet-URLs erhalten die Buildversion als Cache-Schlüssel.
+Der Browser verwendete trotz Neuladen alte Kalenderdateien; externe URLs bleiben
+unverändert. Regressionstest ergänzt. Kandidatenprüfung noch offen.

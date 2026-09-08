@@ -1,6 +1,9 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 09:42 CEST: **0.19.3 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:47 CEST: **0.19.4 in Kandidatenprüfung, noch nicht auf Staging.**
+0.19.3: 33 Tests/200 Assertions bestanden. Browsercache machte einen zentralen
+Buildversionsparameter für lokale Assets erforderlich; externe URLs unverändert.
+Weitere Befunde im Register: SVG-/PHP-Ausführungsgrenze und Upload-Datenerhalt.
 0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
 0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
 Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.
@@ -38,6 +41,26 @@ Last updated: **2026-09-08 08:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### BUG-050 - Browser verwendet alte Assets nach Deployment
+
+Kandidat: HTTP liefert die neue Kalenderdatei, Browser führt trotz Reload den
+alten input.size()-Aufruf aus. 0.19.4 versieht lokale Script-/Style-URLs zentral
+mit dem Buildversionsparameter; externe URLs bleiben unverändert.
+
+### SEC-008 - Upload- und PHP-Ausführungsgrenze noch offen (hoch, Prüfauftrag)
+
+Codebefund: SVG ist als Bild erlaubt und wird nicht als Rasterbild geprüft;
+eine SVG-Bereinigung ist im Uploader nicht vorhanden. Nginx führt vorhandene
+PHP-Dateien unter public generell aus; install.php/update.php sind eigene
+Einstiegspunkte. Kein erfolgreicher Upload-Exploit nachgewiesen. Diese Pfade,
+Berechtigungen und sichere Dateiauslieferung sind vor Public dringend zu prüfen.
+
+### BUG-051 - Ungültiger Upload kann bestehendes Modell löschen
+
+Codebefund: Uploader::uploadModelFiles ruft bei ungültiger Endung model->delete()
+auch im Bearbeitungsfall auf. Noch kein destruktiver Laufzeittest. Separat so
+korrigieren, dass vorhandene Daten bei abgelehnten Uploads erhalten bleiben.
 
 ### SEC-007 - Weitere alte Restore-Routen bleiben zu prüfen (hoch)
 
