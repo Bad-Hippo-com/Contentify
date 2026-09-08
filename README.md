@@ -1,14 +1,11 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
-
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
 > **Status: frühe Stabilisierung, noch nicht für öffentliche Produktivsysteme freigegeben.**
 
@@ -24,7 +21,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.17.2 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.18.1 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -97,8 +94,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.17.2**
-Last updated: **2026-09-08 07:34 CEST**
+Local workstream version: **0.18.1**
+Last updated: **2026-09-08 08:26 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.

@@ -1,5 +1,7 @@
 ## Bad Hippo 0.18.1 / Contentify 3.3-dev - 2026-09-08
 
+- 08:26 CEST auf Staging abgenommen und auf GitHub main übernommen; final
+  23 Tests / 83 Assertions, beide Smoke-Skripte, LESS-Neubau und Audits bestanden.
 - Kalender-Collapse-Instanzen beim Schließen freigeben; bisherige Linkoptik
   erhalten und GitHub-Newsfeed um den Bootstrap-5-Meilenstein ergänzt.
 - Kandidat 0.18.0 bestand 23 Tests / 83 Assertions, beide Smoke-Skripte,

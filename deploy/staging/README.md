@@ -1,17 +1,14 @@
 # Contentify staging deployment
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
-
-Version: **0.17.2 / Contentify 3.3-dev**
-Last updated: **2026-09-08 07:34 CEST**
+Version: **0.18.1 / Contentify 3.3-dev**
+Last updated: **2026-09-08 08:26 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an
@@ -47,6 +44,11 @@ und korrigieren; anschließend echten Theme-Wechsel und `php artisan less:compil
 testen. Eine reine HTTP-200-Assetprüfung erkennt STAGE-008 nicht.
 
 From `deploy/staging`:
+
+Ab 0.18.1 gilt Bootstrap 5.3.8. Vor der Übernahme müssen native Tabs, Modal-
+Schließen samt DOM-/Backdrop-Cleanup, Kalender-Datum/Uhrzeit-Umschaltung und
+Phobos-Dropdown funktionieren. Beide Themes sind mobil und auf Desktop zu prüfen.
+Dev-Pakete nur im isolierten Kandidaten installieren, nicht im Staging-Image.
 
 ```sh
 sudo docker compose --env-file .env.staging up -d

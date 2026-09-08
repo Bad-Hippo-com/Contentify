@@ -1,21 +1,25 @@
 # Contentify project assessment
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
-
-Local workstream version: **0.17.2**
-Assessment/update time: **2026-09-08 07:34 CEST**
+Local workstream version: **0.18.1**
+Assessment/update time: **2026-09-08 08:26 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Bootstrap-5-Portierung – 2026-09-08 08:21 CEST
 
+- Abnahme 08:26 CEST: finaler Kandidat 0.18.1 erneut mit 23 Tests / 83 Assertions
+  und Audit bestanden. Umsetzung über `bad-hippo/bootstrap-5` nach `main`
+  übernommen (`1e02bd64`) und auf Staging installiert. Smoke-Skripte, LESS-Neubau,
+  Composer-Audit, sechs Asset-HTTP-200-Prüfungen sowie Editor/Modal/Tabs/Feed
+  auf Staging erneut bestanden. Keine neuen Anwendungs- oder JS-Fehler beobachtet.
+  Nginx protokolliert beim großen Konfigurationsformular lediglich einen
+  FastCGI-Buffering-Hinweis (temporäre Datei), kein fehlgeschlagener Request.
 - `0.18.0` ersetzt die Laufzeit durch Bootstrap 5.3.8 und das Popper-2-Bundle.
   data-bs-Attribute, native Modal/Tooltip/Collapse-APIs und Laravel-Pagination
   sind migriert. `0.18.1` ergänzt Dispose beim Kalender und erhält die Linkoptik.
@@ -112,7 +116,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | --- | --- |
 | PHP 8.5 / Laravel 13 lint | Pass; `0.13.0` parses 802 project and local-package files |
 | PHP 8.5 / Laravel 13 Artisan | Pass; Laravel 13.30.1 and 512 active production routes |
-| PHP 8.5 / Laravel 13 PHPUnit | Pass; 0.17.2 has 23 tests with 83 assertions including both theme compilers |
+| PHP 8.5 / Laravel 13 PHPUnit | Pass; 0.18.1 has 23 tests with 83 assertions including both theme compilers |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -123,9 +127,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Pass in 0.17.2; no known advisories or abandoned production package |
+| Composer production audit | Pass in 0.18.1; no known advisories or abandoned production package |
 | npm clean install | Pass on Node 24/npm 11 without legacy resolution |
-| npm audit | 0 known advisories in the declared npm tree; Bootstrap 4.6.2 and Popper 1 are EOL; legacy manually vendored libraries are outside this audit |
+| npm audit | 0 known advisories in the declared npm tree with Bootstrap 5.3.8 and Popper 2; manually vendored legacy libraries remain outside this audit |
 | SunEditor production audit | Pass; exact 3.3.2 dependency, no known production vulnerability |
 | LESS build/watch | Pass with exact Less 4.9.1; deterministic CSS hash |
 | Docker/Compose review | Fail for current production readiness |

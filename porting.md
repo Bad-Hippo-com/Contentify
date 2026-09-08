@@ -1,25 +1,22 @@
 # Contentify porting plan
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
-
-Local workstream version: **0.17.2**
-Last updated: **2026-09-08 07:34 CEST**
+Local workstream version: **0.18.1**
+Last updated: **2026-09-08 08:26 CEST**
 
 ## Decision
 
-Bootstrap-4-Zwischenstand (2026-09-08): offizielle kompilierte CSS und Bundle-JS
+Bootstrap-5-Zwischenstand (2026-09-08): offizielle kompilierte CSS und Bundle-JS
 werden lokal eingebunden. Die Themes bleiben vorerst LESS-basiert und nutzen
 einen dokumentierten Referenzadapter für alte Mixins und Komponenten.
-Beim Schritt auf Bootstrap 5 sind dieser Adapter, jQuery-Pluginaufrufe,
-Datumsauswähler und Glyphicons ausdrücklich zu prüfen beziehungsweise abzulösen.
+Bootstrap-Komponenten verwenden native APIs. Als Folgearbeit sind der LESS-Adapter,
+verbleibende jQuery-Plugins, Datumsauswähler und Glyphicons schrittweise abzulösen.
 Ein erfolgreicher npm-Audit ersetzt keine Prüfung manuell vendorter Bibliotheken.
 
 A current, supportable Contentify deployment is technically feasible, but it
@@ -55,7 +52,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.17.2` is installed on staging with Nginx 1.26.3 after passing its
+Version `0.18.1` is installed on staging with Nginx 1.26.3 after passing its
 isolated candidate. It uses PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11.
 The application, database,
 public runtime files and uploads are persistent where required. The Contentify

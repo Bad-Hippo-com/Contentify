@@ -1,17 +1,14 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
-
-Local workstream version: **0.17.2**
-Last updated: **2026-09-08 07:34 CEST**
+Local workstream version: **0.18.1**
+Last updated: **2026-09-08 08:26 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -65,7 +62,7 @@ Exception liegt unter /var/log/contentify-bootstrap-candidate/application-2026-0
 ### BUG-041 - Bootstrap 3 ist abgekündigt und hat keinen offiziellen Sicherheitspatch
 
 Severity: **high**
-Status: **Bootstrap-3-Laufzeit in 0.17.2 ersetzt; EOL-Zwischenstufe Bootstrap 4 bleibt bis Version 5 offen, 2026-09-08 07:34 CEST**
+Status: **Behoben mit Bootstrap 5.3.8 in 0.18.1, 2026-09-08 08:26 CEST**
 
 Contentify mischte Bootstrap-CSS 3.3.3 mit extern geladenem JavaScript 3.3.1.
 Version 0.16.0 vereinheitlicht zunächst alle Styles und Skripte lokal auf der
@@ -73,7 +70,9 @@ letzten kompatiblen 3.x-Version 3.4.1. Der aktuelle npm-Audit weist dafür jedoc
 CVE-2025-1647 und CVE-2024-6485 als moderates Finding aus; eine offiziell
 gepatchte 3.x-Version existiert nicht. Diese Stufe stabilisiert den Bestand und
 entfernt den CDN-Zwang, schließt BUG-041 aber erst mit der getrennten Migration
-auf Bootstrap 5.3.8.
+auf Bootstrap 5.3.8. Diese Migration ist jetzt abgeschlossen. Referenz-LESS
+und Glyphicons sind keine zweite Bootstrap-JavaScript-Laufzeit; die übrigen
+manuell vendorten Plugins bleiben separat zu prüfen.
 
 ### BUG-040 - PHPUnit fordert eine nicht registrierte SQLite-Verbindung an
 

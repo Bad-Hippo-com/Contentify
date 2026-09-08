@@ -1,23 +1,20 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
-Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
-Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+Stand 2026-09-08 08:26 CEST: **0.18.1 mit Bootstrap 5.3.8 auf Staging abgenommen.**
+23 Tests / 83 Assertions, beide Smoke-Skripte und PHP-LESS-Neubau bestanden.
+35 Admin-Menüziele, sechs Tabs, Dialoge, Kalender und beide Themes geprüft.
+Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
+Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
+BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
-23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
-bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
-Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
-SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
-
-Local workstream version: **0.17.2**
-Last updated: **2026-09-08 07:34 CEST**
+Local workstream version: **0.18.1**
+Last updated: **2026-09-08 08:26 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
-2. Nach der Bootstrap-4.6.2-Kompatibilitätsbrücke die Templates, Plugins und
-   eigenen JavaScript-Aufrufe für Bootstrap 5.3.8 inventarisieren und migrieren.
+2. Nach Bootstrap 5 verbleibende LESS-Referenzadapter, Glyphicons, jQuery 2.2.4
+   und manuell vendorte Plugins inventarisieren; BUG-043 und BUG-046 abarbeiten.
 3. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 4. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
 5. BUG-020 im Cup-Siegerablauf reproduzieren, mit einem Regressionstest
@@ -25,6 +22,9 @@ Last updated: **2026-09-08 07:34 CEST**
 
 ## Completed
 
+- [x] Bootstrap 5.3.8 als 0.18.1 auf Staging ausrollen und auf GitHub main
+  übernehmen; native APIs, reproduzierbare Builds, 23 Tests / 83 Assertions,
+  beide Smoke-Skripte und Browserabnahme bestanden (2026-09-08 08:26 CEST).
 - [x] Bootstrap 4.6.2 als Version 0.17.2 auf Staging übernehmen: 23 Tests / 83
   Assertions, 35 Admin-Menüziele, beide Themes und mobile Darstellung geprüft;
   PHP-LESS-Compiler, Dateirechte und Glyphicons-Pfade korrigiert (2026-09-08).
