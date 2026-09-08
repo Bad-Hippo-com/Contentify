@@ -159,6 +159,7 @@ class InstalledWorkflowTest extends TestCase
         $this->loginAs($owner);
         $forum = new \App\Modules\Forums\Forum(['title' => $this->prefix, 'description' => 'Testforum', 'internal' => false]);
         $forum->creator_id = $owner->id;
+        $forum->slug = strtolower($this->prefix);
         $forum->forceSave();
         $this->post('/forums/threads/'.$forum->id, ['title' => $this->prefix, 'text' => 'Erster Testbeitrag'])->assertRedirect();
         $thread = \App\Modules\Forums\ForumThread::whereTitle($this->prefix)->firstOrFail();
@@ -181,6 +182,7 @@ class InstalledWorkflowTest extends TestCase
             'players_per_team' => 1, 'slots' => 4, 'published' => true, 'closed' => false,
         ]);
         $cup->creator_id = $admin->id;
+        $cup->slug = strtolower($this->prefix);
         $cup->join_at = now()->subHour();
         $cup->check_in_at = now()->addHour();
         $cup->start_at = now()->addHours(2);
@@ -221,6 +223,7 @@ class InstalledWorkflowTest extends TestCase
         $owner = $this->fixture('Upload', true);
         $download = new \App\Modules\Downloads\Download(['title' => $this->prefix, 'download_cat_id' => 1]);
         $download->creator_id = $owner->id;
+        $download->slug = strtolower($this->prefix);
         $download->forceSave();
         $file = \Illuminate\Http\UploadedFile::fake()->create('rejected.php', 1, 'text/plain');
         \Illuminate\Support\Facades\Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], ['file' => $file]));
