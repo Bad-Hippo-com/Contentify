@@ -1,3 +1,17 @@
+## Bad Hippo 0.20.5 / Contentify 3.3-dev - 2026-09-08 10:31 CEST
+
+Matchergebnisse erhalten den expliziten Fremdschlüssel match_id; Anlegen,
+Ändern und Löschen aktualisieren das Gesamtergebnis. Acht transaktionale
+Controller-/DB-Ablauftests bestehen mit 72 Assertions. Sauberer Containerneubau
+und Browserabnahme stehen für diesen Stand noch aus.
+
+### Enthaltene Fixstände 0.20.1 bis 0.20.4
+
+- 0.20.1: Ungültiger Ersatz-Upload löscht keinen bestehenden Datensatz mehr.
+- 0.20.2: Cup-Events nutzen die eigene Instanz; beide Halbfinals verweisen auf das Finale.
+- 0.20.3: Leere ursprüngliche Zeitstempel bleiben beim Eloquent-Vergleich nullable.
+- 0.20.4: MatchScore initialisiert Eloquent wieder über parent::boot().
+
 ## Bad Hippo 0.20.0 / Contentify 3.3-dev - 2026-09-08
 
 Frontend-Inventar, Entfernung ungenutzter Browser-LESS-/Kalenderdateien und
