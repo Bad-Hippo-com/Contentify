@@ -20,5 +20,5 @@ const glyphicons = path.join(root, 'resources/assets/less/glyphicons.less');
 less.render(fs.readFileSync(glyphicons, 'utf8'), {filename: glyphicons, rewriteUrls: 'off'})
     .then(({css}) => {
         fs.writeFileSync(path.join(root, 'public/css/glyphicons.css'), css);
-        console.log('Bootstrap 4.6.2, Popper-Bundle und unabhängige Glyphicons bereitgestellt.');
+        console.log('Bootstrap 5.3.8, Popper-Bundle und unabhängige Glyphicons bereitgestellt.');
     }).catch(error => { console.error(error); process.exitCode = 1; });

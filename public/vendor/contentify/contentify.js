@@ -189,7 +189,7 @@ $(document).ready(function()
 
         /**
          * Adds a Bootstrap modal dialogue.
-         * To create close buttons, add this attribute: data-dismiss="modal" 
+         * To create close buttons, add this attribute: data-bs-dismiss="modal"
          *
          * @param {String} title   The title text
          * @param {String} content Content text, HTML or jQuery object
@@ -202,7 +202,7 @@ $(document).ready(function()
                     <div class="modal-content">\
                         <div class="modal-header">\
                             <h4 class="modal-title">%%title%%</h4>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>\
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>\
                         </div>\
                         <div class="modal-body clearfix"></div>\
                         <div class="modal-footer"></div>\
@@ -230,7 +230,12 @@ $(document).ready(function()
 
             $('body').append($modal);
 
-            $modal.modal();
+            var instance = new bootstrap.Modal($modal[0]);
+            $modal[0].addEventListener('hidden.bs.modal', function() {
+                instance.dispose();
+                $modal.remove();
+            }, {once: true});
+            instance.show();
         };
 
         /**
@@ -239,10 +244,9 @@ $(document).ready(function()
          */
         this.closeModal = function()
         {
-            $('.modal').modal('hide');
-
-            $('.modal').on('hidden.bs.modal', function(event) {
-                $(this).remove();
+            document.querySelectorAll('.modal').forEach(function(element) {
+                var instance = bootstrap.Modal.getInstance(element);
+                if (instance) instance.hide();
             });
         };
 

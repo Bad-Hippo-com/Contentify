@@ -128,14 +128,13 @@ $(document).ready(function()
         var $parent = $(this).parent();
 
         if ($parent.is('td')) {
-            $parent.attr('data-toggle',     'tooltip');
-            $parent.attr('data-html',       'true');
-            $parent.attr('data-placement',  'top');
-            $parent.attr('data-trigger',    'hover');
-            $parent.attr('data-title',      $(this).html());
-            $parent.attr('data-container',  'body');
-
-            $parent.tooltip();
+            new bootstrap.Tooltip($parent[0], {
+                html: true,
+                placement: 'top',
+                trigger: 'hover',
+                title: $(this).html(),
+                container: 'body'
+            });
         }
     });
     

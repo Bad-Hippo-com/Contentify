@@ -69,7 +69,7 @@
                                 <span class="image" style="background-image: url({{ asset('img/default/no_user.png') }})"></span>
                             @endif
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{user()->username }} <span class="caret"></span></button>
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">{{user()->username }} <span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li>{!! link_to('users/'.user()->id.'/'.user()->slug, trans('app.profile')) !!}</li>
                                     <li>{!! link_to('users/'.user()->id.'/edit', trans('app.edit_profile')) !!}</li>
@@ -203,7 +203,7 @@
     @if (Config::get('app.gdpr'))
         <div id="gdpr-alert" class="hidden alert alert-info alert-dismissible">
             <strong>{{ trans('app.gdpr_alert') }} <em>{{ link_to('privacy-policy', trans('app.read_more')) }}</em></strong>
-            <a href="#" class="btn btn-default" data-dismiss="alert" aria-label="close">{{ trans('app.confirm') }}</a>
+            <a href="#" class="btn btn-default" data-bs-dismiss="alert" aria-label="close">{{ trans('app.confirm') }}</a>
         </div>
     @endif
 

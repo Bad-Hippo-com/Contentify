@@ -26,17 +26,17 @@ function filesBelow(directory) {
 
 assert.equal(Number(process.versions.node.split('.')[0]), 24, 'Node.js 24 ist erforderlich.');
 assert.equal(packageJson.devDependencies.less, '4.9.1');
-assert.equal(packageJson.dependencies.bootstrap, '4.6.2');
+assert.equal(packageJson.dependencies.bootstrap, '5.3.8');
 assert.equal(packageJson.devDependencies.grunt, undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-less'], undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-watch'], undefined);
 assert.equal(packageJson.devDependencies['jit-grunt'], undefined);
 assert.equal(lock.packages['node_modules/less'].version, '4.9.1');
-assert.equal(lock.packages['node_modules/bootstrap'].version, '4.6.2');
+assert.equal(lock.packages['node_modules/bootstrap'].version, '5.3.8');
 assert.equal(fs.readFileSync(path.join(root, 'resources', 'assets', 'less', 'bootstrap', 'version.txt'), 'utf8').trim(), '3.4.1');
-assert.match(bootstrapJs, /Bootstrap v4\.6\.2/);
-assert.match(backendCss, /Bootstrap v4\.6\.2/);
-assert.match(frontendCss, /Bootstrap v4\.6\.2/);
+assert.match(bootstrapJs, /Bootstrap v5\.3\.8/);
+assert.match(backendCss, /Bootstrap\s+v5\.3\.8/);
+assert.match(frontendCss, /Bootstrap\s+v5\.3\.8/);
 assert.doesNotMatch(bootstrapJs, /Bootstrap v3\./);
 assert.doesNotMatch(backendCss, /\.modal\.in\b/);
 assert.doesNotMatch(frontendCss, /\.modal\.in\b/);
@@ -62,4 +62,18 @@ assert.match(glyphiconsCss, /url\(['"]?\.\/fonts\/glyphicons-halflings-regular\.
 assert.doesNotMatch(backendCss + frontendCss, /url\([^)]*glyphicons-halflings/);
 assert.match(backendCss, /@import url\(['"]https:\/\/fonts\.googleapis\.com\/css\?family=Open\+Sans:400,700['"]\)/);
 
-console.log('OK: Node-24-, LESS-, Bootstrap-4.6.2- und Editor-Asset-Verträge sind erfüllt.');
+const firstPartyViews = [...filesBelow(path.join(root, 'app')), ...filesBelow(path.join(root, 'resources/views'))]
+    .filter(file => file.endsWith('.blade.php'));
+for (const file of firstPartyViews) {
+    assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /data-(?:toggle|dismiss|target|ride|parent)=/, file);
+}
+const sharedJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/contentify.js'), 'utf8');
+const backendJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/backend.js'), 'utf8');
+const pickerJs = fs.readFileSync(path.join(root, 'public/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js'), 'utf8');
+assert.match(sharedJs, /new bootstrap\.Modal/);
+assert.match(sharedJs, /instance\.dispose\(\)/);
+assert.match(backendJs, /new bootstrap\.Tooltip/);
+assert.match(pickerJs, /bootstrap\.Collapse\.getOrCreateInstance/);
+assert.doesNotMatch(sharedJs + backendJs + pickerJs, /\.(?:modal|tooltip|collapse)\(['"](?:hide|show)?['"]?\)/);
+assert.equal(lock.packages['node_modules/popper.js'], undefined);
+console.log('OK: Node-24-, LESS-, Bootstrap-5.3.8- und Editor-Asset-Verträge sind erfüllt.');

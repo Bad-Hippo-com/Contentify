@@ -1,6 +1,10 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+Stand 2026-09-08 08:15 CEST: **0.18.0 / Bootstrap 5.3.8 in Kandidatenprüfung.**
+Native Modal-, Tooltip- und Collapse-Aufrufe sowie data-bs-Attribute umgesetzt.
+Node-Build und Asset-Verträge bestanden. Staging bleibt bis zur Abnahme 0.17.2.
+
+Vorheriger Abnahmestand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
 23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
 bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
 Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale

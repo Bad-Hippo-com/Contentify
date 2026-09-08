@@ -13,12 +13,12 @@
 {!! Form::model($settingsBag, ['route' => 'admin.config.update', 'method' => 'PUT']) !!}
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="nav-item"><a class="nav-link active" href="#tab_general" aria-controls="tab_general" role="tab" data-toggle="tab">{{ trans('app.general') }}</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_services" aria-controls="tab_services" role="tab" data-toggle="tab">{{ trans('app.services') }}</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_code" aria-controls="tab_code" role="tab" data-toggle="tab">{{ trans('app.code') }}</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_theme" aria-controls="tab_theme" role="tab" data-toggle="tab">{{ trans('app.theme') }}</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_meta" aria-controls="tab_meta" role="tab" data-toggle="tab">{{ trans('app.metainfo') }}</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_gdpr" aria-controls="tab_gdpr" role="tab" data-toggle="tab">{{ trans('app.gdpr') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link active" href="#tab_general" aria-controls="tab_general" role="tab" data-bs-toggle="tab">{{ trans('app.general') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_services" aria-controls="tab_services" role="tab" data-bs-toggle="tab">{{ trans('app.services') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_code" aria-controls="tab_code" role="tab" data-bs-toggle="tab">{{ trans('app.code') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_theme" aria-controls="tab_theme" role="tab" data-bs-toggle="tab">{{ trans('app.theme') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_meta" aria-controls="tab_meta" role="tab" data-bs-toggle="tab">{{ trans('app.metainfo') }}</a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#tab_gdpr" aria-controls="tab_gdpr" role="tab" data-bs-toggle="tab">{{ trans('app.gdpr') }}</a></li>
     </ul>
 
     <!-- Tab panes -->

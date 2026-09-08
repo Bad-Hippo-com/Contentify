@@ -1,3 +1,14 @@
+## Bad Hippo 0.18.0 / Contentify 3.3-dev - 2026-09-08
+
+- Bootstrap 5.3.8 mit Popper 2 lokal eingebunden; Bootstrap-4-JavaScript ersetzt.
+- Tabs und Dismiss-Attribute auf data-bs umgestellt; Modal-Lebenszyklus inklusive
+  Dispose, Tooltips und Kalender-Collapse auf native Bootstrap-5-API portiert.
+- Laravel-Pagination auf Bootstrap 5 umgestellt; Theme-LESS-Referenzadapter
+  bleibt bewusst bestehen, Formularabstände und bestehende Breite erhalten.
+- Regressionstests prüfen alte Datenattribute und API-Aufrufe. Erstlauf meldete
+  nur einen veralteten Bannervergleich (zusätzliches Leerzeichen), korrigiert.
+- Kandidatenprüfung läuft; noch keine Staging- oder Public-Freigabe.
+
 ## Bad Hippo 0.17.2 / Contentify 3.3-dev - 2026-09-08
 
 - Glyphicons vom Theme-Neubau getrennt; stabile relative Schriftpfade gelten

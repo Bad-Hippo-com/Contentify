@@ -694,9 +694,8 @@
                     return picker;
                 }
                 // Ignore event if in the middle of a picker transition
-                widget.find('.collapse').each(function () {
-                    var collapseData = $(this).data('bs.collapse');
-                    if (collapseData && collapseData._isTransitioning) {
+                widget.find('.collapse, .collapsing').each(function () {
+                    if ($(this).hasClass('collapsing')) {
                         transitioning = true;
                         return false;
                     }
@@ -811,16 +810,14 @@
                     var $this = $(e.target),
                         $parent = $this.closest('ul'),
                         expanded = $parent.find('.collapse.show'),
-                        closed = $parent.find('.collapse:not(.show)'),
-                        collapseData;
+                        closed = $parent.find('.collapse:not(.show)');
 
                     if (expanded && expanded.length) {
-                        collapseData = expanded.data('bs.collapse');
-                        if (collapseData && collapseData._isTransitioning) {
+                        if ($parent.find('.collapsing').length) {
                             return;
                         }
-                        expanded.collapse('hide');
-                        closed.collapse('show');
+                        bootstrap.Collapse.getOrCreateInstance(expanded[0], {toggle: false}).hide();
+                        bootstrap.Collapse.getOrCreateInstance(closed[0], {toggle: false}).show();
                         if ($this.is('span')) {
                             $this.toggleClass(options.icons.time + ' ' + options.icons.date);
                         } else {
