@@ -1,6 +1,9 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 09:34 CEST: **0.19.2 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:42 CEST: **0.19.3 in Kandidatenprüfung, noch nicht auf Staging.**
+0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
+0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
+Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.
 Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
 Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
 Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.

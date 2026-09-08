@@ -12,6 +12,6 @@
             {!! Form::textarea('text') !!}
         </div>
 
-        {!! Form::button('Save', ['class' => 'save btn btn-default']) !!}
+        {!! Form::button(trans('app.save'), ['class' => 'save btn btn-default']) !!}
     {!! Form::close() !!}
 </div>

@@ -83,6 +83,9 @@ assert.match(sharedJs, /setRequestHeader\('X-CSRF-TOKEN'/);
 assert.doesNotMatch(sharedJs, /xhr\.crossDomain|options\.data \+= '_token='/);
 const backendJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/backend.js'), 'utf8');
 const pickerJs = fs.readFileSync(path.join(root, 'public/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js'), 'utf8');
+for (const code of [pickerJs, fs.readFileSync(path.join(root, 'public/vendor/contentify/comments.js'), 'utf8'), fs.readFileSync(path.join(root, 'public/vendor/contentify/members.js'), 'utf8')]) {
+    assert.doesNotMatch(code, /\.size\(\)|\.success\(/);
+}
 assert.match(sharedJs, /new bootstrap\.Modal/);
 assert.match(sharedJs, /instance\.dispose\(\)/);
 assert.match(backendJs, /new bootstrap\.Tooltip/);

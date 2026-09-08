@@ -390,3 +390,9 @@ Kandidatenkorrektur: Kalender verwendet die bereits initialisierte Framework-
 Instanz. AJAX-CSRF-Token nur im Same-Origin-Header, nicht in URLs/fremden Anfragen.
 Freundschaftsanfragen dürfen nur Empfänger bestätigen, nicht der Absender.
 Kommentar-Regressionsfixtures korrigiert; Kandidaten-Abnahme läuft.
+## Bad Hippo 0.19.3 / Contentify 3.3-dev - 2026-09-08
+
+jQuery-3-Kompatibilität: Kalender verwendet length statt size(), Kommentare und
+Teammitglieder done() statt success(). Kommentarereignisse werden einmal delegiert,
+Bearbeiten/Löschen und anschließendes Neuanlegen überschreiben keine Handler mehr.
+Teamnamen werden als Text angehängt; Kommentar-Speicherknopf auf Deutsch.

@@ -1,6 +1,9 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 09:34 CEST: **0.19.2 in Kandidatenprüfung, noch nicht auf Staging.**
+Stand 2026-09-08 09:42 CEST: **0.19.3 in Kandidatenprüfung, noch nicht auf Staging.**
+0.19.2: 33 Tests/200 Assertions und Smoke-/Auditprüfungen bestanden.
+0.19.3 beseitigt im Browser erkannte jQuery-3-Inkompatibilitäten in Kalender,
+Kommentaren und Mitgliederverwaltung. Weitere Restore-Routen bleiben Sicherheitsarbeit.
 Nachprüfung: Kalender-Initialisierung korrigiert, AJAX-CSRF nur Same-Origin-
 Header, Freundschaftsbestätigung nur durch Empfänger. 0.19.1-Testlauf hatte zwei
 Fixture-Fehler; korrigiert, erneute Abnahme erforderlich. Staging unverändert.
@@ -35,6 +38,19 @@ Last updated: **2026-09-08 08:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### SEC-007 - Weitere alte Restore-Routen bleiben zu prüfen (hoch)
+
+Offen: Die Moduldateien enthalten weiterhin zahlreiche GET-Routen auf @restore
+(Papierkorb-Wiederherstellung). Diese sind nicht Teil der bisher abgesicherten
+Aktionsliste. Gemeinsam mit Objekt-/Rollenrechten im nächsten Sicherheitsblock
+umstellen und negativ testen. Keine umfassende CSRF-Freigabe für das Gesamtsystem.
+
+### BUG-049 - Entfernte jQuery-APIs in Altplugins
+
+Kandidat 0.19.2: Kalender input.size() verhindert Initialisierung; Kommentare und
+Mitglieder verwenden jqXHR.success(). 0.19.3 nutzt length/done und ersetzt doppelte
+Kommentarhandler durch Ereignisdelegation. Browser-Abnahme noch offen.
 
 ### BUG-048 - Kalenderinitialisierung im Kandidaten 0.19.0/0.19.1
 
