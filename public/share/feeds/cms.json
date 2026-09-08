@@ -1,6 +1,12 @@
 [
     {
         "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
+        "text": "Contentify 3.3-dev erreicht Bootstrap 5.3.8: Tabs, Dialoge, Tooltips und Kalender sind auf die neue API portiert. Die Aufarbeitung der verbleibenden Theme- und Plugin-Altlasten geht weiter.",
+        "timestamp": 1788848460,
+        "icon": "columns"
+    },
+    {
+        "url": "https://github.com/Bad-Hippo-com/Contentify/commits/main/",
         "text": "Contentify 3.3-dev erreicht Bootstrap 4.6.2: Themes, Tabs, Datumsauswähler und PHP-LESS-Neubau sind angepasst. Bootstrap 4 bleibt eine interne Zwischenstufe auf dem Weg zu Bootstrap 5.",
         "timestamp": 1788845640,
         "icon": "columns"

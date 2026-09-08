@@ -37,6 +37,12 @@ html {
 body {
   margin: 0;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 .form-group {
   margin-bottom: 1rem;
 }

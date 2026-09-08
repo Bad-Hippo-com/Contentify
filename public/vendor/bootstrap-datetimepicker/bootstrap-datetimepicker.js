@@ -712,6 +712,10 @@
                 widget.off('click', '[data-action]');
                 widget.off('mousedown', false);
 
+                widget.find('.collapse').each(function () {
+                    var instance = bootstrap.Collapse.getInstance(this);
+                    if (instance) instance.dispose();
+                });
                 widget.remove();
                 widget = false;
 

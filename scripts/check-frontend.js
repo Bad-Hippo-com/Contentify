@@ -74,6 +74,7 @@ assert.match(sharedJs, /new bootstrap\.Modal/);
 assert.match(sharedJs, /instance\.dispose\(\)/);
 assert.match(backendJs, /new bootstrap\.Tooltip/);
 assert.match(pickerJs, /bootstrap\.Collapse\.getOrCreateInstance/);
+assert.match(pickerJs, /bootstrap\.Collapse\.getInstance\(this\)/);
 assert.doesNotMatch(sharedJs + backendJs + pickerJs, /\.(?:modal|tooltip|collapse)\(['"](?:hide|show)?['"]?\)/);
 assert.equal(lock.packages['node_modules/popper.js'], undefined);
 console.log('OK: Node-24-, LESS-, Bootstrap-5.3.8- und Editor-Asset-Verträge sind erfüllt.');

@@ -1,3 +1,12 @@
+## Bad Hippo 0.18.1 / Contentify 3.3-dev - 2026-09-08
+
+- Kalender-Collapse-Instanzen beim Schließen freigeben; bisherige Linkoptik
+  erhalten und GitHub-Newsfeed um den Bootstrap-5-Meilenstein ergänzt.
+- Kandidat 0.18.0 bestand 23 Tests / 83 Assertions, beide Smoke-Skripte,
+  35 Admin-Menüziele, sechs Tabs, Modal, Kalender sowie beide Themes mobil/desktop.
+- Prüfaufbau: fehlende Schreibrechte für Dev-Pakete ausschließlich im
+  Kandidaten-Vendorverzeichnis korrigiert; erster Fehlversuch wird archiviert.
+
 ## Bad Hippo 0.18.0 / Contentify 3.3-dev - 2026-09-08
 
 - Bootstrap 5.3.8 mit Popper 2 lokal eingebunden; Bootstrap-4-JavaScript ersetzt.
