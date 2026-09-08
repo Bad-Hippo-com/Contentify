@@ -1,6 +1,15 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
+Stand 2026-09-08 09:27 CEST: **0.19.0 in Kandidatenprüfung, noch nicht auf Staging.**
+Funktionsreparaturen: Cup-Siegerwechsel (BUG-020), Kommentar-Kontext (BUG-008),
+HTTP-Status (BUG-017), Nachrichten-Einstiegsroute und Eingabevalidierung.
+Sicherheitsprüfung: Cup-GET-Mutationen auf Bestätigung/POST umgestellt; jQuery
+3.7.1, Moment 2.30.1 mit Sprachpaketen; Editor-Standardfilter wieder aktiviert.
+PHP- und Browser-Abnahme noch offen. Weitere Altmodule, Berechtigungen,
+serverseitige HTML-Bereinigung und Container-Pakete müssen separat geprüft werden.
+Keine Freigabe für Public; Staging bleibt bis zur Abnahme auf 0.18.3.
+
+Vorheriger Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
 Node-Build, Rahmen-Regressionsprüfung und PHP-LESS-Neubau bestanden.
 Auf Staging installiert und visuell geprüft: Zell- und Zeilenrahmen 0px.
@@ -19,6 +28,35 @@ Last updated: **2026-09-08 08:56 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
+
+### SEC-001 - Schreibende Cup-Aktionen über GET (hoch)
+
+Bestätigt am 2026-09-08 09:27 CEST: Anmeldung, Check-in/-out, Seeding,
+Teilnehmerentfernung und Teamaktionen wurden über GET ausgeführt. Dadurch greift
+die normale CSRF-Prüfung nicht. 0.19.0 zeigt bei GET/HEAD nur eine Bestätigung,
+schreibende Aufrufe benötigen POST mit Sitzungstoken. Kandidaten-Abnahme offen.
+Weitere Module mit schreibenden GET-Routen sind noch zu inventarisieren.
+
+### SEC-002 - Nicht im npm-Audit erfasste Browser-Altbibliotheken (hoch)
+
+Bestätigt: manuell vendortes jQuery 2.2.4 enthält bekannte alte XSS-Risiken.
+0.19.0 ersetzt es durch npm-gesperrtes jQuery 3.7.1. Moment 2.17.1 wird gleichzeitig
+durch 2.30.1 mit Sprachpaketen ersetzt. Build-Vertrag vergleicht ausgelieferte
+Dateien bytegenau. Die alte jQuery-Datei muss auch im persistenten Public-Volume
+entfernt werden. npm-Audit allein erfasst weiterhin nicht alle alten Plugins.
+
+### SEC-003 - Editorfilter explizit deaktiviert (mittel, Härtung)
+
+Bestätigt: sämtliche strictMode-Filter wurden clientseitig ausgeschaltet.
+0.19.0 entfernt diese Abschaltung. Das ist KEIN serverseitiger XSS-Schutz:
+HTML-Speicherpfade, Rollen und Ausgabekontexte benötigen eine eigene Prüfung.
+Noch kein nachgewiesener vollständiger Schutz gegen gespeichertes XSS.
+
+### SEC-004 - Sicherheitsabnahme noch unvollständig (Freigabesperre)
+
+Offen: Rollen-/Objektrechte aller Module, Uploads, BBCode/HTML, weitere
+GET-Mutationen, Container-/OS-Pakete, Geheimnisse/Produktivkonfiguration,
+Rate-Limits und Neuinstallation auf getrenntem Testsystem. Keine Public-Freigabe.
 
 ### BUG-047 - Bootstrap-5-Tabellen überdecken dunkle Themes
 

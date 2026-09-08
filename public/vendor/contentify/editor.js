@@ -232,7 +232,9 @@
     function editorOptions(textarea, locale) {
         var desktop = window.innerWidth > 768;
         var options = {
-            plugins: SUNEDITOR.plugins,
+            plugins: Object.keys(SUNEDITOR.plugins).filter(function (name) {
+                return ['exportPDF', 'fileUpload', 'layout', 'template', 'math'].indexOf(name) === -1;
+            }).map(function (name) { return SUNEDITOR.plugins[name]; }),
             lang: window.SUNEDITOR_LANG && window.SUNEDITOR_LANG[locale]
                 ? window.SUNEDITOR_LANG[locale]
                 : undefined,
@@ -240,14 +242,6 @@
             minHeight: desktop ? '320px' : '240px',
             resizingBar: true,
             charCounter: false,
-            strictMode: {
-                tagFilter: false,
-                formatFilter: false,
-                classFilter: false,
-                textStyleTagFilter: false,
-                attrFilter: false,
-                styleFilter: false
-            },
             buttonList: desktop ? [
                 ['undo', 'redo'],
                 ['blockStyle', 'font', 'fontSize'],

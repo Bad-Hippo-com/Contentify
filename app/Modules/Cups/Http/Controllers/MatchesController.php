@@ -7,6 +7,7 @@ use FrontController;
 use Illuminate\Http\RedirectResponse;
 use Redirect;
 use Request;
+use MsgException;
 
 class MatchesController extends FrontController
 {
@@ -58,7 +59,11 @@ class MatchesController extends FrontController
         $match = CupMatch::findOrFail($id);
 
         try {
-            $newMatch = $match->confirm(Request::get('left_score'), Request::get('right_score'), $left);
+            $scores = Request::validate([
+                'left_score' => 'required|integer|min:0|max:1000000',
+                'right_score' => 'required|integer|min:0|max:1000000',
+            ]);
+            $newMatch = $match->confirm((int) $scores['left_score'], (int) $scores['right_score'], $left);
         } catch (MsgException $exception) {
             $this->alertFlash($exception->getMessage());
             return Redirect::to('cups/matches/'.$match->id);

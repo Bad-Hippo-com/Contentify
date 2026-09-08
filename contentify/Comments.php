@@ -131,6 +131,8 @@ class Comments
 
         $comment->fill(Request::all());
         $comment->updater_id = user()->id;
+        $foreignType = $comment->foreign_type;
+        $foreignId = $comment->foreign_id;
 
         $okay = $comment->save();
 

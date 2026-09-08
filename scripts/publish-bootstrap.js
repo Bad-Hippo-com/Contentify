@@ -6,6 +6,14 @@ const root = path.resolve(__dirname, '..');
 const source = path.join(root, 'node_modules/bootstrap');
 const target = path.join(root, 'public/vendor/bootstrap');
 const less = require('less');
+for (const [from, to] of [
+    ['jquery/dist/jquery.min.js', 'jquery/jquery.min.js'],
+    ['jquery/LICENSE.txt', 'jquery/LICENSE.txt'],
+    ['moment/min/moment-with-locales.min.js', 'moment/moment.js'],
+    ['moment/LICENSE', 'moment/LICENSE'],
+]) {
+    fs.copyFileSync(path.join(root, 'node_modules', from), path.join(root, 'public/vendor', to));
+}
 fs.mkdirSync(target, { recursive: true });
 for (const [from, to] of [
     ['dist/css/bootstrap.min.css', 'bootstrap.min.css'],

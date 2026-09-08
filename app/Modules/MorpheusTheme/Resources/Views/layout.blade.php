@@ -34,7 +34,7 @@
     {!! HTML::style(HTML::versionedAssetPath('css/frontend.css')) !!}
 
     {!! HTML::jsTranslations() !!}
-    {!! HTML::script('vendor/jquery/jquery-2.2.4.min.js') !!}
+    {!! HTML::script('vendor/jquery/jquery.min.js') !!}
     {!! HTML::script('vendor/bootstrap/bootstrap.min.js') !!}
     {!! HTML::script('vendor/contentify/contentify.js') !!}
     {!! HTML::script('vendor/contentify/frontend.js') !!}

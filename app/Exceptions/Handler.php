@@ -53,6 +53,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // Preserve Laravel's authentication redirects and validation responses.
+        if ($exception instanceof \Illuminate\Validation\ValidationException ||
+            $exception instanceof \Illuminate\Auth\AuthenticationException ||
+            $exception instanceof \Illuminate\Http\Exceptions\HttpResponseException) {
+            return parent::render($request, $exception);
+        }
         // Laravel wraps any exceptions thrown in views in an error exception so we have to unwrap it
         // @see https://github.com/laravel/ideas/issues/956
         if ($exception instanceof ErrorException and
@@ -63,6 +69,14 @@ class Handler extends ExceptionHandler
         }
 
         if (! Config::get('app.debug')) { // If we are in debug mode we do not want to override Laravel's error output
+            $exception = $this->prepareException($exception);
+            if ($this->isHttpException($exception)) {
+                $status = $exception->getStatusCode();
+                if ($request->expectsJson()) {
+                    return parent::render($request, $exception);
+                }
+                return response()->view($status === 404 ? 'error_not_found' : 'error', [], $status, $exception->getHeaders());
+            }
             if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                 return Response::make(View::make('error_not_found'), 404);
             }

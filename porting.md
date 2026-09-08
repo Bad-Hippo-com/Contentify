@@ -1,6 +1,15 @@
 # Contentify porting plan
 
-Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
+Stand 2026-09-08 09:27 CEST: **0.19.0 in Kandidatenprüfung, noch nicht auf Staging.**
+Funktionsreparaturen: Cup-Siegerwechsel (BUG-020), Kommentar-Kontext (BUG-008),
+HTTP-Status (BUG-017), Nachrichten-Einstiegsroute und Eingabevalidierung.
+Sicherheitsprüfung: Cup-GET-Mutationen auf Bestätigung/POST umgestellt; jQuery
+3.7.1, Moment 2.30.1 mit Sprachpaketen; Editor-Standardfilter wieder aktiviert.
+PHP- und Browser-Abnahme noch offen. Weitere Altmodule, Berechtigungen,
+serverseitige HTML-Bereinigung und Container-Pakete müssen separat geprüft werden.
+Keine Freigabe für Public; Staging bleibt bis zur Abnahme auf 0.18.3.
+
+Vorheriger Stand 2026-09-08 08:56 CEST: **0.18.3 entfernt Tabellenrahmen in beiden Frontend-Themes.**
 Äußere Rahmen, Zell- und Zeilenlinien entfallen auch mobil; Farben bleiben erhalten.
 Node-Build, Rahmen-Regressionsprüfung und PHP-LESS-Neubau bestanden.
 Auf Staging installiert und visuell geprüft: Zell- und Zeilenrahmen 0px.

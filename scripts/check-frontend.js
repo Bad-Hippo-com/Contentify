@@ -27,6 +27,15 @@ function filesBelow(directory) {
 assert.equal(Number(process.versions.node.split('.')[0]), 24, 'Node.js 24 ist erforderlich.');
 assert.equal(packageJson.devDependencies.less, '4.9.1');
 assert.equal(packageJson.dependencies.bootstrap, '5.3.8');
+assert.equal(packageJson.dependencies.jquery, '3.7.1');
+assert.equal(packageJson.dependencies.moment, '2.30.1');
+for (const [published, source] of [
+    ['public/vendor/jquery/jquery.min.js', 'node_modules/jquery/dist/jquery.min.js'],
+    ['public/vendor/moment/moment.js', 'node_modules/moment/min/moment-with-locales.min.js'],
+]) {
+    assert.deepEqual(fs.readFileSync(path.join(root, published)), fs.readFileSync(path.join(root, source)));
+}
+assert.equal(fs.existsSync(path.join(root, 'public/vendor/jquery/jquery-2.2.4.min.js')), false);
 assert.equal(packageJson.devDependencies.grunt, undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-less'], undefined);
 assert.equal(packageJson.devDependencies['grunt-contrib-watch'], undefined);

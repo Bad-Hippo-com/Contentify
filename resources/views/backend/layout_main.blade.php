@@ -31,7 +31,7 @@
     {!! HTML::style('vendor/suneditor/suneditor-contents.min.css') !!}
 
     {!! HTML::jsTranslations() !!}
-    {!! HTML::script('vendor/jquery/jquery-2.2.4.min.js') !!}
+    {!! HTML::script('vendor/jquery/jquery.min.js') !!}
     {!! HTML::script('vendor/bootstrap/bootstrap.min.js') !!}
     {!! HTML::script('vendor/moment/moment.js') !!}
     {!! HTML::script('vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js') !!}

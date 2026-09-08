@@ -175,9 +175,9 @@ class CupMatch extends BaseModel
      * 
      * @return self
      */
-    public function nextMatch() : self
+    public function nextMatch() : ?self
     {
-        return self::findOrFail($this->next_match_id);
+        return $this->next_match_id ? self::find($this->next_match_id) : null;
     }
 
     /**
@@ -287,9 +287,14 @@ class CupMatch extends BaseModel
      */
     public function updateWinner()
     {
+        $match = $this;
         $nextMatch = $match->nextMatch();
         
         if (! $match->right_participant_id or ! $match->winner_id or ! $nextMatch or $nextMatch->winner_id) {
+            throw new MsgException(trans('app.not_possible'));
+        }
+        if (! $match->left_participant_id || $nextMatch->cup_id != $match->cup_id ||
+            ! in_array($match->winner_id, [$match->left_participant_id, $match->right_participant_id])) {
             throw new MsgException(trans('app.not_possible'));
         }
         

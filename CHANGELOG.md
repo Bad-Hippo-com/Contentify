@@ -370,3 +370,11 @@
 
 **Changes**
 - TBA
+## Bad Hippo 0.19.0 / Contentify 3.3-dev - 2026-09-08
+
+In Kandidatenprüfung: Cup-Siegerwechsel, Kommentar-Kontext und HTTP-Fehlerstatus
+repariert; /messages führt zum Posteingang. Empfänger/Eingaben werden validiert.
+Cup-Aktionslinks zeigen vor schreibenden POST-Aufrufen eine CSRF-Bestätigung.
+jQuery 3.7.1 und Moment 2.30.1 mit deutschen Kalendertexten reproduzierbar gebaut;
+Editor-Standardfilter wieder aktiv, ungenutzte optionale Plugins ausgeblendet.
+Noch kein vollständiger Sicherheitsnachweis oder Public-Release.

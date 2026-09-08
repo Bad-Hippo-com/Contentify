@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="message-box">
-        <h1>Resource Not Found</h1>
+        <h1>Seite nicht gefunden</h1>
 
         <hr>
 
-        <p>Sorry, something bad happened.</p>
-        <p>The resource you're looking for is not available.</p>
-        <p>Maybe you want to {!! link_to('search', 'search') !!} for it?</p>
+        <p>Die angeforderte Seite ist nicht verfügbar.</p>
+        <p>Vielleicht hilft die {!! link_to('search', 'Suche') !!} weiter.</p>
 
         <hr>
 

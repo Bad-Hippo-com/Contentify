@@ -62,12 +62,21 @@ class MessagesController extends FrontController
      */
     public function store()
     {
-        $message = new Message(Request::all());
+        $data = Request::validate([
+            'title' => 'required|string|min:3|max:255',
+            'text' => 'required|string|min:3|max:100000',
+            'receiver_name' => 'required|string|max:255',
+        ]);
+        $message = new Message(['title' => $data['title'], 'text' => $data['text']]);
 
         $message->creator_id = user()->id;
         $message->updater_id = user()->id;
         $message->createSlug();
-        $message->setReceiverByName(Request::get('receiver_name'));
+        if (! $message->setReceiverByName($data['receiver_name'])) {
+            return Redirect::to('messages/create')->withInput()->withErrors([
+                'receiver_name' => 'Der angegebene Empfänger wurde nicht gefunden.',
+            ]);
+        }
 
         $okay = $message->save();
 
