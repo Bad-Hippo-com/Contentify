@@ -134,7 +134,7 @@ class InstalledWorkflowTest extends TestCase
         $this->assertNull(Comment::find($comment->id));
     }
 
-    public function testLegacyPasswordResetMailCompletionAndTokenReuse(): void
+    public function testPasswordResetMailCompletionAndTokenReuse(): void
     {
         $user = $this->fixture('Reset');
         $oldHash = $user->password;
@@ -143,14 +143,44 @@ class InstalledWorkflowTest extends TestCase
         $this->assertNotNull($reminder, 'Resetcode muss gespeichert werden.');
         $transport = Mail::mailer()->getSymfonyTransport();
         $this->assertCount(1, $transport->messages());
-        $url = '/auth/restore/new/'.rawurlencode($user->email).'/'.$reminder->code;
+        $html = $transport->messages()->first()->getOriginalMessage()->getHtmlBody();
+        preg_match('~auth/restore/new/[^"<> ]+/([a-zA-Z0-9]{32})~', $html, $matches);
+        $code = $matches[1];
+        $this->assertSame(hash('sha256', $code), $reminder->code);
+        $url = '/auth/restore/new/'.rawurlencode($user->email).'/'.$code;
         $this->get($url)->assertOk();
+        $this->assertSame($oldHash, $user->fresh()->password, 'GET darf das Passwort nicht ändern.');
+        $this->assertCount(1, $transport->messages());
+        $this->post($url, ['password' => 'short', 'password_confirmation' => 'different'])->assertRedirect();
+        $this->assertSame($oldHash, $user->fresh()->password);
+        $newPassword = 'New-Workflow-Password-2026!';
+        $this->post($url, ['password' => $newPassword, 'password_confirmation' => $newPassword])->assertOk();
         $this->assertNotSame($oldHash, $user->fresh()->password);
-        $this->assertCount(2, $transport->messages());
+        $this->assertTrue(password_verify($newPassword, $user->fresh()->password));
+        $this->assertCount(1, $transport->messages(), 'Kein Passwortversand nach Abschluss.');
         $newHash = $user->fresh()->password;
-        $this->get($url)->assertOk();
+        $this->get($url)->assertStatus(400);
+        $this->post($url, ['password' => $this->password, 'password_confirmation' => $this->password])->assertStatus(400);
         $this->assertSame($newHash, $user->fresh()->password);
-        $this->assertCount(2, $transport->messages());
+        $this->assertCount(1, $transport->messages());
+        $this->post('/auth/login', ['email' => $user->email, 'password' => $newPassword]);
+        $this->assertEquals($user->id, Sentinel::getUser()?->id);
+    }
+
+    public function testExpiredResetAndUnknownAddress(): void
+    {
+        $user = $this->fixture('Expired');
+        $oldHash = $user->password;
+        $code = str_repeat('a', 32);
+        DB::table('reminders')->insert(['user_id' => $user->id, 'code' => hash('sha256', $code),
+            'completed' => false, 'created_at' => now()->subHours(2), 'updated_at' => now()]);
+        $url = '/auth/restore/new/'.rawurlencode($user->email).'/'.$code;
+        $this->get($url)->assertStatus(400);
+        $this->post($url, ['password' => $this->password, 'password_confirmation' => $this->password])->assertStatus(400);
+        $this->assertSame($oldHash, $user->fresh()->password);
+        $this->withSession(['captchaCode' => 'test'])->post('/auth/restore', [
+            'email' => $this->prefix.'absent@example.test', 'captcha' => 'test'])->assertOk();
+        $this->assertCount(0, Mail::mailer()->getSymfonyTransport()->messages());
     }
 
     public function testForumThreadReplyEditAndDelete(): void

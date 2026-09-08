@@ -3,99 +3,92 @@
 namespace App\Modules\Auth\Http\Controllers;
 
 use Captcha;
+use Contentify\Models\User;
 use FrontController;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Mail;
 use Redirect;
 use Request;
 use Reminder;
 use Sentinel;
-use Str;
+use Validator;
 
 class RestorePasswordController extends FrontController
 {
-
-    /**
-     * Show "restore password" page
-     *
-     * @return void
-     * @throws \Exception
-     */
     public function getIndex()
     {
         $this->pageView('auth::restore_password');
     }
 
-    /**
-     * This method will generate a reset password code, save it with the user model
-     * and send it to the user's email address.
-     *
-     * @return RedirectResponse|null
-     * @throws \Exception
-     */
     public function postIndex()
     {
         if (! Captcha::check(Request::get('captcha'))) {
-            return Redirect::to('auth/restore')
-                ->withInput()->withErrors(['message' => trans('app.captcha_invalid')]);
+            return Redirect::to('auth/restore')->withErrors(['message' => trans('app.captcha_invalid')]);
         }
-
-        $email = Request::get('email');
-
-        $user = Sentinel::findByCredentials(['login' => $email]);
-
-        if (! $user) {
-            $this->alertError(trans('auth::email_invalid'));
-            return null;
+        $email = Request::input('email');
+        $validator = Validator::make(['email' => $email], ['email' => 'required|string|email|max:254']);
+        if ($validator->fails()) {
+            return Redirect::to('auth/restore')->withErrors($validator);
         }
-
-        $reminder = Reminder::create($user); // This will generate a new code
-
-        Mail::send('auth::emails.restore_password', compact('user', 'reminder'), function(\Illuminate\Mail\Message $message) use ($email, $user)
-        {
-            $message->to($email, $user->username)->subject(trans('auth::password_reset'));
-        });
-
-        $this->alertSuccess(
-            trans('auth::email_gen_pw')
-        );
-
-        return null;
+        $key = 'password-reset:'.hash('sha256', Request::ip());
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            abort(429);
+        }
+        RateLimiter::hit($key, 3600);
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $code = DB::transaction(function () use ($user) {
+                User::whereKey($user->id)->lockForUpdate()->firstOrFail();
+                DB::table('reminders')->where('user_id', $user->id)->delete();
+                $reminder = Reminder::create($user);
+                $code = $reminder->code;
+                // Only the emailed link carries the secret; the DB stores its digest.
+                $reminder->code = hash('sha256', $code);
+                $reminder->save();
+                return $code;
+            });
+            Mail::send('auth::emails.restore_password', compact('user', 'code'), function ($message) use ($user) {
+                $message->to($user->email, $user->username)->subject(trans('auth::password_reset'));
+            });
+        }
+        // Same visible response for known and unknown addresses.
+        $this->alertSuccess(trans('auth::reset_requested'));
     }
 
-    /**
-     * This method will check the email and the submitted code (it is included into the URL)
-     * and if they pass generate a new password and send it to the user.
-     *
-     * @param string $email The user's email address
-     * @param string $code  Reset password code
-     * @return void
-     * @throws \Exception
-     */
     public function getNew(string $email, string $code)
     {
-        $user = Sentinel::findByCredentials(['login' => $email]);
-
-        if (! $user) {
-            $this->alertError(trans('auth::email_invalid'));
-            return;
+        $user = User::where('email', $email)->first();
+        if (! $user || ! Reminder::exists($user, hash('sha256', $code))) {
+            abort(400, trans('auth::code_invalid'));
         }
+        $this->pageView('auth::new_password', compact('email', 'code'));
+    }
 
-        $password = strtolower(Str::random(9)); // Generate a new password
-
-        // Check the stored code with the passed and if they match, save the new password.
-        if (! Reminder::complete($user, $code, $password)) {
-            $this->alertError(trans('auth::code_invalid'));
-            return;
+    public function postNew(string $email, string $code)
+    {
+        $validator = Validator::make(Request::only('password', 'password_confirmation'), [
+            'password' => 'required|string|min:12|max:72|confirmed',
+        ]);
+        if ($validator->fails()) {
+            // Never flash password fields to the session.
+            return Redirect::to(Request::url())->withErrors($validator);
         }
-
-        Mail::send('auth::emails.send_password', compact('user', 'password'), function(\Illuminate\Mail\Message $message) use ($email, $user)
-        {
-            $message->to($email, $user->username)->subject(trans('auth::new_pw'));
+        $completed = DB::transaction(function () use ($email, $code) {
+            // Serializes simultaneous completions and replacement-token requests.
+            $user = User::where('email', $email)->lockForUpdate()->first();
+            if (! $user || ! Reminder::complete($user, hash('sha256', $code), Request::input('password'))) {
+                return false;
+            }
+            DB::table('reminders')->where('user_id', $user->id)->delete();
+            Sentinel::logout($user, true);
+            return true;
         });
-
-        $this->alertSuccess(
-            trans('auth::email_new_pw')
-        );
+        if (! $completed) {
+            abort(400, trans('auth::code_invalid'));
+        }
+        Request::session()->invalidate();
+        Request::session()->regenerateToken();
+        $this->alertSuccess(trans('auth::reset_completed'));
     }
 }

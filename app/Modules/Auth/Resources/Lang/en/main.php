@@ -1,6 +1,10 @@
 <?php 
 
 return [
+    'reset_requested' => 'If an account exists for this address, you will receive a password reset link.',
+    'reset_completed' => 'Your password has been changed. Please sign in with your new password.',
+    'reset_password_help' => 'Choose a new password containing 12 to 72 characters.',
+    'reset_confirmation' => 'Confirm new password',
 
     /*
     |--------------------------------------------------------------------------

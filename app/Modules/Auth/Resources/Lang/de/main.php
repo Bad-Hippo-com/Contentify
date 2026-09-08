@@ -35,7 +35,11 @@ return [
     'code_invalid'      => 'Der Code ist ungültig.',
     'new_pw'            => 'Neues Passwort',
     'email_new_pw'      => 'Eine Email mit Ihrem neuen Passwort wurde an Ihre Email-Adresse gesendet.',
-    'pw_link'           => 'Bitte klicken Sie auf den nachfolgenden Link, um ein neues Passwort für :0 zu  generieren.',
+    'pw_link'           => 'Über diesen Link können Sie innerhalb von 60 Minuten ein eigenes neues Passwort für :0 setzen. Der Link ist einmalig gültig.',
+    'reset_requested'   => 'Falls ein Konto zu dieser Adresse existiert, erhalten Sie einen Link zum Zurücksetzen des Passworts.',
+    'reset_completed'   => 'Ihr Passwort wurde geändert. Bitte melden Sie sich mit dem neuen Passwort an.',
+    'reset_password_help' => 'Wählen Sie ein neues Passwort mit mindestens 12 und höchstens 72 Zeichen.',
+    'reset_confirmation' => 'Neues Passwort wiederholen',
     'email_ignore'      => 'Falls Sie kein neues Passwort generieren lassen möchten, ignorieren Sie diese Email bitte.',
     'pw_generated'      => 'Ein neues Passwort wurde für :0 generiert.',
 

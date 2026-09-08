@@ -179,7 +179,7 @@ return [
 
         'model' => Cartalyst\Sentinel\Reminders\EloquentReminder::class,
 
-        'expires' => 14400,
+        'expires' => 3600,
 
         'lottery' => [2, 100],
 
