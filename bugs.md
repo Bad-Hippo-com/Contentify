@@ -16,6 +16,19 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### BUG-045 - Kalender-Komponenten beim Entfernen nicht freigegeben
+
+Behoben in 0.18.1 (2026-09-08 08:21 CEST): Bootstrap 5 speichert Collapse-
+Instanzen unabhängig von jQuery. Vor dem Entfernen des Kalender-DOM werden
+sie jetzt explizit mit dispose freigegeben. Auch der Bilderdialog gibt seine
+Modal-Instanz frei und entfernt nach dem Schließen den DOM-Knoten.
+
+### BUG-046 - Serverbereich zeigt Seitentitel Maps
+
+Offen, 2026-09-08 08:21 CEST: Bei der Browserprüfung der 35 Menüziele liefert
+`/admin/servers` den Titel `Maps - Badtify`. Kein Bootstrap-JavaScriptfehler;
+als separater Beschriftungsfehler zur Reproduktion und Korrektur erfasst.
+
 ### BUG-044 - Theme-Neubau erzeugt ungültige Glyphicons-Pfade
 
 Behoben in 0.17.2: Durch relative LESS-Imports wurden im Theme-Neubau Pfade

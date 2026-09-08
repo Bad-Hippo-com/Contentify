@@ -14,7 +14,31 @@ Local workstream version: **0.17.2**
 Assessment/update time: **2026-09-08 07:34 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
-## Bootstrap-4-Abnahme – 2026-09-08 07:37 CEST
+## Bootstrap-5-Portierung – 2026-09-08 08:21 CEST
+
+- `0.18.0` ersetzt die Laufzeit durch Bootstrap 5.3.8 und das Popper-2-Bundle.
+  data-bs-Attribute, native Modal/Tooltip/Collapse-APIs und Laravel-Pagination
+  sind migriert. `0.18.1` ergänzt Dispose beim Kalender und erhält die Linkoptik.
+- Referenz-LESS für alte Theme-Mixins und das eigenständige Glyphicons-Stylesheet
+  bleiben erhalten; Bootstrap 3/4 werden nicht als zweite JS-Laufzeit geladen.
+  Dies ist keine Behauptung einer vollständigen Sass- oder jQuery-Ablösung.
+- Kandidat auf Port 8088 mit separaten DB-, Storage- und Public-Volumes:
+  23 Tests / 83 Assertions, beide Smoke-Skripte und echter PHP-LESS-Neubau bestanden.
+  Alle 35 Admin-Menüziele ohne Error-Seite, sechs Konfigurationstabs, beide
+  Editoren, Bildermodal samt Entfernung von Dialog und Backdrop, Kalenderwechsel
+  Datum/Uhrzeit und Phobos-Benutzerdropdown geprüft. Beide Themes bei 1440 und
+  390 Pixeln geprüft. Theme-Wechsel erfolgt nur im isolierten Kandidaten.
+- Aufbaubefund: Composer-Dev-Pakete ließen sich zunächst nicht in das root-
+  eigene Vendorverzeichnis schreiben. Nur im Prüfcontainer wurde dessen
+  Eigentümer korrigiert; keine Dev-Abhängigkeiten auf Staging installiert.
+- Protokolle: `/var/log/contentify-bootstrap-candidate/deployment/` für
+  Kandidat und Fehlversuche, `/var/log/contentify/deployment/` für Staging.
+  Lokaler erster Asset-Test erforderte wegen des offiziellen CSS-Banners mit
+  doppeltem Leerzeichen einen toleranteren Versionsvergleich.
+- BUG-043 bleibt offen; BUG-046 dokumentiert den nebenbei gefundenen falschen
+  Server-Seitentitel. Node-Audit prüft nicht manuell vendorte Altbibliotheken.
+
+## Historische Bootstrap-4-Abnahme – 2026-09-08 07:37 CEST
 
 - Umsetzung `3045bad5` über `bad-hippo/bootstrap-4` nach `main` übernommen und
   auf Staging `192.168.178.213` als **0.17.2** installiert. PHP 8.5.10 und
