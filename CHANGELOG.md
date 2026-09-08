@@ -3,6 +3,9 @@
 - Glyphicons vom Theme-Neubau getrennt; stabile relative Schriftpfade gelten
   für Backend, Morpheus und Phobos, auch bei Installation im Unterverzeichnis.
 - Node- und PHP-Prüfungen gegen erneut eingebettete falsche Schriftpfade ergänzt.
+- 2026-09-08 07:37 CEST: nach 23 Tests mit 83 Assertions, beiden Smoke-Skripten
+  und Browserprüfung auf Staging installiert; Implementierung auf `main`.
+  Bootstrap 4 bleibt eine interne Zwischenstufe, keine Public-Freigabe.
 
 ## Bad Hippo 0.17.1 / Contentify 3.3-dev - 2026-09-08
 

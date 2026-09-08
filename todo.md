@@ -1,18 +1,18 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
-Local workstream version: **0.16.0**
-Last updated: **2026-09-07 20:13 CEST**
+Local workstream version: **0.17.2**
+Last updated: **2026-09-08 07:34 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
 1. Offene Fehler reproduzieren, sortieren und zuerst den Originalumfang stabilisieren.
-2. Nach der Bootstrap-3.4.1-Kompatibilitätsbrücke die Templates, Plugins und
+2. Nach der Bootstrap-4.6.2-Kompatibilitätsbrücke die Templates, Plugins und
    eigenen JavaScript-Aufrufe für Bootstrap 5.3.8 inventarisieren und migrieren.
 3. Container-Build und Veröffentlichung über GitHub Container Registry vorbereiten.
 4. Einen unabhängigen Testserver installieren und alle Abläufe dort wiederholen.
@@ -21,6 +21,9 @@ Last updated: **2026-09-07 20:13 CEST**
 
 ## Completed
 
+- [x] Bootstrap 4.6.2 als Version 0.17.2 auf Staging übernehmen: 23 Tests / 83
+  Assertions, 35 Admin-Menüziele, beide Themes und mobile Darstellung geprüft;
+  PHP-LESS-Compiler, Dateirechte und Glyphicons-Pfade korrigiert (2026-09-08).
 - [x] `0.16.0` im getrennten Kandidaten mit 22 Tests und 74 Assertions sowie
   beiden Smoke-Skripten prüfen, danach auf Staging ausrollen und Homepage,
   Admin-Icons, IP-Links, Feed, beide Editoren, Bootstrap-Bildermodal, Assets

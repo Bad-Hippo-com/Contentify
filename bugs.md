@@ -1,13 +1,13 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
-Local workstream version: **0.16.0**
-Last updated: **2026-09-07 20:13 CEST**
+Local workstream version: **0.17.2**
+Last updated: **2026-09-08 07:34 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -48,7 +48,7 @@ Exception liegt unter /var/log/contentify-bootstrap-candidate/application-2026-0
 ### BUG-041 - Bootstrap 3 ist abgekündigt und hat keinen offiziellen Sicherheitspatch
 
 Severity: **high**
-Status: **open; compatibility bridge installed on staging in 0.16.0, 2026-09-07 20:13 CEST**
+Status: **Bootstrap-3-Laufzeit in 0.17.2 ersetzt; EOL-Zwischenstufe Bootstrap 4 bleibt bis Version 5 offen, 2026-09-08 07:34 CEST**
 
 Contentify mischte Bootstrap-CSS 3.3.3 mit extern geladenem JavaScript 3.3.1.
 Version 0.16.0 vereinheitlicht zunächst alle Styles und Skripte lokal auf der
@@ -385,7 +385,7 @@ Status: **partially resolved; modern Composer required, 2026-09-06 20:17 CEST**
 - Version `0.8.0` aktualisiert die beiden blockierenden Nette-Pakete und setzt
   die PHP-Anforderung auf `~8.5.0`; Installation und Plattformprüfung laufen
   nun ohne ignorierte Anforderungen.
-- Composer meldet noch ein aufgegebenes Produktionspaket: `oyejorge/less.php`.
+- Seit 0.17.1 ersetzt Wikimedia/less.php das aufgegebene `oyejorge/less.php`.
   Laravel Collective HTML und Steam-Authentifizierung werden seit 0.11.0 als
   kontrollierte lokale Brücken geführt und bleiben als technische Schuld
   dokumentiert.

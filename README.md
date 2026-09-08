@@ -1,10 +1,10 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
 > **Status: frühe Stabilisierung, noch nicht für öffentliche Produktivsysteme freigegeben.**
 
@@ -20,7 +20,7 @@ genannt. Dieser Fork ist derzeit keine offizielle Fortsetzung des ursprüngliche
 Maintainers. Zusammenarbeit, Rückführung geeigneter Änderungen und eine spätere
 Übergabe bleiben ausdrücklich willkommen.
 
-Aktueller Arbeitsstand: **Bad Hippo 0.16.0 / Contentify 3.3-dev**.
+Aktueller Arbeitsstand: **Bad Hippo 0.17.2 / Contentify 3.3-dev**.
 Die Installation funktioniert auf Staging; ein unabhängiger sauberer Testserver
 und die Modernisierung des veralteten Software-Stacks stehen noch aus.
 
@@ -93,16 +93,16 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.16.0**
-Last updated: **2026-09-07 20:13 CEST**
+Local workstream version: **0.17.2**
+Last updated: **2026-09-08 07:34 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.
 The upstream default branch is the unfinished `3.2-dev` / v3.2 ALPHA branch.
-Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.16.0`
+Bad Hippo continues from that baseline as `3.3-dev`; the separate `0.17.2`
 identifier versions our individual, staged changes.
 
-Bad Hippo `0.16.0` is installed on the internal staging host behind Nginx.
+Bad Hippo `0.17.2` is installed on the internal staging host behind Nginx.
 PHP 8.5/Laravel 13 and MariaDB are isolated in containers; this is the
 migration workshop, not a public release. The Node/LESS rung passed 22 tests
 with 74 assertions in its isolated candidate. Live staging reports 512 routes,

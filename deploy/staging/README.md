@@ -1,13 +1,13 @@
 # Contentify staging deployment
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
-Version: **0.16.0 / Contentify 3.3-dev**
-Last updated: **2026-09-07 20:13 CEST**
+Version: **0.17.2 / Contentify 3.3-dev**
+Last updated: **2026-09-08 07:34 CEST**
 
 This deployment continues from the historical Contentify 3.2-dev baseline as
 Bad Hippo 3.3-dev behind Nginx. PHP 8.5 is isolated in a container and is not an

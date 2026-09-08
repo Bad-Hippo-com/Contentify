@@ -1,15 +1,22 @@
 # Contentify porting plan
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
-Local workstream version: **0.16.0**
-Last updated: **2026-09-07 20:13 CEST**
+Local workstream version: **0.17.2**
+Last updated: **2026-09-08 07:34 CEST**
 
 ## Decision
+
+Bootstrap-4-Zwischenstand (2026-09-08): offizielle kompilierte CSS und Bundle-JS
+werden lokal eingebunden. Die Themes bleiben vorerst LESS-basiert und nutzen
+einen dokumentierten Referenzadapter für alte Mixins und Komponenten.
+Beim Schritt auf Bootstrap 5 sind dieser Adapter, jQuery-Pluginaufrufe,
+Datumsauswähler und Glyphicons ausdrücklich zu prüfen beziehungsweise abzulösen.
+Ein erfolgreicher npm-Audit ersetzt keine Prüfung manuell vendorter Bibliotheken.
 
 A current, supportable Contentify deployment is technically feasible, but it
 is a **modernization project**, not a normal installation. The historical
@@ -44,7 +51,7 @@ prepared templates and verification procedure are in `deploy/logging`.
 
 ## Current staging baseline
 
-Version `0.16.0` is installed on staging with Nginx 1.26.3 after passing its
+Version `0.17.2` is installed on staging with Nginx 1.26.3 after passing its
 isolated candidate. It uses PHP-FPM 8.5.10, Laravel 13.30.1 and MariaDB 10.11.
 The application, database,
 public runtime files and uploads are persistent where required. The Contentify

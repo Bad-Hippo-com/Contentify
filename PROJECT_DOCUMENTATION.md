@@ -1,14 +1,42 @@
 # Contentify project assessment
 
-Stand 2026-09-08 07:34 CEST: Bootstrap-4-Kandidat **0.17.2** in Prüfung.
-Bootstrap 4.6.2 ersetzt die Laufzeit; Theme-LESS und Glyphicons bleiben als
-dokumentierte Übergangsschnittstelle erhalten. Tabs, Raster und Datumsauswähler
-sind angepasst. Lokaler Build und npm-Prüfung bestanden; Staging bleibt bis zur
-Kandidatenabnahme auf 0.16.0. Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5.
+Stand 2026-09-08 07:34 CEST: **0.17.2 mit Bootstrap 4.6.2 auf Staging abgenommen.**
+23 Tests mit 83 Assertions, beide Smoke-Tests, PHP-LESS-Neubau und Browserprüfung
+bestanden. Theme-LESS und Glyphicons bleiben dokumentierte Übergangsschnittstellen.
+Bootstrap 4 ist EOL; Ziel bleibt Bootstrap 5. Kalendertexte und optionale
+SunEditor-Pluginwarnungen sind als BUG-043 noch offen.
 
-Local workstream version: **0.16.0**
-Assessment/update time: **2026-09-07 20:13 CEST**
+Local workstream version: **0.17.2**
+Assessment/update time: **2026-09-08 07:34 CEST**
 Workspace: `E:\WorkSpace\contentify`
+
+## Bootstrap-4-Abnahme – 2026-09-08 07:37 CEST
+
+- Umsetzung `3045bad5` über `bad-hippo/bootstrap-4` nach `main` übernommen und
+  auf Staging `192.168.178.213` als **0.17.2** installiert. PHP 8.5.10 und
+  Laravel 13.30.1 bleiben unverändert; kein Public-Release und keine Testserver-Freigabe.
+- Bootstrap 4.6.2 und das Popper-Bundle werden lokal ausgeliefert. Raster,
+  Tabs, Formulare, Pagination, Modals und Datumsauswähler wurden angepasst.
+  Alte Theme-Mixins bleiben als LESS-Referenzadapter erhalten; dies ist noch
+  keine vollständige Sass-Portierung. Glyphicons haben ein separates Stylesheet.
+- Reale Theme-Wechsel deckten drei zusätzliche Fehler auf: der alte PHP-LESS-
+  Compiler scheiterte unter PHP 8.5, Public-Dateien gehörten root und dynamisch
+  kompilierte Icon-Pfade waren falsch. Wikimedia/less.php 5.5.1, atomarer
+  Neubau, korrekte Container-Dateirechte und getrennte Glyphicons beheben sie.
+- Isolierter Kandidat: **23 Tests / 83 Assertions**, beide Smoke-Skripte,
+  tatsächlicher PHP-LESS-Neubau, 35 Admin-Menüziele, sechs Konfigurationstabs,
+  beide Editoren, Bildermodal, Kalenderumschaltung sowie beide Themes geprüft.
+  Desktop und 390-Pixel-Ansicht geprüft; Phobos-Überlappungen korrigiert.
+- Staging: Smoke-Skripte und LESS-Neubau erneut bestanden, Assets mit HTTP 200,
+  Browserprüfung von Editor, Modal, Tabs, Homepage und neuem Feed erfolgreich.
+  Keine JavaScript-Fehler; optionale Editorwarnungen bleiben unter BUG-043 offen.
+- Build- und Prüfprotokolle liegen zentral unter
+  `/var/log/contentify/deployment/` sowie für Kandidaten unter
+  `/var/log/contentify-bootstrap-candidate/deployment/`.
+  Der separate Kandidat wird nach Abnahme ohne Löschen seiner Volumes beendet.
+- Composer-Audit ohne bekannte Advisories; npm-Audit ohne Treffer im deklarierten
+  Paketbaum. Manuell eingebundene Altbibliotheken sind davon nicht abgedeckt.
+  Bootstrap 4 bleibt eine EOL-Zwischenstufe vor Bootstrap 5.
 
 ## Purpose
 
@@ -56,7 +84,7 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | --- | --- |
 | PHP 8.5 / Laravel 13 lint | Pass; `0.13.0` parses 802 project and local-package files |
 | PHP 8.5 / Laravel 13 Artisan | Pass; Laravel 13.30.1 and 512 active production routes |
-| PHP 8.5 / Laravel 13 PHPUnit | Pass; 21 tests with 71 assertions; focused editor suite 3 tests with 16 assertions |
+| PHP 8.5 / Laravel 13 PHPUnit | Pass; 0.17.2 has 23 tests with 83 assertions including both theme compilers |
 | Git checkout | Pass; official default branch cloned cleanly |
 | PHP 8.0 lint | Pass; `0.7.0` parses 688 selected first-party and test files |
 | PHP 8.0 Artisan | Pass; Laravel 8.83.29 and 512 active routes |
@@ -67,9 +95,9 @@ Staging-Rollout geprüft; temporäre Prüfcontainer werden danach entfernt.
 | Composer validation | Pass for `0.6.0`; regenerated lock is installable on PHP 7.4 |
 | Composer normal install on PHP 8.0 | Pass for the pinned `0.7.0` image without ignored requirements |
 | Composer platform check | Pass on PHP 8.0.30 with all required extensions |
-| Composer production audit | Pass; no known vulnerability advisories in `0.13.0`; one abandoned LESS package remains |
+| Composer production audit | Pass in 0.17.2; no known advisories or abandoned production package |
 | npm clean install | Pass on Node 24/npm 11 without legacy resolution |
-| npm audit | Bootstrap-3.4.1 bridge has one moderate package finding from two XSS advisories; Bootstrap 5.3.8 is required |
+| npm audit | 0 known advisories in the declared npm tree; Bootstrap 4.6.2 and Popper 1 are EOL; legacy manually vendored libraries are outside this audit |
 | SunEditor production audit | Pass; exact 3.3.2 dependency, no known production vulnerability |
 | LESS build/watch | Pass with exact Less 4.9.1; deterministic CSS hash |
 | Docker/Compose review | Fail for current production readiness |
