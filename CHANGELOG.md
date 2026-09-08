@@ -3,7 +3,9 @@
 Matchergebnisse erhalten den expliziten Fremdschlüssel match_id; Anlegen,
 Ändern und Löschen aktualisieren das Gesamtergebnis. Acht transaktionale
 Controller-/DB-Ablauftests bestehen mit 72 Assertions. Sauberer Containerneubau
-und Browserabnahme stehen für diesen Stand noch aus.
+abgenommen am 2026-09-08 10:35 CEST: zusätzlich 35 Tests/205 Assertions, beide
+Smoke-Tests, LESS und Composer-Audit bestanden. News-Editoren im Browser sichtbar.
+Nur Kandidat :8088, nicht main oder Staging :80; keine Public-Freigabe.
 
 ### Enthaltene Fixstände 0.20.1 bis 0.20.4
 

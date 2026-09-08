@@ -1,10 +1,21 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08: **0.20.0 vorbereitet; Kandidat noch 0.19.5, Staging :80 bleibt 0.18.3.**
-Frontend-Inventar in FRONTEND_DEPENDENCIES.md; unbenutztes Browser-LESS und
-zweiten Kalender entfernt, Glyphicons aus aktiven Layouts abgelöst. Build bestanden.
-Neue transaktionale Ablaufsuite mit echter Kandidaten-DB und abgefangener Mail
-vorbereitet; noch nicht ausgeführt. Kein vollständiger Kalender-/LESS-Ersatz.
+Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
+Sauberer Neubau: 35 Regressionstests/205 Assertions und acht Ablauftests/72
+Assertions bestanden, außerdem beide Smoke-Tests, LESS-Neubau und Composer-Audit.
+npm-Test und Produktions-Audit bestanden (keine gemeldeten Advisories).
+Browser: Beide News-Editoren samt Werkzeugleisten und Kalender-Symbol sichtbar.
+Entfernte Browser-LESS-/Kalenderdateien und jQuery 2.2.4 liefern HTTP 404.
+Protokolle zentral unter /var/log/contentify-bootstrap-candidate/deployment.
+Frontend-Inventar: FRONTEND_DEPENDENCIES.md. Unbenutztes Browser-LESS und
+zweiter Kalender entfernt; Glyphicons nicht mehr in aktiven Layouts geladen.
+Acht echte Controller-/DB-Ablauftests: 72 Assertions bestanden. Erfasst sind
+Registrierung/Login, Nachrichtenrechte, Kommentare, Reset mit abgefangenen Mails,
+Forum, Solo-Cup bis zum Sieger, abgelehnter Upload und Matchergebnis-CRUD.
+Datensätze werden transaktional zurückgerollt; nur Kandidat :8088 ist freigegeben.
+Keine vollständige Browser-/SMTP-/Captcha-/Upload- oder Sicherheitsabnahme.
+Kalenderersatz, LESS-Helfer, Tagsinput/Flot und Designmodernisierung bleiben offen.
+Die nachfolgenden Browser-/34-Test-Nachweise beziehen sich auf 0.19.5.
 GitHub: Arbeitszweig bad-hippo/stabilisierung-sicherheit, noch nicht main.
 Browser: Seiteneditor und beide News-Editoren sichtbar, Texteingabe und deutscher
 Kalender funktionieren ohne neue JavaScriptfehler; Downloads-Editor ebenfalls.
@@ -38,6 +49,27 @@ Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
 
+### SEC-009 - Passwortreset verschickt ein neues Passwort (hoch, offen)
+
+2026-09-08 10:32 CEST: Reale Reset-Controller erzeugen nach Linkaufruf per GET
+ein Passwort und verschicken es im Klartext per E-Mail. Token-Wiederverwendung
+wird im Test abgewiesen; dies macht den Ablauf nicht sicher. Auf einmaliges,
+befristetes Token und selbst gewähltes Passwort per geschütztem POST umstellen.
+SMTP-Zustellung ist nicht getestet; Tests fangen Mail lokal im Array-Transport ab.
+
+### BUG-053 bis BUG-056 - Durch echte Abläufe gefundene Laufzeitfehler
+
+2026-09-08 10:35 CEST, korrigiert und im sauber gebauten Kandidaten 0.20.5 geprüft:
+- BUG-053: Cup-Seeding nutzte undefiniertes $cup; Events verwenden jetzt $this.
+  Dieselbe Instanzkorrektur gilt für Teilnehmer-Helfer (nicht separat getestet).
+- BUG-054: CupMatch speicherte den nächsten Match-Verweis am falschen Objekt.
+  Beide Halbfinal-Verweise und das Finale bis zum geschlossenen Cup sind geprüft.
+- BUG-055: NULL-Zeitstempel scheiterten beim Eloquent-Originalwertvergleich.
+  NULL/Leerstring bleiben erhalten; Unit-Regression ergänzt, Cupablauf besteht.
+- BUG-056: MatchScore übersprang parent::boot(); nach dessen Reparatur zeigte sich
+  außerdem der falsche implizite Fremdschlüssel game_match_id statt match_id.
+  Anlegen, Ändern, Löschen und aggregierte Ergebnisse bestehen jetzt im DB-Test.
+
 ### BUG-052 - Nicht unterstützte Kalenderoption stoppt alle Editoren
 
 Browserabnahme 0.19.5, 2026-09-08 09:49 CEST: ein Seiteneditor und beide
@@ -65,9 +97,10 @@ Berechtigungen und sichere Dateiauslieferung sind vor Public dringend zu prüfen
 
 ### BUG-051 - Ungültiger Upload kann bestehendes Modell löschen
 
-Codebefund: Uploader::uploadModelFiles ruft bei ungültiger Endung model->delete()
-auch im Bearbeitungsfall auf. Noch kein destruktiver Laufzeittest. Separat so
-korrigieren, dass vorhandene Daten bei abgelehnten Uploads erhalten bleiben.
+2026-09-08 10:32 CEST: Mit einem isolierten Download-Datensatz und abgelehnter
+PHP-Datei reproduziert. Seit 0.20.1 wird nur ein neu angelegtes Modell bei Fehler
+entfernt. Der Regressionstest bestätigt den Erhalt bestehender Datensätze.
+Kein Nachweis vollständiger Upload-Sicherheit oder atomarer Dateiersetzung.
 
 ### SEC-007 - Weitere alte Restore-Routen bleiben zu prüfen (hoch)
 

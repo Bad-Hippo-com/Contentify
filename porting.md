@@ -1,10 +1,21 @@
 # Contentify porting plan
 
-Stand 2026-09-08: **0.20.0 vorbereitet; Kandidat noch 0.19.5, Staging :80 bleibt 0.18.3.**
-Frontend-Inventar in FRONTEND_DEPENDENCIES.md; unbenutztes Browser-LESS und
-zweiten Kalender entfernt, Glyphicons aus aktiven Layouts abgelöst. Build bestanden.
-Neue transaktionale Ablaufsuite mit echter Kandidaten-DB und abgefangener Mail
-vorbereitet; noch nicht ausgeführt. Kein vollständiger Kalender-/LESS-Ersatz.
+Stand 2026-09-08 10:35 CEST: **0.20.5 auf Kandidat :8088; Staging :80 bleibt 0.18.3.**
+Sauberer Neubau: 35 Regressionstests/205 Assertions und acht Ablauftests/72
+Assertions bestanden, außerdem beide Smoke-Tests, LESS-Neubau und Composer-Audit.
+npm-Test und Produktions-Audit bestanden (keine gemeldeten Advisories).
+Browser: Beide News-Editoren samt Werkzeugleisten und Kalender-Symbol sichtbar.
+Entfernte Browser-LESS-/Kalenderdateien und jQuery 2.2.4 liefern HTTP 404.
+Protokolle zentral unter /var/log/contentify-bootstrap-candidate/deployment.
+Frontend-Inventar: FRONTEND_DEPENDENCIES.md. Unbenutztes Browser-LESS und
+zweiter Kalender entfernt; Glyphicons nicht mehr in aktiven Layouts geladen.
+Acht echte Controller-/DB-Ablauftests: 72 Assertions bestanden. Erfasst sind
+Registrierung/Login, Nachrichtenrechte, Kommentare, Reset mit abgefangenen Mails,
+Forum, Solo-Cup bis zum Sieger, abgelehnter Upload und Matchergebnis-CRUD.
+Datensätze werden transaktional zurückgerollt; nur Kandidat :8088 ist freigegeben.
+Keine vollständige Browser-/SMTP-/Captcha-/Upload- oder Sicherheitsabnahme.
+Kalenderersatz, LESS-Helfer, Tagsinput/Flot und Designmodernisierung bleiben offen.
+Die nachfolgenden Browser-/34-Test-Nachweise beziehen sich auf 0.19.5.
 GitHub: Arbeitszweig bad-hippo/stabilisierung-sicherheit, noch nicht main.
 Browser: Seiteneditor und beide News-Editoren sichtbar, Texteingabe und deutscher
 Kalender funktionieren ohne neue JavaScriptfehler; Downloads-Editor ebenfalls.
