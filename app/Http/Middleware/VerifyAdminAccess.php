@@ -25,15 +25,15 @@ class VerifyAdminAccess
                     return response('Unauthorized', 401);
                 } else {
                     Session::put('redirect', $request->path());
-                    return response(view('backend.auth'));
+                    return response(view('backend.auth'), 401);
                 }
             }
 
             if (! user()->hasAccess('backend')) {
                 if ($request->ajax()) {
-                    return response('Unauthorized', 401);
+                    return response('Forbidden', 403);
                 } else {
-                    return response(view('backend.no_access'));
+                    return response(view('backend.no_access'), 403);
                 }
             }
         }

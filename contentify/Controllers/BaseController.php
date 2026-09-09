@@ -468,8 +468,7 @@ abstract class BaseController extends Controller
             if (! Request::ajax()) {
                 $this->alertError(trans('app.access_denied'));
             }
-
-            return false;
+            abort(403, trans('app.access_denied'));
         }
     }
 
@@ -488,8 +487,7 @@ abstract class BaseController extends Controller
             if (! Request::ajax()) {
                 $this->alertError(trans('app.access_denied'));
             }
-
-            return false;
+            abort(403, trans('app.access_denied'));
         }
     }
 
@@ -508,8 +506,7 @@ abstract class BaseController extends Controller
             if (! Request::ajax()) {
                 $this->alertError(trans('app.access_denied'));
             }
-
-            return false;
+            abort(403, trans('app.access_denied'));
         }
     }
 
@@ -528,8 +525,7 @@ abstract class BaseController extends Controller
             if (! Request::ajax()) {
                 $this->alertError(trans('app.access_denied'));
             }
-
-            return false;
+            abort(403, trans('app.access_denied'));
         }
     }
 

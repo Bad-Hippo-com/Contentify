@@ -498,7 +498,7 @@ class ModelHandler
         $okay = $model->save();
 
         if (! $okay) {
-            return Redirect::route('admin.'.Str::kebab($controller->getControllerName()).'.edit', ['id' => $model->id])
+            return Redirect::route('admin.'.Str::kebab($controller->getControllerName()).'.edit', [$model->id])
                 ->withInput()->withErrors($model->getErrors());
         }
 
@@ -508,7 +508,7 @@ class ModelHandler
         if (count($errors) > 0) {
             return Redirect::route(
                 'admin.'.Str::kebab($controller->getControllerName()).'.edit',
-                ['id' => $model->id]
+                [$model->id]
             )->withInput()->withErrors($errors);
         }
 

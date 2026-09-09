@@ -88,7 +88,7 @@ class InstalledWorkflowTest extends TestCase
         $this->assertFalse((bool) Sentinel::check());
         $this->post('/auth/login', ['email' => $email, 'password' => $this->password]);
         $this->assertEquals($user->id, Sentinel::getUser()?->id);
-        $this->get('/admin/config', ['X-Requested-With' => 'XMLHttpRequest'])->assertStatus(401);
+        $this->get('/admin/config', ['X-Requested-With' => 'XMLHttpRequest'])->assertStatus(403);
     }
 
     public function testMessagesSendReadDenyThirdUserAndDelete(): void
@@ -279,7 +279,7 @@ class InstalledWorkflowTest extends TestCase
         $uri = '/admin/downloads/'.$download->id.'/restore';
         $this->loginAs($outsider);
         $this->get($uri)->assertStatus(405);
-        $this->post($uri)->assertStatus(401);
+        $this->post($uri)->assertStatus(403);
         $this->assertNotNull(\App\Modules\Downloads\Download::onlyTrashed()->find($download->id));
         $this->loginAs($admin);
         $this->post($uri)->assertRedirect();
