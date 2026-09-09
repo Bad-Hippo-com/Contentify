@@ -95,6 +95,10 @@ class ModuleRoute
      */
     public function get(string $route, $target) : \Illuminate\Routing\Route
     {
+        $uses = is_array($target) ? ($target['uses'] ?? '') : $target;
+        if (is_string($uses) && str_ends_with($uses, '@restore')) {
+            return $this->createRoute('post', $route, $target);
+        }
         return $this->createRoute('get', $route, $target);
     }
 

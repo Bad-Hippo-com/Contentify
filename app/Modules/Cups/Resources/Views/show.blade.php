@@ -40,7 +40,7 @@
                                         <ul class="dropdown-menu">
                                             @foreach ($cup->teamsOfUser(user(), true) as $team)
                                                 @if ($team->countMembers() >= $cup->players_per_team)
-                                                    <li><a href="{!! url('cups/join/'.$cup->id.'/'.$team->id) !!}">{{ $team->title }}</a></li>
+                                                    <li><a data-method="POST" href="{!! url('cups/join/'.$cup->id.'/'.$team->id) !!}">{{ $team->title }}</a></li>
                                                 @else
                                                     <li><a href="{!! url('cups/teams/'.$team->id.'/'.$team->slug) !!}"><del>{{ $team->title }}</del> <em>({{ trans('cups::not_enough_players') }})</em></a></li>
                                                 @endif
@@ -53,7 +53,7 @@
                                     {{ trans('cups::no_team') }} <a class="btn btn-default" href="{!! url('cups/teams/create') !!}">{{ trans('cups::create_team') }}</a>
                                  @endif
                             @else
-                                <a class="btn btn-default" href="{!! url('cups/join/'.$cup->id.'/'.user()->id) !!}">{{ trans('cups::join') }}</a>
+                                <a class="btn btn-default" data-method="POST" href="{!! url('cups/join/'.$cup->id.'/'.user()->id) !!}">{{ trans('cups::join') }}</a>
                             @endif
                         @endif
                     @elseif ($cup->start_at->timestamp > time())
@@ -62,10 +62,10 @@
                         @if ($participant)
                             @if ($cup->hasParticipantCheckedIn($participant))
                                 {{ trans('cups::check_out') }}
-                                <a class="btn btn-default" href="{!! url('cups/check-out/'.$cup->id) !!}">Check-out now</a>
+                                <a class="btn btn-default" data-method="POST" href="{!! url('cups/check-out/'.$cup->id) !!}">Check-out now</a>
                             @else
                                 {{ trans('cups::in') }}
-                                <a class="btn btn-default" href="{!! url('cups/check-in/'.$cup->id) !!}">Check-in now</a>
+                                <a class="btn btn-default" data-method="POST" href="{!! url('cups/check-in/'.$cup->id) !!}">Check-in now</a>
                             @endif
                         @else
                             {{ trans('cups::not_participating') }}

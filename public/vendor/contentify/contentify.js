@@ -245,6 +245,25 @@ $(document).ready(function()
             });
         };
 
+        this.submitMutation = function($link)
+        {
+            var method = ($link.attr('data-method') || 'POST').toUpperCase();
+            var $form = $('<form>', {method: 'POST', action: $link.attr('href')})
+                .append($('<input>', {type: 'hidden', name: '_token', value: framework.csrfToken}));
+            if (method !== 'POST') {
+                $form.append($('<input>', {type: 'hidden', name: '_method', value: method}));
+            }
+            $('body').append($form);
+            $form.trigger('submit');
+        };
+
+        $('*[data-method]:not([data-confirm]):not([data-confirm-delete])').click(function(event)
+        {
+            event.preventDefault();
+            event.stopPropagation();
+            framework.submitMutation($(this));
+        });
+
         /*
          * Add delete confirm dialogue
          */
@@ -259,7 +278,7 @@ $(document).ready(function()
             .append(
                 $('<button>').text(framework.translations.yes).click(function()
                 {
-                    window.location = $self.attr('href');
+                    framework.submitMutation($self);
                 })
             ).append(
                 $('<button>').text(framework.translations.no).click(function()
@@ -286,7 +305,7 @@ $(document).ready(function()
             .append(
                 $('<button>').text(framework.translations.yes).click(function()
                 {
-                    window.location = $self.attr('href');
+                    framework.submitMutation($self);
                 })
             ).append(
                 $('<button>').text(framework.translations.no).click(function()

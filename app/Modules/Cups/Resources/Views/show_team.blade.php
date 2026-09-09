@@ -38,7 +38,7 @@
                     </td>
                     @if (user() and ($organizer or user()->isSuperAdmin()))
                         <td>
-                            <a class="btn btn-default" href="{{ url('cups/teams/leave/'.$team->id.'/'.$member->id) }}">{{ trans('app.remove') }}</a>
+                            <a class="btn btn-default" data-confirm-delete="1" data-method="POST" href="{{ url('cups/teams/leave/'.$team->id.'/'.$member->id) }}">{{ trans('app.remove') }}</a>
                         </td>
                     @endif
                 </tr>

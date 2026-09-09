@@ -62,7 +62,11 @@ class FriendsController extends FrontController
 
         $friend->sendSystemMessage(
             trans('friends::request_title'),
-            trans('friends::request_text', [user()->username]).link_to('friends/confirm/'.user()->id, 'Accept')
+            trans('friends::request_text', [user()->username]).link_to(
+                'friends/confirm/'.user()->id,
+                trans('app.confirm'),
+                ['data-method' => 'POST']
+            )
         );
 
         $this->alertFlash(trans('friends::request_sent', [$friend->username]));

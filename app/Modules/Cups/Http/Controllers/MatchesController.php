@@ -30,6 +30,9 @@ class MatchesController extends FrontController
     {
         /** @var CupMatch $match */
         $match = CupMatch::findOrFail($id);
+        if (! $match->cup->published && (! user() || ! user()->isSuperAdmin())) {
+            abort(404);
+        }
 
         if ($match->with_teams) {
             $leftName = $match->left_participant ? $match->left_participant->title : 'Wildcard';

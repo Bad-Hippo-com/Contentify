@@ -31,7 +31,7 @@ class AdminActivitiesController extends BackController
     {
         $this->indexPage([
             'buttons'   => [
-                '<a href="'.url('admin/activities/delete/all').'" class="btn btn-default" data-confirm-delete="1">'
+                '<a href="'.url('admin/activities/delete/all').'" class="btn btn-default" data-confirm-delete="1" data-method="POST">'
                 .HTML::fontIcon('trash').' '.trans('app.delete').'</a>'
             ],
             'tableHead' => [

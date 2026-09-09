@@ -241,6 +241,51 @@ class InstalledWorkflowTest extends TestCase
         $this->assertNull(\App\Modules\Forums\ForumThread::find($thread->id));
     }
 
+    public function testPrivateForumAndForeignProfileActionsAreDenied(): void
+    {
+        $admin = $this->fixture('PrivateAdmin', true);
+        $outsider = $this->fixture('PrivateOther');
+        $forum = new \App\Modules\Forums\Forum([
+            'title' => $this->prefix, 'description' => 'Privat', 'internal' => true,
+        ]);
+        $forum->creator_id = $admin->id;
+        $forum->slug = strtolower($this->prefix);
+        $forum->forceSave();
+        $this->loginAs($outsider);
+        $this->get('/forums/'.$forum->id.'/'.$forum->slug)->assertStatus(404);
+        $this->get('/forums/threads/create/'.$forum->id)->assertStatus(404);
+        $this->post('/forums/threads/'.$forum->id, ['title' => $this->prefix, 'text' => 'Verboten'])
+            ->assertStatus(404);
+        $this->assertSame(0, \App\Modules\Forums\ForumThread::whereForumId($forum->id)->count());
+        $this->get('/users/'.$admin->id.'/password')->assertDontSee('password_confirmation');
+        $this->put('/users/'.$admin->id.'/password', [
+            'password' => 'Forbidden-Password-2026!',
+            'password_confirmation' => 'Forbidden-Password-2026!',
+        ]);
+        $this->assertTrue(password_verify($this->password, $admin->fresh()->password));
+    }
+
+    public function testRestoreRequiresAdminAndPost(): void
+    {
+        $admin = $this->fixture('RestoreAdmin', true);
+        $outsider = $this->fixture('RestoreOther');
+        $download = new \App\Modules\Downloads\Download([
+            'title' => $this->prefix, 'download_cat_id' => 1, 'published' => false, 'internal' => false,
+        ]);
+        $download->creator_id = $admin->id;
+        $download->slug = strtolower($this->prefix);
+        $download->forceSave();
+        $download->delete();
+        $uri = '/admin/downloads/'.$download->id.'/restore';
+        $this->loginAs($outsider);
+        $this->get($uri)->assertStatus(405);
+        $this->post($uri)->assertStatus(401);
+        $this->assertNotNull(\App\Modules\Downloads\Download::onlyTrashed()->find($download->id));
+        $this->loginAs($admin);
+        $this->post($uri)->assertRedirect();
+        $this->assertNotNull(\App\Modules\Downloads\Download::find($download->id));
+    }
+
     public function testCupJoinCheckInSeedAndPlayToWinner(): void
     {
         $admin = $this->fixture('Cup', true);

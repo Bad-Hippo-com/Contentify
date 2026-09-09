@@ -137,6 +137,18 @@ class StabilizationSecurityTest extends TestCase
         }
     }
 
+    public function testAdminRestoreRoutesAcceptPostButNeverGet(): void
+    {
+        $restoreRoutes = collect(app('router')->getRoutes())->filter(function ($route) {
+            return str_ends_with((string) $route->getActionName(), '@restore');
+        });
+        $this->assertGreaterThanOrEqual(20, $restoreRoutes->count());
+        foreach ($restoreRoutes as $route) {
+            $this->assertContains('POST', $route->methods(), $route->uri());
+            $this->assertNotContains('GET', $route->methods(), $route->uri());
+        }
+    }
+
     public function testWinnerSwitchUpdatesBothMatches(): void
     {
         $next = Mockery::mock(CupMatch::class)->makePartial();

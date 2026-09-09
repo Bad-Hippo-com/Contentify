@@ -27,10 +27,10 @@
                         <a class="btn btn-default btn-xs" href="{!! url('forums/posts/edit/'.$forumPost->id) !!}">{!! trans('app.edit') !!}</a>
                     @endif
                     @if (! $forumPost->root and (user()->hasAccess('forums', PERM_DELETE) or $forumPost->creator->id == user()->id))
-                        <a class="btn btn-default btn-xs" href="{!! url('forums/posts/delete/'.$forumPost->id) !!}">{!! trans('app.delete') !!}</a>
+                        <a class="btn btn-default btn-xs" data-confirm-delete="1" data-method="POST" href="{!! url('forums/posts/delete/'.$forumPost->id) !!}">{!! trans('app.delete') !!}</a>
                     @endif
                     @if (Config::get('forums::reports'))
-                        <a class="btn btn-default btn-xs report" href="{!! url('forums/posts/report/'.$forumPost->id) !!}">{!! trans('forums::report') !!}</a>
+                        <a class="btn btn-default btn-xs report" data-method="POST" href="{!! url('forums/posts/report/'.$forumPost->id) !!}">{!! trans('forums::report') !!}</a>
                     @endif
                 @endif
                 <a class="btn btn-default btn-xs" href="{!! url('forums/posts/perma/'.$forumPost->id) !!}">

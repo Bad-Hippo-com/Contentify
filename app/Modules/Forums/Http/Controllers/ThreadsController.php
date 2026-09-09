@@ -55,6 +55,7 @@ class ThreadsController extends FrontController implements GlobalSearchInterface
      */
     public function create(int $forumId)
     {
+        Forum::isAccessible()->findOrFail($forumId);
         $this->pageView('forums::root_post_form', compact('forumId'));
     }
 

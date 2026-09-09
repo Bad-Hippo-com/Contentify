@@ -9,7 +9,7 @@
                     <div class="actions pull-right">
                         @if ($team->isOrganizer(user()) or user()->isSuperAdmin())
                             <a class="btn btn-default" href="{{ url('cups/teams/edit/'.$team->id) }}">{{ trans('app.edit') }}</a>
-                            <a class="btn btn-default" href="{{ url('cups/teams/delete/'.$team->id) }}">{{ trans('app.delete') }}</a>
+                            <a class="btn btn-default" data-confirm-delete="1" data-method="POST" href="{{ url('cups/teams/delete/'.$team->id) }}">{{ trans('app.delete') }}</a>
                         @endif
                     </div>
                 @endif

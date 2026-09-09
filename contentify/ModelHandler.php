@@ -285,15 +285,13 @@ class ModelHandler
                                 }
                                 break;
                             case 'delete':
-                                $urlParams = '?method=DELETE&_token='.csrf_token();
                                 if ($model->modifiable()) {
                                     $actionsCode .= icon_link(
                                         'trash',
                                         trans('app.delete'),
-                                        route($surface.'.'.$controllerRouteName.'.destroy', [$model->id])
-                                            .$urlParams,
+                                        route($surface.'.'.$controllerRouteName.'.destroy', [$model->id]),
                                         false,
-                                        ['data-confirm-delete' => true, 'data-color' => 'red']
+                                        ['data-confirm-delete' => true, 'data-method' => 'DELETE', 'data-color' => 'red']
                                     );
                                 }
                                 break;
@@ -304,7 +302,7 @@ class ModelHandler
                                         trans('app.restore'),
                                         route($surface.'.'.$controllerRouteName.'.restore', [$model->id]),
                                         false,
-                                        ['data-color' => 'yellow']
+                                        ['data-method' => 'POST', 'data-color' => 'yellow']
                                     );
                                 }
                                 break;

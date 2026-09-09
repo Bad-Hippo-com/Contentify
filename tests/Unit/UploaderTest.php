@@ -82,8 +82,12 @@ class UploaderTest extends TestCase
 
     public function test_it_uses_detected_image_type_instead_of_client_suffix(): void
     {
+        $path = $this->uploadDirectory.DIRECTORY_SEPARATOR.'source.png';
+        file_put_contents($path, base64_decode(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+        ));
         Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], [
-            'image' => UploadedFile::fake()->image('misleading.gif')->mimeType('image/png'),
+            'image' => new UploadedFile($path, 'misleading.gif', 'image/gif', null, true),
         ]));
         $model = new UploadModelStub($this->uploadDirectory);
         $this->assertSame([], (new Uploader())->uploadModelFiles($model));

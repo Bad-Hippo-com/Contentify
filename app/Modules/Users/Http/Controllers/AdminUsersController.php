@@ -80,9 +80,9 @@ class AdminUsersController extends BackController
                     return icon_link(
                         'trash',
                         trans('app.delete'),
-                        url('admin/users/'.$user->id).'?method=DELETE&_token='.csrf_token(),
+                        url('admin/users/'.$user->id),
                         false,
-                        ['data-confirm-delete' => true, 'data-color' => 'red']
+                        ['data-confirm-delete' => true, 'data-method' => 'DELETE', 'data-color' => 'red']
                     );
                 },
             ]

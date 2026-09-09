@@ -92,7 +92,7 @@ class DownloadsController extends FrontController implements GlobalSearchInterfa
     public function perform(int $id)
     {
         /** @var Download $download */
-        $download = Download::findOrFail($id);
+        $download = Download::published()->findOrFail($id);
 
         $hasAccess = (user() and user()->hasAccess('internal'));
         if ($download->internal and ! $hasAccess) {
@@ -107,7 +107,12 @@ class DownloadsController extends FrontController implements GlobalSearchInterfa
         if ($extension) {
             $shortName .= '.'.$extension;
         }
-        return Response::download($download->uploadPath(true).$download->file, $shortName);
+        $path = $download->uploadPath(true).basename((string) $download->file);
+        abort_unless(File::isFile($path), 404);
+        return Response::download($path, $shortName, [
+            'X-Content-Type-Options' => 'nosniff',
+            'Content-Security-Policy' => "default-src 'none'; sandbox",
+        ]);
     }
     
     /**

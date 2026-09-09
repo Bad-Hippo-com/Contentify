@@ -80,6 +80,9 @@ assert.match(sharedJs, /locale: framework\.locale/);
 assert.match(sharedJs, /if \(! options\.crossDomain\)/);
 assert.match(sharedJs, /setRequestHeader\('X-CSRF-TOKEN'/);
 assert.doesNotMatch(sharedJs, /xhr\.crossDomain|options\.data \+= '_token='/);
+assert.match(sharedJs, /this\.submitMutation/);
+assert.match(sharedJs, /name: '_method'/);
+assert.doesNotMatch(sharedJs, /window\.location = \$self\.attr\('href'\)/);
 const backendJs = fs.readFileSync(path.join(root, 'public/vendor/contentify/backend.js'), 'utf8');
 const pickerJs = fs.readFileSync(path.join(root, 'public/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.js'), 'utf8');
 for (const code of [pickerJs, fs.readFileSync(path.join(root, 'public/vendor/contentify/comments.js'), 'utf8'), fs.readFileSync(path.join(root, 'public/vendor/contentify/members.js'), 'utf8')]) {

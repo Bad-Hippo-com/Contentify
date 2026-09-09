@@ -6,16 +6,16 @@
 <div class="buttons">
 @if (user())
     @if (user()->hasAccess('forums', PERM_UPDATE))
-        <a class="btn btn-default" href="{!! url('forums/threads/sticky/'.$forumThread->id) !!}">
+        <a class="btn btn-default" data-method="POST" href="{!! url('forums/threads/sticky/'.$forumThread->id) !!}">
             {{ trans('forums::sticky') }}: {!! HTML::fontIcon($forumThread->sticky ? 'check' : 'times') !!}
         </a>
-        <a class="btn btn-default" href="{!! url('forums/threads/closed/'.$forumThread->id) !!}">
+        <a class="btn btn-default" data-method="POST" href="{!! url('forums/threads/closed/'.$forumThread->id) !!}">
             {{ trans('forums::closed') }}: {!! HTML::fontIcon($forumThread->closed ? 'check' : 'times') !!}
             </a>
         <a class="btn btn-default" href="{!! url('forums/threads/move/'.$forumThread->id) !!}">{!!  trans('forums::move') !!}</a>
     @endif
     @if (user()->hasAccess('forums', PERM_DELETE))
-        <a class="btn btn-default" href="{!! url('forums/threads/delete/'.$forumThread->id) !!}">{!! trans('app.delete') !!}</a>
+        <a class="btn btn-default" data-confirm-delete="1" data-method="POST" href="{!! url('forums/threads/delete/'.$forumThread->id) !!}">{!! trans('app.delete') !!}</a>
     @endif
 @endif
 </div>

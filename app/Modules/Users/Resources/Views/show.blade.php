@@ -75,7 +75,7 @@
         <div class="actions">
             @if (user())
                 <a class="btn btn-default" href="{!! url('messages/create/'.$user->username) !!}" title="{!! trans('users::send_msg') !!}">{!! HTML::fontIcon('envelope') !!}</a>
-                <a class="btn btn-default" href="{!! url('friends/add/'.$user->id) !!}" title="{!! trans('users::add_friend') !!}" <?php if (user()->id == $user->id or user()->isFriendWith($user->id)) echo 'disabled="disabled"' ?>>{!! HTML::fontIcon('user-plus') !!}</a>
+                <a class="btn btn-default" data-method="POST" href="{!! url('friends/add/'.$user->id) !!}" title="{!! trans('users::add_friend') !!}" <?php if (user()->id == $user->id or user()->isFriendWith($user->id)) echo 'disabled="disabled"' ?>>{!! HTML::fontIcon('user-plus') !!}</a>
             @endif
             <a class="btn btn-default" href="{!! url('forums/posts/user/'.$user->id.'/'.$user->slug) !!}" title="{!! trans('forums::show_user_posts') !!}">{!! HTML::fontIcon('comment') !!}</a>
         </div>

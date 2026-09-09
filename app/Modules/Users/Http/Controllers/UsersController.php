@@ -152,7 +152,8 @@ class UsersController extends FrontController implements GlobalSearchInterface
      */
     public function editPassword(int $id)
     {
-        if (! $this->checkAuth()) {
+        if (! user() || user()->id !== $id) {
+            $this->alertError(trans('app.access_denied'));
             return;
         }
 
