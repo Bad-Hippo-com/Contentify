@@ -504,7 +504,7 @@ class ModelHandler
 
         UserActivities::addUpdate(false, user()->id, $controller->getModelClass());
 
-        $errors = $this->uploader->uploadModelFiles($model);
+        $errors = $this->uploader->uploadModelFiles($model, false);
         if (count($errors) > 0) {
             return Redirect::route(
                 'admin.'.Str::kebab($controller->getControllerName()).'.edit',

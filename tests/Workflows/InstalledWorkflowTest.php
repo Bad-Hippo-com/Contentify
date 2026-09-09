@@ -243,8 +243,8 @@ class InstalledWorkflowTest extends TestCase
 
     public function testPrivateForumAndForeignProfileActionsAreDenied(): void
     {
-        $admin = $this->fixture('PrivateAdmin', true);
-        $outsider = $this->fixture('PrivateOther');
+        $admin = $this->fixture('PrvAdm', true);
+        $outsider = $this->fixture('PrvOth');
         $forum = new \App\Modules\Forums\Forum([
             'title' => $this->prefix, 'description' => 'Privat', 'internal' => true,
         ]);
@@ -267,8 +267,8 @@ class InstalledWorkflowTest extends TestCase
 
     public function testRestoreRequiresAdminAndPost(): void
     {
-        $admin = $this->fixture('RestoreAdmin', true);
-        $outsider = $this->fixture('RestoreOther');
+        $admin = $this->fixture('RstAdm', true);
+        $outsider = $this->fixture('RstOth');
         $download = new \App\Modules\Downloads\Download([
             'title' => $this->prefix, 'download_cat_id' => 1, 'published' => false, 'internal' => false,
         ]);
@@ -364,6 +364,15 @@ class InstalledWorkflowTest extends TestCase
         $this->assertMatchesRegularExpression('/^[a-f0-9]{32}\.txt$/', $download->file);
         $this->assertFileExists($oldFile);
         $this->post('/downloads/perform/'.$download->id)->assertOk()->assertHeader('content-disposition');
+
+        $this->put('/admin/downloads/'.$download->id, [
+            'title' => $this->prefix, 'description' => 'Abzuweisen',
+            'download_cat_id' => $category->id, 'internal' => false, 'published' => true,
+            'file' => \Illuminate\Http\UploadedFile::fake()->createWithContent('payload.phtml', '<?php echo 1;'),
+        ])->assertRedirect();
+        $this->assertNotNull(\App\Modules\Downloads\Download::find($download->id));
+        $this->assertSame($download->file, $download->fresh()->file);
+        $this->assertFileExists($oldFile);
 
         $this->put('/admin/downloads/'.$download->id, [
             'title' => $this->prefix, 'description' => 'Ersetzt',
