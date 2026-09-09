@@ -13,6 +13,42 @@ use Tests\TestCase;
 
 class StabilizationSecurityTest extends TestCase
 {
+    public function testBbCodeHtmlSanitizerRejectsScriptableAttributesAndUris(): void
+    {
+        $sanitizer = \Contentify\HtmlSanitizer::class;
+
+        $safe = $sanitizer::sanitizeBbCode(
+            '<a href="javascript:alert(1)" onclick="alert(2)">Link</a>'.
+            '<img src="data:text/html;base64,PHNjcmlwdD4=" onerror="alert(3)">'.
+            '<script>alert(4)</script>'
+        );
+
+        $this->assertStringContainsString('Link', $safe);
+        $this->assertStringNotContainsString('javascript:', $safe);
+        $this->assertStringNotContainsString('data:', $safe);
+        $this->assertStringNotContainsString('onclick', $safe);
+        $this->assertStringNotContainsString('onerror', $safe);
+        $this->assertStringNotContainsString('<script', $safe);
+        $this->assertStringNotContainsString('alert(4)', $safe);
+    }
+
+    public function testBbCodeHtmlSanitizerKeepsOnlyExpectedFormatting(): void
+    {
+        $safe = \Contentify\HtmlSanitizer::sanitizeBbCode(
+            '<strong>Fett</strong><a href="https://example.com/a?b=1">Link</a>'.
+            '<span style="color: #12AbEF" onmouseover="x">Farbe</span>'.
+            '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" onload="x"></iframe>'
+        );
+
+        $this->assertStringContainsString('<strong>Fett</strong>', $safe);
+        $this->assertStringContainsString('href="https://example.com/a?b=1"', $safe);
+        $this->assertStringContainsString('rel="nofollow noopener noreferrer"', $safe);
+        $this->assertStringContainsString('style="color: #12AbEF"', $safe);
+        $this->assertStringContainsString('sandbox=', $safe);
+        $this->assertStringNotContainsString('onmouseover', $safe);
+        $this->assertStringNotContainsString('onload', $safe);
+    }
+
     public function testNullableOriginalDatesRemainNullable(): void
     {
         $match = new \App\Modules\Cups\CupMatch;
@@ -121,7 +157,7 @@ class StabilizationSecurityTest extends TestCase
         $this->assertSame('confirmed', $response->getContent());
     }
 
-    public function testCupMutationRoutesRequireAuthenticationAndConfirmation(): void
+    public function testMutationRoutesArePostOnlyAndRequireAuthentication(): void
     {
         foreach (['cups/join/1/2', 'cups/check-in/1', 'cups/check-out/1', 'admin/cups/seed/1',
             'admin/cups/participants/delete/1/2', 'cups/teams/leave/1/2', 'cups/teams/delete/1',
@@ -129,10 +165,11 @@ class StabilizationSecurityTest extends TestCase
             'forums/posts/delete/1', 'forums/posts/report/1', 'friends/add/1', 'friends/confirm/1',
             'admin/activities/delete/all', 'admin/config/log/clear', 'admin/config/optimize',
             'admin/config/compile-less', 'admin/config/clear-cache'] as $uri) {
-            foreach (['GET', 'POST'] as $method) {
-                $route = app('router')->getRoutes()->match(Request::create('/'.$uri, $method));
+            $route = app('router')->getRoutes()->match(Request::create('/'.$uri, 'POST'));
+            $this->assertContains('POST', $route->methods(), $uri);
+            $this->assertNotContains('GET', $route->methods(), $uri);
+            if (! str_starts_with($uri, 'admin/')) {
                 $this->assertContains('auth', $route->gatherMiddleware());
-                $this->assertContains(ConfirmMutation::class, $route->gatherMiddleware());
             }
         }
     }

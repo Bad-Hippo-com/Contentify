@@ -83,7 +83,8 @@ class InstalledWorkflowTest extends TestCase
         $user = User::whereEmail($email)->first();
         $this->assertNotNull($user, 'Registrierung muss einen Benutzer speichern.');
         $this->assertFalse($user->isSuperAdmin());
-        $this->get('/auth/logout');
+        $this->get('/auth/logout')->assertStatus(405);
+        $this->post('/auth/logout')->assertRedirect();
         $this->post('/auth/login', ['email' => $email, 'password' => 'Incorrect-Test-Password']);
         $this->assertFalse((bool) Sentinel::check());
         $this->post('/auth/login', ['email' => $email, 'password' => $this->password]);

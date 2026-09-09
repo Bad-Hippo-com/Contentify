@@ -81,7 +81,9 @@ class AdminCupsController extends BackController
                     return icon_link(
                         'share-alt',
                         trans('cups::seeding'),
-                        url('admin/cups/seed/'.$cup->id)
+                        url('admin/cups/seed/'.$cup->id),
+                        false,
+                        ['data-method' => 'POST']
                     );
                 },
                 'delete'

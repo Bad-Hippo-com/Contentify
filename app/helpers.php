@@ -90,9 +90,9 @@ function icon_link(string $icon, string $title, string $url, bool $showTitle = f
  * @param  string $icon  The name of the icon. It's rendered by an icon font.
  * @return string
  */
-function button(string $title, string $url, string $icon = '') : string
+function button(string $title, string $url, string $icon = '', array $attributes = []) : string
 {
-    return HTML::button($title, $url, $icon);
+    return HTML::button($title, $url, $icon, $attributes);
 }
 
 /**

@@ -1,4 +1,4 @@
-{!! button(trans('app.delete'), url('admin/config/log/clear'), 'trash') !!}
+{!! button(trans('app.delete'), url('admin/config/log/clear'), 'trash', ['data-confirm-delete' => true, 'data-method' => 'POST']) !!}
 
 {!! button(trans('app.download'), url('admin/config/plain-log'), 'download') !!}
 

@@ -2,10 +2,10 @@
     {!! button(trans('app.object_diag'), url('admin/diag'), 'heartbeat') !!}
     {!! button(trans('config::button_info'), url('admin/config/info'), 'info-circle') !!}
     {!! button(trans('config::button_log'), url('admin/config/log'), 'file-alt') !!}
-    {!! button(trans('config::button_optimize'), url('admin/config/optimize'), 'database') !!}
+    {!! button(trans('config::button_optimize'), url('admin/config/optimize'), 'database', ['data-method' => 'POST']) !!}
     {!! button(trans('config::button_dump'), url('admin/config/export'), 'database') !!}
-    {!! button(trans('config::button_compile_less'), url('admin/config/compile-less'), 'code') !!}
-    {!! button(trans('config::button_clear_cache'), url('admin/config/clear-cache'), 'trash') !!}
+    {!! button(trans('config::button_compile_less'), url('admin/config/compile-less'), 'code', ['data-method' => 'POST']) !!}
+    {!! button(trans('config::button_clear_cache'), url('admin/config/clear-cache'), 'trash', ['data-method' => 'POST']) !!}
 </div>
 
 {!! Form::errors($errors) !!}

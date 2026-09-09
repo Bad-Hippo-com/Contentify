@@ -14,6 +14,6 @@ ModuleRoute::group(['as' => ModuleRoute::getAdminNamePrefix()], function () {
     ModuleRoute::post('admin/users/{id}/{activate}', 'AdminUsersController@activate');
 
     ModuleRoute::get('admin/activities', 'AdminActivitiesController@index');
-    ModuleRoute::match(['GET', 'POST'], 'admin/activities/delete/all', 'AdminActivitiesController@deleteAll')->middleware(['auth', \App\Http\Middleware\ConfirmMutation::class]);
+    ModuleRoute::post('admin/activities/delete/all', 'AdminActivitiesController@deleteAll');
     ModuleRoute::post('admin/activities/search', 'AdminActivitiesController@search');
 });

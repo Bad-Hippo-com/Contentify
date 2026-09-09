@@ -4,6 +4,7 @@ namespace Contentify\Models;
 
 use BBCode;
 use Cache;
+use Contentify\HtmlSanitizer;
 use SoftDeletingTrait;
 
 /**
@@ -54,7 +55,7 @@ class Comment extends BaseModel
     public function cache()
     {
         $bbcode = new BBCode();
-        $rendered = $bbcode->render($this->text);
+        $rendered = HtmlSanitizer::sanitizeBbCode($bbcode->render($this->text));
         $rendered = emojis($rendered);
         Cache::put(self::CACHE_KEY.$this->id, $rendered, 60 * 60);
     }

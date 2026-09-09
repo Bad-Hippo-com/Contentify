@@ -566,7 +566,7 @@ class User extends SentinelUser implements UserInterface
         } else {
             $bbcode = new BBCode();
 
-            $rendered = $bbcode->render($this->signature);
+            $rendered = \Contentify\HtmlSanitizer::sanitizeBbCode($bbcode->render($this->signature));
             $rendered = emojis($rendered);
 
             Cache::forever($cacheKey, $rendered);

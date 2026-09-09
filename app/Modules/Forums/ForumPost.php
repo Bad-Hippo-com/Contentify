@@ -5,6 +5,7 @@ namespace App\Modules\Forums;
 use BaseModel;
 use BBCode;
 use Cache;
+use Contentify\HtmlSanitizer;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use SoftDeletingTrait;
@@ -79,7 +80,7 @@ class ForumPost extends BaseModel
     {
         $bbcode = new BBCode();
 
-        $rendered = $bbcode->render($this->text);
+        $rendered = HtmlSanitizer::sanitizeBbCode($bbcode->render($this->text));
         $rendered = emojis($rendered);
 
         Cache::put(self::CACHE_KEY.$this->id, $rendered, 60 * 60);

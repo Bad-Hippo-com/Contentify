@@ -5,6 +5,7 @@ namespace App\Modules\Messages;
 use BaseModel;
 use BBCode;
 use Cache;
+use Contentify\HtmlSanitizer;
 use User;
 
 /**
@@ -81,6 +82,9 @@ class Message extends BaseModel
 
         $bbcode = new BBCode();
         $rendered = $bbcode->render($this->text, $escape);
+        if ($escape) {
+            $rendered = HtmlSanitizer::sanitizeBbCode($rendered);
+        }
 
         Cache::put(self::CACHE_KEY.$this->id, $rendered, 60 * 60);
     }

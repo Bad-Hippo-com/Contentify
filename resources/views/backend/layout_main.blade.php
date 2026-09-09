@@ -62,7 +62,7 @@
                         <ul class="list-inline">
                             <li><a href="https://github.com/Contentify/Contentify/wiki" title="Help" target="_blank">{!! HTML::fontIcon('question-circle') !!} <span class="text">{{ trans('app.help') }}</span></a></li>
                             <li><a href="{!! route('home') !!}" title="Website">{!! HTML::fontIcon('desktop') !!} <span class="text">{{ trans('app.website') }}</span></a></li>
-                            <li><a href="{!! route('logout') !!}" title="Logout">{!! HTML::fontIcon('power-off') !!} <span class="text">{{ trans('app.logout') }}</span></a></li>
+                            <li><a href="{!! route('logout') !!}" data-method="POST" title="Logout">{!! HTML::fontIcon('power-off') !!} <span class="text">{{ trans('app.logout') }}</span></a></li>
                         </ul>
                     </nav>
                 </div>

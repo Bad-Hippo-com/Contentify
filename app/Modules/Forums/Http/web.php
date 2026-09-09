@@ -34,11 +34,11 @@ ModuleRoute::group(['middleware' => 'auth'], function()
     ModuleRoute::post('forums/threads/{id}', 'ThreadsController@store');
     ModuleRoute::get('forums/threads/edit/{id}', 'ThreadsController@edit');
     ModuleRoute::put('forums/threads/{id}', 'ThreadsController@update');
-    ModuleRoute::match(['GET', 'POST'], 'forums/threads/sticky/{id}', 'ThreadsController@sticky')->middleware(\App\Http\Middleware\ConfirmMutation::class);
-    ModuleRoute::match(['GET', 'POST'], 'forums/threads/closed/{id}', 'ThreadsController@closed')->middleware(\App\Http\Middleware\ConfirmMutation::class);
+    ModuleRoute::post('forums/threads/sticky/{id}', 'ThreadsController@sticky');
+    ModuleRoute::post('forums/threads/closed/{id}', 'ThreadsController@closed');
     ModuleRoute::get('forums/threads/move/{id}', 'ThreadsController@getMove');
     ModuleRoute::post('forums/threads/move/{id}', 'ThreadsController@postMove');
-    ModuleRoute::match(['GET', 'POST'], 'forums/threads/delete/{id}', 'ThreadsController@delete')->middleware(\App\Http\Middleware\ConfirmMutation::class);
+    ModuleRoute::post('forums/threads/delete/{id}', 'ThreadsController@delete');
 });
 ModuleRoute::post('forums/search', 'ThreadsController@search');
 
@@ -47,9 +47,9 @@ ModuleRoute::get('forums/posts/user/{id}/{slug?}', 'PostsController@showUserPost
 ModuleRoute::group(['middleware' => 'auth'], function()
 {
     ModuleRoute::get('forums/posts/{id}', 'PostsController@get');
-    ModuleRoute::match(['GET', 'POST'], 'forums/posts/delete/{id}', 'PostsController@delete')->middleware(\App\Http\Middleware\ConfirmMutation::class);
+    ModuleRoute::post('forums/posts/delete/{id}', 'PostsController@delete');
     ModuleRoute::post('forums/posts/{id}', 'PostsController@store');
     ModuleRoute::get('forums/posts/edit/{id}', 'PostsController@edit');
-    ModuleRoute::match(['GET', 'POST'], 'forums/posts/report/{id}', 'PostsController@report')->middleware(\App\Http\Middleware\ConfirmMutation::class);
+    ModuleRoute::post('forums/posts/report/{id}', 'PostsController@report');
     ModuleRoute::put('forums/posts/{id}', 'PostsController@update');
 });

@@ -266,7 +266,8 @@ class HtmlBuilder extends OriginalHtmlBuilder
      */
     public function button(string $title, string $url, string $icon = '', array $attributes = []) : string
     {
-        $action = 'onclick="document.location.href=\''.$url.'\'"';
+        $action = array_key_exists('data-method', $attributes)
+            ? '' : 'onclick="document.location.href=\''.$url.'\'"';
 
         if ($icon) {
             $icon = self::fontIcon($icon).' ';
