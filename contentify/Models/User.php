@@ -432,45 +432,31 @@ class User extends SentinelUser implements UserInterface
     public function uploadImage(string $fieldName)
     {
         $file       = Request::file($fieldName);
-        $extension  = $file->getClientOriginalExtension();
-
-        try {
-            $imgData = getimagesize($file->getRealPath()); // Try to gather info about the image
-        } catch (Exception $e) {
-            // Do nothing
-        }
-
-        if (! in_array(strtolower($extension), Uploader::ALLOWED_IMG_EXTENSIONS)) {
+        $uploader = new Uploader();
+        [$error, $extension] = $uploader->validateUploadedFile($file, true);
+        if ($error !== false) {
             return Redirect::route('users.edit', [$this->id])
-            ->withInput()->withErrors([trans('app.invalid_image')]);
-        }
-
-        // Check if image has a size. If not, it's not an image. Does not work for SVGs.
-        if (strtolower($extension) !== 'svg' and (! isset($imgData[2]) or ! $imgData[2])) {
-            return Redirect::route('users.edit', [$this->id])
-                ->withInput()->withErrors([trans('app.invalid_image')]);
+                ->withErrors([$error]);
         }
 
         $filePath = public_path().'/uploads/users/';
 
-        if (File::exists($filePath.$this->getOriginal($fieldName))) {
-            File::delete($filePath.$this->getOriginal($fieldName));
-        }
-
-        $filename           = $this->id.'_'.$fieldName.'.'.$extension;
-        $uploadedFile       = $file->move($filePath, $filename);
+        $oldFilename        = basename((string) $this->getOriginal($fieldName));
+        $filename           = $uploader->generateFilename($filePath, $extension);
+        $file->move($filePath, $filename);
         $this->$fieldName   = $filename;
         $this->save();
 
         if ($fieldName == 'image') {
-            if (File::exists($filePath.'80/'.$this->getOriginal($fieldName))) {
-                File::delete($filePath.'80/'.$this->getOriginal($fieldName));
-            }
-
             InterImage::make($filePath.'/'.$filename)->resize(80, 80, function ($constraint) {
                 /** @var \Intervention\Image\Constraint $constraint */
                 $constraint->aspectRatio();
             })->save($filePath.'80/'.$filename);
+        }
+
+        if ($oldFilename && $oldFilename !== '.') {
+            File::delete($filePath.$oldFilename);
+            File::delete($filePath.'80/'.$oldFilename);
         }
     }
 

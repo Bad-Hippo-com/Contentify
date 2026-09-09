@@ -116,38 +116,22 @@ abstract class BaseModel extends Eloquent
         }
 
         if ($file) {
-            $extension  = $file->getClientOriginalExtension();
-
-            if ($isImage) {
-                try {
-                    $imgData = getimagesize($file->getRealPath()); // Try to gather infos about the image
-                } catch (Exception $e) {
-                    // Do nothing.
-                }
-
-                if (! in_array(strtolower($extension), Uploader::ALLOWED_IMG_EXTENSIONS)) {
-                    return trans('app.invalid_image');
-                }
-
-                // Check if image has a size. If not, it's not an image. Does not work for SVGs.
-                if (strtolower($extension) !== 'svg' and (! isset($imgData[2]) or ! $imgData[2])) {
-                    return trans('app.invalid_image');
-                }
+            [$error, $extension] = (new Uploader())->validateUploadedFile($file, $isImage);
+            if ($error !== false) {
+                return $error;
             }
         }
 
         $filePath = $this->uploadPath(true);
 
-        if (File::exists($filePath.$this->getOriginal($fieldName))) {
-            File::delete($filePath.$this->getOriginal($fieldName)); // Delete the old file
-        }
-
         if ($file) {
-            $filename           = $this->id.'_'.$fieldName.'.'.$extension;
-            $uploadedFile       = $file->move($filePath, $filename);
+            $oldFilename        = basename((string) $this->getOriginal($fieldName));
+            $filename           = (new Uploader())->generateFilename($filePath, $extension);
+            $file->move($filePath, $filename);
             $this->$fieldName   = $filename;
             $this->save();
         } else {
+            $oldFilename = basename((string) $this->getOriginal($fieldName));
             $this->$fieldName   = '';
             $this->save();
         }
@@ -157,17 +141,22 @@ abstract class BaseModel extends Eloquent
                 if (is_callable($thumbnail)) {
                     $thumbnail($file ? $filePath.$filename : null); // Let the closure handle the thumbnailing
                 } else {
-                    if (File::exists($filePath.$thumbnail.'/'.$this->getOriginal($fieldName))) {
-                        File::delete($filePath.$thumbnail.'/'.$this->getOriginal($fieldName)); // Delete old thumbnail
-                    }
-
-                    if ($file) {
+                if ($file) {
                         InterImage::make($filePath.'/'.$filename)->resize($thumbnail, $thumbnail, function ($constraint)
                         {
                             /** @var \Intervention\Image\Constraint $constraint */
                             $constraint->aspectRatio(); // Keep the aspect ratio
                         })->save($filePath.$thumbnail.'/'.$filename);
                     }
+                }
+            }
+        }
+
+        if ($oldFilename && $oldFilename !== '.') {
+            File::delete($filePath.$oldFilename);
+            foreach ($thumbnails as $thumbnail) {
+                if (! is_callable($thumbnail)) {
+                    File::delete($filePath.$thumbnail.'/'.$oldFilename);
                 }
             }
         }

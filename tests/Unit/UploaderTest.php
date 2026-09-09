@@ -64,6 +64,44 @@ class UploaderTest extends TestCase
         $this->assertFileExists($this->uploadDirectory.DIRECTORY_SEPARATOR.$model->banner);
         $this->assertSame(1, $model->saveCount);
     }
+
+    public function test_it_rejects_svg_and_disguised_php_as_images(): void
+    {
+        foreach ([
+            UploadedFile::fake()->createWithContent('vector.svg', '<svg><script>alert(1)</script></svg>'),
+            UploadedFile::fake()->createWithContent('photo.jpg', '<?php echo "executed";'),
+        ] as $file) {
+            Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], ['image' => $file]));
+            $model = new UploadModelStub($this->uploadDirectory);
+            $errors = (new Uploader())->uploadModelFiles($model);
+            $this->assertNotEmpty($errors);
+            $this->assertNull($model->image);
+            $this->assertSame([], array_values(array_diff(scandir($this->uploadDirectory), ['.', '..'])));
+        }
+    }
+
+    public function test_it_uses_detected_image_type_instead_of_client_suffix(): void
+    {
+        Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], [
+            'image' => UploadedFile::fake()->image('misleading.gif')->mimeType('image/png'),
+        ]));
+        $model = new UploadModelStub($this->uploadDirectory);
+        $this->assertSame([], (new Uploader())->uploadModelFiles($model));
+        $this->assertStringEndsWith('.png', $model->image);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{32}\.png$/', $model->image);
+    }
+
+    public function test_it_rejects_executable_generic_download_suffixes(): void
+    {
+        foreach (['payload.phtml', 'payload.PHP8', 'payload.svg', 'payload.htaccess'] as $name) {
+            Request::swap(\Illuminate\Http\Request::create('/', 'POST', [], [], [
+                'file' => UploadedFile::fake()->createWithContent($name, 'test'),
+            ]));
+            $model = new DownloadUploadModelStub($this->uploadDirectory);
+            $this->assertNotEmpty((new Uploader())->uploadModelFiles($model));
+            $this->assertNull($model->file);
+        }
+    }
 }
 
 class UploadModelStub
@@ -98,4 +136,10 @@ class UploadModelStub
     public function delete(): void
     {
     }
+}
+
+class DownloadUploadModelStub extends UploadModelStub
+{
+    public static $fileHandling = ['file'];
+    public $file;
 }

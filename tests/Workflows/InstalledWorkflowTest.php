@@ -300,6 +300,40 @@ class InstalledWorkflowTest extends TestCase
         $this->assertNotNull(\App\Modules\Downloads\Download::find($download->id), 'Abgelehnter Upload darf vorhandenen Datensatz nicht löschen.');
     }
 
+    public function testDownloadUploadReplaceDownloadAndDelete(): void
+    {
+        $admin = $this->fixture('Upload', true);
+        $this->loginAs($admin);
+        $category = new \App\Modules\Downloads\DownloadCat(['title' => $this->prefix]);
+        $category->creator_id = $admin->id;
+        $category->slug = strtolower($this->prefix);
+        $category->forceSave();
+
+        $this->post('/admin/downloads', [
+            'title' => $this->prefix, 'description' => 'Sicherer Upload',
+            'download_cat_id' => $category->id, 'internal' => false, 'published' => true,
+            'file' => \Illuminate\Http\UploadedFile::fake()->createWithContent('first.txt', 'erste version'),
+        ])->assertRedirect();
+        $download = \App\Modules\Downloads\Download::whereTitle($this->prefix)->firstOrFail();
+        $oldFile = $download->uploadPath(true).$download->file;
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{32}\.txt$/', $download->file);
+        $this->assertFileExists($oldFile);
+        $this->post('/downloads/perform/'.$download->id)->assertOk()->assertHeader('content-disposition');
+
+        $this->put('/admin/downloads/'.$download->id, [
+            'title' => $this->prefix, 'description' => 'Ersetzt',
+            'download_cat_id' => $category->id, 'internal' => false, 'published' => true,
+            'file' => \Illuminate\Http\UploadedFile::fake()->createWithContent('second.txt', 'zweite version'),
+        ])->assertRedirect();
+        $newFile = $download->fresh()->uploadPath(true).$download->fresh()->file;
+        $this->assertFileDoesNotExist($oldFile);
+        $this->assertFileExists($newFile);
+        $this->assertSame('zweite version', file_get_contents($newFile));
+
+        $this->delete('/admin/downloads/'.$download->id)->assertRedirect();
+        $this->assertFileDoesNotExist($newFile);
+    }
+
     public function testMatchScoreCreateUpdateAndDelete(): void
     {
         $admin = $this->fixture('Match', true);
