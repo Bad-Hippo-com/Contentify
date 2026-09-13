@@ -1,6 +1,12 @@
 # Contentify defect and risk register
 
-Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
+Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+SEC-007/008 sowie die priorisierte Objekt-/BBCode-Härtung sind umgesetzt.
+Zwischenprüfung: 42 Regressionstests/278 Assertions und 13 Workflowtests/131
+Assertions. Sauberer Neubau, Browserabnahme, Testsystem und Container-/OS-Audit
+bleiben Freigabesperren; `main`, Staging `:80` und Public sind unverändert.
+
+Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
 Assertions bestanden (45 Tests/308 Assertions), beide Smoke-Tests ebenfalls.
 Alle vier Dienste laufen; Protokolle inklusive Fehlversuchen zentral archiviert
@@ -63,8 +69,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.19.5 (Kandidat); Staging: 0.18.3**
-Last updated: **2026-09-08 09:51 CEST**
+Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
+Last updated: **2026-09-09 04:46 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -117,27 +123,31 @@ Kandidat: HTTP liefert die neue Kalenderdatei, Browser führt trotz Reload den
 alten input.size()-Aufruf aus. 0.19.4 versieht lokale Script-/Style-URLs zentral
 mit dem Buildversionsparameter; externe URLs bleiben unverändert.
 
-### SEC-008 - Upload- und PHP-Ausführungsgrenze noch offen (hoch, Prüfauftrag)
+### SEC-008 - Upload- und PHP-Ausführungsgrenze (hoch, in 0.22.5 korrigiert)
 
-Codebefund: SVG ist als Bild erlaubt und wird nicht als Rasterbild geprüft;
-eine SVG-Bereinigung ist im Uploader nicht vorhanden. Nginx führt vorhandene
-PHP-Dateien unter public generell aus; install.php/update.php sind eigene
-Einstiegspunkte. Kein erfolgreicher Upload-Exploit nachgewiesen. Diese Pfade,
-Berechtigungen und sichere Dateiauslieferung sind vor Public dringend zu prüfen.
+0.22.0 prüft Bilder anhand echter Rasterdaten und MIME, normalisiert die Endung,
+verwendet kryptografische Zufallsnamen und verweigert SVG, PHP-Varianten sowie
+aktive/ausführbare Dateitypen. 0.22.5 schützt `/uploads` zusätzlich in Nginx:
+nur statische Auslieferung mit `nosniff`/Sandbox-CSP; aktive und versteckte
+Dateinamen erhalten auch bei manueller Ablage 404. Live-Nachweis im sauberen
+Kandidaten steht zum Zeitpunkt dieses Eintrags noch aus.
 
 ### BUG-051 - Ungültiger Upload kann bestehendes Modell löschen
 
 2026-09-08 10:32 CEST: Mit einem isolierten Download-Datensatz und abgelehnter
 PHP-Datei reproduziert. Seit 0.20.1 wird nur ein neu angelegtes Modell bei Fehler
 entfernt. Der Regressionstest bestätigt den Erhalt bestehender Datensätze.
-Kein Nachweis vollständiger Upload-Sicherheit oder atomarer Dateiersetzung.
+0.22.0/0.22.1 ersetzen atomar: neue Datei, Vorschaubilder und Modell werden
+zuerst gespeichert; erst danach wird die alte Datei entfernt. Der echte HTTP-/DB-
+Ablauftest bestätigt Datensatz- und Dateierhalt bei abgelehnter `.phtml`-Datei,
+gültigen Ersatz, öffentlichen Abruf und abschließendes Löschen.
 
-### SEC-007 - Weitere alte Restore-Routen bleiben zu prüfen (hoch)
+### SEC-007 - Alte Restore-Routen (hoch, in 0.22.2 korrigiert)
 
-Offen: Die Moduldateien enthalten weiterhin zahlreiche GET-Routen auf @restore
-(Papierkorb-Wiederherstellung). Diese sind nicht Teil der bisher abgesicherten
-Aktionsliste. Gemeinsam mit Objekt-/Rollenrechten im nächsten Sicherheitsblock
-umstellen und negativ testen. Keine umfassende CSRF-Freigabe für das Gesamtsystem.
+Alle `@restore`-Ziele registriert Contentify zentral nur noch als POST. GET wird
+mit 405 abgewiesen, POST benötigt CSRF und nicht privilegierte Benutzer erhalten
+403. Derselbe Block begrenzt Logout, Cup-, Forum-, Freunde- und Admin-Wartungs-
+aktionen auf POST/DELETE. Routen- und Workflowtests bestätigen die Grenzen.
 
 ### BUG-049 - Entfernte jQuery-APIs in Altplugins
 
@@ -168,7 +178,9 @@ Bestätigt am 2026-09-08 09:27 CEST: Anmeldung, Check-in/-out, Seeding,
 Teilnehmerentfernung und Teamaktionen wurden über GET ausgeführt. Dadurch greift
 die normale CSRF-Prüfung nicht. 0.19.0 zeigt bei GET/HEAD nur eine Bestätigung,
 schreibende Aufrufe benötigen POST mit Sitzungstoken. Kandidaten-Abnahme offen.
-Weitere Module mit schreibenden GET-Routen sind noch zu inventarisieren.
+Die inventarisierten Zustandsänderungen sind auf POST/DELETE umgestellt. Der
+Teambeitritt behält nur eine sichere GET-Bestätigungsansicht; die Änderung selbst
+erfolgt per CSRF-geschütztem POST.
 
 ### SEC-002 - Nicht im npm-Audit erfasste Browser-Altbibliotheken (hoch)
 
@@ -181,15 +193,21 @@ entfernt werden. npm-Audit allein erfasst weiterhin nicht alle alten Plugins.
 ### SEC-003 - Editorfilter explizit deaktiviert (mittel, Härtung)
 
 Bestätigt: sämtliche strictMode-Filter wurden clientseitig ausgeschaltet.
-0.19.0 entfernt diese Abschaltung. Das ist KEIN serverseitiger XSS-Schutz:
-HTML-Speicherpfade, Rollen und Ausgabekontexte benötigen eine eigene Prüfung.
-Noch kein nachgewiesener vollständiger Schutz gegen gespeichertes XSS.
+0.19.0 entfernt diese Abschaltung. 0.22.4 ergänzt für nicht vertrauenswürdige
+BBCode-Ausgaben aus Kommentaren, Forum, Nachrichten und Signaturen eine
+serverseitige Whitelist für Elemente, Attribute, CSS-Werte und URL-Schemata.
+Attribut-, `javascript:`-, `data:`- und Ereignishandler-Angriffe sind durch
+Regressionstests abgedeckt. Privilegierte redaktionelle HTML-Inhalte benötigen
+weiterhin eine eigene Richtlinie und Prüfung.
 
 ### SEC-004 - Sicherheitsabnahme noch unvollständig (Freigabesperre)
 
-Offen: Rollen-/Objektrechte aller Module, Uploads, BBCode/HTML, weitere
-GET-Mutationen, Container-/OS-Pakete, Geheimnisse/Produktivkonfiguration,
-Rate-Limits und Neuinstallation auf getrenntem Testsystem. Keine Public-Freigabe.
+Teilweise geschlossen: Uploads, Restore-/inventarisierte GET-Mutationen,
+BBCode sowie ausgewählte Objektgrenzen (private Foren, fremde Passwörter,
+unveröffentlichte Cup-Matches) sind gehärtet und getestet. Offen bleiben die
+vollständige Rollen-/Objektmatrix aller 44 Module, privilegiertes Editor-HTML,
+Container-/OS-Pakete, Geheimnisse/Produktivkonfiguration, weitere Rate-Limits,
+Browser/SMTP/Captcha und Neuinstallation auf getrenntem Testsystem. Keine Public-Freigabe.
 
 ### BUG-047 - Bootstrap-5-Tabellen überdecken dunkle Themes
 

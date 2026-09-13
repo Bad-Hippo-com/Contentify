@@ -1,6 +1,12 @@
 # Contentify modernization backlog
 
-Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
+Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Upload-/Nginx-Grenze, atomare Dateiersetzung, POST-/CSRF-Routen, ausgewählte
+Objektrechte und serverseitige BBCode-Whitelist sind umgesetzt. Zwischenprüfung:
+42 Regressionstests/278 Assertions und 13 Workflowtests/131 Assertions. Sauberer
+Neubau und Abschlussprotokolle folgen; `main`, Staging `:80` und Public unverändert.
+
+Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
 Assertions bestanden (45 Tests/308 Assertions), beide Smoke-Tests ebenfalls.
 Alle vier Dienste laufen; Protokolle inklusive Fehlversuchen zentral archiviert
@@ -63,25 +69,25 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.21.2 (Kandidat geprüft); Staging: 0.18.3**
+Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
 
-Nächste Arbeitspakete (Stand 2026-09-08 10:35 CEST):
+Nächste Arbeitspakete (Stand 2026-09-09 04:46 CEST):
 1. Erledigt 0.21.2: Passwortreset ohne Passwortversand/GET-Mutation,
    Token-/CSRF-/Ablauf-/Persistenztests. SMTP und vollständige Browserabnahme offen.
-2. Uploads: gültigen Upload, Abruf, Ersatz und Löschen testen; SVG/PHP-Grenze härten.
-3. Kalender kontrolliert ersetzen; Datum speichern und nach erneutem Öffnen prüfen.
-4. Rollenmatrix erweitern: private Foren, Team-Cups und fremde Objekt-IDs.
+2. Erledigt 0.22.5: Upload/Abruf/Ersatz/Löschen, SVG/PHP-/Nginx-Grenze,
+   Restore- und Mutationsrouten sowie untrusted BBCode serverseitig härten.
+3. Vollständige Rollen-/Objektmatrix und privilegiertes Editor-HTML prüfen.
+4. Kalender kontrolliert ersetzen; Datum speichern und nach erneutem Öffnen prüfen.
 5. Tagsinput/Flot und LESS-Referenzhelfer ablösen; modernes Design getrennt planen.
 6. Vollständige Browserabläufe und SMTP/Captcha prüfen, danach Neuinstallation
    auf dem separaten Testsystem. Keine Übernahme nach main/Public vorher behaupten.
-Last updated: **2026-09-08 09:51 CEST**
+Last updated: **2026-09-09 04:46 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
-1. Kandidat 0.19.5 abschließend abnehmen: Kommentare, Nachrichten, Cup-Ablauf
-   und übrige Formularseiten. Erst danach auf main/Staging übernehmen.
-2. SEC-007/008 und BUG-051: Restore-Routen, Uploads/SVG, PHP-Einstiegspunkte
-   und Datenerhalt. Danach Objekt-/Rollenrechte und serverseitiges HTML prüfen.
+1. Kandidat 0.22.5 sauber neu bauen, Tests, Smokes, Nginx-Uploadgrenze und Logs
+   abnehmen. Erst danach über eine Übernahme auf main/Staging entscheiden.
+2. Vollständige Objekt-/Rollenrechte und privilegiertes Editor-HTML prüfen.
 3. Übrige manuell vendorte Plugins, LESS-Referenzadapter und Container prüfen;
    Veröffentlichung über GitHub Container Registry vorbereiten.
 4. Einen unabhängigen Testserver frisch installieren und alle Abläufe wiederholen.
@@ -270,8 +276,9 @@ Last updated: **2026-09-08 09:51 CEST**
 - [ ] Replace the container definitions with pinned supported images,
   least-privilege permissions, secrets, volumes and health checks.
 - [ ] Build an automated installer/database test fixture.
-- [ ] Add tests for authentication, roles, every public write route, uploads,
-  comments, matches, cups, themes and administrative CRUD.
+- [ ] Testmatrix für alle Rollen, alle 44 Module und jedes administrative CRUD
+  vervollständigen. Auth, zentrale Schreibwege, Uploads, Kommentare, Nachrichten,
+  Forum, Matches und Cups sind bereits in Unit-/Workflowtests vertreten.
 - [ ] Add CI for PHP lint, coding style, PHPUnit, Composer audit, npm build/audit
   and container build.
 - [ ] Perform a focused application-security review after the framework port.

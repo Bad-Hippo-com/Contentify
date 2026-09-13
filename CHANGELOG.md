@@ -1,3 +1,32 @@
+## Bad Hippo 0.22.5 / Contentify 3.3-dev - 2026-09-09 04:46 CEST
+
+Upload- und Berechtigungshärtung abgeschlossen. Uploads werden anhand Inhalt,
+MIME und Erweiterung geprüft, Bilder erhalten die erkannte Rastererweiterung und
+zufällige Namen. SVG, PHP-Varianten sowie browseraktive/ausführbare Dateitypen
+werden abgewiesen. Ersatzdateien werden erst nach erfolgreichem Speichern gegen
+die alte Datei getauscht; abgelehnte Ersetzungen erhalten Datensatz und Datei.
+
+Wiederherstellung, Logout, Cup-, Forum-, Freunde- und Admin-Wartungsaktionen
+akzeptieren nur noch POST/DELETE mit CSRF. Unerlaubte Zugriffe liefern 401/403;
+private Foren, fremde Passwörter und unveröffentlichte Cup-Matches sind geschützt.
+BBCode aus Kommentaren, Forum, Nachrichten und Signaturen durchläuft serverseitig
+eine HTML-, Attribut-, Style- und URL-Whitelist. Nginx liefert Uploads nur statisch
+und lehnt aktive sowie versteckte Dateinamen auch bei manueller Ablage ab.
+
+Zwischenprüfung im laufenden Kandidaten: 42 Unit-/Regressionstests mit 278
+Assertions und 13 echte Workflowtests mit 131 Assertions bestanden. Der saubere
+Containerneubau und dessen Abschlussnachweise folgen vor einer Kandidatenfreigabe.
+`main`, Staging `:80` und Public bleiben unverändert.
+
+### Enthaltene Fixstände 0.22.0 bis 0.22.5
+
+- 0.22.0: Inhaltsbasierte Uploadprüfung, Zufallsnamen und atomare Ersatzdateien.
+- 0.22.1: Updatepfad nutzt den Ersatzmodus und erhält Daten bei Ablehnung.
+- 0.22.2: Restore- und weitere Mutationsrouten auf POST/DELETE mit CSRF begrenzt.
+- 0.22.3: Verbotene Admin-/Objektzugriffe liefern korrekte 401/403-Statuscodes.
+- 0.22.4: Serverseitige BBCode-Ausgabe-Whitelist gegen gespeichertes XSS.
+- 0.22.5: Nginx verweigert aktive/versteckte Dateien im Uploadbereich.
+
 ## Bad Hippo 0.21.2 / Contentify 3.3-dev - 2026-09-08 10:58 CEST
 
 Reset bei bereits angemeldetem Benutzer: Sentinel logout mit frisch geladenem

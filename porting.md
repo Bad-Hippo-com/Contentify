@@ -1,6 +1,14 @@
 # Contentify porting plan
 
-Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
+Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Die erste Sicherheitsstufe nach Framework-/Frontend-Portierung umfasst nun
+inhaltsbasierte Uploadprüfung, atomare Ersetzung, statische Nginx-Uploadgrenze,
+POST/DELETE mit CSRF, korrekte 401/403-Statuscodes, ausgewählte Objektgrenzen
+und eine serverseitige BBCode-Whitelist. Zwischenprüfung: 42 Tests/278 Assertions
+plus 13 Workflowtests/131 Assertions. Sauberer Neubau und Testsystem bleiben offen;
+`main`, Staging `:80` und Public sind unverändert.
+
+Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
 Assertions bestanden (45 Tests/308 Assertions), beide Smoke-Tests ebenfalls.
 Alle vier Dienste laufen; Protokolle inklusive Fehlversuchen zentral archiviert
@@ -67,8 +75,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.19.5 (Kandidat); Staging: 0.18.3**
-Last updated: **2026-09-08 09:51 CEST**
+Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
+Last updated: **2026-09-09 04:46 CEST**
 
 ## Decision
 

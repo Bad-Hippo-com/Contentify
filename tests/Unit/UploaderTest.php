@@ -106,6 +106,19 @@ class UploaderTest extends TestCase
             $this->assertNull($model->file);
         }
     }
+
+    public function test_staging_nginx_never_serves_active_upload_suffixes(): void
+    {
+        $config = file_get_contents(base_path('deploy/staging/nginx.conf'));
+
+        $this->assertStringContainsString('location ^~ /uploads/', $config);
+        $this->assertMatchesRegularExpression('/php\[0-9\]\*/', $config);
+        $this->assertStringContainsString('|phtml|', $config);
+        $this->assertStringContainsString('|svgz?|', $config);
+        $this->assertStringContainsString('|html?|', $config);
+        $this->assertStringContainsString('X-Content-Type-Options nosniff', $config);
+        $this->assertStringContainsString("default-src 'none'", $config);
+    }
 }
 
 class UploadModelStub
