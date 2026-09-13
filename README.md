@@ -1,11 +1,12 @@
 # Contentify – Bad Hippo Community-Fork
 
-Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Stand 2026-09-13 09:55 CEST: **0.22.5 auf Kandidat :8088 installiert und geprüft.**
 Uploadprüfung, atomare Ersetzung, POST-/CSRF-Routen, Objektzugriffe und die
 serverseitige BBCode-Whitelist sind umgesetzt. Der laufende Kandidat besteht
-42 Regressionstests/278 Assertions und 13 echte Ablauftests/131 Assertions.
-Der saubere Containerneubau steht noch aus; `main`, Staging `:80` und Public
-bleiben unverändert und sind durch diesen Zwischenstand nicht freigegeben.
+43 Regressionstests/285 Assertions und 13 echte Ablauftests/131 Assertions.
+Beide Smokes, LESS, Nginx und Composer-Audit sind grün. Aktive Uploadproben liefern
+404, harmlose Dateien 200 mit Schutzheadern. Der Kandidat wurde danach frisch
+ohne Dev-Pakete gestartet. `main`, Staging `:80` und Public bleiben unverändert.
 
 Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
@@ -157,8 +158,8 @@ Contributions welcome! [Learn more...](CONTRIBUTING.md)
 
 ### Local technical assessment
 
-Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
-Last updated: **2026-09-09 04:46 CEST**
+Local workstream version: **0.22.5 (Kandidat geprüft); Staging: 0.18.3**
+Last updated: **2026-09-13 09:55 CEST**
 
 This checkout was reviewed against current PHP, Composer, Node.js and Laravel
 support levels. The result is **not production-ready without modernization**.

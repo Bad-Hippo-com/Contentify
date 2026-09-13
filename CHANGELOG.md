@@ -1,4 +1,4 @@
-## Bad Hippo 0.22.5 / Contentify 3.3-dev - 2026-09-09 04:46 CEST
+## Bad Hippo 0.22.5 / Contentify 3.3-dev - 2026-09-13 09:55 CEST
 
 Upload- und Berechtigungshärtung abgeschlossen. Uploads werden anhand Inhalt,
 MIME und Erweiterung geprüft, Bilder erhalten die erkannte Rastererweiterung und
@@ -13,10 +13,12 @@ BBCode aus Kommentaren, Forum, Nachrichten und Signaturen durchläuft serverseit
 eine HTML-, Attribut-, Style- und URL-Whitelist. Nginx liefert Uploads nur statisch
 und lehnt aktive sowie versteckte Dateinamen auch bei manueller Ablage ab.
 
-Zwischenprüfung im laufenden Kandidaten: 42 Unit-/Regressionstests mit 278
-Assertions und 13 echte Workflowtests mit 131 Assertions bestanden. Der saubere
-Containerneubau und dessen Abschlussnachweise folgen vor einer Kandidatenfreigabe.
-`main`, Staging `:80` und Public bleiben unverändert.
+Sauberer Kandidatenneubau bestanden: 43 Unit-/Regressionstests mit 285 Assertions,
+13 echte Workflowtests mit 131 Assertions, beide Smoke-Tests, LESS-Kompilierung,
+Nginx-Konfiguration und Composer-Audit. Reale Uploadproben: PHP, SVG und Dotfile
+jeweils 404; harmlose Textdatei 200 mit `nosniff` und Sandbox-CSP. Produktions-
+container danach frisch ohne Dev-Pakete erstellt. `main`, Staging `:80` und
+Public bleiben unverändert.
 
 ### Enthaltene Fixstände 0.22.0 bis 0.22.5
 

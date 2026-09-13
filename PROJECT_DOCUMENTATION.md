@@ -1,12 +1,15 @@
 # Contentify project assessment
 
-Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Stand 2026-09-13 09:55 CEST: **0.22.5 auf Kandidat :8088 installiert und geprüft.**
 Am 09.09. wurden die priorisierten Blöcke Uploads und Schreib-/Objektrechte
 umgesetzt: echte Dateitypprüfung, atomarer Ersatz, Nginx-Isolation, POST/CSRF,
 401/403, private Objekte und BBCode-Whitelist. Der laufende Kandidat besteht
-42 Regressionstests/278 Assertions und 13 echte Ablauftests/131 Assertions.
-Sauberer Containerneubau und dessen Betriebsnachweise folgen. `main`, Staging
-`:80` und Public bleiben ausdrücklich unverändert.
+43 Regressionstests/285 Assertions und 13 echte Ablauftests/131 Assertions.
+Beide Smokes, LESS, Nginx und Composer-Audit bestanden. PHP-/SVG-/Dotfile-Proben
+liefern 404, eine Textprobe 200 mit Schutzheadern. Die Prüfdateien wurden entfernt
+und der Produktionskandidat frisch ohne Dev-Pakete erstellt. Nachweise liegen unter
+`/var/log/contentify-bootstrap-candidate/deployment/contentify-0225-*`.
+`main`, Staging `:80` und Public bleiben ausdrücklich unverändert.
 
 Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
@@ -74,8 +77,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
-Assessment/update time: **2026-09-09 04:46 CEST**
+Local workstream version: **0.22.5 (Kandidat geprüft); Staging: 0.18.3**
+Assessment/update time: **2026-09-13 09:55 CEST**
 Workspace: `E:\WorkSpace\contentify`
 
 ## Tabellenfarben – 0.18.2, 2026-09-08

@@ -1,10 +1,11 @@
 # Contentify defect and risk register
 
-Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Stand 2026-09-13 09:55 CEST: **0.22.5 auf Kandidat :8088 installiert und geprüft.**
 SEC-007/008 sowie die priorisierte Objekt-/BBCode-Härtung sind umgesetzt.
-Zwischenprüfung: 42 Regressionstests/278 Assertions und 13 Workflowtests/131
-Assertions. Sauberer Neubau, Browserabnahme, Testsystem und Container-/OS-Audit
-bleiben Freigabesperren; `main`, Staging `:80` und Public sind unverändert.
+Sauberer Neubau: 43 Regressionstests/285 Assertions, 13 Workflowtests/131
+Assertions, beide Smokes, LESS, Nginx und Composer-Audit bestanden. Browserabnahme,
+Testsystem und Container-/OS-Audit bleiben Freigabesperren; `main`, Staging `:80`
+und Public sind unverändert.
 
 Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
@@ -69,8 +70,8 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
-Last updated: **2026-09-09 04:46 CEST**
+Local workstream version: **0.22.5 (Kandidat geprüft); Staging: 0.18.3**
+Last updated: **2026-09-13 09:55 CEST**
 Scope: upstream commit `5bd21fb7879cf0fbede159a6dc71d0554c8d2bde`
 
 ## Open blockers
@@ -129,8 +130,9 @@ mit dem Buildversionsparameter; externe URLs bleiben unverändert.
 verwendet kryptografische Zufallsnamen und verweigert SVG, PHP-Varianten sowie
 aktive/ausführbare Dateitypen. 0.22.5 schützt `/uploads` zusätzlich in Nginx:
 nur statische Auslieferung mit `nosniff`/Sandbox-CSP; aktive und versteckte
-Dateinamen erhalten auch bei manueller Ablage 404. Live-Nachweis im sauberen
-Kandidaten steht zum Zeitpunkt dieses Eintrags noch aus.
+Dateinamen erhalten auch bei manueller Ablage 404. Im sauberen Kandidaten liefern
+eine PHP-, SVG- und Dotfile-Probe jeweils 404; eine Textprobe liefert 200 mit
+`nosniff` und Sandbox-CSP. Die exakt benannten Prüfdateien wurden wieder entfernt.
 
 ### BUG-051 - Ungültiger Upload kann bestehendes Modell löschen
 

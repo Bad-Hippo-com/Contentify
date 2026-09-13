@@ -1,10 +1,11 @@
 # Contentify modernization backlog
 
-Stand 2026-09-09 04:46 CEST: **0.22.5 in Abschlussprüfung auf Kandidat :8088.**
+Stand 2026-09-13 09:55 CEST: **0.22.5 auf Kandidat :8088 installiert und geprüft.**
 Upload-/Nginx-Grenze, atomare Dateiersetzung, POST-/CSRF-Routen, ausgewählte
-Objektrechte und serverseitige BBCode-Whitelist sind umgesetzt. Zwischenprüfung:
-42 Regressionstests/278 Assertions und 13 Workflowtests/131 Assertions. Sauberer
-Neubau und Abschlussprotokolle folgen; `main`, Staging `:80` und Public unverändert.
+Objektrechte und serverseitige BBCode-Whitelist sind umgesetzt. Abnahme:
+43 Regressionstests/285 Assertions, 13 Workflowtests/131 Assertions, beide Smokes,
+LESS, Nginx und Composer-Audit. Uploadgrenze live geprüft; Produktionskandidat
+anschließend frisch ohne Dev-Pakete gestartet. `main`, Staging `:80` und Public unverändert.
 
 Vorheriger Stand 2026-09-08 11:00 CEST: **0.21.2 auf Kandidat :8088 installiert und geprüft.**
 Sauberer Container: 35 Regressionstests/205 Assertions und zehn Ablauftests/103
@@ -69,9 +70,9 @@ Implementierung auf GitHub main; kein Public-Release. LESS-Referenzadapter,
 Glyphicons und manuell vendorte Altplugins bleiben Folgearbeit.
 BUG-043 (Kalendertexte/Editorwarnungen) und BUG-046 (Server-Seitentitel) sind offen.
 
-Local workstream version: **0.22.5 (Kandidat in Abschlussprüfung); Staging: 0.18.3**
+Local workstream version: **0.22.5 (Kandidat geprüft); Staging: 0.18.3**
 
-Nächste Arbeitspakete (Stand 2026-09-09 04:46 CEST):
+Nächste Arbeitspakete (Stand 2026-09-13 09:55 CEST):
 1. Erledigt 0.21.2: Passwortreset ohne Passwortversand/GET-Mutation,
    Token-/CSRF-/Ablauf-/Persistenztests. SMTP und vollständige Browserabnahme offen.
 2. Erledigt 0.22.5: Upload/Abruf/Ersatz/Löschen, SVG/PHP-/Nginx-Grenze,
@@ -81,12 +82,12 @@ Nächste Arbeitspakete (Stand 2026-09-09 04:46 CEST):
 5. Tagsinput/Flot und LESS-Referenzhelfer ablösen; modernes Design getrennt planen.
 6. Vollständige Browserabläufe und SMTP/Captcha prüfen, danach Neuinstallation
    auf dem separaten Testsystem. Keine Übernahme nach main/Public vorher behaupten.
-Last updated: **2026-09-09 04:46 CEST**
+Last updated: **2026-09-13 09:55 CEST**
 
 ## Nächste Arbeitsreihenfolge
 
-1. Kandidat 0.22.5 sauber neu bauen, Tests, Smokes, Nginx-Uploadgrenze und Logs
-   abnehmen. Erst danach über eine Übernahme auf main/Staging entscheiden.
+1. Erledigt: Kandidat 0.22.5 sauber neu gebaut; Tests, Smokes, Nginx-Uploadgrenze
+   und zentrale Logs abgenommen. Übernahme auf main/Staging bleibt eigene Entscheidung.
 2. Vollständige Objekt-/Rollenrechte und privilegiertes Editor-HTML prüfen.
 3. Übrige manuell vendorte Plugins, LESS-Referenzadapter und Container prüfen;
    Veröffentlichung über GitHub Container Registry vorbereiten.
