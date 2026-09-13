@@ -49,6 +49,21 @@ class StabilizationSecurityTest extends TestCase
         $this->assertStringNotContainsString('onload', $safe);
     }
 
+    public function testLegacyBbCodeAttributeInjectionIsNeutralizedAfterRendering(): void
+    {
+        $bbcode = new \BBCode();
+        $rendered = $bbcode->render(
+            '[url=https://example.com/" onmouseover="alert(1)]Link[/url]'.
+            '[img]javascript:alert(2)[/img]'
+        );
+        $safe = \Contentify\HtmlSanitizer::sanitizeBbCode($rendered);
+
+        $this->assertStringContainsString('Link', $safe);
+        $this->assertStringNotContainsString('onmouseover', $safe);
+        $this->assertStringNotContainsString('javascript:', $safe);
+        $this->assertStringNotContainsString('alert(', $safe);
+    }
+
     public function testNullableOriginalDatesRemainNullable(): void
     {
         $match = new \App\Modules\Cups\CupMatch;
